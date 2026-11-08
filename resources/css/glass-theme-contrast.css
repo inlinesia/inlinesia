@@ -1,0 +1,1397 @@
+/* ==========================================================================
+   KOREKSI WARNA & KONTRAS - TEMA KACA (glass)
+   --------------------------------------------------------------------------
+   Catatan spesifisitas (penting):
+   glass-theme.css punya aturan blanket
+
+       .public-site :is(<25 kartu>) :is(h1,h2,h3,p,strong,label,legend,small,span)
+
+   dengan spesifisitas (0,2,2) - BUKAN (0,2,1) - karena nilai :is() adalah
+   spesifisitas argumen paling spesifik, yaitu ".sponsor-card-options article"
+   yang bernilai (0,1,1). Akibatnya setiap elemen turunan kartu yang berupa
+   span/p/strong/dll dipaksa berwarna putih, bahkan ketika chip-nya sendiri
+   sudah kita ubah menjadi chip gelap.
+
+   Karena itu override di bawah memakai !important pada property color agar
+   selalu menang atas blanket tersebut. Nilai !important di sini sengaja dan
+   hanya dipakai pada property color, bukan pada layout.
+
+   SEMUA ATURAN DI BAWAH HANYA BERLAKU UNTUK TEMA GLASS (data-theme="glass")
+   agar tidak mengganggu tema lain (copper, neural, topic).
+   ========================================================================== */
+
+[data-theme='glass'] .public-site .listing-event-card .listing-event-date,
+[data-theme='glass'] .public-site .public-event-card .public-event-date,
+[data-theme='glass'] .public-site :is(.public-event-card, .listing-event-card) :is(.event-date-coral, .event-date-blue) {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffb59a;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='glass'] .public-site .listing-event-card:nth-of-type(2) .listing-event-date,
+[data-theme='glass'] .public-site :is(.public-event-card, .listing-event-card) .event-date-blue {
+    color: #9fd8f2;
+}
+
+[data-theme='glass'] .public-site .listing-event-card:nth-of-type(3) .listing-event-date {
+    color: #e8cd9b;
+}
+
+[data-theme='glass'] .public-site .listing-event-date :is(span, strong, small),
+[data-theme='glass'] .public-site .public-event-date :is(span, strong),
+[data-theme='glass'] .public-site :is(.public-event-card, .listing-event-card) :is(.event-date-coral, .event-date-blue) :is(span, strong, small) {
+    color: inherit !important;
+}
+
+/* --- 2. Ikon lingkaran kartu layanan ----------------------------------- */
+[data-theme='glass'] .public-site .service-card .service-icon {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffb59a;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='glass'] .public-site .service-card:nth-child(2) .service-icon {
+    color: #9fd8f2;
+}
+
+[data-theme='glass'] .public-site .service-card:nth-child(3) .service-icon {
+    color: #e8cd9b;
+}
+
+/* --- 3. Pita informasi di dalam kartu (ikon "i") ----------------------- */
+[data-theme='glass'] .public-site .listing-demo-notice > span,
+[data-theme='glass'] .public-site .event-demo-note > span {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffb59a;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='glass'] .public-site .listing-demo-notice strong {
+    color: #f5f5f4 !important;
+}
+
+/* --- 4. Pil status ------------------------------------------------------- */
+[data-theme='glass'] .public-site .listing-status {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(245, 245, 244, 0.86) !important;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme='glass'] .public-site .listing-event-card .listing-status-open {
+    border-color: rgba(65, 214, 165, 0.5);
+    color: #9df5cd !important;
+    background: rgba(65, 214, 165, 0.16);
+}
+
+[data-theme='glass'] .public-site .listing-event-card .listing-status-preparing {
+    border-color: rgba(232, 205, 155, 0.5);
+    color: #f0dcb0 !important;
+    background: rgba(232, 205, 155, 0.16);
+}
+
+/* --- 5. Toolbar & pengurut daftar lomba --------------------------------- */
+[data-theme='glass'] .public-site .listing-toolbar h2 {
+    color: #f5f5f4;
+}
+
+[data-theme='glass'] .public-site .listing-toolbar h2 span {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffb59a;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='glass'] .public-site .listing-sort-label {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(245, 245, 244, 0.9);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme='glass'] .public-site .listing-sort-label span {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='glass'] .public-site .listing-card-number {
+    color: rgba(245, 245, 244, 0.62) !important;
+}
+
+[data-theme='glass'] .public-site .listing-demo-footnote {
+    color: rgba(245, 245, 244, 0.72);
+}
+
+/* --- 6. Kartu ringkasan di dalam hero (platform preview) ---------------- */
+[data-theme='glass'] .public-site .platform-preview-label {
+    color: rgba(245, 245, 244, 0.78);
+}
+
+[data-theme='glass'] .public-site .platform-preview-link {
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #f5f5f4;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='glass'] .public-site .platform-preview-link:hover {
+    border-color: rgba(255, 181, 154, 0.55);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='glass'] .public-site .platform-preview-link small {
+    color: rgba(245, 245, 244, 0.76);
+}
+
+[data-theme='glass'] .public-site .platform-preview-link em,
+[data-theme='glass'] .public-site .platform-preview-arrow {
+    color: rgba(245, 245, 244, 0.8);
+}
+
+[data-theme='glass'] .public-site .platform-preview-number {
+    color: #ffcdb9;
+}
+
+/* --- 7. Logo, tanda organizer & catatan komunitas ---------------------- */
+/* Wordmark: hanya huruf "LI" yang merah (warna bendera Indonesia), sisa
+   huruf "IN" + "NESIA" putih. Berlaku untuk logo publik maupun sidebar
+   admin (dashboard.css L27). */
+
+[data-theme='glass'] .inlinesia-logo-copy strong,
+[data-theme='glass'] .brand .inlinesia-logo-copy strong {
+    color: #ffffff;
+}
+
+[data-theme='glass'] .inlinesia-logo-copy .logo-accent,
+[data-theme='glass'] .brand .inlinesia-logo-copy .logo-accent {
+    color: var(--flag-red);
+    text-shadow: 0 0 10px var(--flag-red-glow);
+}
+
+[data-theme='glass'] .inlinesia-logo-copy small,
+[data-theme='glass'] .brand .inlinesia-logo-copy small {
+    color: rgba(245, 245, 244, 0.78);
+}
+
+[data-theme='glass'] .public-site .organizer-mark {
+    border-color: #ffb59a;
+    color: #ffb59a;
+}
+
+[data-theme='glass'] .public-site .public-community-note strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .value-number {
+    color: #ffb59a !important;
+}
+
+/* --- 8. Teks sekunder: naikkan opasitas --------------------------------- */
+[data-theme='glass'] .public-site :is(
+    .public-overline,
+    .hero-bottom-note,
+    .public-community-note p,
+    .public-event-tag,
+    .service-number,
+    .public-section-label,
+    .event-demo-note
+) {
+    color: rgba(245, 245, 244, 0.8) !important;
+}
+
+[data-theme='glass'] .public-site :is(
+    .account-intro > p,
+    .profile-heading > p,
+    .page-subtitle,
+    .listing-intro > p,
+    .public-hero-lead,
+    .about-inlinesia p,
+    .public-community p
+) {
+    color: rgba(245, 245, 244, 0.86) !important;
+}
+
+[data-theme='glass'] .public-site :is(
+    .public-nav a,
+    .public-login,
+    .public-footer,
+    .footer-tagline,
+    .footer-copyright,
+    .public-text-link,
+    .public-event-arrow,
+    .listing-back-link
+) {
+    color: rgba(245, 245, 244, 0.9) !important;
+}
+
+/* --- 9. Tombol ----------------------------------------------------------- */
+[data-theme='glass'] .public-site .public-button-orange {
+    background: linear-gradient(135deg, #9c5a1c, #8a4f16);
+}
+
+[data-theme='glass'] .public-site .public-button-orange:hover {
+    background: linear-gradient(135deg, #b0691f, #965616);
+}
+
+[data-theme='glass'] .public-site .listing-register-link {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: linear-gradient(135deg, #0d7d64, #0a5f4c);
+}
+
+[data-theme='glass'] .public-site .listing-register-link:hover {
+    background: linear-gradient(135deg, #12a37c, #0a5f4c);
+}
+
+/* Teks di dalam tombol harus mengikuti warna tombol (putih di atas
+   gradien oranye, gelap di atas tombol tembaga), bukan warna putih
+   yang dipaksakan blanket. */
+
+[data-theme='glass'] .public-site :is(
+    .public-button,
+    .public-button-orange,
+    .public-button-dark,
+    .public-button-light,
+    .listing-register-link,
+    .account-submit,
+    .button-primary,
+    .listing-sort-label
+) :is(span, small, strong, i, em, b) {
+    color: inherit !important;
+}
+
+/* --- 10. Halaman masuk / daftar ----------------------------------------- */
+/* .account-eyebrow juga muncul di panel .app-shell (mis. "PENGELOLAAN ADMIN"
+   pada sidebar), jadi cakupannya tidak boleh hanya .public-site. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .account-eyebrow {
+    color: #ffb59a;
+}
+
+[data-theme='glass'] .public-site .account-note {
+    border-left-color: #ffb59a;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='glass'] .public-site .account-note strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .account-note span {
+    color: rgba(245, 245, 244, 0.8) !important;
+}
+
+[data-theme='glass'] .public-site .role-option {
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='glass'] .public-site .role-option:has(input:checked) {
+    border-color: rgba(65, 214, 165, 0.7);
+    background: rgba(65, 214, 165, 0.14);
+}
+
+[data-theme='glass'] .public-site .role-option strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .remember-option {
+    color: rgba(245, 245, 244, 0.88) !important;
+}
+
+[data-theme='glass'] .public-site .account-switch {
+    color: rgba(245, 245, 244, 0.82) !important;
+}
+
+[data-theme='glass'] .public-site .account-switch a {
+    color: #ffb59a;
+}
+
+/* --- 11. Kartu kontak --------------------------------------------------- */
+[data-theme='glass'] .public-site :is(.contact-label, .contact-value.is-empty, .contact-action.is-static) {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='glass'] .public-site .contact-action {
+    color: #ffb59a;
+}
+
+[data-theme='glass'] .public-site .contact-item .contact-icon {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='glass'] .public-site .contact-item:nth-child(2) .contact-icon {
+    color: #9fd8f2;
+    background: rgba(159, 216, 242, 0.18);
+}
+
+[data-theme='glass'] .public-site .contact-item:nth-child(3) .contact-icon {
+    color: #e8cd9b;
+    background: rgba(232, 205, 155, 0.18);
+}
+
+/* --- 12. Panel pembagian kategori otomatis ------------------------------ */
+[data-theme='glass'] .public-site .event-category-assign {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='glass'] .public-site .event-category-assign-copy h2 {
+    color: #f5f5f4;
+}
+
+[data-theme='glass'] .public-site .event-category-assign-copy p {
+    color: rgba(245, 245, 244, 0.82);
+}
+
+/* --- 13. Keadaan kosong -------------------------------------------------- */
+[data-theme='glass'] .public-site .listing-empty-state {
+    border-color: rgba(255, 255, 255, 0.24);
+    color: rgba(245, 245, 244, 0.84);
+}
+
+[data-theme='glass'] .public-site .listing-empty-state > span {
+    color: #ffb59a;
+}
+
+/* --- 14. Tabel daftar peserta & filter kolom ---------------------------- */
+[data-theme='glass'] .public-site .event-roster-filters {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='glass'] .public-site .event-roster-filter > span {
+    color: rgba(245, 245, 244, 0.68) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-filter input,
+[data-theme='glass'] .public-site .event-roster-filter select {
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #f5f5f4 !important;
+    background: rgba(0, 0, 0, 0.28);
+}
+
+[data-theme='glass'] .public-site .event-roster-filter input::placeholder {
+    color: rgba(245, 245, 244, 0.55);
+}
+
+[data-theme='glass'] .public-site .event-roster-filter select option {
+    color: #f5f5f4;
+    background: #1c211e;
+}
+
+[data-theme='glass'] .public-site .event-roster-filter-reset {
+    color: #ffc9b3;
+}
+
+[data-theme='glass'] .public-site .event-roster-table thead th {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    color: rgba(245, 245, 244, 0.62) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table thead th :is(span, small) {
+    color: inherit !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-sort {
+    color: inherit;
+}
+
+[data-theme='glass'] .public-site .event-roster-sort:hover,
+[data-theme='glass'] .public-site .event-roster-sort.is-active {
+    color: #ffc9b3 !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody th,
+[data-theme='glass'] .public-site .event-roster-table tbody td {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: rgba(245, 245, 244, 0.86) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.045);
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody th strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody th small {
+    color: rgba(245, 245, 244, 0.7) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody tr.event-roster-group-row {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody tr.event-roster-group-row:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='glass'] .public-site .event-roster-table tbody tr.event-roster-group-row th {
+    border-bottom-color: rgba(255, 255, 255, 0.14);
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-group-meta {
+    color: rgba(245, 245, 244, 0.6) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table .event-registration-edit-link {
+    color: #ffc9b3;
+}
+
+[data-theme='glass'] .public-site .event-roster-table .event-registration-edit-link:hover {
+    color: #ffd9c9;
+}
+
+[data-theme='glass'] .public-site .event-payment-status {
+    border-color: rgba(232, 205, 155, 0.4);
+    color: #ffd9a0 !important;
+    background: rgba(232, 205, 155, 0.16);
+}
+
+[data-theme='glass'] .public-site .event-payment-status.payment-paid {
+    border-color: rgba(65, 214, 165, 0.45);
+    color: #9df5cd !important;
+    background: rgba(65, 214, 165, 0.16);
+}
+
+[data-theme='glass'] .public-site .event-payment-status.payment-unpaid {
+    border-color: rgba(255, 157, 149, 0.4);
+    color: #ffb0a8 !important;
+    background: rgba(255, 157, 149, 0.14);
+}
+
+[data-theme='glass'] .public-site .event-roster-table .guest-registration-status {
+    color: rgba(245, 245, 244, 0.86) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table .guest-registration-status.status-approved {
+    color: #9df5cd !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-table .guest-registration-status.status-rejected {
+    color: #ffb0a8 !important;
+}
+
+[data-theme='glass'] .public-site .event-payment-confirm-button {
+    border-color: rgba(65, 214, 165, 0.45);
+    color: #bff3d6 !important;
+    background: rgba(65, 214, 165, 0.14);
+}
+
+[data-theme='glass'] .public-site .event-payment-confirm-button:hover {
+    color: #fff !important;
+    background: #0d7d64;
+}
+
+[data-theme='glass'] .public-site .event-roster-empty-row .guest-dashboard-empty strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-empty-row .guest-dashboard-empty p {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='glass'] .public-site .event-public-roster .event-registration-readonly-label {
+    color: rgba(245, 245, 244, 0.72) !important;
+}
+
+/* --- 15. Chip & banner berlatar terang yang bocor ke tema gelap ---------- */
+/* account-portal.css (L66, L90-96, L106-114, L182-183, L354-360),
+   event-form.css (L18) dan dashboard.css (L64, L126) masih memakai warna
+   tema terang: #fff, #fbede5, #f1efff, #f4dfcc, #eef7f0, #fbf4e7, dll.
+   Aturan blanket di glass-theme.css (L179) lalu memaksa teks di dalam
+   kartu menjadi putih, sehingga hasilnya TEKS PUTIH DI ATAS LATAR PUTIH -
+   misalnya badge tanggal "05 / FEB / 2027" dan anak panah "->" pada
+   tombol "Ubah event" di dasbor peserta.
+
+   Di bawah ini tiap elemen mendapat latar gelap sesuai bahasa visual tema
+   kaca (panel putih transparan + border putih), dan warna teks anak
+   dikembalikan ke `inherit` agar mengikuti warna induknya. Nilai !important
+   tetap hanya dipakai pada property color, sesuai catatan di header file. */
+
+[data-theme='glass'] /* 15a. Badge tanggal event di dasbor peserta + admin */
+[data-theme='glass'] .public-site .guest-event-date,
+[data-theme='glass'] :is(.public-site, .app-shell) .event-date {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffb59a;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='glass'] .public-site .guest-event-date :is(span, strong, small),
+[data-theme='glass'] :is(.public-site, .app-shell) .event-date :is(span, strong, small) {
+    color: inherit !important;
+}
+
+/* 15b. Nomor langkah pada form pengajuan event */
+[data-theme='glass'] :is(.public-site, .app-shell) .form-step {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f5f5f4 !important;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* 15c. Tombol aksi baris ("Ubah event", "Kelola peserta", ...)
+   Padanan untuk konteks .app-shell ikut ditulis di section 23; yang di bawah
+   ini hanya menutupi halaman publik. */
+[data-theme='glass'] .public-site :is(.account-edit-link, .account-verify-link) {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px 6px 14px 8px;
+    color: #f5f5f4 !important;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme='glass'] .public-site .account-verify-link {
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.22);
+}
+
+/* Tanpa ini anak panah di dalam tombol tetap putih di atas tombol putih. */
+[data-theme='glass'] .public-site :is(.account-edit-link, .account-verify-link) :is(span, small, strong) {
+    color: inherit !important;
+}
+
+[data-theme='glass'] .public-site :is(.account-edit-link, .account-verify-link):hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme='glass'] .public-site .account-verify-link:hover {
+    border-color: rgba(126, 190, 148, 0.55);
+    background: rgba(74, 119, 91, 0.34);
+}
+
+/* 15d. Chip peran akun */
+[data-theme='glass'] .public-site .profile-role {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #e8d3c4 !important;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+/* 15e. Avatar kecil di topbar admin */
+[data-theme='glass'] .app-shell .avatar-small {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f5f5f4;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* 15f. Panel info pembagian kategori + instruksi pembayaran */
+[data-theme='glass'] .public-site .category-assignment-preview {
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(245, 245, 244, 0.86) !important;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='glass'] .public-site .category-assignment-preview.is-assigned {
+    border-color: rgba(126, 190, 148, 0.42);
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.24);
+}
+
+[data-theme='glass'] .public-site .event-payment-instructions {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='glass'] .public-site .event-payment-instructions strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .event-payment-instructions p {
+    color: rgba(245, 245, 244, 0.86) !important;
+}
+
+[data-theme='glass'] .public-site .event-payment-instructions small {
+    color: rgba(245, 245, 244, 0.7) !important;
+}
+
+/* 15f. Panel halaman pendaftaran yang masih memakai warna terang dari
+   account-portal.css: gelombang tarif, rekening pembayaran, dan umpan balik NIK.
+   Tanpa aturan ini panel putih berdiri di atas latar gelap dan teks putih dari
+   glass-theme.css jadi tidak terbaca. */
+[data-theme='glass'] .public-site :is(.event-pricing-waves, .event-payment-account) {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='glass'] .public-site .event-pricing-waves > span:first-child,
+[data-theme='glass'] .public-site .event-pricing-wave-group > b {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .event-pricing-wave {
+    color: rgba(245, 245, 244, 0.7) !important;
+}
+
+[data-theme='glass'] .public-site .event-pricing-wave.is-active {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .event-pricing-wave.is-active em {
+    color: #b7d4c1 !important;
+}
+
+[data-theme='glass'] .public-site .event-payment-account :is(span, strong) {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .public-site .nik-feedback {
+    border-color: rgba(74, 119, 91, 0.5);
+    background: rgba(74, 119, 91, 0.24);
+}
+
+[data-theme='glass'] .public-site .nik-feedback:not(.is-error) {
+    color: #b7d4c1 !important;
+}
+
+[data-theme='glass'] .public-site .nik-feedback.is-error {
+    border-color: rgba(169, 75, 66, 0.55);
+    background: rgba(169, 75, 66, 0.24);
+}
+
+[data-theme='glass'] .public-site .nik-feedback.is-error {
+    color: #f0b3aa !important;
+}
+
+/* 15g. Pil status pengajuan/pendaftaran.
+   glass-theme.css L466-479 memakai warna tema terang (#3c8058, #a94b42)
+   dengan spesifisitas (0,4,0) - lebih tinggi dari tema tembaga - sehingga
+   hijau gelap "#3c8058" ikut bocor ke kedua tema dan hilang di panel gelap. */
+
+[data-theme='glass'] .public-site .profile-submissions .profile-submission-status,
+[data-theme='glass'] .public-site .guest-registration-card .guest-registration-status {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='glass'] .public-site .profile-submissions .profile-submission-status.status-approved,
+[data-theme='glass'] .public-site .guest-registration-card .guest-registration-status.status-approved {
+    color: #8fd6a8 !important;
+}
+
+[data-theme='glass'] .public-site .profile-submissions .profile-submission-status.status-rejected,
+[data-theme='glass'] .public-site .guest-registration-card .guest-registration-status.status-rejected {
+    color: #ff9d94 !important;
+}
+
+/* --- 16. Panel, chip & tabel admin yang masih berlatar terang ------------ */
+/* templatemo-glass-admin.css memang dirancang untuk tema kaca, tetapi
+   diimpor (app.css L3) SEBELUM dashboard.css (L4), sehingga warnanya
+   ditimpa oleh nilai tema terang di dashboard.css dan account-portal.css:
+     dashboard.css   L102 .stat-card       background: #fff
+                     L106 .stat-*          background pastel terang
+                     L117 .panel           background: white
+                     L126 .event-date      background: #f1efff
+                     L133 .status-open     background: #eaf7f0
+                     L142 .agenda-count    background: #f1efff
+                     L152 .module-strip    background: white
+                     L157 .module-icon     background pastel terang
+   account-portal  L85  .account-table th background: #fafbfc
+                   L90  .email-verification-badge  background terang
+
+   Tema tembaga sudah punya padanan sendiri di tembaga-theme.css; tema kaca
+   tidak punya, sehingga kartu, chip, dan kepala tabel admin tetap putih
+   sementara glass-theme.css L453-466 memaksa teksnya menjadi putih. */
+
+[data-theme='glass'] .app-shell :is(.stat-card, .module-strip) {
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.085);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.19), inset 0 1px rgba(255, 255, 255, 0.13);
+}
+
+[data-theme='glass'] .app-shell .stat-label,
+[data-theme='glass'] .app-shell .stat-foot {
+    color: rgba(245, 245, 244, 0.72) !important;
+}
+
+[data-theme='glass'] .app-shell .stat-value {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .app-shell .stat-foot strong {
+    color: rgba(245, 245, 244, 0.9) !important;
+}
+
+[data-theme='glass'] .app-shell .stat-foot a {
+    color: #a9b4ff !important;
+}
+
+[data-theme='glass'] .app-shell .module-item {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme='glass'] .app-shell .module-item strong,
+[data-theme='glass'] .app-shell .module-intro h2 {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] .app-shell .module-item small {
+    color: rgba(245, 245, 244, 0.7) !important;
+}
+
+[data-theme='glass'] .app-shell .module-arrow {
+    color: rgba(245, 245, 244, 0.6) !important;
+}
+
+/* Ikon chip: statistik, modul, agenda, dan badge tanggal */
+[data-theme='glass'] .app-shell :is(.stat-icon, .module-icon, .agenda-count, .event-date) {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #f5f5f4 !important;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='glass'] .app-shell :is(.stat-purple, .module-race) {
+    color: #b9aeff !important;
+}
+
+[data-theme='glass'] .app-shell .stat-blue {
+    color: #9fd0f7 !important;
+}
+
+[data-theme='glass'] .app-shell :is(.stat-orange, .date-orange, .module-medal) {
+    color: #ffbd85 !important;
+}
+
+[data-theme='glass'] .app-shell :is(.stat-green, .module-money) {
+    color: #7fd9b3 !important;
+}
+
+[data-theme='glass'] .app-shell .date-blue {
+    color: #9fd0f7 !important;
+}
+
+[data-theme='glass'] .app-shell .event-date :is(span, strong) {
+    color: inherit !important;
+}
+
+/* Pil status pada daftar event */
+[data-theme='glass'] .app-shell .status-open {
+    color: #7fd9b3 !important;
+    background: rgba(57, 169, 130, 0.22);
+}
+
+[data-theme='glass'] .app-shell .status-draft {
+    color: #f0c078 !important;
+    background: rgba(220, 154, 57, 0.22);
+}
+
+/* Kepala tabel akun.
+   Di-scope ke :is(.public-site, .app-shell), bukan hanya .app-shell, karena
+   tabel yang sama juga dirender di halaman publik: rekap keuangan event dan
+   tabel peserta pada halaman kelola peserta semuanya memakai .account-table
+   di dalam .public-site. Kalau hanya .app-shell, background terang #fafbfc
+   dari account-portal.css L85 tetap berlaku di sana dan teks putih di
+   atasnya jadi tak terbaca. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .account-table th {
+    color: rgba(245, 245, 244, 0.72) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Tombol tutup modal edit atlet. account-portal.css memberi lingkaran putih
+   penuh dengan tanda silang abu-abu; di atas panel gelap itu jadi noda
+   putih menyilaukan. Rasio kontras teksnya sendiri sudah lolos, jadi yang
+   diganti hanya warnanya. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-registration-modal-close {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: rgba(245, 245, 244, 0.82) !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+}
+
+/* Chip peran dan badge verifikasi email */
+[data-theme='glass'] .app-shell .profile-role {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #e8d3c4 !important;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme='glass'] .app-shell .email-verification-badge.is-verified {
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.24);
+}
+
+[data-theme='glass'] .app-shell .email-verification-badge.is-unverified {
+    color: #e8cd9b !important;
+    background: rgba(154, 120, 60, 0.24);
+}
+
+/* --- 17. Paginasi Laravel (view paginator bawaan Tailwind) --------------- */
+/* Markup paginator memakai utility class Tailwind (bg-white, text-gray-700).
+   Utilitas Tailwind berada di @layer utilities sehingga kalah dari CSS
+   di luar layer - jadi tombol nomor halaman tetap putih. */
+
+[data-theme='glass'] .account-pagination nav {
+    color: rgba(245, 245, 244, 0.72) !important;
+}
+
+[data-theme='glass'] .account-pagination nav :is(a, span) {
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    color: rgba(245, 245, 244, 0.82) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='glass'] .account-pagination nav :is(a, span):hover {
+    color: #f5f5f4 !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme='glass'] .account-pagination nav :is(a, span).active,
+[data-theme='glass'] .account-pagination nav :is(span[aria-current='page']) {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #f5f5f4 !important;
+    background: rgba(255, 255, 255, 0.22) !important;
+}
+
+/* 16g. Catatan admin pada form kelola akun.
+   account-portal.css L106 memberi latar krem #fbf6e9 dengan teks gelap,
+   sementara blanket glass-theme.css L464 memaksa warnanya menjadi putih. */
+
+[data-theme='glass'] .app-shell .account-admin-note {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: rgba(245, 245, 244, 0.84) !important;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* 16h. Notifikasi pada form event.
+   event-form.css L9-12 memakai krem #f7f1e6 / #ebdfc6 dengan teks gelap.
+   Pada tema gelap keduanya perlu latar gelap + teks terang.
+   PENTING: .form-errors sengaja TIDAK termasuk di sini - glass-theme.css
+   L363-368 sudah memberinya kotak merah gelap + teks #ffd9d1 yang benar,
+   dan menimpanya dengan abu-abu netral akan menghilangkan tanda galat. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .form-example-notice {
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(245, 245, 244, 0.86) !important;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .form-example-notice strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .notice-icon {
+    color: #f0c078 !important;
+    background: rgba(220, 154, 57, 0.22);
+}
+
+/* 16i. Kotak galat di area admin.
+   glass-theme.css L363-368 hanya mencakup .public-site, sehingga
+   .account-errors pada form kelola akun (/admin/akun/buat dan /edit)
+   tetap memakai latar merah muda account-portal.css L55. */
+
+[data-theme='glass'] .app-shell :is(.account-errors, .form-errors) {
+    color: #ffd9d1 !important;
+    border-color: rgba(236, 136, 109, 0.42) !important;
+    background: rgba(120, 39, 30, 0.35);
+}
+
+/* 16j. Flash (pesan sukses / peringatan) - dua-duanya bocor warna terang.
+   account-portal.css L7-8  .public-flash          #eef7f0 / teks #346749
+                     L8      .public-flash-warning  #fbf3dc / teks #725a2f
+   event-form.css L3         .admin-flash          #edf8f1 / teks #287650
+   glass-theme.css L552 hanya memberi .admin-flash latar rgba(237,248,241,.92)
+   yang justru tetap terang, dan .public-flash tidak punya aturan warna sama
+   sekali (L370 hanya border-radius + blur). Semua flash sekarang memakai
+   panel gelap bernuansa agar tetap terbaca dan sesuai tema. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .public-flash {
+    border: 1px solid rgba(126, 190, 148, 0.42);
+    border-radius: 12px;
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.24);
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .public-flash-warning {
+    border-color: rgba(220, 180, 120, 0.45) !important;
+    color: #e8cd9b !important;
+    background: rgba(154, 120, 60, 0.26) !important;
+}
+
+[data-theme='glass'] .app-shell .admin-flash {
+    border: 1px solid rgba(126, 190, 148, 0.42);
+    border-radius: 12px;
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.24) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.public-flash, .admin-flash) :is(strong, span, a, small) {
+    color: inherit !important;
+}
+
+/* 16k. Halaman kategori event memakai layout admin (.app-shell.is-sidebarless).
+   glass-theme.css hanya menimpa .eligibility-choice di dalam .public-site
+   (L337-355), jadi versi .app-shell memakai rgba(255,255,255,0.54) dari
+   L586 yang terang dan teks putihnya hanya 1.97:1. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .eligibility-choice {
+    border-color: rgba(255, 255, 255, 0.17) !important;
+    background: rgba(255, 255, 255, 0.065) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .eligibility-choice:has(input:checked) {
+    border-color: rgba(65, 214, 165, 0.7) !important;
+    background: rgba(5, 150, 105, 0.2) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .eligibility-choice strong,
+[data-theme='glass'] .app-shell .eligibility-methods > legend {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .eligibility-choice small,
+[data-theme='glass'] .app-shell .eligibility-methods > legend span {
+    color: rgba(245, 245, 244, 0.72) !important;
+}
+
+/* 16l. Komponen account-portal.css yang bocor di halaman kategori event
+   (L159, L169, L172, L170-171): semuanya latar terang dengan teks putih. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-category-page :is(
+    .registration-readiness-option,
+    .birth-year-chip,
+    .category-pricing-fields
+) {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Tombol kecil di dalam kartu aturan. Padanan tembaga ada di
+   tembaga-theme.css L1652-1661, glass sebelumnya hanya menutupi .category-rule-add
+   dan .category-rule-add-year sehingga .category-rule-remove (background white
+   dari account-portal.css L153) dan .form-cancel-button tetap terang. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-category-page :is(.category-rule-remove, .form-cancel-button) {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ffb4a8 !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-category-page :is(.category-rule-remove, .form-cancel-button):hover {
+    border-color: rgba(255, 180, 168, 0.45) !important;
+    background: rgba(255, 180, 168, 0.14) !important;
+}
+
+/* Panel publikasi daftar peserta (account-portal.css L250-252): latar #fbf5ef
+   terang dengan teks #74675d. Padanan tembaga ada di tembaga-theme.css
+   L1751-1762; glass belum punya, jadi di tema kaca panel ini tetap terang. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-roster-publication {
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-publication p {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='glass'] .public-site .event-roster-publication .submission-approve {
+    color: #0e1411 !important;
+    background: #8ee0ad !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .birth-year-chip button {
+    color: rgba(245, 245, 244, 0.72) !important;
+    background: transparent !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .birth-year-picker select {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    color: rgba(245, 245, 244, 0.9) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page :is(.category-rule-add, .category-rule-add-year) {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #c9c4ff !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-pair-prompt {
+    border-color: rgba(65, 214, 165, 0.35) !important;
+    color: rgba(245, 245, 244, 0.9) !important;
+    background: rgba(8, 20, 15, 0.58) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-pair-prompt button {
+    border-color: rgba(65, 214, 165, 0.45) !important;
+    color: #b9f4df !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-pair-prompt .category-pair-confirm {
+    color: #062119 !important;
+    background: #41d6a5 !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-name-controls input[readonly] {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    color: rgba(245, 245, 244, 0.9) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-outside-race-picker {
+    border-color: rgba(65, 214, 165, 0.3) !important;
+    background: rgba(8, 20, 15, 0.42) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-outside-race-picker > legend {
+    color: #9df5cd !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-outside-race-picker > label {
+    color: rgba(245, 245, 244, 0.86) !important;
+}
+
+[data-theme='glass'] .public-site .event-category-page .category-outside-race-picker .field-hint {
+    color: rgba(245, 245, 244, 0.7) !important;
+}
+
+/* --- 16m. Keadaan kosong di area admin. glass-theme-contrast.css L376 dan
+   glass-theme.css L111 hanya mencakup .public-site, sehingga
+   /admin/pengajuan-event masih memakai #f7f1e7 landing.css L122. */
+
+[data-theme='glass'] .app-shell .listing-empty-state {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: rgba(245, 245, 244, 0.74) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme='glass'] .app-shell .listing-empty-state > span {
+    color: #ffb59a !important;
+}
+
+[data-theme='glass'] .app-shell .listing-empty-state :is(h3, p) {
+    color: rgba(245, 245, 244, 0.74) !important;
+}
+
+/* --- 16n. .text-link (#7163d8 dashboard.css L122) hanya ditimpa tema copper
+   (tembaga-theme.css L249); di glass hanya 2.89:1. */
+
+[data-theme='glass'] .app-shell :is(.text-link, .text-link span) {
+    color: #a9b4ff !important;
+}
+
+/* --- 16o. Inisial avatar. dashboard.css L47 memakai gradasi #d5a47a -> #87614e
+   dengan teks putih; ujung paling terang hanya 2.23:1. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.avatar, .avatar-small, .profile-avatar, .module-athlete-avatar) {
+    background: linear-gradient(145deg, #8f6d5a, #5f4133);
+}
+
+/* --- 16p. .agenda-link (#7163d8 dashboard.css L150) hanya ditimpa tema copper
+   (tembaga-theme.css L253); di glass hanya 2.19:1 di atas panel gelap. */
+
+[data-theme='glass'] .app-shell :is(.agenda-link, .agenda-link:hover) {
+    color: #a9b4ff !important;
+}
+
+/* --- 16q. .art-caption landing.css L77 memakai biru tua #29394a yang
+   dirancang untuk panel terang; di atas gradasi .hero-banner hanya 1.53:1.
+   landing.css L90-91 (.art-number) sudah putih, tapi alphanya terlalu tipis. */
+
+[data-theme='glass'] .app-shell .art-caption {
+    color: rgba(245, 245, 244, 0.82) !important;
+}
+
+[data-theme='glass'] .app-shell .art-number {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='glass'] .app-shell .art-number span {
+    color: rgba(245, 245, 244, 0.88) !important;
+}
+
+/* --- 16r. Tanda centang tema aktif pada /admin/pengaturan/tema, sama seperti
+   8j pada tema copper. */
+
+[data-theme='glass'] .app-shell .theme-option.is-active .theme-option-check {
+    color: #14161b !important;
+}
+
+/* --- 16s. .workspace-label (#74768b dashboard.css L30) hanya ditimpa tema copper
+   (tembaga-theme.css L366); di glass hanya 4.23:1 di atas sidebar gelap. */
+
+[data-theme='glass'] .app-shell .workspace-label {
+    color: #a3a7bd !important;
+}
+
+/* --- 16t. .event-form-actions p strong (#6557cf event-form.css L34) tidak punya
+   padanan di kedua tema; di glass hanya 3.2:1, di copper 3.1:1. */
+
+[data-theme='glass'] .app-shell .event-form-actions p strong {
+    color: #b3a6ff !important;
+}
+
+/* --- 16u. Aksen --orange milik light theme (landing.css L2 #e67855) tidak pernah
+   di-override di tema mana pun. Glass memakai aksen hangat yang sudah
+   dipakai di berkas ini (#f0b39a) supaya konsisten. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) {
+    --orange: #f0b39a;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .account-intro h1 span {
+    color: #f0b39a;
+}
+
+/* --- 16v. Padanan 8m untuk glass. aksen #d66f4f milik light theme tidak pernah
+   di-override di tema mana pun. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(
+    .account-switch a,
+    .profile-panel-link,
+    .guest-dashboard-all-events,
+    .public-nav a.is-current
+),
+[data-theme='glass'] .event-registration-edit-link,
+[data-theme='glass'] .listing-roster-link,
+[data-theme='glass'] .event-roster-filter-reset:hover,
+[data-theme='glass'] .account-back-link:hover {
+    color: #f0b39a;
+}
+
+/* --- 16w. Padanan 8n untuk glass. */
+
+[data-theme='glass'] .app-shell .module-arrow {
+    color: rgba(245, 245, 244, 0.82) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .listing-empty-state :is(h3, p) {
+    color: rgba(245, 245, 244, 0.88) !important;
+}
+
+/* --- 16x. Judul berwarna biru tua #293747 milik light theme. account-portal.css
+   memakai warna itu pada sepuluh judul dan landing.css pada lima judul
+   lainnya; glass hanya menimpa dua di antaranya (glass-theme.css L66-77),
+   sisanya bocor. Judul "Daftar peserta" di /kejuaraan/{event}/atlet hanya
+   1.51:1 di glass. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(
+    .account-card-heading h2,
+    .profile-heading h1,
+    .profile-summary h2,
+    .profile-notifications h2,
+    .profile-submissions h2,
+    .guest-dashboard-section-heading h2,
+    .guest-registration-info strong,
+    .guest-event-info h3,
+    .event-category-assign-copy h2,
+    .event-registration-heading h1,
+    .event-registration-modal-heading h2,
+    .listing-toolbar h2,
+    .listing-organizer-cta h2,
+    .community-copy h2,
+    .contact-heading h2,
+    .sponsor-card-intro h2
+) {
+    color: #f5f5f4;
+}
+
+/* Garis pemisah account-portal.css L148 juga terang. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .guest-dashboard-empty {
+    border-top-color: rgba(255, 255, 255, 0.14);
+    color: #f5f5f4;
+}
+
+/* --- 16y. Petunjuk dan label opsional di halaman kategori memakai alpha 0.55
+   (glass-theme.css L360-362), hanya 3.77:1 pada 9px. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-category-page :is(.field-hint, .optional-label) {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+/* --- 17. Halaman keuangan event ---------------------------------------- */
+/* Warna income/expense didefinisikan ulang di sini (bukan di event-finance.css)
+   supaya setiap tema memakai warna yang kontrasnya lolos WCAG AA di atas panel
+   gelapnya masing-masing. Dipakai juga untuk warna angka saldo, bar grafik, dan
+   badge kategori pada tabel riwayat.
+
+   Halaman ini dirender dua kali dengan dua layout berbeda: admin memakai
+   layouts.admin (.app-shell), sedangkan pemilik event memakai layouts.public
+   (.public-site). Karena itu semua aturan di section ini di-scope ke
+   :is(.public-site, .app-shell), bukan hanya .app-shell. */
+
+.event-finance-page {
+    --finance-income: #8ee0ad;
+    --finance-expense: #ffb59a;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-finance-page .finance-summary-foot {
+    color: rgba(245, 245, 244, 0.76);
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-finance-page .finance-summary-pending {
+    color: #e8cd9b;
+}
+
+/* Peringatan nominal tarif yang belum dihitung. Aturan blanket tema untuk
+   elemen <small>/<span> di dalam kartu menang lewat jumlah elemen, jadi warna
+   .cartanya perlu dipaksa agar catatan ini tetap terbaca sebagai peringatan
+   dan bukan sekadar teks kaki biasa. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-finance-page .finance-summary-warn {
+    color: #f0dcb4 !important;
+}
+
+/* --- 18. Cakupan .app-shell yang tertinggal di tema kaca ------------------ */
+/* Dua kelompok aturan berikut sudah ada padanannya di tema tembaga
+   (tembaga-theme.css L1501 dan L1195-1204) tapi belum ada di tema kaca,
+   sehingga di /admin/akun dan form ubah akun tetap ada kotak putih. */
+
+/* Tombol "Edit akun" di daftar akun: account-portal.css L94 memberi
+   background #fff dengan teks #42485a. */
+
+[data-theme='glass'] .app-shell :is(.account-edit-link, .account-verify-link) {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f5f5f4 !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+}
+
+[data-theme='glass'] .app-shell :is(.account-edit-link, .account-verify-link):hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.16) !important;
+}
+
+[data-theme='glass'] .app-shell .account-verify-link {
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.22) !important;
+}
+
+/* Isian form di kartu ubah akun (termasuk textarea yang tidak tertangkap
+   aturan .app-shell .form-field, karena markupnya memakai .account-form). */
+
+[data-theme='glass'] .app-shell .account-edit-card .account-form :is(
+    input:not([type='checkbox']):not([type='radio']),
+    select,
+    textarea
+) {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f5f5f4;
+    background: rgba(3, 12, 9, 0.34);
+}
+
+[data-theme='glass'] .app-shell .account-edit-card .account-form select option {
+    color: #f5f5f4;
+    background: #14251d;
+}
+
+[data-theme='glass'] .app-shell .account-edit-card .account-form :is(input, select, textarea):focus {
+    border-color: rgba(255, 255, 255, 0.42);
+}
+
+[data-theme='glass'] .app-shell .account-edit-card .account-form :is(input, select, textarea)::placeholder {
+    color: rgba(245, 245, 244, 0.5);
+}
+
+/* --- 19. Halaman atur perlombaan + hari lomba ------------------------- */
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) :is(td, th, strong, small) {
+    color: rgba(245, 245, 244, 0.86) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) strong {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) th {
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+    color: rgba(245, 245, 244, 0.68) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) td {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Baris atlet yang tidak muncul / DNF / DSQ diberi coret. Coret tidak
+   menurunkan kontras di bawah ambang, jadi warnanya boleh lebih redup. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-lane-row[data-race-status='no_show'] strong,
+[data-theme='glass'] :is(.public-site, .app-shell) .race-lane-row[data-race-status='dnf'] strong,
+[data-theme='glass'] :is(.public-site, .app-shell) .race-lane-row[data-race-status='dsq'] strong {
+    color: #9fa3ab !important;
+}
+
+/* Label kolom "Lane", "Urutan" dan seterusnya adalah th biasa, sudah
+   ditangani di atas. Yang tersisa: select dan input di dalam tabel. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-heat-table :is(input, select) {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    color: #f5f5f4 !important;
+    background: rgba(3, 12, 9, 0.34) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-heat-table select option {
+    color: #f5f5f4;
+    background: #14251d;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-heat-table input::placeholder {
+    color: rgba(245, 245, 244, 0.5);
+}
+
+/* Tombol cepat (Menang / Tidak muncul / DNF / DSQ / Ulangi). */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-quick {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    color: #cfd2d8 !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-quick.is-win {
+    border-color: rgba(142, 224, 173, 0.45) !important;
+    color: #8ee0ad !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.race-quick.is-no-show, .race-quick.is-dnf, .race-quick.is-dsq) {
+    border-color: rgba(255, 181, 154, 0.4) !important;
+    color: #ffb59a !important;
+}
+
+/* event-form.css L36 memberi .form-cancel-button warna #77798b yang di atas
+   panel gelap hanya 3.0:1. Override di section 15 khusus halaman kategori,
+   jadi halaman perlombaan butuh bagian sendiri. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .form-cancel-button {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ffb4a8 !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .form-cancel-button:hover {
+    border-color: rgba(255, 180, 168, 0.45) !important;
+    background: rgba(255, 180, 168, 0.14) !important;
+}
+
+/* Teks kecil pendukung: 10-11px dengan warna #9fa3ab sudah lolos, tetapi
+   sub-label .race-format-summary-item kecil 8px belum. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .race-format-summary-item small {
+    color: rgba(245, 245, 244, 0.72) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) :is(.race-format-card-meta, .race-heat-meta, .race-quick-actions + *, .race-heat-actions p) {
+    color: rgba(245, 245, 244, 0.7) !important;
+}
+
+/* .form-section-heading h2/p hanya ditulis ulang di dalam .app-shell
+   (glass-theme.css L546). Halaman perlombaan dirender di dalam
+   .public-site, jadi kedua elemen itu masih memakai warna terang dari
+   event-form.css L19-20: judul #343648 di atas panel gelap hanya 1.58:1. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .form-section-heading :is(h2, p) {
+    color: rgba(245, 245, 244, 0.88) !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .form-section-heading h2 {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .form-section-heading {
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* .race-control-copy memakai h2 dan p sendiri, bukan .form-section-heading,
+   jadi butuh catatan sendiri karena blanket (0,2,2) tetap menusuknya. */
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .race-control-copy h2 {
+    color: #f5f5f4 !important;
+}
+
+[data-theme='glass'] :is(.public-site, .app-shell) .event-race-page .race-control-copy p {
+    color: rgba(245, 245, 244, 0.72) !important;
+}

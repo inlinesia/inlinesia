@@ -1,0 +1,40 @@
+<?php
+
+return [
+    [
+        'name' => 'Kediri Skate Challenge',
+        'type' => 'Kejuaraan',
+        'day' => '18',
+        'month' => 'Oktober',
+        'year' => '2026',
+        'location' => 'GOR Jayabaya, Kota Kediri',
+        'description' => 'Ajang adu kecepatan dan ketangkasan skater.',
+        'races' => 12,
+        'participants' => 64,
+        'registration_status' => 'Pendaftaran dibuka',
+    ],
+    [
+        'name' => 'Friendly Match Antar Klub',
+        'type' => 'Friendly match',
+        'day' => '09',
+        'month' => 'November',
+        'year' => '2026',
+        'location' => 'Kabupaten Kediri',
+        'description' => 'Hari seru untuk bertemu dan bermain bersama.',
+        'races' => 8,
+        'participants' => 32,
+        'registration_status' => 'Persiapan',
+    ],
+    [
+        'name' => 'Wali Kota Cup 2026',
+        'type' => 'Kejuaraan',
+        'day' => '14',
+        'month' => 'Desember',
+        'year' => '2026',
+        'location' => 'Kota Kediri',
+        'description' => 'Perayaan prestasi atlet sepatu roda Kediri.',
+        'races' => 16,
+        'participants' => null,
+        'registration_status' => 'Persiapan',
+    ],
+];

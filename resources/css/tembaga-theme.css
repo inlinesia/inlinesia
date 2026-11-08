@@ -1,0 +1,2652 @@
+/* ==========================================================================
+   TEMBAGA (copper) — tema opsional Inlinesia
+   Port dari resources/css/Tembaga.html (Surrealist UI Kit styleguide).
+
+   Seluruh aturan di file ini hanya aktif ketika elemen <html> memiliki
+   atribut data-theme="copper". Diaktifkan lewat Halaman Pengaturan Admin
+   dan disimpan di localStorage agar berlaku di semua halaman.
+   ========================================================================== */
+
+[data-theme='copper'] {
+    --bg-color: #24272e;
+    --bg-deep: #1a1c21;
+    --panel-bg: linear-gradient(145deg, #383c47, #2c3039);
+    --panel-solid: #2c3039;
+    --copper: #d8a899;
+    --copper-light: #e8c4b7;
+    --copper-glow: rgba(216, 168, 153, 0.4);
+    --copper-dim: rgba(216, 168, 153, 0.15);
+    --copper-dark: #8c6a5d;
+    --text-light: #a4abb5;
+    --text-muted: #6a707a;
+    --text-white: #e2e8f0;
+    --line: #4a4f5a;
+    --border-melt: 15px 25px 10px 30px;
+    --border-melt-alt: 25px 10px 30px 15px;
+    --shadow-panel: 15px 15px 25px rgba(0, 0, 0, 0.6), -5px -5px 15px rgba(255, 255, 255, 0.03),
+        inset 0 0 0 1px rgba(216, 168, 153, 0.2);
+    --shadow-inset: inset 0 4px 10px rgba(0, 0, 0, 0.6);
+    --font-display: 'Oswald', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* ============================ DASAR ============================ */
+
+/* Selector harus html[data-theme='copper'], bukan [data-theme='copper'] html.
+   Atribut data-theme dipasang pada <html> itu sendiri (layouts/*.blade.php),
+   sedangkan [data-theme='copper'] html menuntut atribut tersebut pada
+   induk <html> yang tidak pernah ada - sehingga aturan ini tidak pernah
+   cocok dan canvas <html> tetap memakai latar terang #f4f6fa dari
+   dashboard.css L4. */
+html[data-theme='copper'] {
+    min-height: 100%;
+    background: var(--bg-color);
+}
+
+[data-theme='copper'] body,
+[data-theme='copper'] body.public-home,
+[data-theme='copper'] body.auth-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: var(--text-light);
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle at 50% -20%, #4a5160, transparent 60%);
+}
+
+[data-theme='copper'] h1,
+[data-theme='copper'] h2,
+[data-theme='copper'] h3,
+[data-theme='copper'] h4,
+[data-theme='copper'] .copper-text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--copper);
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] a {
+    color: var(--copper);
+    transition: color 0.25s, text-shadow 0.25s;
+}
+
+[data-theme='copper'] a:hover {
+    color: var(--copper-light);
+    text-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] ::selection {
+    background: var(--copper);
+    color: #14161b;
+}
+
+[data-theme='copper'] :is(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 2px;
+}
+
+/* ============================ KERANGKA ============================ */
+
+[data-theme='copper'] .public-site,
+[data-theme='copper'] .app-shell {
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: var(--text-light);
+    font-family: var(--font-body);
+}
+
+[data-theme='copper'] .page-content,
+[data-theme='copper'] .main-content {
+    background: transparent;
+    color: var(--text-light);
+}
+
+/* ============================ NAVBAR PUBLIK ============================ */
+
+[data-theme='copper'] .public-header {
+    background: linear-gradient(145deg, #383c47, #2c3039);
+    border: 1px solid var(--copper-dim);
+    box-shadow: var(--shadow-panel);
+    border-radius: 0 0 var(--border-melt) var(--border-melt-alt);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-brand,
+[data-theme='copper'] .inlinesia-logo-copy {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-nav {
+    background: #1a1c21;
+    border-radius: 20px 8px 20px 12px;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+[data-theme='copper'] .public-nav a,
+[data-theme='copper'] .public-site .public-nav a {
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 15px 5px 15px 8px;
+    padding: 8px 18px;
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-nav a:hover,
+[data-theme='copper'] .public-site .public-nav a:hover {
+    color: var(--copper);
+    background: var(--copper-dim);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-nav a.is-current,
+[data-theme='copper'] .public-site .public-nav a.is-current {
+    color: var(--copper);
+    background: var(--panel-bg);
+    border: 1px solid var(--copper-dim);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 0 8px var(--copper-glow);
+    text-shadow: 0 0 8px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-login {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 12px 6px 15px 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+[data-theme='copper'] .public-login:hover {
+    background: var(--copper-dim);
+    box-shadow: 0 0 15px var(--copper-glow);
+    text-shadow: none;
+}
+
+/* ============================ TOMBOL ============================ */
+
+[data-theme='copper'] .public-button,
+[data-theme='copper'] .button,
+[data-theme='copper'] .account-submit,
+[data-theme='copper'] .inline-action {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 12px 6px 15px 8px;
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+}
+
+[data-theme='copper'] .public-button:hover,
+[data-theme='copper'] .button:hover,
+[data-theme='copper'] .account-submit:hover,
+[data-theme='copper'] .inline-action:hover {
+    background: var(--copper-dim);
+    box-shadow: 0 0 18px var(--copper-glow);
+    color: var(--copper-light);
+    transform: translateY(-1px);
+}
+
+[data-theme='copper'] .public-button:active,
+[data-theme='copper'] .button:active,
+[data-theme='copper'] .account-submit:active {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: var(--copper-dark);
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.8), 0 0 5px var(--copper-glow);
+    border-radius: 10px 12px 8px 15px;
+    transform: none;
+}
+
+[data-theme='copper'] .public-button-orange,
+[data-theme='copper'] .public-button-dark,
+[data-theme='copper'] .button-primary,
+[data-theme='copper'] .account-submit {
+    background: var(--copper);
+    color: #14161b;
+    text-shadow: none;
+    border-color: var(--copper-light);
+}
+
+[data-theme='copper'] .public-button-orange:hover,
+[data-theme='copper'] .public-button-dark:hover,
+[data-theme='copper'] .button-primary:hover,
+[data-theme='copper'] .account-submit:hover {
+    background: var(--copper-light);
+    color: #14161b;
+    box-shadow: 0 0 22px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-button-light {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-white);
+    border-color: var(--line);
+}
+
+[data-theme='copper'] .public-button-light:hover {
+    border-color: var(--copper);
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-text-link,
+[data-theme='copper'] .text-link,
+[data-theme='copper'] .account-back-link,
+[data-theme='copper'] .form-back-link,
+[data-theme='copper'] .hero-link,
+[data-theme='copper'] .agenda-link,
+[data-theme='copper'] .agenda-time,
+[data-theme='copper'] .help-link,
+[data-theme='copper'] .profile-panel-link,
+[data-theme='copper'] .contact-phone,
+[data-theme='copper'] .stat-foot a {
+    color: var(--copper);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px var(--copper-glow);
+    border-bottom: 1px solid var(--copper-dim);
+    padding-bottom: 2px;
+}
+
+[data-theme='copper'] .public-text-link:hover,
+[data-theme='copper'] .text-link:hover,
+[data-theme='copper'] .account-back-link:hover,
+[data-theme='copper'] .form-back-link:hover,
+[data-theme='copper'] .hero-link:hover,
+[data-theme='copper'] .agenda-link:hover,
+[data-theme='copper'] .help-link:hover,
+[data-theme='copper'] .contact-phone:hover,
+[data-theme='copper'] .stat-foot a:hover {
+    color: var(--copper-light);
+    text-shadow: 0 0 14px var(--copper-glow);
+    border-bottom-color: var(--copper);
+}
+
+[data-theme='copper'] .button:disabled,
+[data-theme='copper'] .module-search input:disabled,
+[data-theme='copper'] .welcome-row .button:disabled {
+    border-color: var(--text-muted);
+    color: var(--text-muted);
+    background: transparent;
+    box-shadow: none;
+    cursor: not-allowed;
+    text-shadow: none;
+    opacity: 0.6;
+}
+
+/* ============================ PANEL & KARTU ============================ */
+
+[data-theme='copper'] :is(
+        .panel,
+        .stat-card,
+        .hero-banner,
+        .module-card,
+        .module-strip,
+        .account-card,
+        .profile-edit-card,
+        .guest-registration-card,
+        .profile-notifications,
+        .profile-submissions,
+        .help-card,
+        .form-section,
+        .form-errors,
+        .form-example-notice,
+        .listing-event-card,
+        .service-card,
+        .event-row,
+        .agenda-item,
+        .events-panel,
+        .right-panel,
+        .module-metrics
+    ) {
+    background: var(--panel-bg);
+    border: 1px solid var(--copper-dim);
+    border-radius: var(--border-melt);
+    box-shadow: var(--shadow-panel);
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .events-panel,
+[data-theme='copper'] .right-panel,
+[data-theme='copper'] .module-strip {
+    border-radius: var(--border-melt-alt);
+}
+
+[data-theme='copper'] .module-card,
+[data-theme='copper'] .stat-card,
+[data-theme='copper'] .form-section {
+    border-radius: 18px 10px 24px 14px;
+}
+
+[data-theme='copper'] .account-card {
+    border-radius: 25px 10px 30px 15px;
+}
+
+[data-theme='copper'] .listing-event-card,
+[data-theme='copper'] .service-card {
+    border-radius: 20px 12px 26px 10px;
+    background: linear-gradient(145deg, #343845, #262931);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5), -4px -4px 12px rgba(255, 255, 255, 0.03),
+        inset 0 0 0 1px rgba(216, 168, 153, 0.18);
+}
+
+[data-theme='copper'] .listing-event-card:hover,
+[data-theme='copper'] .service-card:hover,
+[data-theme='copper'] .event-row:hover,
+[data-theme='copper'] .stat-card:hover {
+    border-color: var(--copper);
+    box-shadow: 0 0 24px var(--copper-glow), var(--shadow-panel);
+}
+
+[data-theme='copper'] .panel-title,
+[data-theme='copper'] .section-kicker,
+[data-theme='copper'] .eyebrow,
+[data-theme='copper'] .eyebrow-line,
+[data-theme='copper'] .account-eyebrow,
+[data-theme='copper'] .public-overline,
+[data-theme='copper'] .public-section-label,
+[data-theme='copper'] .public-event-tag,
+[data-theme='copper'] .workspace-label,
+[data-theme='copper'] .stat-label,
+[data-theme='copper'] .service-number,
+[data-theme='copper'] .value-number,
+[data-theme='copper'] .value-mark,
+[data-theme='copper'] .art-number,
+[data-theme='copper'] .form-step,
+[data-theme='copper'] .optional-label,
+[data-theme='copper'] .primary-admin-label,
+[data-theme='copper'] .nav-count,
+[data-theme='copper'] .agenda-count,
+[data-theme='copper'] .module-period,
+[data-theme='copper'] .preview-badge {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--copper);
+}
+
+[data-theme='copper'] .eyebrow-line,
+[data-theme='copper'] .public-overline span,
+[data-theme='copper'] .section-kicker::before {
+    background: var(--copper);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] .page-subtitle,
+[data-theme='copper'] .welcome-row p,
+[data-theme='copper'] .account-intro > p,
+[data-theme='copper'] .profile-heading > p,
+[data-theme='copper'] .listing-intro > p,
+[data-theme='copper'] .public-hero-lead,
+[data-theme='copper'] .public-community p,
+[data-theme='copper'] .about-inlinesia p,
+[data-theme='copper'] .public-community-note p,
+[data-theme='copper'] .module-card-heading p,
+[data-theme='copper'] .account-card-heading p,
+[data-theme='copper'] .listing-event-body > p,
+[data-theme='copper'] .public-site .public-section-heading p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .welcome-row h1 {
+    color: var(--copper);
+    text-shadow: 0 0 14px var(--copper-glow);
+}
+
+[data-theme='copper'] .wave {
+    color: var(--copper);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .hero-banner {
+    background: linear-gradient(120deg, #343845, #24272e 60%, #2f2530);
+    overflow: hidden;
+}
+
+[data-theme='copper'] .hero-copy h2,
+[data-theme='copper'] .club-cta h2,
+[data-theme='copper'] .community-copy h2,
+[data-theme='copper'] .account-intro h1,
+[data-theme='copper'] .profile-heading h1,
+[data-theme='copper'] .event-form-heading h1 {
+    color: var(--copper);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .hero-copy p,
+[data-theme='copper'] .community-copy p,
+[data-theme='copper'] .club-cta p,
+[data-theme='copper'] .account-intro p,
+[data-theme='copper'] .profile-heading p {
+    color: var(--text-light);
+    opacity: 0.85;
+}
+
+[data-theme='copper'] .art-sun,
+[data-theme='copper'] .cta-sun {
+    background: radial-gradient(circle at 35% 35%, var(--copper-light), var(--copper-dark));
+    box-shadow: 0 0 40px var(--copper-glow);
+    opacity: 0.85;
+}
+
+[data-theme='copper'] .art-orbit,
+[data-theme='copper'] .orbit-one,
+[data-theme='copper'] .orbit-two {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .art-track,
+[data-theme='copper'] .art-track-back,
+[data-theme='copper'] .art-track-front {
+    border-color: var(--copper-dark);
+    opacity: 0.55;
+}
+
+[data-theme='copper'] .art-caption,
+[data-theme='copper'] .art-stamp,
+[data-theme='copper'] .hero-decoration {
+    color: var(--copper);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .art-dot,
+[data-theme='copper'] .demo-dot,
+[data-theme='copper'] .season-dot,
+[data-theme='copper'] .agenda-marker,
+[data-theme='copper'] .module-icon,
+[data-theme='copper'] .stat-icon,
+[data-theme='copper'] .help-icon,
+[data-theme='copper'] .organizer-mark {
+    background: var(--copper-dim);
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+/* ============================ FLASH & ERROR ============================ */
+
+[data-theme='copper'] .public-header + .public-flash,
+[data-theme='copper'] .public-site > .public-flash {
+    background: linear-gradient(90deg, var(--copper-dim), rgba(0, 0, 0, 0.2));
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-flash-warning,
+[data-theme='copper'] .form-errors,
+[data-theme='copper'] .account-errors {
+    background: linear-gradient(90deg, rgba(216, 122, 90, 0.22), rgba(0, 0, 0, 0.2));
+    border-color: #d87a5a;
+    color: #f0b39a;
+}
+
+[data-theme='copper'] .form-errors ul,
+[data-theme='copper'] .account-errors ul {
+    color: #e8c4b7;
+}
+
+[data-theme='copper'] .admin-flash {
+    background: var(--panel-bg);
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    border-radius: 8px 15px 8px 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 8px var(--copper-glow);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/* ============================ KARTU DAFTAR LOMBA ============================ */
+
+[data-theme='copper'] .listing-event-date,
+[data-theme='copper'] .guest-event-date,
+[data-theme='copper'] .event-date {
+    background: #1a1c21;
+    border: 1px solid var(--copper-dim);
+    border-radius: 15px 8px 15px 10px;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7);
+    color: var(--copper);
+}
+
+[data-theme='copper'] .listing-event-date strong,
+[data-theme='copper'] .listing-event-date span,
+[data-theme='copper'] .listing-event-date small,
+[data-theme='copper'] .guest-event-date strong,
+[data-theme='copper'] .guest-event-date span,
+[data-theme='copper'] .event-date strong,
+[data-theme='copper'] .event-date span {
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-shadow: 0 0 8px var(--copper-glow);
+}
+
+[data-theme='copper'] .listing-event-type,
+[data-theme='copper'] .listing-status,
+[data-theme='copper'] .status,
+[data-theme='copper'] .module-status,
+[data-theme='copper'] .guest-registration-status,
+[data-theme='copper'] .profile-submission-status {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.68rem;
+    padding: 4px 12px;
+    border-radius: 12px 6px 12px 6px;
+    border: 1px solid var(--copper);
+    background: var(--copper-dim);
+    color: var(--copper);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .listing-status-preparing,
+[data-theme='copper'] .status-draft,
+[data-theme='copper'] .module-status.is-review {
+    border-color: var(--copper-dark);
+    background: rgba(140, 106, 93, 0.18);
+    color: #c9a697;
+    text-shadow: none;
+}
+
+[data-theme='copper'] .listing-status-open,
+[data-theme='copper'] .status-open,
+[data-theme='copper'] .status-approved,
+[data-theme='copper'] .module-status.is-active {
+    background: var(--copper-dim);
+    color: var(--copper);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] .status-rejected,
+[data-theme='copper'] .profile-submission-status.status-rejected {
+    border-color: #d87a5a;
+    background: rgba(216, 122, 90, 0.2);
+    color: #f0b39a;
+}
+
+[data-theme='copper'] .listing-event-facts,
+[data-theme='copper'] .listing-event-facts span,
+[data-theme='copper'] .event-info p,
+[data-theme='copper'] .guest-event-info,
+[data-theme='copper'] .guest-registration-info,
+[data-theme='copper'] .guest-registration-actions,
+[data-theme='copper'] .guest-registration-notes,
+[data-theme='copper'] .event-participants,
+[data-theme='copper'] .module-card-footer,
+[data-theme='copper'] .page-footer,
+[data-theme='copper'] .stat-foot,
+[data-theme='copper'] .footer-copyright,
+[data-theme='copper'] .footer-tagline,
+[data-theme='copper'] .field-hint {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .listing-register-link,
+[data-theme='copper'] .guest-registration-actions a,
+[data-theme='copper'] .contact-phone {
+    color: var(--copper);
+    text-shadow: 0 0 10px var(--copper-glow);
+}
+
+/* Badge harga dan tenggat bayar pada baris ringkasan pendaftaran. */
+[data-theme='copper'] .guest-registration-headline strong {
+    color: var(--text-white) !important;
+}
+
+[data-theme='copper'] .guest-registration-headline > span:not(.guest-registration-event) {
+    color: var(--text-light) !important;
+}
+
+[data-theme='copper'] .guest-registration-amount {
+    border-color: rgba(169, 214, 184, 0.35);
+    color: #a9d6b8;
+    background: rgba(169, 214, 184, 0.12);
+}
+
+[data-theme='copper'] .guest-registration-amount.is-settled {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+    background: rgba(216, 168, 153, 0.12);
+}
+
+[data-theme='copper'] .guest-registration-wave {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+    background: rgba(216, 168, 153, 0.12);
+}
+
+[data-theme='copper'] .guest-event-closed,
+[data-theme='copper'] .optional-label,
+[data-theme='copper'] .module-card-footer span {
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+[data-theme='copper'] .public-footer {
+    background: linear-gradient(145deg, #383c47, #2c3039);
+    border: 1px solid var(--copper-dim);
+    box-shadow: var(--shadow-panel);
+    color: var(--text-muted);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .footer-brand,
+[data-theme='copper'] .inlinesia-logo-copy strong,
+[data-theme='copper'] .inlinesia-logo-copy span {
+    color: var(--copper);
+}
+
+/* ============================ SIDEBAR ADMIN ============================ */
+
+[data-theme='copper'] .sidebar {
+    background: linear-gradient(180deg, #343845, #24272e);
+    border: 1px solid var(--copper-dim);
+    box-shadow: var(--shadow-panel);
+    color: var(--text-light);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .primary-nav {
+    background: #1a1c21;
+    border-radius: 20px 8px 20px 12px;
+    padding: 6px;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme='copper'] .nav-link {
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    border-radius: 15px 5px 15px 8px;
+    background: transparent;
+    box-shadow: none;
+}
+
+[data-theme='copper'] .nav-link:hover {
+    color: var(--copper);
+    background: var(--copper-dim);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .nav-link.is-active {
+    color: var(--copper);
+    background: var(--panel-bg);
+    border-color: var(--copper-dim);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 0 8px var(--copper-glow);
+    text-shadow: 0 0 8px var(--copper-glow);
+}
+
+[data-theme='copper'] .nav-link svg {
+    stroke: currentColor;
+}
+
+[data-theme='copper'] .nav-count {
+    background: var(--copper);
+    color: #14161b;
+    border-radius: 12px 6px 12px 6px;
+    font-size: 0.62rem;
+    padding: 1px 7px;
+    text-shadow: none;
+}
+
+[data-theme='copper'] .nav-external {
+    color: var(--copper);
+    margin-left: auto;
+}
+
+[data-theme='copper'] .sidebar-bottom {
+    border-top: 1px solid var(--copper-dim);
+}
+
+[data-theme='copper'] .help-card {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 15px 12px 20px 10px;
+    border: 1px solid var(--line);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme='copper'] .help-icon,
+[data-theme='copper'] .avatar,
+[data-theme='copper'] .avatar-small,
+[data-theme='copper'] .profile-avatar,
+[data-theme='copper'] .module-athlete-avatar {
+    background: radial-gradient(circle at 30% 30%, var(--copper), var(--copper-dark));
+    border: 1px solid var(--copper);
+    color: #14161b;
+    box-shadow: 0 0 12px var(--copper-glow);
+    font-family: var(--font-display);
+}
+
+[data-theme='copper'] .user-copy strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .user-copy small,
+[data-theme='copper'] .role-option,
+[data-theme='copper'] .remember-option,
+[data-theme='copper'] .account-switch {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .user-menu,
+[data-theme='copper'] .row-arrow,
+[data-theme='copper'] .module-arrow {
+    color: var(--copper);
+    border: 1px solid var(--copper-dim);
+    background: var(--copper-dim);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+/* ============================ TOPBAR ADMIN ============================ */
+
+[data-theme='copper'] .topbar {
+    background: linear-gradient(145deg, #383c47, #2c3039);
+    border: 1px solid var(--copper-dim);
+    box-shadow: var(--shadow-panel);
+    border-radius: 18px 10px 18px 12px;
+    color: var(--text-light);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .breadcrumbs,
+[data-theme='copper'] .breadcrumbs a,
+[data-theme='copper'] .crumb-separator {
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+[data-theme='copper'] .breadcrumbs span,
+[data-theme='copper'] .breadcrumbs strong {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .season-pill {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--copper);
+    background: var(--copper-dim);
+    border: 1px solid var(--copper-dim);
+    border-radius: 12px 6px 12px 6px;
+    padding: 4px 12px;
+}
+
+/* ============================ FORM ============================ */
+
+[data-theme='copper'] :is(
+        input[type='text'],
+        input[type='email'],
+        input[type='password'],
+        input[type='date'],
+        input[type='number'],
+        input[type='search'],
+        input[type='tel'],
+        select,
+        textarea
+    ) {
+    width: 100%;
+    box-sizing: border-box;
+    background: #1f2126;
+    border: 1px solid var(--line);
+    border-radius: 8px 12px 6px 10px;
+    padding: 12px 15px;
+    color: var(--copper);
+    font-family: var(--font-body);
+    box-shadow: var(--shadow-inset);
+    transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+[data-theme='copper'] :is(input, select, textarea)::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+[data-theme='copper'] :is(input, select, textarea):focus {
+    outline: none;
+    border-color: var(--copper);
+    color: var(--copper-light);
+    box-shadow: var(--shadow-inset), 0 0 14px var(--copper-glow);
+}
+
+[data-theme='copper'] :is(input[type='checkbox'], input[type='radio']) {
+    accent-color: var(--copper);
+}
+
+[data-theme='copper'] label {
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+[data-theme='copper'] .field-error {
+    color: #f0b39a;
+    font-family: var(--font-display);
+    letter-spacing: 0.5px;
+}
+
+[data-theme='copper'] .form-section-heading,
+[data-theme='copper'] .panel-heading,
+[data-theme='copper'] .module-card-heading,
+[data-theme='copper'] .account-card-heading,
+[data-theme='copper'] .event-form-heading,
+[data-theme='copper'] .guest-dashboard-section-heading,
+[data-theme='copper'] .profile-heading {
+    border-bottom: 1px solid var(--copper-dim);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+}
+
+[data-theme='copper'] .form-step {
+    background: var(--copper-dim);
+    border: 1px solid var(--copper);
+    border-radius: 40% 60% 50% 50% / 50% 50% 60% 40%;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 14px var(--copper-glow);
+}
+
+[data-theme='copper'] .inline-action {
+    background: var(--copper-dim);
+    padding: 6px 14px;
+    font-size: 0.72rem;
+}
+
+/* ============================ TABEL & MODUL ============================ */
+
+[data-theme='copper'] .module-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+[data-theme='copper'] .module-table th {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--copper);
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 12px;
+    background: transparent;
+}
+
+[data-theme='copper'] .module-table td {
+    border-bottom: 1px solid #3a3f4a;
+    padding: 12px;
+}
+
+[data-theme='copper'] .module-table tr:hover td {
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .module-table td strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .module-table td small,
+[data-theme='copper'] .module-athlete-grid small {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+}
+
+[data-theme='copper'] .module-table-wrap {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--line);
+    border-radius: 15px 12px 20px 10px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+[data-theme='copper'] .module-athlete-grid article,
+[data-theme='copper'] .profile-submissions article,
+[data-theme='copper'] .profile-notifications p,
+[data-theme='copper'] .agenda-item,
+[data-theme='copper'] .event-row {
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid var(--line);
+    border-radius: 15px 12px 20px 10px;
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.5);
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .module-metrics,
+[data-theme='copper'] .module-metric {
+    background: var(--panel-bg);
+    border: 1px solid var(--copper-dim);
+    border-radius: 15px 12px 20px 10px;
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .module-metric strong {
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .module-metric small,
+[data-theme='copper'] .module-metric span {
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+}
+
+[data-theme='copper'] .module-search label {
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.7rem;
+}
+
+[data-theme='copper'] .stat-value {
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .stat-spark i {
+    background: var(--copper);
+    border-radius: 2px;
+    box-shadow: 0 0 6px var(--copper-glow);
+}
+
+[data-theme='copper'] .event-name-line h3,
+[data-theme='copper'] .panel-heading h2,
+[data-theme='copper'] .module-card-heading h2,
+[data-theme='copper'] .agenda-item strong,
+[data-theme='copper'] .module-athlete-grid strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .guest-dashboard-empty {
+    color: var(--text-muted);
+    text-align: center;
+}
+
+[data-theme='copper'] .page-footer {
+    border-top: 1px solid var(--copper-dim);
+}
+
+/* ================= SPECIFICITY TINGGI (menimpa glass-theme) ================= */
+
+[data-theme='copper'] .public-site :is(
+        .account-card,
+        .account-edit-card,
+        .profile-edit-card,
+        .profile-summary,
+        .profile-notifications,
+        .profile-submissions,
+        .guest-dashboard-section,
+        .guest-event-card,
+        .guest-registration-card,
+        .guest-dashboard-empty,
+        .event-eligible-categories,
+        .event-user-registrations,
+        .form-section,
+        .listing-event-card,
+        .listing-demo-notice,
+        .account-table-card,
+        .submission-card,
+        .category-rule-card,
+        .service-card,
+        .public-event-card,
+        .community-values article
+    ) {
+    border: 1px solid var(--copper-dim);
+    border-radius: var(--border-melt);
+    color: var(--text-light);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-site :is(
+        .category-rule-card,
+        .listing-demo-notice,
+        .event-eligible-categories,
+        .event-user-registrations,
+        .guest-dashboard-empty
+    ) {
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--line);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme='copper'] .public-site :is(.account-card, .account-edit-card, .profile-edit-card, .profile-summary) {
+    border-radius: 25px 10px 30px 15px;
+}
+
+[data-theme='copper'] .public-site .form-section {
+    border-radius: 18px 10px 24px 14px;
+}
+
+[data-theme='copper'] .public-site :is(.service-card, .listing-event-card, .guest-event-card) {
+    background: linear-gradient(145deg, #343845, #262931);
+}
+
+[data-theme='copper'] .public-site :is(
+        .account-intro h1,
+        .profile-heading h1,
+        .event-form-heading h1,
+        .listing-intro h1,
+        .public-section-heading h2,
+        .public-community h2,
+        .public-community h3
+    ) {
+    color: var(--copper);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-site :is(.account-intro > p, .profile-heading > p, .page-subtitle, .listing-intro > p) {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-site :is(.profile-role, .profile-submission-status, .guest-registration-status, .listing-status) {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-site :is(.profile-submission-status.status-rejected, .guest-registration-status.status-rejected) {
+    color: #f0b39a;
+}
+
+[data-theme='copper'] .public-site .listing-event-card .listing-status-open {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-site .listing-event-card .listing-status-preparing {
+    color: #c9a697;
+}
+
+[data-theme='copper'] .public-site :is(.account-form, .event-form) :is(input:not([type='checkbox']):not([type='radio']), select, textarea) {
+    border-color: var(--line);
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .public-site :is(.account-form, .event-form) select option {
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .public-site :is(.account-form, .event-form) :is(input, select, textarea):focus {
+    border-color: var(--copper);
+    box-shadow: var(--shadow-inset), 0 0 14px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-site :is(.account-submit, .button-primary, .public-button-orange, .public-button-dark) {
+    border-radius: 12px 6px 15px 8px;
+    background: var(--copper);
+    color: #14161b;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='copper'] .category-pricing-waves {
+    border-color: var(--copper-dim);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='copper'] .category-pricing-waves-head strong {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .category-pricing-waves-head small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .category-wave-add,
+[data-theme='copper'] .category-wave-apply {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+}
+
+[data-theme='copper'] .category-wave-add:hover,
+[data-theme='copper'] .category-wave-apply:hover,
+[data-theme='copper'] .category-wave-apply.is-applied {
+    border-style: solid;
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .category-wave-row {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .category-wave-row .form-field > label {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .category-base-pricing-range {
+    border-color: var(--copper-dim);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='copper'] .category-base-pricing-range .field-group-label {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell :is(
+        .panel,
+        .module-card,
+        .module-event-selector,
+        .account-table-card,
+        .account-edit-card,
+        .form-section,
+        .category-rule-card,
+        .submission-card,
+        .profile-notifications,
+        .profile-submissions
+    ) {
+    border: 1px solid var(--copper-dim);
+    border-radius: var(--border-melt);
+    color: var(--text-light);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .app-shell .sidebar {
+    border-color: var(--copper-dim);
+    background: linear-gradient(180deg, #343845, #24272e);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .sidebar-toggle {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+    background: #292c35;
+}
+
+[data-theme='copper'] .app-shell .sidebar-toggle:hover {
+    color: var(--copper-light);
+    background: #383c47;
+}
+
+[data-theme='copper'] .app-shell .topbar {
+    border-color: var(--copper-dim);
+    background: linear-gradient(145deg, #383c47, #2c3039);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .hero-banner {
+    border: 1px solid var(--copper-dim);
+    border-radius: var(--border-melt);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell :is(.button, .module-publish-button) {
+    border-radius: 12px 6px 15px 8px;
+}
+
+[data-theme='copper'] .app-shell :is(.welcome-row h1, .event-form-heading h1, .page-content > header h1) {
+    color: var(--copper);
+    text-shadow: 0 0 14px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .breadcrumbs strong {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .module-status {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .module-status.is-review {
+    color: #c9a697;
+}
+
+[data-theme='copper'] .app-shell .module-status.is-draft {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell :is(.panel, .module-card) :is(input, select, textarea) {
+    border-color: var(--line);
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell :is(.panel, .module-card) select option {
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .form-field :is(input, select, textarea) {
+    border-color: var(--line);
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .account-admin-page .account-edit-card {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .account-form > label,
+[data-theme='copper'] .app-shell .account-edit-card .role-options legend {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .account-form :is(
+        input:not([type='checkbox']):not([type='radio']),
+        select,
+        textarea
+    ) {
+    border-color: var(--line);
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .account-form select option {
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .account-form :is(input, select, textarea):focus {
+    border-color: var(--copper);
+    box-shadow: var(--shadow-inset), 0 0 14px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .role-option {
+    border-color: var(--line);
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .role-option:has(input:checked) {
+    border-color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .account-admin-note {
+    border: 1px solid var(--copper-dim);
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='copper'] .app-shell .account-edit-card .account-submit {
+    border-radius: 12px 6px 15px 8px;
+    color: #14161b;
+    background: var(--copper);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .form-section-heading {
+    border-color: var(--copper-dim);
+}
+
+/* ============================ KOMPONEN ELIGIBILITY ============================ */
+
+[data-theme='copper'] .eligibility-method-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+[data-theme='copper'] .eligibility-methods {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+[data-theme='copper'] .eligibility-methods > legend {
+    margin-bottom: 9px;
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+[data-theme='copper'] .eligibility-methods > legend span {
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+[data-theme='copper'] .eligibility-choice {
+    display: flex;
+    min-height: 67px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px 6px 15px 8px;
+    color: var(--text-light);
+    background: #1a1c21;
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+[data-theme='copper'] .eligibility-choice:hover {
+    transform: translateY(-1px);
+    border-color: var(--copper);
+    box-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .eligibility-choice:has(input:checked) {
+    border-color: var(--copper);
+    background: var(--copper-dim);
+    box-shadow: inset 0 0 0 1px var(--copper-dim), 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .eligibility-choice input {
+    flex: none;
+    margin: 2px 0 0;
+    accent-color: var(--copper);
+}
+
+[data-theme='copper'] .eligibility-choice > span {
+    display: grid;
+    gap: 4px;
+}
+
+[data-theme='copper'] .eligibility-choice strong {
+    color: var(--copper);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    font-size: 10px;
+}
+
+[data-theme='copper'] .eligibility-choice small {
+    color: var(--text-muted);
+    font-size: 9px;
+    font-weight: 450;
+    line-height: 1.45;
+}
+
+[data-theme='copper'] .eligibility-fields[hidden] {
+    display: none;
+}
+
+[data-theme='copper'] .eligibility-fields:not([hidden]) {
+    grid-column: 1 / -1;
+}
+
+/* ============================ RESPONSIF ============================ */
+
+.profile-submissions article {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-submission-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--copper-dim, rgba(255, 255, 255, 0.14));
+}
+
+.profile-submission-actions .account-edit-link {
+    color: var(--copper);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+@media (max-width: 700px) {
+    [data-theme='copper'] .eligibility-method-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    [data-theme='copper'] {
+        --border-melt: 18px 20px 14px 22px;
+        --border-melt-alt: 22px 14px 24px 18px;
+    }
+
+    [data-theme='copper'] .public-nav {
+        flex-wrap: nowrap;
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 4px 0;
+        scrollbar-width: none;
+    }
+
+    [data-theme='copper'] .public-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    [data-theme='copper'] .public-nav a,
+    [data-theme='copper'] .public-site .public-nav a {
+        flex: none;
+        padding: 5px 10px;
+        font-size: 0.68rem;
+        white-space: nowrap;
+    }
+
+    [data-theme='copper'] .app-shell .sidebar {
+        width: 46px;
+    }
+
+    [data-theme='copper'] .app-shell .topbar {
+        position: relative;
+        height: 46px;
+        padding: 0 9px;
+    }
+}
+
+/* ============================ PENYEMPURNAAN KOMPONEN ============================ */
+
+[data-theme='copper'] .public-home:not(.event-listing-page) .public-site .public-hero {
+    background: linear-gradient(112deg, #343845, #292c35 58%, #24272e);
+}
+
+[data-theme='copper'] .public-home:not(.event-listing-page) .public-site .public-hero-art {
+    border-color: var(--copper-dim);
+    background: linear-gradient(145deg, #383c47, #2c3039);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-site .listing-event-card .listing-event-date {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper);
+    background: #1a1c21;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme='copper'] .public-site .listing-event-card .listing-event-date :is(strong, span, small) {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .submission-card {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .app-shell .submission-card .submission-facts {
+    border: 1px solid var(--line);
+    border-radius: 12px 6px 15px 8px;
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='copper'] .app-shell .submission-card .submission-facts span,
+[data-theme='copper'] .app-shell .submission-card .submission-details,
+[data-theme='copper'] .app-shell .submission-card .submission-description {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .submission-card .submission-facts strong,
+[data-theme='copper'] .app-shell .submission-card .submission-heading p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .submission-card .submission-heading :is(h2, p strong),
+[data-theme='copper'] .app-shell .submission-card .submission-details summary {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .submission-card :is(.submission-details, .submission-actions) {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .submission-card .submission-reject-form input {
+    border-color: var(--line);
+    color: var(--text-white);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .account-table-heading {
+    border-color: var(--copper-dim);
+}
+
+/* Di-scope ke :is(.public-site, .app-shell), bukan hanya .app-shell, karena
+   tabel yang sama juga dirender di halaman publik. Kalau hanya .app-shell,
+   background terang .account-table th dari account-portal.css L85 tetap
+   berlaku di sana dan teks terang di atasnya jadi tak terbaca. */
+[data-theme='copper'] :is(.public-site, .app-shell) .account-table th {
+    color: var(--copper);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-modal-close {
+    border-color: var(--copper-dim);
+    color: rgba(245, 245, 244, 0.82);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme='copper'] .app-shell .account-table td {
+    border-color: var(--line);
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .account-table td strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .app-shell .account-table td small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell :is(.account-edit-link, .account-verify-link) {
+    border-color: var(--copper-dim);
+    border-radius: 10px 5px 12px 7px;
+    color: var(--copper);
+    background: #1a1c21;
+}
+
+[data-theme='copper'] .app-shell :is(.account-edit-link, .account-verify-link):hover {
+    border-color: var(--copper);
+    color: var(--copper-light);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .email-verification-badge.is-verified {
+    color: #b7d4c1;
+    background: rgba(74, 119, 91, 0.22);
+}
+
+[data-theme='copper'] .app-shell .email-verification-badge.is-unverified {
+    color: #d8be91;
+    background: rgba(140, 106, 55, 0.22);
+}
+
+[data-theme='copper'] .app-shell .account-pagination {
+    border-top: 1px solid var(--copper-dim);
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .account-pagination :is(a, span) {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .podium-place {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: linear-gradient(145deg, #343845, #262931);
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='copper'] .app-shell .podium-place.podium-first {
+    border-color: rgba(216, 168, 153, 0.48);
+    background: linear-gradient(145deg, #403a3b, #2c3039);
+}
+
+[data-theme='copper'] .app-shell .podium-place :is(strong, b) {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .podium-place > span:not(.podium-medal) {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .podium-place > small {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .finance-type {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper-light);
+    background: rgba(216, 168, 153, 0.1);
+}
+
+[data-theme='copper'] .app-shell .finance-type.type-expense {
+    border-color: rgba(216, 122, 90, 0.35);
+    color: #f0b39a;
+    background: rgba(140, 74, 62, 0.2);
+}
+
+[data-theme='copper'] .public-site .service-icon {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper);
+    background: #1a1c21;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-site .listing-sort-label,
+[data-theme='copper'] .public-site :is(.listing-register-link, .listing-roster-link) {
+    border: 1px solid var(--copper-dim);
+    border-radius: 10px 5px 12px 7px;
+    color: var(--copper);
+    background: linear-gradient(145deg, #383c47, #24272e);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='copper'] .public-site .listing-sort-label span {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .public-site :is(.listing-sort-label, .listing-register-link, .listing-roster-link):hover {
+    border-color: var(--copper);
+    color: var(--copper-light);
+    background: linear-gradient(145deg, #45404a, #2c3039);
+    box-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .right-panel {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .app-shell .right-panel .panel-heading {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .right-panel .agenda-count {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper);
+    background: rgba(216, 168, 153, 0.1);
+}
+
+[data-theme='copper'] .app-shell .right-panel .agenda-list > .guest-dashboard-empty {
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px 6px 15px 8px;
+    color: var(--text-white);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='copper'] .app-shell .right-panel .guest-dashboard-empty p,
+[data-theme='copper'] .app-shell .right-panel .agenda-item p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .right-panel :is(.agenda-item, .agenda-link) {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .public-site .profile-role,
+[data-theme='copper'] .app-shell .profile-role {
+    border: 1px solid var(--copper-dim);
+    border-radius: 10px 5px 12px 7px;
+    color: var(--copper);
+    background: rgba(216, 168, 153, 0.1);
+}
+
+[data-theme='copper'] .app-shell .listing-empty-state {
+    border: 1px dashed var(--copper-dim);
+    border-radius: var(--border-melt);
+    color: var(--text-light);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .listing-empty-state > span {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .listing-empty-state :is(h3, p) {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions :is(.event-category-link, .event-approve-button, .event-delete-button),
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page :is(
+    .category-rule-remove,
+    .category-rule-add-year,
+    .category-rule-add,
+    .birth-year-chip button,
+    .form-cancel-button
+) {
+    border: 1px solid var(--copper-dim);
+    border-radius: 10px 5px 12px 7px;
+    color: var(--copper);
+    background: #1a1c21;
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions .event-category-link {
+    display: inline-flex;
+    min-height: 29px;
+    align-items: center;
+    padding: 0 9px;
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions .event-approve-button {
+    border-color: var(--copper);
+    color: #14161b;
+    background: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions .event-delete-button {
+    border-color: rgba(216, 122, 90, 0.4);
+    color: #f0b39a;
+    background: rgba(140, 74, 62, 0.2);
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions :is(.event-category-link, .event-approve-button, .event-delete-button):hover,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page :is(
+    .category-rule-remove,
+    .category-rule-add-year,
+    .category-rule-add,
+    .birth-year-chip button,
+    .form-cancel-button
+):hover {
+    border-color: var(--copper);
+    color: var(--copper-light);
+    background: var(--copper-dim);
+    text-decoration: none;
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions .event-approve-button:hover {
+    color: #14161b;
+    background: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .event-admin-actions .event-delete-button:hover {
+    border-color: #d87a5a;
+    color: #fff1e9;
+    background: rgba(140, 74, 62, 0.42);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .birth-year-chip button {
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-rule-add {
+    border-style: dashed;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .form-cancel-button {
+    display: inline-flex;
+    min-height: 36px;
+    align-items: center;
+    padding: 0 11px;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-management {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .event-ownership-transfer {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .event-ownership-transfer label {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .event-ownership-transfer select {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--surface-dark);
+}
+
+[data-theme='copper'] .app-shell .event-ownership-transfer button {
+    border-color: var(--copper);
+    color: var(--text-white);
+    background: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-publication {
+    border-color: var(--copper-dim);
+    background: var(--surface-dark);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-publication p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-publication .submission-approve {
+    color: var(--text-white);
+    background: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-heading h1 {
+    color: var(--copper);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-heading p,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-name small,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-readonly-label {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-name strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-row {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-facts > span {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-facts > span > strong {
+    color: var(--copper-dark);
+}
+
+[data-theme='copper'] .public-site :is(.event-public-category, .event-public-category strong) {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-site :is(.event-public-category span, .event-public-privacy-note) {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-site .listing-roster-link {
+    color: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-edit-link {
+    color: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-status {
+    border-color: var(--copper);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-status.payment-paid {
+    border-color: var(--copper-light);
+    color: var(--copper-light);
+    background: rgba(216, 168, 153, 0.12);
+}
+
+[data-theme='copper'] .app-shell .event-registration-edit-form :is(input:not([type='checkbox']):not([type='radio']), select, textarea) {
+    border-color: var(--line);
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .event-registration-edit-form select option {
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-races {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-races legend,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-races .role-option,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-races .role-option strong {
+    color: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-registration-category-note {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--copper-dim);
+}
+
+/* ============================ MODUL ADMIN (kejuaraan, hasil, keuangan) ============================ */
+
+[data-theme='copper'] .app-shell .module-card,
+[data-theme='copper'] .app-shell .module-secondary-card {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .module-card-heading {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .module-card-heading :is(h2, p) {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .module-metric {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .module-metric > span {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .module-metric > strong {
+    color: var(--copper-light);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .module-metric > strong small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-metric > small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-event-selector {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .module-event-selector > div > strong {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .module-event-selector > div > small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-event-selector select {
+    border-color: var(--line);
+    color: var(--copper);
+    background: #1f2126;
+}
+
+[data-theme='copper'] .app-shell .module-event-selector label {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .finance-balance-card {
+    background: linear-gradient(120deg, #343845, #2c3039);
+    border: 1px solid var(--copper-dim);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .app-shell .finance-balance-card > div:first-child > span {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .finance-balance-card > div:first-child > strong {
+    color: var(--copper-light);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .finance-balance-card > div:first-child > small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .finance-balance-detail > span {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .finance-balance-detail strong {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .module-table-wrap {
+    border-color: var(--line);
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme='copper'] .app-shell .module-table {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .module-table th {
+    border-color: var(--line);
+    color: var(--copper);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='copper'] .app-shell .module-table td {
+    border-color: var(--line);
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .module-table td strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .app-shell .module-table td small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-table tr:hover td {
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .module-status {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .module-status.is-active {
+    border-color: var(--copper);
+    color: var(--copper-light);
+    background: var(--copper-dim);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .module-status.is-review {
+    border-color: var(--copper-dark);
+    color: #c9a697;
+    background: rgba(140, 106, 93, 0.18);
+}
+
+[data-theme='copper'] .app-shell .module-status.is-draft {
+    border-color: var(--line);
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='copper'] .app-shell .module-card-footer {
+    border-color: var(--copper-dim);
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-card-footer span {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-text-action {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .module-text-action:disabled {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-chip-list > span {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .module-chip-list small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .podium-card {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .app-shell .podium-card > .module-card-heading {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .podium-grid {
+    gap: 12px;
+}
+
+[data-theme='copper'] .app-shell .podium-place {
+    border-color: var(--copper-dim);
+    background: linear-gradient(145deg, #343845, #262931);
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='copper'] .app-shell .podium-place.podium-first {
+    border-color: rgba(216, 168, 153, 0.48);
+    background: linear-gradient(145deg, #403a3b, #2c3039);
+}
+
+[data-theme='copper'] .app-shell .podium-medal {
+    border: 1px solid var(--copper);
+    color: #14161b;
+    background: var(--copper);
+    box-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .podium-second .podium-medal {
+    border-color: var(--copper-dark);
+    color: #c9a697;
+    background: rgba(140, 106, 93, 0.18);
+}
+
+[data-theme='copper'] .app-shell .podium-third .podium-medal {
+    border-color: var(--copper-dark);
+    color: #c9a697;
+    background: rgba(140, 106, 93, 0.18);
+}
+
+[data-theme='copper'] .app-shell .podium-place > small {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .podium-place > strong {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .podium-place > span:not(.podium-medal) {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .podium-place > b {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .podium-actions {
+    border-color: var(--copper-dim);
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .module-publish-button {
+    border-radius: 12px 6px 15px 8px;
+    background: var(--copper);
+    color: #14161b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='copper'] .app-shell .module-publish-button:hover:not(:disabled) {
+    background: var(--copper-light);
+    box-shadow: 0 0 18px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .module-publish-button:disabled {
+    border-color: var(--text-muted);
+    color: var(--text-muted);
+    background: transparent;
+    box-shadow: none;
+}
+
+[data-theme='copper'] .app-shell .rank-cell {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .rank-gold {
+    border-color: var(--copper);
+    color: var(--copper-light);
+    background: var(--copper);
+}
+
+[data-theme='copper'] .app-shell .rank-silver {
+    border-color: var(--copper-dark);
+    color: #c9a697;
+    background: rgba(140, 106, 93, 0.18);
+}
+
+[data-theme='copper'] .app-shell .rank-bronze {
+    border-color: var(--copper-dark);
+    color: #c9a697;
+    background: rgba(140, 106, 93, 0.18);
+}
+
+[data-theme='copper'] .app-shell .module-athlete-grid {
+    border-color: var(--line);
+}
+
+[data-theme='copper'] .app-shell .module-athlete-grid article {
+    border-color: var(--line);
+    background: rgba(0, 0, 0, 0.22);
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='copper'] .app-shell .module-athlete-avatar {
+    border: 1px solid var(--copper);
+    color: #14161b;
+    background: radial-gradient(circle at 30% 30%, var(--copper), var(--copper-dark));
+    box-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .module-athlete-avatar.avatar-peach,
+[data-theme='copper'] .app-shell .module-athlete-avatar.avatar-green {
+    border: 1px solid var(--copper);
+    color: #14161b;
+    background: radial-gradient(circle at 30% 30%, var(--copper), var(--copper-dark));
+}
+
+[data-theme='copper'] .app-shell .module-athlete-grid strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .app-shell .module-athlete-grid small {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .budget-total strong {
+    color: var(--copper-light);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .budget-total span {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .app-shell .budget-progress {
+    background: var(--line);
+}
+
+[data-theme='copper'] .app-shell .budget-progress span {
+    background: linear-gradient(90deg, var(--copper) 0 61%, var(--copper-light) 61% 85%, var(--copper-dark) 85%);
+}
+
+[data-theme='copper'] .app-shell .budget-legend > span {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .app-shell .budget-legend b {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .budget-dot {
+    border: 1px solid var(--copper);
+    box-shadow: 0 0 8px var(--copper-glow);
+}
+
+[data-theme='copper'] .app-shell .budget-note {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .finance-content-grid .module-card-heading {
+    border-color: var(--copper-dim);
+}
+
+[data-theme='copper'] .app-shell .finance-side-card {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .app-shell .module-table td.money-positive {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .app-shell .module-table td.money-negative {
+    color: #f0b39a;
+}
+
+[data-theme='copper'] .app-shell .button:not(.button-primary),
+[data-theme='copper'] .app-shell .module-publish-button {
+    border-radius: 12px 6px 15px 8px;
+}
+
+/* ============================ HALAMAN BERANDA (public-home) ============================ */
+
+[data-theme='copper'] .public-home .public-site {
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-home .public-hero {
+    background: linear-gradient(112deg, #343845, #292c35 58%, #24272e);
+    border: 1px solid var(--copper-dim);
+    border-radius: 0 0 var(--border-melt) var(--border-melt-alt);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-home .public-hero-copy h1 {
+    color: var(--copper);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .public-hero-lead {
+    color: var(--text-light);
+    opacity: 0.85;
+}
+
+[data-theme='copper'] .public-home .public-hero-art {
+    border-color: var(--copper-dim);
+    background: linear-gradient(145deg, #383c47, #2c3039);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-home .art-sun,
+[data-theme='copper'] .public-home .cta-sun {
+    background: radial-gradient(circle at 35% 35%, var(--copper-light), var(--copper-dark));
+    box-shadow: 0 0 40px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .art-track,
+[data-theme='copper'] .public-home .art-track-back,
+[data-theme='copper'] .public-home .art-track-front {
+    border-color: var(--copper-dark);
+    opacity: 0.55;
+}
+
+[data-theme='copper'] .public-home .art-caption,
+[data-theme='copper'] .public-home .art-stamp,
+[data-theme='copper'] .public-home .hero-decoration {
+    color: var(--copper);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .art-dot,
+[data-theme='copper'] .public-home .demo-dot,
+[data-theme='copper'] .public-home .season-dot,
+[data-theme='copper'] .public-home .agenda-marker,
+[data-theme='copper'] .public-home .module-icon,
+[data-theme='copper'] .public-home .stat-icon,
+[data-theme='copper'] .public-home .help-icon,
+[data-theme='copper'] .public-home .organizer-mark {
+    background: var(--copper-dim);
+    border: 1px solid var(--copper);
+    color: var(--copper);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .public-championships,
+[data-theme='copper'] .public-home .public-events,
+[data-theme='copper'] .public-home .about-inlinesia {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .public-home .public-section-heading :is(h2, h3) {
+    color: var(--copper);
+    text-shadow: 0 0 12px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .public-section-label {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home .public-community {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .public-home .public-community p {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home .community-values article {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .public-home .community-values h3 {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .public-home .community-values p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-home .value-number {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home .value-mark {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home .club-cta {
+    border: 1px solid var(--copper-dim);
+    border-radius: var(--border-melt);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-home .sponsor-card {
+    border-color: var(--copper-dim);
+    border-radius: var(--border-melt);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-home .sponsor-card-intro h2 {
+    color: var(--copper);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .sponsor-card-intro p,
+[data-theme='copper'] .public-home .sponsor-card-options p {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home .sponsor-card-options article {
+    border-color: var(--copper-dim);
+    border-radius: var(--border-melt-alt);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] .public-home .sponsor-card-options h3 {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .public-home .club-cta h2 {
+    color: var(--copper);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .club-cta p {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home .about-inlinesia p {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-heading h2 {
+    color: var(--copper);
+    text-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-heading h2 span {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-heading p,
+[data-theme='copper'] .public-home .public-contact .contact-foot p {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-item,
+[data-theme='copper'] .public-home .public-contact .contact-foot {
+    border-color: var(--copper-dim);
+    border-radius: var(--border-melt-alt);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-item:hover {
+    box-shadow: var(--shadow-panel), 0 0 22px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-label,
+[data-theme='copper'] .public-home .public-contact .contact-value.is-empty,
+[data-theme='copper'] .public-home .public-contact .contact-action.is-static {
+    color: var(--text-light);
+    opacity: .72;
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-value {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-action {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-item .contact-icon {
+    color: var(--copper);
+    background: rgba(184, 115, 51, 0.16);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-foot .public-button-orange {
+    background: var(--copper);
+}
+
+[data-theme='copper'] .public-home .public-contact .contact-foot .public-button-orange:hover {
+    background: var(--copper-light);
+}
+
+[data-theme='copper'] .public-home .footer-copyright,
+[data-theme='copper'] .public-home .footer-tagline {
+    color: var(--text-muted);
+}
+
+/* ============================ HALAMAN DAFTAR LOMBA ============================ */
+
+[data-theme='copper'] .public-home.event-listing-page .public-site {
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-card {
+    border-color: var(--copper-dim);
+    background: linear-gradient(145deg, #343845, #262931);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5), -4px -4px 12px rgba(255, 255, 255, 0.03),
+        inset 0 0 0 1px rgba(216, 168, 153, 0.18);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-date {
+    background: #1a1c21;
+    border: 1px solid var(--copper-dim);
+    border-radius: 15px 8px 15px 10px;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7);
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-date :is(strong, span, small) {
+    color: var(--copper);
+    font-family: var(--font-display);
+    text-shadow: 0 0 8px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-type {
+    border-color: var(--copper);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-status {
+    border-color: var(--copper);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-status-preparing {
+    border-color: var(--copper-dark);
+    background: rgba(140, 106, 93, 0.18);
+    color: #c9a697;
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-status-open {
+    background: var(--copper-dim);
+    color: var(--copper);
+    box-shadow: 0 0 10px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-body h3 {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-body p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-event-facts span {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-register-link {
+    border: 1px solid var(--copper);
+    border-radius: 12px 6px 15px 8px;
+    color: #14161b;
+    background: var(--copper);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-register-link:hover {
+    background: var(--copper-light);
+    box-shadow: 0 0 18px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .guest-event-closed {
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-empty-state {
+    border: 1px dashed var(--copper-dim);
+    border-radius: var(--border-melt);
+    color: var(--text-light);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-empty-state > span {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-empty-state :is(h3, p) {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-organizer-cta {
+    border-color: var(--copper-dim);
+    border-radius: var(--border-melt);
+    color: var(--text-light);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-organizer-cta :is(h2, p) {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-organizer-cta .public-section-label {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-back-link {
+    color: var(--copper);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-sort-label {
+    border: 1px solid var(--copper-dim);
+    border-radius: 10px 5px 12px 7px;
+    color: var(--copper);
+    background: linear-gradient(145deg, #383c47, #24272e);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-sort-label:hover {
+    border-color: var(--copper);
+    color: var(--copper-light);
+    background: linear-gradient(145deg, #45404a, #2c3039);
+    box-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-home.event-listing-page .listing-card-number {
+    color: var(--copper-dim);
+    opacity: 0.3;
+}

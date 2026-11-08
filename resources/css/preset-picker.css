@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Pengisi Cepat Detail Event (preset picker)
+   Dipakai pada halaman Kelola Kejuaraan (create & edit).
+   ========================================================================== */
+
+.preset-picker {
+    display: grid;
+    gap: 10px;
+}
+
+.preset-picker-label {
+    color: var(--copper, #d8a899);
+    font-family: var(--font-display, 'Oswald', sans-serif);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+.preset-options {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.preset-option {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 4px 0;
+    color: var(--text-light, #a4abb5);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    width: 100%;
+}
+
+.preset-option:hover {
+    color: var(--copper-light, #e8c4b7);
+}
+
+.preset-option input[type='checkbox'] {
+    accent-color: var(--copper, #d8a899);
+    margin: 0;
+    flex: none;
+    width: 0.75em;
+    height: 0.75em;
+    cursor: pointer;
+    transform: translateY(0.05em);
+}
+
+.preset-option span {
+    flex: 1;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.preset-option:has(input:checked) {
+    color: var(--copper, #d8a899);
+}
+
+.preset-option-custom {
+    border-top: 1px dashed var(--line, #4a4f5a);
+    margin-top: 4px;
+    padding-top: 8px;
+}
+
+.preset-custom-area {
+    display: grid;
+    gap: 6px;
+}
+
+.preset-custom-area[hidden] {
+    display: none;
+}
+
+.preset-picker-note {
+    margin: 0;
+    color: var(--text-muted, #6a707a);
+    font-size: 0.72rem;
+    line-height: 1.45;
+}
+
+.preset-picker-note[hidden] {
+    display: none;
+}

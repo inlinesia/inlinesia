@@ -1,0 +1,180 @@
+/* ==========================================================================
+   PAGE CONTEXT WIDGET
+   Widget mengambang yang menampilkan identitas penjelajah (semua role) dan
+   lokasi blade halaman (khusus admin). Bisa dipindahkan dan disembunyikan.
+   ========================================================================== */
+
+.page-context {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    font-family: 'Instrument Sans', 'Segoe UI', sans-serif;
+    transition: bottom 0.18s ease, right 0.18s ease;
+}
+
+.page-context[hidden] {
+    display: none;
+}
+
+.page-context-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 168px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    background: rgba(24, 26, 31, 0.94);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.page-context-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.page-context-title {
+    color: #f5f5f4;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.page-context-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    background: transparent;
+    color: #d6d8dd;
+    cursor: pointer;
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.page-context-toggle:hover {
+    border-color: var(--copper, #d8a899);
+    color: var(--copper, #d8a899);
+}
+
+.page-context-card.is-collapsed .page-context-body {
+    display: none;
+}
+
+/* User badge */
+
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.user-badge-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--copper, #d8a899), #b9765f);
+    color: #17181c;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.user-badge-guest .user-badge-avatar {
+    background: rgba(255, 255, 255, 0.16);
+    color: #e5e7eb;
+}
+
+.user-badge-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.user-badge-name {
+    overflow: hidden;
+    max-width: 190px;
+    color: #f5f5f4;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-badge-role {
+    color: var(--copper, #d8a899);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* Lokasi blade (admin) */
+
+.blade-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 9px;
+    border: 1px dashed rgba(216, 168, 153, 0.5);
+    border-radius: 10px;
+    background: rgba(216, 168, 153, 0.08);
+}
+
+.blade-location-icon {
+    flex: 0 0 auto;
+    font-size: 0.78rem;
+    line-height: 1;
+}
+
+.blade-location-path {
+    overflow-wrap: anywhere;
+    color: #f0e2da;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.66rem;
+    line-height: 1.4;
+}
+
+/* Varian untuk tema terang */
+
+[data-theme='topic'] .page-context-card {
+    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme='topic'] .page-context-title,
+[data-theme='topic'] .user-badge-name,
+[data-theme='topic'] .blade-location-path {
+    color: #14181f;
+}
+
+@media (max-width: 640px) {
+    .page-context {
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .page-context-card {
+        min-width: 140px;
+        padding: 8px 10px;
+    }
+}

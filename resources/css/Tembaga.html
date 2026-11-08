@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surrealist UI Kit Styleguide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --bg-color: #24272e;
+            --panel-bg: linear-gradient(145deg, #383c47, #2c3039);
+            --copper: #d8a899;
+            --copper-glow: rgba(216, 168, 153, 0.4);
+            --copper-dim: rgba(216, 168, 153, 0.15);
+            --copper-dark: #8c6a5d;
+            --text-light: #a4abb5;
+            --text-muted: #626770;
+            --text-white: #e2e8f0;
+            --border-melt: 15px 25px 10px 30px;
+            --border-melt-alt: 25px 10px 30px 15px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 50% -20%, #4a5160, transparent 60%);
+            overflow-x: hidden;
+        }
+
+        /* Teks & Tipografi */
+        h1, h2, h3, .copper-text {
+            font-family: 'Oswald', sans-serif;
+            color: var(--copper);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px var(--copper-glow);
+            margin: 0;
+        }
+
+        .header-title {
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            line-height: 1.2;
+        }
+
+        .label-tiny {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* Panel Containers */
+        .panel {
+            background: var(--panel-bg);
+            border-radius: var(--border-melt);
+            padding: 35px 30px;
+            margin-bottom: 40px;
+            box-shadow: 
+                15px 15px 25px rgba(0,0,0,0.6), 
+                -5px -5px 15px rgba(255,255,255,0.03),
+                inset 0 0 0 1px rgba(216, 168, 153, 0.2);
+            position: relative;
+        }
+        
+        .panel.alt-melt {
+            border-radius: var(--border-melt-alt);
+        }
+
+        .panel-title {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 2px 12px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+
+        /* ==================== 1. FOUNDATIONS ==================== */
+        .surface-container { display: flex; gap: 20px; align-items: center;}
+        
+        .surface-tokens {
+            position: relative;
+            height: 180px;
+            width: 120px;
+            perspective: 1000px;
+        }
+
+        .layer {
+            width: 90px; height: 90px;
+            position: absolute; left: 10px;
+            transform: rotateX(60deg) rotateZ(-45deg);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        /* Base */
+        .layer-1 { bottom: 10px; background: linear-gradient(135deg, #2a2d35, #1a1c22); box-shadow: -5px 5px 15px rgba(0,0,0,0.8); border: 1px solid #444; }
+        /* Raised */
+        .layer-2 { bottom: 45px; background: rgba(216, 168, 153, 0.4); border: 1px solid var(--copper); box-shadow: -5px 5px 20px var(--copper-glow); backdrop-filter: blur(4px); }
+        /* Inset */
+        .layer-3 { bottom: 80px; background: linear-gradient(135deg, #444, #222); box-shadow: inset -3px 3px 10px rgba(0,0,0,0.8); }
+        /* Pressed */
+        .layer-4 { bottom: 115px; background: linear-gradient(135deg, #999, #e0e0e0); border-radius: 15px 10px 20px 12px; box-shadow: -2px 2px 5px rgba(0,0,0,0.5); }
+
+        .layer-labels { display: flex; flex-direction: column; justify-content: space-between; height: 160px; padding-top: 10px; }
+        
+        .simeon-tokens { display: flex; flex-direction: column; gap: 15px; margin-left: 10px;}
+        .simeon-item { display: flex; align-items: center; gap: 10px;}
+        .mini-layer { width: 30px; height: 30px; transform: rotateX(60deg) rotateZ(-45deg); border-radius: 5px; }
+
+        .border-thickness { display: flex; flex-direction: column; gap: 15px; }
+        .thickness-row { display: flex; align-items: center; gap: 10px; }
+        .thickness-line { flex: 1; stroke: var(--copper); fill: none; }
+
+        .radius-scale { display: flex; gap: 15px; align-items: center; margin-top: 10px; }
+        .radius-box {
+            width: 45px; height: 45px; border: 1.5px solid var(--copper);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 13px; color: var(--copper); box-shadow: 0 0 10px var(--copper-glow);
+            background: linear-gradient(135deg, rgba(216,168,153,0.1), transparent);
+        }
+
+        .iconography-grid { display: flex; gap: 15px; align-items: end; margin-top: 10px;}
+        .icon-box { text-align: center; font-size: 0.7rem; }
+        
+        /* ==================== 2. CONTROLS ==================== */
+        .btn-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--copper);
+            color: var(--copper); padding: 10px 30px; width: 140px;
+            border-radius: 12px 6px 15px 8px; /* Organik */
+            font-family: 'Oswald', sans-serif; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .btn:hover { box-shadow: 0 0 15px var(--copper-glow); background: var(--copper-dim); }
+        .btn.pressed {
+            background: rgba(0,0,0,0.4); border-color: var(--copper-dark);
+            box-shadow: inset 0 3px 10px rgba(0,0,0,0.8), 0 0 5px var(--copper-glow);
+            border-radius: 10px 12px 8px 15px;
+        }
+        .btn.disabled { border-color: var(--text-muted); color: var(--text-muted); cursor: not-allowed; box-shadow: none; }
+
+        .input-wrapper { margin-bottom: 20px; }
+        .input-field {
+            width: 100%; background: #1f2126; border: 1px solid #4a4f5a;
+            padding: 12px 15px; border-radius: 8px 12px 6px 10px;
+            color: var(--copper); box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
+            box-sizing: border-box; font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+        }
+        .input-field:focus { outline: none; border-color: var(--copper); box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 0 12px var(--copper-glow); }
+        .input-melted {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            border: 2px solid var(--copper);
+            background: linear-gradient(135deg, #1f2126, #2a2d35);
+        }
+
+        .toggle-group { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+        .checkbox-wavy {
+            width: 26px; height: 26px; border: 2px solid var(--copper);
+            border-radius: 8px 5px 10px 6px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 8px var(--copper-glow); background: rgba(0,0,0,0.2);
+        }
+        .radio-btn {
+            width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--copper);
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 0 8px var(--copper-glow);
+        }
+        .radio-inner { width: 12px; height: 12px; border-radius: 50%; background: var(--copper); }
+        
+        .switch-container { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; }
+        .switch {
+            position: relative; width: 50px; height: 24px; background: #17181c;
+            border-radius: 12px; border: 1px solid #444; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+        }
+        .switch::after {
+            content: ''; position: absolute; top: 1px; right: 2px;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--copper));
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5), 0 0 10px var(--copper-glow);
+        }
+
+        .slider-wrapper { position: relative; width: 100%; height: 20px; display: flex; align-items: center; }
+        .slider-track { width: 100%; height: 6px; background: #17181c; border-radius: 3px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); position: absolute; }
+        .slider-fill { width: 75%; height: 100%; background: var(--copper); border-radius: 3px; position: absolute; box-shadow: 0 0 8px var(--copper-glow); }
+        .slider-thumb {
+            width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff, var(--copper));
+            position: absolute; left: 75%; transform: translateX(-50%); box-shadow: 0 0 15px var(--copper-glow); z-index: 2;
+        }
+
+        /* ==================== 3. NAVIGATION ==================== */
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+
+        .tabs { display: flex; background: #1a1c21; border-radius: 20px 8px 20px 12px; padding: 5px; box-shadow: inset 0 3px 8px rgba(0,0,0,0.7); }
+        .tab { padding: 8px 22px; border-radius: 15px 5px 15px 8px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+        .tab.active { background: var(--panel-bg); color: var(--copper); box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 0 0 8px var(--copper-glow); border: 1px solid var(--copper-dim); }
+
+        .breadcrumbs { font-size: 0.8rem; letter-spacing: 1px; }
+        .breadcrumbs span { color: var(--copper); }
+
+        .pagination { display: flex; align-items: center; gap: 15px; font-size: 0.85rem; font-weight: 600; }
+        .page-box {
+            width: 35px; height: 35px; background: var(--copper-dim); color: var(--copper);
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--copper); border-radius: 8px 12px 6px 10px;
+            box-shadow: 0 0 10px var(--copper-glow); font-size: 1.1rem;
+        }
+
+        .step-process { display: flex; align-items: center; gap: 5px; position: relative; }
+        .step {
+            width: 35px; height: 35px; border-radius: 50%; border: 2px solid #555;
+            display: flex; justify-content: center; align-items: center; background: #222; font-size: 0.9rem; font-weight: bold; z-index: 2;
+        }
+        .step-line { width: 25px; height: 2px; background: #555; }
+        .step.active-large {
+            width: 60px; height: 60px; border-color: var(--copper); color: var(--copper);
+            box-shadow: 0 0 20px var(--copper-glow), inset 0 0 15px var(--copper-glow);
+            border-radius: 40% 60% 50% 50% / 50% 50% 60% 40%; /* Wavy step */
+            font-size: 1.2rem; background: rgba(216,168,153,0.1);
+        }
+        .step-line.active { background: var(--copper); box-shadow: 0 0 5px var(--copper-glow); }
+        .step-tooltip {
+            position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%);
+            background: #2a2d35; border: 1px solid #555; padding: 4px 12px;
+            border-radius: 12px; font-size: 0.65rem; color: var(--text-light); white-space: nowrap;
+        }
+
+        /* ==================== 4. DATA DISPLAY ==================== */
+        .card {
+            background: rgba(0,0,0,0.25); border-radius: 15px 12px 20px 10px; padding: 15px;
+            border: 1px solid #4a4f5a; box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+        }
+        .card-img {
+            height: 140px; border-radius: 10px; margin-bottom: 12px;
+            background: linear-gradient(45deg, #5c433b, #d8a899, #2c3039);
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
+            position: relative; overflow: hidden;
+        }
+        /* Simulasi efek leleh di dalam gambar */
+        .card-img::after {
+            content: ''; position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
+            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 70%);
+            filter: blur(5px);
+        }
+
+        .list-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #3a3f4a; }
+        .avatar-box {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #a4abb5, #3a3f4a);
+            border: 1.5px solid var(--copper); box-shadow: 0 0 10px var(--copper-glow);
+            position: relative; overflow: hidden;
+        }
+        .avatar-box::before { content: ''; position: absolute; top: 15px; left: 10px; width: 6px; height: 4px; background: #111; border-radius: 50%; box-shadow: 14px 0 0 #111; }
+        .avatar-box::after { content: ''; position: absolute; top: 25px; left: 15px; width: 10px; height: 3px; background: #111; border-radius: 50%; }
+
+        .avatar-row { display: flex; gap: 15px; margin: 20px 0; }
+        .avatar-lg { width: 50px; height: 50px; }
+        .avatar-xl { width: 65px; height: 65px; }
+
+        .badges { display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
+        .badge {
+            border: 1px solid var(--copper); padding: 4px 12px; border-radius: 12px 6px 12px 6px;
+            font-size: 0.7rem; color: var(--copper); background: var(--copper-dim);
+            letter-spacing: 0.5px;
+        }
+
+        .table-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #4a4f5a; padding-bottom: 8px; margin-top: 20px; font-size: 0.75rem;
+        }
+
+        /* ==================== 5. FEEDBACK ==================== */
+        .alert-banner {
+            background: linear-gradient(90deg, rgba(216, 168, 153, 0.2), rgba(0,0,0,0.2));
+            border: 1px solid var(--copper); padding: 12px; border-radius: 8px 15px 8px 12px;
+            color: var(--copper); font-size: 0.85rem; font-weight: bold; text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin-bottom: 25px;
+        }
+
+        .modal-box {
+            background: linear-gradient(135deg, #383c47, #24272e);
+            border: 1px solid var(--copper); border-radius: 20px 35px 15px 25px;
+            padding: 30px 25px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), inset 0 0 25px var(--copper-dim);
+        }
+
+        .progress-bar {
+            width: 100%; height: 10px; background: #17181c; border-radius: 5px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.8); overflow: hidden; margin-top: 10px;
+        }
+        .progress-fill {
+            height: 100%; width: 60%; border-radius: 5px;
+            background: linear-gradient(90deg, transparent, var(--copper));
+            box-shadow: 0 0 15px var(--copper-glow);
+        }
+
+        .toast-stack { display: flex; flex-direction: column; gap: 12px; }
+        .toast {
+            background: #2a2d35; border: 1px solid var(--copper); padding: 12px 20px;
+            border-radius: 8px 15px 8px 12px; color: var(--copper); font-size: 0.85rem;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .skeleton-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .skeleton-circle { width: 35px; height: 35px; border-radius: 50%; background: #3a3f4a; }
+        .skeleton-line {
+            height: 10px; background: #3a3f4a; border-radius: 5px;
+            background: linear-gradient(90deg, #3a3f4a 25%, #4a5160 50%, #3a3f4a 75%);
+            background-size: 200% 100%; animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .empty-state { text-align: center; margin-top: 20px; }
+        .empty-icon {
+            width: 80px; height: 80px; margin: 0 auto 15px;
+            background: radial-gradient(circle, #4a5160, #24272e);
+            border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%;
+            border: 2px solid var(--copper-dark); box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        /* Mata di dalam empty state */
+        .empty-icon::after {
+            content: '👁'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 2rem; color: var(--copper); text-shadow: 0 0 10px var(--copper-glow);
+        }
+
+        .spinner {
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 3px solid transparent; border-top-color: var(--copper);
+            border-right-color: var(--copper-dark);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <h1 class="header-title">2:3 SURREALIST UI KIT<br>STYLEGUIDE</h1>
+
+    <!-- 1. FOUNDATIONS -->
+    <div class="panel">
+        <h2 class="panel-title">FOUNDATIONS</h2>
+        <div class="grid-3">
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">SURFACE TOKENS</h3>
+                <div class="surface-container">
+                    <div class="surface-tokens">
+                        <div class="layer layer-1"></div>
+                        <div class="layer layer-2"></div>
+                        <div class="layer layer-3"></div>
+                        <div class="layer layer-4"></div>
+                    </div>
+                    <div class="layer-labels">
+                        <div><strong style="color:#fff;">BASE</strong><br><span class="label-tiny">ELEVATION 0</span></div>
+                        <div><strong style="color:#fff;">RAISED</strong><br><span class="label-tiny">ELEVATION 1: SOFT GLOW</span></div>
+                        <div><strong style="color:#fff;">INSET</strong><br><span class="label-tiny">ELEVATION -1: SHADOW</span></div>
+                        <div><strong style="color:#fff;">PRESSED</strong></div>
+                    </div>
+                    <div class="simeon-tokens">
+                        <div class="simeon-item">
+                            <div class="mini-layer" style="background:rgba(216,168,153,0.3); border:1px solid var(--copper);"></div>
+                            <span class="label-tiny" style="width:80px;">SIMEON 1: ETHEREAL LIFT</span>
+                        </div>
+                        <div class="simeon-item">
+                            <div class="mini-layer" style="background:#2a2d35; border:1px solid #555;"></div>
+                            <span class="label-tiny" style="width:80px;">SIMEON 3: DEEP ABYSS</span>
+                        </div>
+                        <div class="simeon-item">
+                            <div class="mini-layer" style="background:linear-gradient(135deg, #777, #ccc);"></div>
+                            <span class="label-tiny" style="width:80px;">SIMEON 5: TACTILE PRESS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">BORDER THICKNESS TOKENS</h3>
+                <div class="border-thickness">
+                    <div class="thickness-row">
+                        <svg class="thickness-line" height="4"><path d="M0 2 Q 50 -2, 100 2 T 200 2" stroke-width="1"/></svg>
+                        <span class="label-tiny">1px</span>
+                    </div>
+                    <div class="thickness-row">
+                        <svg class="thickness-line" height="6"><path d="M0 3 Q 50 0, 100 3 T 200 3" stroke-width="2"/></svg>
+                        <span class="label-tiny">2px</span>
+                    </div>
+                    <div class="thickness-row">
+                        <svg class="thickness-line" height="10"><path d="M0 5 Q 50 1, 100 5 T 200 5" stroke-width="4"/></svg>
+                        <span class="label-tiny">4px</span>
+                    </div>
+                    <div class="thickness-row">
+                        <svg class="thickness-line" height="16"><path d="M0 8 Q 50 2, 100 8 T 200 8" stroke-width="8" stroke-linecap="round"/></svg>
+                        <span class="label-tiny">8px</span>
+                    </div>
+                </div>
+                
+                <h3 style="font-size: 0.95rem; margin-top: 25px;">RADIUS SCALE</h3>
+                <div class="radius-scale">
+                    <div class="radius-box" style="border-radius: 4px;">4px</div>
+                    <div class="radius-box" style="border-radius: 12px;">12px</div>
+                    <div class="radius-box" style="border-radius: 24px;">24px</div>
+                    <div class="radius-box" style="border-radius: 50%;">FULL</div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">ICONOGRAPHY RULES</h3>
+                <div class="iconography-grid">
+                    <div class="icon-box">
+                        <div style="font-size:14px; color:var(--copper); text-shadow: 0 0 5px var(--copper-glow);">⚙</div>
+                        14px
+                    </div>
+                    <div class="icon-box">
+                        <div style="font-size:18px; color:var(--copper); text-shadow: 0 0 5px var(--copper-glow);">👁</div>
+                        18px
+                    </div>
+                    <div class="icon-box">
+                        <div style="font-size:22px; color:var(--copper); text-shadow: 0 0 5px var(--copper-glow);">➔</div>
+                        22px
+                    </div>
+                </div>
+                
+                <h3 style="font-size: 0.95rem; margin-top: 30px;">STROKE WEIGHT (1.5px)</h3>
+                <svg width="60" height="60" viewBox="0 0 100 100" style="margin-top:10px; filter: drop-shadow(0 0 5px var(--copper-glow));">
+                    <path d="M50 90 L50 50 L30 30 M50 50 L70 30 M60 40 L80 50 M40 40 L20 50" stroke="var(--copper)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CONTROLS -->
+    <div class="panel">
+        <h2 class="panel-title">CONTROLS</h2>
+        <div class="grid-3">
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">BUTTON SET</h3>
+                <div class="btn-container">
+                    <button class="btn">DEFAULT</button>
+                </div>
+                <div class="btn-container">
+                    <button class="btn pressed">PRESSED</button>
+                    <span class="label-tiny">--- LOAD/MELT/SHIFT<br>--- CHANGE ON PRESS</span>
+                </div>
+                <div class="btn-container">
+                    <button class="btn disabled">DISABLED</button>
+                    <span class="label-tiny">--- DISABLED STATE</span>
+                </div>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">TEXT FIELD</h3>
+                <div class="input-wrapper">
+                    <input type="text" class="input-field" placeholder="Enter your dreams...">
+                    <div style="font-size: 0.65rem; color: var(--copper); margin-top: 5px;">⚠️ INVALID INPUT: DREAM ALREADY DREAMT</div>
+                </div>
+                
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">FOCUSED STATE</h3>
+                <input type="text" class="input-field input-melted" value="Enter your dreams...">
+                
+                <h3 style="font-size: 0.95rem; margin-top: 15px; margin-bottom: 15px;">FOCUSED STATE</h3>
+                <input type="text" class="input-field" value="Enter your dreams..." style="border-color: var(--copper); box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 0 12px var(--copper-glow);">
+            </div>
+            
+            <div>
+                <div class="toggle-group">
+                    <div>
+                        <h3 style="font-size: 0.95rem; margin-bottom: 10px;">CHECKBOX</h3>
+                        <div class="checkbox-wavy"><span style="color:var(--copper); font-size:14px; font-weight:bold;">✔</span></div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 0.95rem; margin-bottom: 10px;">RADIO</h3>
+                        <div class="radio-btn"><div class="radio-inner"></div></div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 0.95rem; margin-bottom: 10px;">SWITCH</h3>
+                        <div class="switch-container">
+                            <span>OFF</span>
+                            <div class="switch"></div>
+                            <span>ON</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px; margin-top:30px;">SLIDER <span style="float:right; font-size:0.7rem;">VALUE: 75</span></h3>
+                <div class="slider-wrapper">
+                    <div class="slider-track"></div>
+                    <div class="slider-fill"></div>
+                    <div class="slider-thumb"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:10px; color:#555; font-size:10px;">
+                    <span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span><span>|</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. NAVIGATION -->
+    <div class="panel alt-melt">
+        <h2 class="panel-title">NAVIGATION</h2>
+        <div class="nav-wrapper">
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">TABS</h3>
+                <div class="tabs">
+                    <div class="tab active">EXPLORE</div>
+                    <div class="tab">COLLECTION</div>
+                </div>
+                
+                <h3 style="font-size: 0.95rem; margin-top: 25px; margin-bottom: 10px;">BREADCRUMBS</h3>
+                <div class="breadcrumbs">HOME > VISIONS > <span>CURRENT STATE</span></div>
+                
+                <div style="display:flex; gap:10px; align-items:center; margin-top:25px; font-size:0.8rem; color:#888;">
+                    PREV &nbsp; <span style="color:var(--copper); border:1px solid var(--copper); padding:2px 8px; border-radius:4px; background:var(--copper-dim);">1</span> &nbsp; 2 &nbsp; 3 &nbsp; NEXT
+                </div>
+            </div>
+            
+            <div style="text-align:center;">
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px; text-align:left;">PAGINATION</h3>
+                <div class="pagination">
+                    <span style="color:var(--copper);">PREV</span>
+                    <div class="page-box">2</div>
+                    <span>3</span>
+                    <span style="color:var(--copper);">NEXT</span>
+                </div>
+                <div style="font-size:0.65rem; color:#777; margin-top:8px;">PAGE</div>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 0.95rem; margin-bottom: 15px;">5-STEP PROCESS</h3>
+                <div class="step-process">
+                    <div class="step">1</div>
+                    <div class="step-line active"></div>
+                    <div class="step">2</div>
+                    <div class="step-line active"></div>
+                    <div style="position:relative;">
+                        <div class="step active-large">3:</div>
+                        <div class="step-tooltip">TOOLTIP: CONVERTING MATTER...</div>
+                    </div>
+                    <div class="step-line" style="margin-left:-5px;"></div>
+                    <div class="step">4</div>
+                    <div class="step-line"></div>
+                    <div class="step">5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 & 5. DATA DISPLAY & FEEDBACK -->
+    <div class="grid-2">
+        
+        <div class="panel">
+            <h2 class="panel-title">DATA DISPLAY</h2>
+            
+            <h3 style="font-size: 0.95rem; margin-bottom: 15px;">CARDS</h3>
+            <div class="card">
+                <div class="card-img"></div>
+                <div style="font-size:0.6rem; color:#888; letter-spacing:1px;">SURREAL LANDSCAPE</div>
+                <h4 style="margin:5px 0; color:#fff; font-size:1.1rem;">The Melting Hour</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom:15px;">An exploration of warped realities.</p>
+                <button class="btn" style="width:100%; padding:8px; font-size:0.8rem;">VIEW MORE</button>
+            </div>
+            
+            <div class="grid-2" style="margin-top:25px; gap:15px;">
+                <div>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 10px;">BADGES</h3>
+                    <div class="badges">
+                        <div class="badge">STATUS: ACTIVE</div>
+                        <div class="badge">TYPE: SURREAL</div>
+                        <div class="badge" style="border-color:#555; color:#aaa; background:transparent;">COUNT: 3</div>
+                    </div>
+                    
+                    <div style="margin-top:20px; background:#2a2d35; border:1px solid #555; padding:6px 12px; border-radius:15px; display:inline-block; font-size:0.75rem;">
+                        <strong style="color:#fff;">TOOLTIP</strong><br>
+                        <span style="color:#aaa;">M/S: A fleeting thought</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 10px;">LIST ITEMS <span style="text-transform:none; font-size:0.7rem; color:#777;">secondary text</span></h3>
+                    <div class="list-item">
+                        <div class="avatar-box"></div>
+                        <div style="flex:1;">
+                            <div style="font-weight: 600; font-size: 0.85rem; color: #fff; display:flex; justify-content:space-between;">
+                                Cosmic Anomaly <span style="background:var(--copper); color:#000; font-size:0.6rem; padding:2px 4px; border-radius:4px;">NEW</span>
+                            </div>
+                            <div style="font-size: 0.7rem; color:#888;">Detected on the event horizon.</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="avatar-box"></div>
+                        <div style="flex:1;">
+                            <div style="font-weight: 600; font-size: 0.85rem; color: #fff; display:flex; justify-content:space-between;">
+                                Cosmic Anomaly <span style="background:var(--copper); color:#000; font-size:0.6rem; padding:2px 4px; border-radius:4px;">NEW</span>
+                            </div>
+                            <div style="font-size: 0.7rem; color:#888;">Detected on the event horizon.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 0.95rem; margin-top: 25px; margin-bottom: 5px;">AVATARS</h3>
+            <div class="avatar-row">
+                <div class="avatar-box"></div>
+                <div class="avatar-box avatar-lg"></div>
+                <div class="avatar-box avatar-xl" style="background: radial-gradient(circle at 30% 30%, #d8a899, #5c433b);"></div>
+            </div>
+
+            <h3 style="font-size: 0.95rem; margin-top: 25px;">COMPACT TABLE HEADER</h3>
+            <div class="table-header">
+                <div>ID ↕</div>
+                <div>VISION NAME ↕</div>
+                <div>STATUS ↕</div>
+                <div>DATE ↕</div>
+                <div style="color:var(--copper);">↑↓ ⚲</div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2 class="panel-title">FEEDBACK</h2>
+            
+            <div style="text-align:right; font-size:0.7rem; color:#888; margin-bottom:5px;">ALERT BANNER</div>
+            <div class="alert-banner">⚠️ ALERT: TIMELINE INSTABILITY DETECTED.</div>
+            
+            <div class="grid-2">
+                <div>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 15px;">MODAL CONFIRMATION</h3>
+                    <div class="modal-box">
+                        <h4 class="copper-text" style="font-size:1.1rem; margin-bottom:10px;">CONFIRM DEPARTURE</h4>
+                        <p style="font-size: 0.8rem; color:#aaa; margin-bottom:20px;">Are you sure you want to leave this reality?</p>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button class="btn" style="padding: 6px 12px; font-size: 0.7rem; color: #aaa; border-color:#555; box-shadow:none; width:auto;">CANCEL</button>
+                            <button class="btn" style="padding: 6px 12px; font-size: 0.7rem; background:var(--copper-dim); width:auto;">CONFIRM</button>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 0.95rem; margin-top: 30px; margin-bottom: 5px;">LINEAR PROGRESS</h3>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                    <div style="font-size:0.7rem; margin-top:5px; color:#777;">60% COMPLETE</div>
+                    
+                    <h3 style="font-size: 0.95rem; margin-top: 30px; display:flex; align-items:center; gap:10px;">SKELETON ROWS</h3>
+                    <div>
+                        <div class="skeleton-row">
+                            <div class="skeleton-circle"></div>
+                            <div style="flex:1;">
+                                <div class="skeleton-line" style="width: 100%; margin-bottom:6px;"></div>
+                                <div class="skeleton-line" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-row">
+                            <div class="skeleton-circle"></div>
+                            <div style="flex:1;">
+                                <div class="skeleton-line" style="width: 90%; margin-bottom:6px;"></div>
+                                <div class="skeleton-line" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 15px;">TOAST STACK</h3>
+                    <div class="toast-stack">
+                        <div class="toast">TOAST 1: REALITY SHIFT DETECTED.</div>
+                        <div class="toast" style="opacity: 0.7;">TOAST 2: DATA SYNC COMPLETE.</div>
+                    </div>
+                    
+                    <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-top:20px;">
+                        <span style="font-size:0.8rem; font-weight:bold;">SPINNER</span>
+                        <div class="spinner"></div>
+                    </div>
+
+                    <h3 style="font-size: 0.95rem; margin-top: 30px;">EMPTY STATE</h3>
+                    <div class="empty-state">
+                        <div class="empty-icon"></div>
+                        <div style="color:#aaa; font-size:0.85rem; margin-bottom:15px;">No Visions Found.</div>
+                        <button class="btn" style="background:var(--copper-dim); padding:8px 20px; font-size:0.8rem; width:auto;">CREATE VISION</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

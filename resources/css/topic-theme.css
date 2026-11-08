@@ -1,0 +1,989 @@
+/* ==========================================================================
+   TOPIC LISTING — tema baru (TemplateMo 590)
+   Aktif saat <html data-theme="topic">.
+   Mengambil inspirasi warna Bootstrap tema (biru-hijau) tanpa membawa
+   Bootstrap itu sendiri.
+   ========================================================================== */
+
+[data-theme='topic'] {
+    --bg-color: #eef7ff;
+    --bg-deep: #e3f0ff;
+    --panel-bg: rgba(255, 255, 255, 0.85);
+    --panel-solid: rgba(255, 255, 255, 0.95);
+    --panel-hover: rgba(255, 255, 255, 0.98);
+    --topic-primary: #0d3d56;
+    --topic-primary-soft: #13547a;
+    --topic-secondary: #6ac7bc;
+    --topic-tertiary: #4fd1c5;
+    --accent: #13547a;
+    --accent-light: #1f7fb6;
+    --accent-glow: rgba(19, 84, 122, 0.25);
+    --text-light: #3a4a55;
+    --text-muted: #6b7a85;
+    --text-white: #1a1c23;
+    --line: rgba(19, 84, 122, 0.18);
+    --line-soft: rgba(19, 84, 122, 0.1);
+    --border-melt: 20px 20px 24px 18px;
+    --shadow-panel: 0 12px 40px rgba(19, 84, 122, 0.1), 0 2px 8px rgba(19, 84, 122, 0.06);
+    --shadow-panel-hover: 0 20px 60px rgba(19, 84, 122, 0.15), 0 4px 16px rgba(19, 84, 122, 0.08);
+    --font-display: 'Montserrat', 'Inter', system-ui, sans-serif;
+    --font-body: 'Open Sans', 'Inter', system-ui, sans-serif;
+}
+
+html[data-theme='topic'] {
+    min-height: 100%;
+    background: var(--bg-color);
+}
+
+[data-theme='topic'] body,
+[data-theme='topic'] body.public-home,
+[data-theme='topic'] body.auth-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: var(--text-light);
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    background-image:
+        radial-gradient(ellipse 60% 40% at 10% 0%, rgba(19, 84, 122, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 30% at 90% 100%, rgba(106, 199, 188, 0.1) 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg-color) 0%, var(--bg-deep) 100%);
+    background-attachment: fixed;
+}
+
+[data-theme='topic'] h1,
+[data-theme='topic'] h2,
+[data-theme='topic'] h3,
+[data-theme='topic'] h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--topic-primary);
+    letter-spacing: -0.01em;
+}
+
+[data-theme='topic'] a {
+    color: var(--topic-primary);
+    transition: color 0.2s ease;
+}
+
+[data-theme='topic'] a:hover {
+    color: var(--accent-light);
+}
+
+[data-theme='topic'] ::selection {
+    background: rgba(106, 199, 188, 0.35);
+    color: var(--topic-primary);
+}
+
+[data-theme='topic'] :is(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--topic-secondary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(106, 199, 188, 0.25);
+}
+
+[data-theme='topic'] .public-site,
+[data-theme='topic'] .app-shell {
+    background: transparent;
+    color: var(--text-light);
+}
+
+[data-theme='topic'] .page-content,
+[data-theme='topic'] .main-content {
+    background: transparent;
+}
+
+[data-theme='topic'] .public-header {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-panel);
+    border-radius: 0 0 28px 28px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+[data-theme='topic'] .public-brand .inlinesia-logo-copy strong {
+    color: var(--topic-primary);
+}
+
+[data-theme='topic'] .public-brand .inlinesia-logo-copy small {
+    color: var(--text-muted);
+}
+
+[data-theme='topic'] .public-nav-link {
+    color: var(--text-light);
+}
+
+[data-theme='topic'] .public-nav-link:hover {
+    color: var(--topic-primary);
+}
+
+[data-theme='topic'] .public-nav-link.is-active {
+    color: var(--topic-primary);
+    background: rgba(106, 199, 188, 0.15);
+    box-shadow: inset 2px 0 var(--topic-secondary);
+}
+
+[data-theme='topic'] .button-primary,
+[data-theme='topic'] .account-submit,
+[data-theme='topic'] .listing-register-link {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--topic-tertiary) 0%, var(--topic-primary-soft) 100%);
+    box-shadow: 0 8px 24px rgba(19, 84, 122, 0.25);
+    border: none;
+}
+
+[data-theme='topic'] .button-primary:hover,
+[data-theme='topic'] .account-submit:hover,
+[data-theme='topic'] .listing-register-link:hover {
+    filter: brightness(1.03);
+    box-shadow: 0 12px 32px rgba(19, 84, 122, 0.3);
+}
+
+[data-theme='topic'] .panel,
+[data-theme='topic'] .account-form-card,
+[data-theme='topic'] .account-table-card,
+[data-theme='topic'] .event-category-card,
+[data-theme='topic'] .finance-summary-card,
+[data-theme='topic'] .race-format-card,
+[data-theme='topic'] .race-heat,
+[data-theme='topic'] .race-standings,
+[data-theme='topic'] .listing-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme='topic'] .panel:hover,
+[data-theme='topic'] .account-form-card:hover,
+[data-theme='topic'] .account-table-card:hover,
+[data-theme='topic'] .event-category-card:hover,
+[data-theme='topic'] .finance-summary-card:hover,
+[data-theme='topic'] .race-format-card:hover,
+[data-theme='topic'] .race-heat:hover,
+[data-theme='topic'] .race-standings:hover,
+[data-theme='topic'] .listing-card:hover {
+    box-shadow: var(--shadow-panel-hover);
+    border-color: rgba(19, 84, 122, 0.25);
+}
+
+[data-theme='topic'] .sidebar {
+    color: #f0f7ff;
+    background: radial-gradient(120% 120% at 0% 0%, var(--accent-light) 0%, var(--topic-primary-soft) 60%, var(--topic-primary) 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+[data-theme='topic'] .sidebar-toggle {
+    color: var(--topic-primary);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(19, 84, 122, 0.22);
+}
+
+[data-theme='topic'] .nav-link {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+[data-theme='topic'] .nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme='topic'] .nav-link.is-active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: inset 2px 0 var(--topic-tertiary);
+}
+
+[data-theme='topic'] .topbar {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='topic'] .account-table th {
+    background: rgba(106, 199, 188, 0.15);
+    color: var(--topic-primary);
+}
+
+[data-theme='topic'] .form-field :is(input, select, textarea) {
+    border-color: var(--line);
+    background: var(--panel-solid);
+    color: var(--text-white);
+}
+
+[data-theme='topic'] .form-field :is(input, select, textarea)::placeholder {
+    color: rgba(107, 122, 133, 0.6);
+}
+
+[data-theme='topic'] .race-badge {
+    background: rgba(106, 199, 188, 0.2);
+    color: var(--topic-primary);
+    border-color: rgba(106, 199, 188, 0.4);
+}
+
+[data-theme='topic'] .race-quick.is-win {
+    border-color: rgba(19, 84, 122, 0.4);
+    color: var(--topic-primary);
+}
+
+[data-theme='topic'] .race-quick.is-no-show,
+[data-theme='topic'] .race-quick.is-dnf,
+[data-theme='topic'] .race-quick.is-dsq {
+    border-color: rgba(19, 84, 122, 0.28);
+    color: var(--topic-primary);
+}
+[data-theme="topic"] .sidebar :is(a,p,span,strong,small,li,.nav-link,.workspace-label,.section-kicker,.help-card p,.user-copy small) { color: inherit !important; }
+[data-theme="topic"] .sidebar .nav-link { color: rgba(255,255,255,0.86) !important; }
+[data-theme="topic"] .sidebar .nav-link.is-active { color: #fff !important; }
+[data-theme="topic"] :is(.main-content,.page-content,.panel) { color: var(--text-light) !important; }
+[data-theme="topic"] .form-section-heading :is(h2,p) { color: var(--topic-primary) !important; }
+[data-theme="topic"] .form-field label { color: var(--text-light) !important; }
+[data-theme="topic"] .field-hint,[data-theme="topic"] .optional-label { color: var(--text-muted) !important; }
+[data-theme="topic"] .account-table th { color: var(--topic-primary) !important; }
+[data-theme="topic"] .public-header .public-nav-link { color: var(--text-light) !important; }
+[data-theme="topic"] .public-header .public-nav-link.is-active { color: var(--topic-primary) !important; }
+
+[data-theme="topic"] .account-eyebrow,
+[data-theme="topic"] .eyebrow,
+[data-theme="topic"] .section-kicker,
+[data-theme="topic"] .workspace-label { color: var(--text-muted) !important; }
+[data-theme="topic"] h1,
+[data-theme="topic"] h2,
+[data-theme="topic"] h3 { color: var(--topic-primary) !important; }
+[data-theme="topic"] .page-subtitle { color: var(--text-muted) !important; }
+[data-theme="topic"] .topbar { color: var(--text-light) !important; }
+[data-theme="topic"] .topbar :is(a,span,strong,button) { color: inherit !important; }
+[data-theme="topic"] .public-header .public-login,
+[data-theme="topic"] .public-header .public-logout { color: var(--text-light) !important; }
+[data-theme="topic"] .public-header .public-login:hover { color: var(--topic-primary) !important; }
+[data-theme="topic"] .season-pill { color: var(--text-light) !important; border-color: var(--line) !important; }
+[data-theme="topic"] .icon-button { color: var(--text-light) !important; }
+[data-theme="topic"] .breadcrumbs { color: var(--text-muted) !important; }
+[data-theme="topic"] .breadcrumbs strong { color: var(--topic-primary) !important; }
+
+[data-theme="topic"] .public-header :is(a,span,button,.public-login,.public-logout) { color: var(--text-light) !important; }
+[data-theme="topic"] .public-header .public-nav-link.is-active { color: var(--topic-primary) !important; }
+[data-theme="topic"] .public-home .public-header :is(a,span,button) { color: #e8f0f8 !important; }
+[data-theme="topic"] .public-home .public-header .public-nav-link.is-active { color: var(--topic-tertiary) !important; }
+[data-theme="topic"] .public-home .hero h1,
+[data-theme="topic"] .public-home .hero p,
+[data-theme="topic"] .public-home .hero-description p { color: #e8f0f8 !important; }
+[data-theme="topic"] .public-home .hero-subtitle { color: rgba(232,240,248,0.85) !important; }
+[data-theme="topic"] .public-home .hero-stat-number { color: #fff !important; }
+[data-theme="topic"] .public-home .hero-stat-label { color: rgba(232,240,248,0.8) !important; }
+
+[data-theme="topic"] .public-site,
+[data-theme="topic"] .public-site :is(p,span,li,a,label,small,strong,h1,h2,h3,h4,h5,h6),
+[data-theme="topic"] .public-header :is(a,span,button),
+[data-theme="topic"] .public-home .hero :is(h1,p,span),
+[data-theme="topic"] .public-home .feature-content :is(h3,p),
+[data-theme="topic"] .public-home .process-content :is(h3,p),
+[data-theme="topic"] .public-home .faq-list :is(h3,p,a),
+[data-theme="topic"] .public-home .contact-section :is(h2,p,label),
+[data-theme="topic"] .public-home .footer :is(a,p,span) { color: inherit !important; }
+[data-theme="topic"] .public-home .hero h1,
+[data-theme="topic"] .public-home .hero p { color: #e8f0f8 !important; }
+[data-theme="topic"] .public-home .feature-content h3,
+[data-theme="topic"] .public-home .process-step h3 { color: var(--topic-primary) !important; }
+[data-theme="topic"] .public-home .feature-content p,
+[data-theme="topic"] .public-home .process-step p { color: var(--text-light) !important; }
+
+/* ==========================================================================
+   TOPIC — Halaman daftar lomba (event listing)
+   Sebelumnya kelas-kelas ini tidak punya override di tema topic, sehingga
+   warisan warna terang/putih dari landing.css tampil sebagai blok yang
+   mengganggu di atas latar biru muda tema ini.
+   ========================================================================== */
+[data-theme='topic'] .listing-intro h1 {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-intro > p {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .listing-back-link {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .listing-back-link:hover {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-results {
+    border-top-color: var(--line) !important;
+}
+[data-theme='topic'] .listing-toolbar h2 {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-toolbar h2 span {
+    color: var(--topic-primary) !important;
+    background: rgba(106, 199, 188, 0.2) !important;
+}
+[data-theme='topic'] .listing-sort-label {
+    border-color: var(--line) !important;
+    color: var(--text-muted) !important;
+    background: var(--panel-solid) !important;
+}
+[data-theme='topic'] .listing-sort-label span {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-event-card {
+    border-color: var(--line) !important;
+    background: var(--panel-bg) !important;
+    box-shadow: var(--shadow-panel);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+[data-theme='topic'] .listing-event-card:hover {
+    box-shadow: var(--shadow-panel-hover);
+    border-color: rgba(19, 84, 122, 0.25);
+    transform: translateY(-2px);
+}
+[data-theme='topic'] .listing-event-date {
+    border-color: rgba(106, 199, 188, 0.5) !important;
+    background: rgba(106, 199, 188, 0.12) !important;
+}
+[data-theme='topic'] .listing-event-date :is(strong, span, small) {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-event-body h3 {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-event-body > p {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .listing-event-type,
+[data-theme='topic'] .listing-status {
+    border-color: rgba(19, 84, 122, 0.28) !important;
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-status-open {
+    border-color: rgba(19, 84, 122, 0.45) !important;
+    color: var(--topic-primary) !important;
+    background: rgba(106, 199, 188, 0.18) !important;
+}
+[data-theme='topic'] .listing-status-preparing {
+    border-color: rgba(19, 84, 122, 0.2) !important;
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .listing-event-facts,
+[data-theme='topic'] .listing-event-facts span {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .listing-event-facts > span > span {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-card-number {
+    color: rgba(19, 84, 122, 0.3) !important;
+}
+[data-theme='topic'] .listing-register-link,
+[data-theme='topic'] .listing-roster-link {
+    color: #ffffff !important;
+    border: none;
+}
+[data-theme='topic'] .listing-demo-notice {
+    border-color: var(--line) !important;
+    background: rgba(106, 199, 188, 0.1) !important;
+}
+[data-theme='topic'] .listing-demo-notice > span {
+    color: var(--topic-primary) !important;
+    background: rgba(106, 199, 188, 0.22) !important;
+}
+[data-theme='topic'] .listing-demo-notice :is(p, strong),
+[data-theme='topic'] .listing-demo-footnote,
+[data-theme='topic'] .listing-demo-footnote span {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .listing-empty-state {
+    border-color: rgba(19, 84, 122, 0.2) !important;
+    background: var(--panel-bg) !important;
+}
+[data-theme='topic'] .listing-empty-state > span,
+[data-theme='topic'] .listing-empty-state :is(h3, p) {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .listing-organizer-cta {
+    background: var(--panel-bg) !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: var(--shadow-panel);
+}
+[data-theme='topic'] .listing-organizer-cta :is(h2, p) {
+    color: var(--topic-primary) !important;
+}
+
+/* ==========================================================================
+   TOPIC — Halaman pendaftaran peserta
+   Kelas-kelas ini sebelumnya mewarisi latar putih dan teks gelap dari
+   account-portal.css sehingga tampak sebagai bidang putih yang mengganggu
+   di tengah tema topic.
+   ========================================================================== */
+[data-theme='topic'] .account-card {
+    border: 1px solid var(--line) !important;
+    background: var(--panel-bg) !important;
+    box-shadow: var(--shadow-panel);
+}
+[data-theme='topic'] .account-card-heading h2 {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .account-card-heading p,
+[data-theme='topic'] .account-eyebrow {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .account-intro h1 {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .account-intro > p {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .account-form label {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .account-form :is(input, select, textarea) {
+    border-color: var(--line) !important;
+    color: var(--text-white) !important;
+    background: var(--panel-solid) !important;
+}
+[data-theme='topic'] .account-form :is(input, select, textarea):focus {
+    border-color: var(--topic-primary) !important;
+    box-shadow: 0 0 0 3px rgba(19, 84, 122, 0.15);
+}
+[data-theme='topic'] .account-form label.is-locked :is(select, input) {
+    color: var(--text-muted) !important;
+    background: rgba(19, 84, 122, 0.06) !important;
+}
+[data-theme='topic'] .field-hint,
+[data-theme='topic'] .optional-label {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .nik-feedback {
+    border-color: rgba(30, 132, 73, 0.35) !important;
+    color: #1e8449 !important;
+    background: rgba(106, 199, 188, 0.16) !important;
+}
+[data-theme='topic'] .nik-feedback.is-error {
+    border-color: rgba(164, 64, 47, 0.35) !important;
+    color: #a4402f !important;
+    background: rgba(236, 136, 109, 0.14) !important;
+}
+[data-theme='topic'] .category-assignment-preview {
+    border-color: var(--line) !important;
+    color: var(--text-muted) !important;
+    background: rgba(19, 84, 122, 0.05) !important;
+}
+[data-theme='topic'] .category-assignment-preview.is-assigned {
+    border-color: rgba(30, 132, 73, 0.3) !important;
+    color: #1e8449 !important;
+    background: rgba(106, 199, 188, 0.16) !important;
+}
+[data-theme='topic'] .athlete-registration-form .role-options {
+    border-color: var(--line) !important;
+}
+[data-theme='topic'] .athlete-registration-form .role-options legend,
+[data-theme='topic'] .athlete-registration-form .role-option {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .event-eligible-categories {
+    border-color: var(--line) !important;
+    background: rgba(19, 84, 122, 0.04) !important;
+}
+[data-theme='topic'] .event-eligible-categories > strong {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .event-eligible-categories p {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .event-payment-instructions {
+    border-color: var(--line) !important;
+    background: rgba(19, 84, 122, 0.04) !important;
+}
+[data-theme='topic'] .event-payment-instructions > :is(strong, p, small) {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .event-payment-account {
+    border-color: rgba(106, 199, 188, 0.3) !important;
+    background: rgba(106, 199, 188, 0.12) !important;
+}
+[data-theme='topic'] .event-payment-account :is(span, strong) {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .event-pricing-waves {
+    border-color: var(--line) !important;
+    background: rgba(19, 84, 122, 0.04) !important;
+}
+[data-theme='topic'] .event-pricing-waves > span:first-child,
+[data-theme='topic'] .event-pricing-wave-group > b {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .event-pricing-wave {
+    color: var(--text-muted) !important;
+}
+[data-theme='topic'] .event-pricing-wave.is-active {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .event-pricing-wave.is-active em {
+    color: var(--topic-primary) !important;
+}
+[data-theme='topic'] .event-user-registrations {
+    border-color: var(--line) !important;
+    background: rgba(19, 84, 122, 0.04) !important;
+}
+[data-theme='topic'] .event-user-registrations > :is(strong, span) {
+    color: var(--text-light) !important;
+}
+[data-theme='topic'] .account-errors {
+    border-color: rgba(164, 64, 47, 0.35) !important;
+    color: #a4402f !important;
+    background: rgba(236, 136, 109, 0.12) !important;
+}
+[data-theme='topic'] .account-back-link,
+[data-theme='topic'] .account-edit-link {
+    color: var(--topic-primary) !important;
+}
+
+/* ==========================================================================
+   TOPIC — Landing page components (beranda publik)
+   Memastikan semua komponen halaman publik konsisten dengan tema topic.
+   ========================================================================== */
+
+/* Hero section */
+[data-theme='topic'] .public-home .public-hero {
+    background: linear-gradient(112deg, rgba(19, 84, 122, 0.08) 0%, rgba(227, 240, 255, 0.9) 56%, var(--bg-color) 100%);
+}
+[data-theme='topic'] .public-home .public-hero-art {
+    border-color: var(--line);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+[data-theme='topic'] .public-home .platform-preview-link {
+    border-color: var(--line);
+    background: var(--panel-solid);
+    color: var(--text-light);
+}
+[data-theme='topic'] .public-home .platform-preview-link:hover {
+    border-color: var(--topic-secondary);
+    transform: translateX(3px);
+}
+[data-theme='topic'] .public-home .platform-preview-link strong {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-home .platform-preview-link small {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-home .platform-preview-link em {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-home .platform-preview-arrow {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-home .platform-preview-number {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-home .hero-bottom-note {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-home .hero-bottom-note span {
+    color: var(--topic-primary);
+}
+
+/* Championship/Event listing on home page */
+[data-theme='topic'] .public-championships {
+    border-bottom-color: var(--line);
+}
+[data-theme='topic'] .public-championship-list .listing-event-card {
+    margin: 0;
+    border-color: var(--line);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+}
+[data-theme='topic'] .public-championship-list .listing-event-card:hover {
+    box-shadow: var(--shadow-panel-hover);
+    border-color: rgba(19, 84, 122, 0.25);
+}
+
+/* Service cards */
+[data-theme='topic'] .service-cards .service-card {
+    border-color: var(--line);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+[data-theme='topic'] .service-cards .service-card:hover {
+    box-shadow: var(--shadow-panel-hover);
+    border-color: rgba(19, 84, 122, 0.25);
+    transform: translateY(-2px);
+}
+[data-theme='topic'] .service-card .service-icon {
+    border-color: var(--line);
+    background: rgba(106, 199, 188, 0.12);
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .service-card:nth-child(2) .service-icon {
+    background: rgba(19, 84, 122, 0.1);
+}
+[data-theme='topic'] .service-card:nth-child(3) .service-icon {
+    background: rgba(106, 199, 188, 0.1);
+}
+[data-theme='topic'] .service-card h3 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .service-card p {
+    color: var(--text-light);
+}
+[data-theme='topic'] .service-card .public-text-link {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .service-card .public-text-link:hover {
+    color: var(--accent-light);
+}
+[data-theme='topic'] .service-number {
+    color: rgba(19, 84, 122, 0.3);
+}
+
+/* Public events section */
+[data-theme='topic'] .public-events {
+    border-top-color: var(--line);
+}
+[data-theme='topic'] .public-section-heading h2 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-section-label {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-event-card {
+    border-color: var(--line);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+[data-theme='topic'] .public-event-card:hover {
+    box-shadow: var(--shadow-panel-hover);
+    border-color: rgba(19, 84, 122, 0.25);
+    transform: translateY(-2px);
+}
+[data-theme='topic'] .public-event-date {
+    background: rgba(106, 199, 188, 0.12);
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-event-date strong,
+[data-theme='topic'] .public-event-date span {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-event-tag {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-event-details h3 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-event-details p {
+    color: var(--text-light);
+}
+[data-theme='topic'] .public-event-arrow {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-event-arrow:hover {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .event-demo-note {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .event-demo-note span {
+    background: var(--topic-secondary);
+}
+
+/* Community section */
+[data-theme='topic'] .public-community {
+    border-top-color: var(--line);
+    background: rgba(255, 255, 255, 0.3);
+}
+[data-theme='topic'] .community-copy h2 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .community-copy h2 span {
+    color: var(--topic-secondary);
+}
+[data-theme='topic'] .community-copy > p {
+    color: var(--text-light);
+}
+[data-theme='topic'] .community-values {
+    border-top-color: var(--line);
+}
+[data-theme='topic'] .community-values article {
+    border-bottom-color: var(--line);
+}
+[data-theme='topic'] .community-values h3 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .community-values p {
+    color: var(--text-light);
+}
+[data-theme='topic'] .value-number {
+    color: var(--topic-secondary);
+}
+[data-theme='topic'] .value-mark {
+    color: var(--text-muted);
+}
+
+/* Contact section */
+[data-theme='topic'] .public-contact {
+    /* uses global styles */
+}
+[data-theme='topic'] .contact-heading h2 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .contact-heading h2 span {
+    color: var(--topic-secondary);
+}
+[data-theme='topic'] .contact-heading p {
+    color: var(--text-light);
+}
+[data-theme='topic'] .contact-grid .contact-item {
+    border-color: var(--line);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-panel);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+[data-theme='topic'] .contact-grid .contact-item:hover {
+    box-shadow: var(--shadow-panel-hover);
+    border-color: rgba(19, 84, 122, 0.25);
+    transform: translateY(-2px);
+}
+[data-theme='topic'] .contact-icon {
+    background: rgba(106, 199, 188, 0.12);
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .contact-item:nth-child(2) .contact-icon {
+    background: rgba(19, 84, 122, 0.1);
+    color: var(--accent-light);
+}
+[data-theme='topic'] .contact-item:nth-child(3) .contact-icon {
+    background: rgba(106, 199, 188, 0.1);
+    color: var(--topic-tertiary);
+}
+[data-theme='topic'] .contact-label {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .contact-value {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .contact-value.is-empty {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .contact-action {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .contact-action:hover {
+    color: var(--accent-light);
+}
+[data-theme='topic'] .contact-foot {
+    border-color: var(--line);
+    background: var(--panel-bg);
+}
+[data-theme='topic'] .contact-foot p {
+    color: var(--text-light);
+}
+
+/* Club CTA */
+[data-theme='topic'] .club-cta {
+    background: linear-gradient(135deg, var(--topic-primary) 0%, var(--topic-primary-soft) 100%);
+    color: #fff;
+}
+[data-theme='topic'] .club-cta .public-section-label {
+    color: rgba(255, 255, 255, 0.7);
+}
+[data-theme='topic'] .club-cta h2 {
+    color: #fff;
+}
+[data-theme='topic'] .club-cta p {
+    color: rgba(255, 255, 255, 0.85);
+}
+[data-theme='topic'] .contact-phone {
+    color: #fff;
+}
+[data-theme='topic'] .contact-phone:hover {
+    color: var(--topic-tertiary);
+}
+[data-theme='topic'] .club-cta .public-button-orange {
+    background: var(--topic-tertiary);
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .club-cta .public-button-orange:hover {
+    background: var(--topic-secondary);
+}
+[data-theme='topic'] .club-cta .public-button-light {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+[data-theme='topic'] .club-cta .public-button-light:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+[data-theme='topic'] .cta-sun {
+    background: radial-gradient(circle at 35% 35%, var(--topic-tertiary), var(--topic-secondary));
+    box-shadow: 0 0 40px rgba(106, 199, 188, 0.4);
+    opacity: 0.6;
+}
+
+/* Sponsor card */
+[data-theme='topic'] .sponsor-card {
+    border-color: var(--line);
+    background: var(--panel-bg);
+}
+[data-theme='topic'] .sponsor-card-intro h2 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .sponsor-card-intro p {
+    color: var(--text-light);
+}
+[data-theme='topic'] .sponsor-card-options article {
+    border-color: var(--line);
+    background: var(--panel-solid);
+}
+[data-theme='topic'] .sponsor-option-number {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .sponsor-card-options h3 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .sponsor-card-options p {
+    color: var(--text-light);
+}
+
+/* Footer */
+[data-theme='topic'] .public-footer {
+    border-top-color: var(--line);
+}
+[data-theme='topic'] .footer-brand .inlinesia-logo-copy strong {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .footer-brand .inlinesia-logo-copy small {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .footer-tagline,
+[data-theme='topic'] .footer-copyright,
+[data-theme='topic'] .footer-admin-link {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .footer-admin-link:hover {
+    color: var(--topic-primary);
+}
+
+/* About Inlinesia */
+[data-theme='topic'] .about-inlinesia {
+    border-bottom-color: var(--line);
+}
+[data-theme='topic'] .about-inlinesia p {
+    color: var(--text-light);
+}
+
+/* Listing intro overline */
+[data-theme='topic'] .public-overline {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .public-overline span {
+    background: var(--topic-secondary);
+}
+
+/* Demo notice on listing page */
+[data-theme='topic'] .listing-demo-notice {
+    border-color: var(--line);
+    background: rgba(106, 199, 188, 0.1);
+}
+[data-theme='topic'] .listing-demo-notice > span {
+    color: var(--topic-primary);
+    background: rgba(106, 199, 188, 0.22);
+}
+[data-theme='topic'] .listing-demo-notice p {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .listing-demo-notice strong {
+    color: var(--topic-primary);
+}
+
+/* Pagination */
+[data-theme='topic'] .account-pagination {
+    border-top-color: var(--line);
+    color: var(--text-light);
+}
+[data-theme='topic'] .account-pagination :is(a, span) {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .account-pagination a:hover {
+    color: var(--accent-light);
+}
+[data-theme='topic'] .account-pagination .current {
+    background: rgba(106, 199, 188, 0.2);
+    color: var(--topic-primary);
+}
+
+/* Button variants */
+[data-theme='topic'] .public-button-dark {
+    background: var(--topic-primary);
+    color: #fff;
+}
+[data-theme='topic'] .public-button-dark:hover {
+    background: var(--topic-primary-soft);
+}
+[data-theme='topic'] .public-button-orange {
+    background: linear-gradient(135deg, var(--topic-tertiary), var(--topic-primary-soft));
+    color: #fff;
+}
+[data-theme='topic'] .public-button-orange:hover {
+    filter: brightness(1.05);
+}
+[data-theme='topic'] .public-button-light {
+    border: 1px solid var(--line);
+    color: var(--topic-primary);
+    background: var(--panel-solid);
+}
+[data-theme='topic'] .public-button-light:hover {
+    border-color: var(--topic-secondary);
+    background: rgba(106, 199, 188, 0.1);
+}
+
+/* Text links */
+[data-theme='topic'] .public-text-link {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-text-link:hover {
+    color: var(--accent-light);
+}
+
+/* Organizer mark */
+[data-theme='topic'] .organizer-mark {
+    border-color: var(--topic-secondary);
+    color: var(--topic-primary);
+}
+
+/* Avatar stack */
+[data-theme='topic'] .public-avatar-stack span {
+    border-color: var(--panel-solid);
+    background: var(--topic-secondary);
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .public-avatar-stack span:nth-child(2) {
+    background: var(--topic-tertiary);
+}
+[data-theme='topic'] .public-avatar-stack span:nth-child(3) {
+    background: var(--accent-light);
+}
+
+/* Demo footnote */
+[data-theme='topic'] .listing-demo-footnote {
+    color: var(--text-muted);
+}
+[data-theme='topic'] .listing-demo-footnote span {
+    background: var(--topic-secondary);
+}
+
+/* Empty state */
+[data-theme='topic'] .listing-empty-state {
+    border-color: rgba(19, 84, 122, 0.2);
+    background: var(--panel-bg);
+}
+[data-theme='topic'] .listing-empty-state > span {
+    color: var(--topic-secondary);
+}
+[data-theme='topic'] .listing-empty-state h3 {
+    color: var(--topic-primary);
+}
+[data-theme='topic'] .listing-empty-state p {
+    color: var(--text-light);
+}

@@ -1,0 +1,135 @@
+/* ==========================================================================
+   NAVBAR & SIDEBAR COMPACT
+   --------------------------------------------------------------------------
+   Ukuran navbar publik dan sidebar admin diperkecil kurang lebih 1/3,
+   disamakan untuk semua tema (glass & tembaga), dan dikunci memakai satuan
+   px + !important supaya tidak ikut membesar ketika layar diperlebar.
+
+   File ini diimpor paling akhir (lihat app.css) agar menang atas aturan tema.
+   ========================================================================== */
+
+/* ----------------------------- NAVBAR PUBLIK ----------------------------- */
+/* Hanya untuk layar desktop; di layar kecil aturan responsif yang ada tetap
+   dipakai supaya navigasi tidak rusak. */
+@media (min-width: 701px) {
+    .public-header,
+    .auth-page .public-header {
+        min-height: 58px !important;
+        gap: 15px !important;
+    }
+
+    .public-header .inlinesia-logo { gap: 7px !important; }
+    .public-header .inlinesia-logo-image {
+        width: 41px !important;
+        height: 41px !important;
+        padding: 4px !important;
+        border-radius: 7px !important;
+    }
+    .public-header .inlinesia-logo-copy strong { font-size: 11px !important; letter-spacing: -.4px !important; }
+    .public-header .inlinesia-logo-copy small { font-size: 4px !important; letter-spacing: .43px !important; }
+
+    .public-nav { gap: 8px !important; }
+    .public-nav a,
+    .public-login,
+    .auth-page .public-nav.is-account-nav a {
+        padding: 3px 8px !important;
+        font-size: 8px !important;
+        line-height: 1 !important;
+    }
+
+    .public-header-actions { gap: 10px !important; }
+    .public-button {
+        min-height: 27px !important;
+        gap: 12px !important;
+        padding: 0 9px !important;
+        font-size: 7px !important;
+        border-radius: 3px !important;
+    }
+
+    /* Tembaga: samakan ukuran pil navigasi dengan tema lainnya. */
+    [data-theme='copper'] .public-nav {
+        padding: 2px !important;
+        gap: 2px !important;
+        border-radius: 16px 7px 16px 10px !important;
+    }
+    [data-theme='copper'] .public-nav a,
+    [data-theme='copper'] .public-site .public-nav a {
+        padding: 3px 8px !important;
+        font-size: 8px !important;
+        letter-spacing: .5px !important;
+        border-radius: 10px 4px 10px 6px !important;
+    }
+    [data-theme='copper'] .public-login {
+        padding: 3px 8px !important;
+        font-size: 8px !important;
+        letter-spacing: .5px !important;
+        border-radius: 9px 4px 11px 6px !important;
+    }
+    [data-theme='copper'] .public-button {
+        font-size: 7px !important;
+        letter-spacing: .5px !important;
+        border-radius: 10px 4px 10px 6px !important;
+    }
+}
+
+/* ------------------------------ SIDEBAR ADMIN ---------------------------- */
+/* Diterapkan mulai lebar 801px. Di bawah itu tetap memakai mode ikon/lipat
+   yang sudah ada.
+
+   Catatan ukuran teks: sidebar tetap ramping, tetapi teksnya TIDAK boleh ikut
+   menyusut. Versi sebelumnya memakai 8px untuk label navigasi, 6px untuk
+   workspace/user, dan 3.5px untuk tagline logo — semua itu praktis tak terbaca
+   meskipun masih tampil di DOM. Ukuran di bawah kembali ke skala yang
+   nyaman dibaca (±11px) sementara lebar sidebar dinaikkan sedikit agar teks
+   tidak terpotong. */
+@media (min-width: 801px) {
+    .sidebar {
+        width: 190px;
+        padding: 18px 12px 10px;
+    }
+    .brand { padding: 0 5px 22px; }
+    .brand .inlinesia-logo { gap: 8px; }
+    .brand .inlinesia-logo-image { width: 38px; height: 38px; padding: 3px; border-radius: 7px; }
+    .brand .inlinesia-logo-copy strong { font-size: 15px; letter-spacing: -.4px; }
+    .brand .inlinesia-logo-copy small { font-size: 5px; letter-spacing: .34px; }
+
+    .workspace-label { padding: 0 6px 8px; font-size: 8px; letter-spacing: 1.1px; }
+    .section-kicker { font-size: 8px; }
+    .primary-nav { gap: 3px; }
+    .nav-link { height: 33px; gap: 9px; padding: 0 8px; font-size: 11px; border-radius: 5px; }
+    .nav-link svg { width: 13px; height: 13px; }
+    .nav-public-home { margin-top: 7px; padding-top: 7px; height: 37px; }
+    .nav-external { font-size: 9px; }
+    .nav-count { width: 17px; height: 16px; font-size: 8.5px; }
+
+    .help-card { padding: 10px; }
+    .help-icon { width: 15px; height: 15px; margin-bottom: 7px; font-size: 10px; }
+    .help-card strong { font-size: 10px; }
+    .help-card p { margin: 4px 0 9px; font-size: 9px; line-height: 1.5; }
+    .help-link { font-size: 9px; }
+    .user-profile { gap: 8px; margin-top: 10px; padding: 10px 3px 0; }
+    .avatar { width: 26px; height: 26px; font-size: 10px; }
+    .user-copy { gap: 3px; }
+    .user-copy strong { font-size: 10px; }
+    .user-copy small { font-size: 8px; }
+    .user-menu { font-size: 10px; }
+
+    .main-content { margin-left: 190px; }
+
+    /* Tembaga: samakan ukuran item navigasi sidebar. */
+    [data-theme='copper'] .primary-nav { padding: 4px; border-radius: 14px 6px 14px 8px; }
+    [data-theme='copper'] .nav-link { letter-spacing: .3px; border-radius: 10px 4px 10px 6px; }
+    [data-theme='copper'] .nav-count { padding: 1px 5px; font-size: 8.5px; border-radius: 8px 4px 8px 4px; }
+
+    /* Kondisi sidebar diciutkan. */
+    .app-shell.is-sidebar-collapsed .sidebar { width: 48px; padding: 12px 5px 8px; }
+    .app-shell.is-sidebar-collapsed .brand { padding: 0 0 20px; }
+    .app-shell.is-sidebar-collapsed .brand .inlinesia-logo-image { width: 25px; height: 25px; padding: 2px; border-radius: 5px; }
+    .app-shell.is-sidebar-collapsed .nav-link { height: 32px; }
+    .app-shell.is-sidebar-collapsed .nav-link svg { width: 14px; height: 14px; }
+    .app-shell.is-sidebar-collapsed .user-profile { padding: 8px 0 0; }
+    .app-shell.is-sidebar-collapsed .main-content { margin-left: 48px; }
+
+    .sidebar-toggle { width: 19px; height: 28px; right: -10px; }
+    .sidebar-toggle svg { width: 11px; height: 11px; }
+}

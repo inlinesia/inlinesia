@@ -1,0 +1,694 @@
+/* ==========================================================================
+   ATUR PERLOMBAAN + HARI LOMBA
+   --------------------------------------------------------------------------
+   Dua halaman yang/theme-agnostic: semua warna diambil dari variabel yang
+   didefinisikan di bawah lalu ditulis ulang per tema, sehingga tidak ada
+   warna putih yang bocor ke tema gelap atau sebaliknya.
+   ========================================================================== */
+
+.public-application-page.event-race-page {
+    --race-income: #7ee2a8;
+    --race-expense: #ffb59a;
+    --race-line: rgba(255, 255, 255, .1);
+    --race-chip: rgba(255, 255, 255, .07);
+    --race-win: #8ee0ad;
+    --race-warn: #f3dcb0;
+}
+
+[data-theme='copper'] .public-application-page.event-race-page {
+    --race-income: #8fd6a6;
+    --race-expense: #e8c4b7;
+    --race-line: rgba(216, 168, 153, .22);
+    --race-chip: rgba(255, 255, 255, .05);
+    --race-win: #a9d6b8;
+    --race-warn: #f0dcb0;
+}
+
+/* ------------------------------- RINGKASAN -------------------------------- */
+
+.event-race-page .event-form-heading-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.race-format-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 0 0 20px;
+}
+
+.race-format-summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 11px 13px;
+    border: 1px solid var(--race-line);
+    border-radius: 10px;
+    background: var(--race-chip);
+}
+
+.race-format-summary-item small {
+    color: #b3b6bd;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.race-format-summary-item strong {
+    color: #f5f5f4;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* --------------------------- KARTU PENGATURAN ----------------------------- */
+
+.race-format-list {
+    display: grid;
+    gap: 14px;
+}
+
+.race-format-card {
+    display: block;
+    padding: 16px 17px 18px;
+    border: 1px solid var(--race-line);
+    border-radius: 12px;
+    background: var(--race-chip);
+}
+
+.race-format-card legend {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 9px;
+    padding: 0 5px;
+    color: #f5f5f4;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.race-format-card-meta {
+    color: #9fa3ab;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.race-format-card .form-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 13px;
+}
+
+.race-format-card .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.race-format-card .form-field label {
+    color: #d9dae0;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.race-format-card input,
+.race-format-card select {
+    min-height: 34px;
+    padding: 6px 9px;
+    border: 1px solid var(--race-line);
+    border-radius: 7px;
+    background: rgba(0, 0, 0, .22);
+    color: #f5f5f4;
+    font: inherit;
+    font-size: 12px;
+}
+
+.race-format-card .field-hint {
+    color: #979aa2;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* Pilihan mode penghitungan gruping babak. */
+.race-mode-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.race-mode-option {
+    display: inline-flex;
+    /* Ukuran mengikuti isinya, jadi label tidak pernah menyempit lalu
+       patah menjadi tiga baris di dalam kotak yang sebenarnya longgar. */
+    flex: none;
+    align-items: center;
+    gap: 7px;
+    min-height: 34px;
+    padding: 6px 11px;
+    border: 1px solid var(--race-line);
+    border-radius: 7px;
+    background: rgba(0, 0, 0, .22);
+    color: #d9dae0;
+    font-size: 11px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+}
+
+.race-mode-option span {
+    flex: none;
+    white-space: nowrap;
+}
+
+.race-mode-option:hover {
+    color: #f5f5f4;
+}
+
+.race-mode-option:has(input:checked) {
+    border-color: #d8a899;
+    color: #f5f5f4;
+}
+
+.race-mode-option input {
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    accent-color: #d8a899;
+}
+
+.race-format-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 13px;
+}
+
+.race-apply-status {
+    margin-right: auto;
+    color: #9fa3ab;
+    font-size: 10.5px;
+}
+
+.race-format-note {
+    margin: 0 0 16px;
+    padding: 10px 13px;
+    border: 1px solid var(--race-line);
+    border-left: 3px solid var(--race-warn);
+    border-radius: 8px;
+    background: var(--race-chip);
+    color: var(--race-warn);
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.race-warnings {
+    margin: 0 0 18px;
+    padding: 12px 15px;
+    border: 1px solid var(--race-line);
+    border-left: 3px solid var(--race-warn);
+    border-radius: 9px;
+    background: var(--race-chip);
+    color: var(--race-warn);
+}
+
+.race-warnings strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+}
+
+.race-warnings ul {
+    margin: 0;
+    padding-left: 17px;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* ------------------------------- HARI LOMBA ------------------------------- */
+
+.race-category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0 0 16px;
+}
+
+/* Tab mata lomba duduk di bawah tab kategori; jaraknya dirapatkan supaya
+   keduanya terbaca sebagai satu pemilih, bukan dua bagian terpisah. */
+.race-mata-lomba-tabs {
+    margin-top: -8px;
+}
+
+.race-category-tab {
+    padding: 6px 12px;
+    border: 1px solid var(--race-line);
+    border-radius: 14px 6px 14px 7px;
+    background: var(--race-chip);
+    color: #c8cad1;
+    font-size: 10.5px;
+    font-weight: 650;
+    text-decoration: none;
+    transition: background .15s ease, color .15s ease;
+}
+
+.race-category-tab:hover {
+    color: #f5f5f4;
+}
+
+.race-category-tab.is-active {
+    border-color: transparent;
+    background: #d8a899;
+    color: #14161b;
+}
+
+.race-control {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 0 0 20px;
+    padding: 15px 17px;
+    border: 1px solid var(--race-line);
+    border-radius: 12px;
+    background: var(--race-chip);
+}
+
+.race-control-copy {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+}
+
+.race-control-copy h2 {
+    margin: 0 0 3px;
+    color: #f5f5f4;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.race-control-copy p {
+    margin: 0;
+    color: #a4a7ae;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.race-control-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+.race-stage-next {
+    display: block;
+    margin: 26px 0 0;
+}
+
+.race-stage-next .race-control {
+    margin-bottom: 12px;
+}
+
+.race-stage-next .race-control-actions {
+    flex: 1 1 100%;
+}
+
+/* --------------------------------- BABAK ---------------------------------- */
+
+.race-heat-list {
+    display: grid;
+    gap: 10px;
+}
+
+.race-heat {
+    border: 1px solid var(--race-line);
+    border-radius: 11px;
+    background: var(--race-chip);
+}
+
+.race-heat > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.race-heat > summary::-webkit-details-marker {
+    display: none;
+}
+
+.race-heat-label {
+    color: #f5f5f4;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.race-heat-meta {
+    flex: 1 1 auto;
+    color: #9fa3ab;
+    font-size: 10.5px;
+}
+
+.race-heat-toggle {
+    color: #9fa3ab;
+    font-size: 11px;
+    transition: transform .15s ease;
+}
+
+.race-heat[open] .race-heat-toggle {
+    transform: rotate(90deg);
+}
+
+.race-heat-form {
+    padding: 0 15px 14px;
+}
+
+.race-heat-table-wrap,
+.race-standings-table-wrap {
+    overflow-x: auto;
+}
+
+.race-heat-table,
+.race-standings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.race-heat-table th,
+.race-standings-table th {
+    padding: 8px 9px;
+    border-bottom: 1px solid var(--race-line);
+    color: #a7aab1;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.race-heat-table td,
+.race-standings-table td {
+    padding: 9px;
+    border-bottom: 1px solid var(--race-line);
+    color: #d9dae0;
+    font-size: 11px;
+    vertical-align: top;
+}
+
+.race-heat-table tr:last-child td,
+.race-standings-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.race-heat-table strong,
+.race-standings-table strong {
+    color: #f5f5f4;
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+.race-numeric {
+    text-align: right !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.race-lane-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .08);
+    color: #f5f5f4;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.race-heat-table select,
+.race-heat-table input {
+    width: 100%;
+    min-height: 30px;
+    padding: 5px 8px;
+    border: 1px solid var(--race-line);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, .24);
+    color: #f5f5f4;
+    font: inherit;
+    font-size: 11px;
+}
+
+.race-heat-table td[data-label='Urutan'] input {
+    width: 72px;
+    text-align: right;
+}
+
+.race-heat-table td[data-label='Waktu'] input {
+    width: 96px;
+}
+
+.race-lane-row[data-race-status='no_show'] strong,
+.race-lane-row[data-race-status='dnf'] strong,
+.race-lane-row[data-race-status='dsq'] strong {
+    color: #a9aab2;
+    text-decoration: line-through;
+    text-decoration-color: var(--race-expense);
+}
+
+.race-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.race-quick {
+    padding: 3px 8px;
+    border: 1px solid var(--race-line);
+    border-radius: 10px 4px 10px 5px;
+    background: rgba(255, 255, 255, .04);
+    color: #b6b9c0;
+    font: inherit;
+    font-size: 9.5px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.race-quick:hover {
+    color: #f5f5f4;
+    background: rgba(255, 255, 255, .1);
+}
+
+.race-quick.is-win {
+    border-color: rgba(142, 224, 173, .4);
+    color: var(--race-win);
+}
+
+.race-quick.is-no-show,
+.race-quick.is-dnf,
+.race-quick.is-dsq {
+    border-color: rgba(255, 181, 154, .34);
+    color: var(--race-expense);
+}
+
+.race-heat-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 11px;
+    margin-top: 12px;
+}
+
+.race-heat-actions p {
+    margin: 0;
+    color: #9fa3ab;
+    font-size: 10.5px;
+    line-height: 1.55;
+}
+
+/* ------------------------------- PAPAN HASIL ------------------------------ */
+
+.race-standings {
+    margin: 30px 0 0;
+}
+
+.race-standings tr.is-champion td {
+    background: rgba(142, 224, 173, .08);
+}
+
+.race-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1px solid var(--race-line);
+    border-radius: 9px;
+    color: #b6b9c0;
+    font-size: 9.5px;
+    font-weight: 650;
+}
+
+.race-badge.is-qualified {
+    border-color: rgba(142, 224, 173, .38);
+    color: var(--race-win);
+}
+
+.race-badge.is-champion {
+    border-color: transparent;
+    background: #8ee0ad;
+    color: #0e1411;
+    font-weight: 750;
+}
+
+.race-row-note {
+    display: block;
+    margin-top: 3px;
+    color: var(--race-expense);
+    font-size: 9.5px;
+}
+
+/* Kolom semifinal disembunyikan lewat atribut hidden, tapi .form-field di
+   bawah memakai display:flex yang mengalahkan display:none bawaan
+   peramban. Atributnya sendiri yang perlu dipaksa berlaku. */
+.race-format-card .form-field[hidden],
+.race-format-card [hidden] {
+    display: none !important;
+}
+
+/* ---------------------------- GRUP + URUTAN LOMBA ------------------------- */
+
+.race-badge.is-running {
+    border-color: transparent;
+    background: var(--race-win);
+    color: #0e1411;
+    font-weight: 750;
+}
+
+.race-group {
+    margin: 0 0 26px;
+}
+
+.race-group.is-running > .race-control {
+    border-color: rgba(142, 224, 173, .45);
+}
+
+.race-quick.is-postpone {
+    border-color: rgba(243, 220, 176, .4);
+    color: var(--race-warn);
+}
+
+/* ------------------------- SUSUNAN DI ATUR PERLOMBAAN --------------------- */
+
+.race-plan-section {
+    margin-top: 30px;
+}
+
+.race-plan-card h3 {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 0 0 10px;
+    color: #f5f5f4;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.race-plan-groups,
+.race-plan-heats {
+    margin: 0;
+    padding-left: 18px;
+    color: #c8cad1;
+    font-size: 11.5px;
+}
+
+.race-plan-groups > li + li {
+    margin-top: 4px;
+}
+
+.race-plan-heats li {
+    margin: 4px 0;
+    line-height: 1.55;
+}
+
+.race-plan-heats strong {
+    margin-right: 6px;
+    color: #f5f5f4;
+}
+
+/* --------------------------- HALAMAN URUTAN LOMBA ------------------------- */
+
+.race-order-section {
+    margin: 28px 0 0;
+}
+
+.race-order-groups {
+    display: grid;
+    gap: 10px;
+}
+
+.race-heat.race-order-group.is-running {
+    border-color: rgba(142, 224, 173, .45);
+}
+
+.race-order-heats {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0 15px 14px;
+    list-style: none;
+}
+
+.race-order-heat {
+    padding: 10px 12px;
+    border: 1px solid var(--race-line);
+    border-radius: 9px;
+    background: rgba(0, 0, 0, .16);
+}
+
+.race-order-heat > strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #f5f5f4;
+    font-size: 11.5px;
+}
+
+.race-order-lanes {
+    display: grid;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.race-order-lanes li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #d9dae0;
+    font-size: 11px;
+}
+
+.race-order-lanes strong {
+    color: #f5f5f4;
+    font-size: 11px;
+}
+
+.race-order-club {
+    color: #9fa3ab;
+    font-size: 10px;
+}
+
+.race-group-status {
+    margin-left: auto;
+}

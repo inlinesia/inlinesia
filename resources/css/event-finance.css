@@ -1,0 +1,412 @@
+/* ==========================================================================
+   HALAMAN KEUANGAN EVENT
+   --------------------------------------------------------------------------
+   Stylesheet ini sengaja hanya memakai warna netral (putih transparan di atas
+   gelap) plus dua variabel --finance-income / --finance-expense. Kedua
+   variabel itu diberi nilai cadangan di sini, lalu didefinisikan ulang di
+   glass-theme-contrast.css dan tembaga-theme-contrast.css supaya tiap tema
+   punya warna sendiri yang kontrasnya lolos WCAG AA di atas panel gelapnya.
+   ========================================================================== */
+
+.event-finance-page {
+    --finance-income: #7ed09a;
+    --finance-expense: #f0a38a;
+}
+
+.event-finance-page .finance-summary {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.event-finance-page .finance-summary-card {
+    display: grid;
+    gap: 6px;
+    padding: 15px 17px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.event-finance-page .finance-summary-label {
+    color: rgba(245, 245, 244, 0.72);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1.05px;
+    text-transform: uppercase;
+}
+
+.event-finance-page .finance-summary-value {
+    color: #f5f5f4;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.6px;
+    line-height: 1.15;
+}
+
+.event-finance-page .finance-summary-foot {
+    color: rgba(245, 245, 244, 0.72);
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.event-finance-page .finance-summary-pending {
+    color: #e8cd9b;
+}
+
+/* Penjelasan ketika ada pembayaran terkonfirmasi tapi tarifnya belum dihitung.
+   Nada cartridge kuning supaya terbaca sebagai catatan, bukan sebagai error. */
+.event-finance-page .finance-summary-warn {
+    padding: 6px 8px;
+    border-left: 2px solid var(--finance-warn, #e8cd9b);
+    border-radius: 3px;
+    color: #f0dcb4;
+    font-size: 9.5px;
+    line-height: 1.55;
+    background: rgba(232, 205, 155, 0.1);
+}
+
+/* Kartu saldo memakai warna income/expense supaya arahnya terbaca sekilas. */
+.event-finance-page .finance-summary-card.is-positive .finance-summary-value { color: var(--finance-income); }
+.event-finance-page .finance-summary-card.is-negative .finance-summary-value { color: var(--finance-expense); }
+
+/* ------------------------------- GRAFIK --------------------------------- */
+.event-finance-page .finance-chart,
+.event-finance-page .finance-breakdown {
+    margin-bottom: 18px;
+    padding: 16px 18px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.event-finance-page .finance-chart-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.event-finance-page .finance-chart-heading > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.event-finance-page .finance-chart-heading h2 {
+    margin: 0;
+    color: #f5f5f4;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: -.2px;
+}
+
+.event-finance-page .finance-chart-legend {
+    display: flex;
+    gap: 14px;
+}
+
+.event-finance-page .finance-chart-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(245, 245, 244, 0.82);
+    font-size: 10px;
+}
+
+.event-finance-page .finance-swatch {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+}
+
+.event-finance-page .finance-swatch.is-income { background: var(--finance-income); }
+.event-finance-page .finance-swatch.is-refund { background: #e3aa58; }
+.event-finance-page .finance-swatch.is-expense { background: var(--finance-expense); }
+
+.event-finance-page .finance-chart-bars {
+    display: grid;
+    gap: 10px;
+    align-items: end;
+    height: 150px;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.event-finance-page .finance-chart-column {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 7px;
+    height: 100%;
+}
+
+.event-finance-page .finance-chart-pair {
+    display: flex;
+    gap: 4px;
+    align-items: end;
+    height: 100%;
+}
+
+.event-finance-page .finance-bar {
+    flex: 1;
+    min-height: 0;
+    border-radius: 3px 3px 0 0;
+    transition: filter .16s ease;
+}
+
+.event-finance-page .finance-bar.is-income { background: var(--finance-income); }
+.event-finance-page .finance-bar.is-refund { background: #e3aa58; }
+.event-finance-page .finance-bar.is-expense { background: var(--finance-expense); }
+.event-finance-page .finance-bar:hover { filter: brightness(1.18); }
+
+.event-finance-page .finance-chart-label {
+    color: rgba(245, 245, 244, 0.72);
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* --------------------------- RINCIAN KATEGORI --------------------------- */
+.event-finance-page .finance-breakdown-list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.event-finance-page .finance-breakdown-list li {
+    display: grid;
+    gap: 10px;
+    align-items: center;
+    grid-template-columns: minmax(96px, 150px) 1fr auto;
+}
+
+.event-finance-page .finance-breakdown-label {
+    color: rgba(245, 245, 244, 0.9);
+    font-size: 11px;
+}
+
+.event-finance-page .finance-breakdown-track {
+    height: 7px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.event-finance-page .finance-breakdown-track i {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--finance-expense);
+}
+
+.event-finance-page .finance-breakdown-total {
+    color: #f5f5f4;
+    font-size: 11px;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+/* --------------------------------- FORM --------------------------------- */
+.event-finance-page .finance-form {
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.event-finance-page .finance-form label {
+    color: rgba(245, 245, 244, 0.85);
+}
+
+.event-finance-page .finance-form input,
+.event-finance-page .finance-form select {
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f5f5f4;
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.event-finance-page .finance-form input::placeholder {
+    color: rgba(245, 245, 244, 0.55);
+}
+
+.event-finance-page .finance-form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* -------------------------------- TABEL --------------------------------- */
+.event-finance-page .finance-table-wrap {
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+}
+
+.event-finance-page .finance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.event-finance-page .finance-table th {
+    padding: 11px 13px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(245, 245, 244, 0.75);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+    /* .account-table th mewarisi background #fafbfc yang terang; di halaman
+       gelap teks putih di atasnya tidak akan terbaca, jadi di sini
+       ditetaskan ulang. */
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.event-finance-page .finance-table td {
+    padding: 12px 13px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(245, 245, 244, 0.9);
+    font-size: 11px;
+    vertical-align: top;
+}
+
+.event-finance-page .finance-table tbody tr:last-child td { border-bottom: 0; }
+.event-finance-page .finance-table tbody tr:hover { background: rgba(255, 255, 255, 0.04); }
+
+.event-finance-page .finance-table td strong {
+    display: block;
+    color: #f5f5f4;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.event-finance-page .finance-table td small {
+    display: block;
+    margin-top: 3px;
+    color: rgba(245, 245, 244, 0.72);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.event-finance-page .finance-numeric {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.event-finance-page .finance-row.is-income .finance-numeric { color: var(--finance-income); font-weight: 650; }
+.event-finance-page .finance-row.is-expense .finance-numeric { color: var(--finance-expense); font-weight: 650; }
+
+.event-finance-page .finance-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.event-finance-page .finance-badge.is-income {
+    background: color-mix(in srgb, var(--finance-income) 20%, transparent);
+    color: var(--finance-income);
+}
+
+.event-finance-page .finance-badge.is-expense {
+    background: color-mix(in srgb, var(--finance-expense) 20%, transparent);
+    color: var(--finance-expense);
+}
+
+/* ------------------------------- AKSI BARIS ----------------------------- */
+.event-finance-page .finance-row-actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: flex-end;
+    white-space: nowrap;
+}
+
+.event-finance-page .finance-edit summary {
+    padding: 4px 9px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: rgba(245, 245, 244, 0.88);
+    font-size: 10px;
+    font-weight: 650;
+    cursor: pointer;
+    list-style: none;
+}
+
+.event-finance-page .finance-edit summary::-webkit-details-marker { display: none; }
+.event-finance-page .finance-edit[open] summary { border-color: rgba(255, 255, 255, 0.4); }
+
+.event-finance-page .finance-edit-form {
+    display: grid;
+    gap: 7px;
+    margin-top: 9px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.event-finance-page .finance-edit-form label {
+    color: rgba(245, 245, 244, 0.85);
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.event-finance-page .finance-edit-form input {
+    padding: 7px 9px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 5px;
+    color: #f5f5f4;
+    font-size: 11px;
+    background: rgba(0, 0, 0, 0.32);
+}
+
+.event-finance-page .finance-edit-pair {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.event-finance-page .finance-edit-pair span {
+    display: grid;
+    gap: 4px;
+}
+
+.event-finance-page .finance-delete-button {
+    padding: 4px 9px;
+    border: 1px solid color-mix(in srgb, var(--finance-expense) 55%, transparent);
+    border-radius: 5px;
+    color: var(--finance-expense);
+    font-size: 10px;
+    font-weight: 650;
+    cursor: pointer;
+    background: transparent;
+}
+
+.event-finance-page .finance-delete-button:hover {
+    background: color-mix(in srgb, var(--finance-expense) 18%, transparent);
+}
+
+/* ------------------------------- RESPONSIF ------------------------------ */
+@media (max-width: 720px) {
+    .event-finance-page .finance-chart-bars { height: 120px; }
+    .event-finance-page .finance-breakdown-list li { grid-template-columns: 1fr; gap: 5px; }
+    .event-finance-page .finance-breakdown-total { text-align: left; }
+    .event-finance-page .finance-table thead { display: none; }
+    .event-finance-page .finance-table tr { display: block; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .event-finance-page .finance-table td { display: flex; gap: 10px; justify-content: space-between; padding: 5px 13px; border: 0; text-align: left; }
+    .event-finance-page .finance-table td::before { content: attr(data-label); color: rgba(245, 245, 244, 0.7); font-size: 9px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
+    .event-finance-page .finance-table td strong,
+    .event-finance-page .finance-table td small { margin: 0; }
+    .event-finance-page .finance-row-actions { padding-top: 8px; }
+}

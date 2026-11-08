@@ -1,0 +1,271 @@
+/* ==========================================================================
+   NEURAL GLASS — tema baru (TemplateMo 597)
+   Aktif saat <html data-theme="neural">.
+   ========================================================================== */
+
+[data-theme='neural'] {
+    --bg-color: #0a0a0a;
+    --bg-deep: #050505;
+    --panel-bg: rgba(20, 15, 40, 0.78);
+    --panel-solid: rgba(20, 15, 40, 0.98);
+    --neural-purple: #e0a3ff;
+    --neural-pink: #ff69b4;
+    --neural-cyan: #00ffff;
+    --neural-green: #228b22;
+    --accent: #e0a3ff;
+    --accent-light: #f1c7ff;
+    --text-light: #d8c9ff;
+    --text-muted: #9f92c6;
+    --text-white: #f3edff;
+    --line: rgba(224, 163, 255, 0.25);
+    --border-melt: 20px 16px 28px 18px;
+    --shadow-panel: 0 40px 120px rgba(111, 66, 193, 0.4), inset 0 0 0 1px rgba(224, 163, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --font-display: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+html[data-theme='neural'] {
+    min-height: 100%;
+    background: var(--bg-color);
+}
+
+[data-theme='neural'] body,
+[data-theme='neural'] body.public-home,
+[data-theme='neural'] body.auth-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: var(--text-light);
+    font-family: var(--font-body);
+    background-color: #0a0a0a;
+    background-image:
+        radial-gradient(circle at 15% 85%, rgba(75, 0, 130, 0.7) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, rgba(139, 37, 99, 0.8) 0%, transparent 50%),
+        radial-gradient(circle at 45% 60%, rgba(128, 0, 128, 0.6) 0%, transparent 50%),
+        radial-gradient(circle at 70% 40%, rgba(34, 139, 34, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0a 0%, #2d1b3d 50%, #000000 100%);
+    background-attachment: fixed;
+}
+
+[data-theme='neural'] h1,
+[data-theme='neural'] h2,
+[data-theme='neural'] h3,
+[data-theme='neural'] h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--neural-purple);
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 30px rgba(224, 163, 255, 0.45);
+}
+
+[data-theme='neural'] a {
+    color: var(--neural-purple);
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+[data-theme='neural'] a:hover {
+    color: var(--neural-cyan);
+    text-shadow: 0 0 24px rgba(0, 255, 255, 0.4);
+}
+
+[data-theme='neural'] ::selection {
+    background: rgba(224, 163, 255, 0.45);
+    color: #0a0a0a;
+}
+
+[data-theme='neural'] :is(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--neural-cyan);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.2);
+}
+
+[data-theme='neural'] .public-site,
+[data-theme='neural'] .app-shell {
+    background: transparent;
+    color: var(--text-light);
+}
+
+[data-theme='neural'] .page-content,
+[data-theme='neural'] .main-content {
+    background: transparent;
+}
+
+[data-theme='neural'] .public-header {
+    background: rgba(20, 15, 40, 0.82);
+    border: 1px solid rgba(224, 163, 255, 0.35);
+    box-shadow: var(--shadow-panel);
+    border-radius: 0 0 24px 24px;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+[data-theme='neural'] .public-brand .inlinesia-logo-copy strong {
+    color: var(--neural-purple);
+    text-shadow: 0 0 30px rgba(224, 163, 255, 0.5);
+}
+
+[data-theme='neural'] .public-brand .inlinesia-logo-copy small {
+    color: rgba(243, 237, 255, 0.78);
+}
+
+[data-theme='neural'] .public-nav-link {
+    color: rgba(243, 237, 255, 0.82);
+}
+
+[data-theme='neural'] .public-nav-link:hover {
+    color: var(--neural-cyan);
+}
+
+[data-theme='neural'] .public-nav-link.is-active {
+    color: var(--neural-purple);
+    background: rgba(224, 163, 255, 0.18);
+    box-shadow: inset 2px 0 var(--neural-cyan);
+}
+
+[data-theme='neural'] .button-primary,
+[data-theme='neural'] .account-submit,
+[data-theme='neural'] .listing-register-link {
+    color: #140f28;
+    background: linear-gradient(135deg, #e0a3ff 0%, #ff69b4 60%, #00ffff 120%);
+    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.45), 0 0 80px rgba(0, 255, 255, 0.25);
+    border: none;
+}
+
+[data-theme='neural'] .button-primary:hover,
+[data-theme='neural'] .account-submit:hover,
+[data-theme='neural'] .listing-register-link:hover {
+    filter: brightness(1.05);
+}
+
+[data-theme='neural'] .panel,
+[data-theme='neural'] .account-form-card,
+[data-theme='neural'] .account-table-card,
+[data-theme='neural'] .event-category-card,
+[data-theme='neural'] .finance-summary-card,
+[data-theme='neural'] .race-format-card,
+[data-theme='neural'] .race-heat,
+[data-theme='neural'] .race-standings,
+[data-theme='neural'] .listing-card {
+    background: var(--panel-bg);
+    border: 1px solid rgba(224, 163, 255, 0.28);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+/* Panel halaman pendaftaran. Tanpa aturan ini warna terang bawaan
+   account-portal.css tetap berdiri di atas latar gelap neural, dan teks putih
+   dari glass-theme.css jadi tidak terbaca. */
+[data-theme='neural'] .public-site :is(.event-pricing-waves, .event-payment-account) {
+    border-color: rgba(224, 163, 255, 0.25);
+    background: rgba(20, 15, 40, 0.6);
+}
+
+[data-theme='neural'] .public-site .event-pricing-waves > span:first-child,
+[data-theme='neural'] .public-site .event-pricing-wave-group > b {
+    color: var(--text-light) !important;
+}
+
+[data-theme='neural'] .public-site .event-pricing-wave {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='neural'] .public-site .event-pricing-wave.is-active {
+    color: var(--text-light) !important;
+}
+
+[data-theme='neural'] .public-site .event-pricing-wave.is-active em {
+    color: var(--text-light) !important;
+}
+
+[data-theme='neural'] .public-site .event-payment-account :is(span, strong) {
+    color: var(--text-light) !important;
+}
+
+[data-theme='neural'] .public-site .nik-feedback {
+    border-color: rgba(159, 146, 198, 0.45);
+    background: rgba(159, 146, 198, 0.16);
+}
+
+[data-theme='neural'] .public-site .nik-feedback:not(.is-error) {
+    color: var(--text-light) !important;
+}
+
+[data-theme='neural'] .public-site .nik-feedback.is-error {
+    border-color: rgba(236, 136, 109, 0.45);
+    background: rgba(236, 136, 109, 0.16);
+}
+
+[data-theme='neural'] .public-site .nik-feedback.is-error {
+    color: #f0b3aa !important;
+}
+
+[data-theme='neural'] .sidebar {
+    color: rgba(243, 237, 255, 0.86);
+    background: rgba(10, 8, 24, 0.92);
+    border-right: 1px solid rgba(224, 163, 255, 0.25);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+[data-theme='neural'] .sidebar-toggle {
+    color: var(--neural-purple);
+    background: rgba(20, 15, 40, 0.92);
+    border-color: rgba(224, 163, 255, 0.35);
+}
+
+[data-theme='neural'] .nav-link {
+    color: rgba(243, 237, 255, 0.72);
+}
+
+[data-theme='neural'] .nav-link:hover {
+    color: #fff;
+    background: rgba(224, 163, 255, 0.16);
+}
+
+[data-theme='neural'] .nav-link.is-active {
+    color: #fff;
+    background: rgba(224, 163, 255, 0.24);
+    box-shadow: inset 2px 0 var(--neural-cyan);
+}
+
+[data-theme='neural'] .topbar {
+    background: rgba(10, 8, 24, 0.92);
+    border-bottom: 1px solid rgba(224, 163, 255, 0.22);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+[data-theme='neural'] .account-table th {
+    background: rgba(224, 163, 255, 0.12);
+    color: rgba(243, 237, 255, 0.82);
+}
+
+[data-theme='neural'] .form-field :is(input, select, textarea) {
+    border-color: rgba(224, 163, 255, 0.32);
+    background: rgba(10, 8, 24, 0.6);
+    color: var(--text-white);
+}
+
+[data-theme='neural'] .form-field :is(input, select, textarea)::placeholder {
+    color: rgba(243, 237, 255, 0.45);
+}
+
+[data-theme='neural'] .race-badge {
+    background: rgba(224, 163, 255, 0.22);
+    color: var(--neural-purple);
+    border-color: rgba(224, 163, 255, 0.42);
+}
+
+[data-theme='neural'] .race-quick.is-win {
+    border-color: rgba(0, 255, 255, 0.5);
+    color: var(--neural-cyan);
+}
+
+[data-theme='neural'] .race-quick.is-no-show,
+[data-theme='neural'] .race-quick.is-dnf,
+[data-theme='neural'] .race-quick.is-dsq {
+    border-color: rgba(255, 105, 180, 0.45);
+    color: var(--neural-pink);
+}

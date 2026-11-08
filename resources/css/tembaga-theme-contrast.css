@@ -1,0 +1,841 @@
+/* ==========================================================================
+   KOREKSI WARNA & KONTRAS - TEMA TEMBAGA (copper)
+   --------------------------------------------------------------------------
+   Diimpor setelah tembaga-theme.css sehingga aturan di sini selalu menang.
+   Fokus: naikkan keterbacaan teks muted di panel gelap, kembalikan chip
+   berlatar terang (dari landing.css) ke panel tembaga, dan pastikan teks
+   tombol tidak lagi putih di atas latar tembaga.
+   ========================================================================== */
+
+[data-theme='copper'] {
+    /* #6a707a hanya menghasilkan kontras 2.4-3.0:1 di panel gelap. */
+    --text-muted: #a3aab6;
+}
+
+/* --- 1. Chip/badge berlatar terang -> panel tembaga --------------------- */
+[data-theme='copper'] .public-site .platform-preview-link {
+    border: 1px solid var(--copper-dim);
+    border-radius: 12px 6px 14px 8px;
+    color: var(--text-white);
+    background: linear-gradient(145deg, #383c47, #24272e);
+    box-shadow: var(--shadow-panel);
+}
+
+[data-theme='copper'] .public-site .platform-preview-link:hover {
+    border-color: var(--copper);
+    background: linear-gradient(145deg, #45404a, #2c3039);
+    box-shadow: 0 0 16px var(--copper-glow);
+}
+
+[data-theme='copper'] .public-site .platform-preview-link small,
+[data-theme='copper'] .public-site .platform-preview-label {
+    color: var(--text-muted);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site .platform-preview-link em,
+[data-theme='copper'] .public-site .platform-preview-arrow {
+    color: var(--text-light);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site .platform-preview-number {
+    color: var(--copper);
+    text-shadow: 0 0 8px var(--copper-glow);
+}
+
+/* tembaga-theme.css L2561 memakai .public-home.event-listing-page (0,4,0),
+   jadi kita harus memakai spesifisitas yang sama. Perhatikan bahwa
+   .public-home berada pada <body>, bukan di dalam .public-site. */
+[data-theme='copper'] .public-home.event-listing-page .listing-card-number {
+    color: rgba(216, 168, 153, 0.95);
+    opacity: 1;
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site .listing-toolbar h2 {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .public-site .listing-toolbar h2 span {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper-light);
+    background: rgba(216, 168, 153, 0.16);
+}
+
+[data-theme='copper'] .public-site .listing-event-card .listing-status-open {
+    border: 1px solid rgba(216, 168, 153, 0.45);
+    color: var(--copper-light);
+    background: rgba(216, 168, 153, 0.16);
+}
+
+[data-theme='copper'] .public-site .listing-event-card .listing-status-preparing {
+    border: 1px solid rgba(140, 106, 93, 0.55);
+    color: #f0d3c4;
+    background: rgba(140, 106, 93, 0.26);
+}
+
+/* --- 2. Teks tombol tidak boleh putih di atas tembaga -------------------- */
+/* Selector di bawah juga mencakup .app-shell karena blanket di
+   glass-theme.css L464 memaksa span/strong di dalam .account-edit-card
+   menjadi putih - termasuk anak panah "->" pada tombol .account-submit
+   yang latarnya tembaga solid (tembaga-theme.css L1232). */
+[data-theme='copper'] :is(.public-site, .app-shell) :is(
+    .public-button-orange,
+    .public-button-dark,
+    .button-primary,
+    .account-submit
+) :is(span, small, strong, i, em) {
+    color: inherit;
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site :is(
+    .listing-register-link,
+    .listing-roster-link
+) :is(span, small, strong, i, em) {
+    color: inherit;
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site .listing-register-link {
+    color: var(--copper-light);
+    text-shadow: 0 0 8px var(--copper-glow);
+}
+
+/* --- 2b. Wordmark logo: hanya huruf "LI" yang merah --------------------- */
+/* tembaga-theme.css L114 dan L621 memaksa seluruh .inlinesia-logo-copy
+   menjadi warna tembaga, jadi rules di sini harus lebih spesifik.
+   Merah diambil dari Merah Putih bendera Indonesia (--flag-red), huruf
+   lainnya putih. */
+[data-theme='copper'] .inlinesia-logo-copy strong,
+[data-theme='copper'] .inlinesia-logo-copy span:not(.logo-accent) {
+    /* Putih murni (bukan --text-white #e2e8f0 yang bernuansa biru dingin)
+       supaya warna lainnya benar-benar Merah Putih bendera Indonesia. */
+    color: #ffffff;
+}
+
+[data-theme='copper'] .inlinesia-logo-copy .logo-accent,
+[data-theme='copper'] .brand .inlinesia-logo-copy .logo-accent {
+    color: var(--flag-red);
+    text-shadow: 0 0 10px var(--flag-red-glow);
+}
+
+/* dashboard.css L27 hanya memberi warna pada strong, sehingga "IN" dan "SIA"
+   ikut merah. Bersihkan agar hanya huruf "LI" yang merah. */
+[data-theme='copper'] .brand .inlinesia-logo-copy strong {
+    color: #ffffff;
+}
+
+[data-theme='copper'] .brand .inlinesia-logo-copy small {
+    color: var(--text-muted);
+}
+
+/* --- 3. Teks muted & sekunder ------------------------------------------- */
+[data-theme='copper'] .public-site :is(
+    .public-nav a,
+    .account-switch,
+    .remember-option,
+    .role-option,
+    .inlinesia-logo-copy small,
+    .listing-demo-notice p,
+    .event-demo-note
+) {
+    color: var(--text-muted);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site .inlinesia-logo-copy small {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] .public-site :is(.public-community-note, .community-values) strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] .public-site :is(.account-note strong, .role-option strong, .listing-demo-notice strong, .listing-event-body h3, .service-card h3, .public-event-details h3) {
+    color: var(--text-white);
+    text-shadow: none;
+}
+
+[data-theme='copper'] .public-site :is(
+    .account-note span,
+    .role-option small,
+    .listing-demo-notice,
+    .public-event-details p
+) {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-site .remember-option {
+    color: var(--text-light) !important;
+}
+
+/* --- 4. Halaman masuk / daftar ------------------------------------------ */
+[data-theme='copper'] .public-site .account-note {
+    border-left-color: var(--copper);
+    background: rgba(0, 0, 0, 0.32);
+}
+
+[data-theme='copper'] .public-site .role-option {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='copper'] .public-site .role-option:has(input:checked) {
+    border-color: var(--copper);
+    background: rgba(216, 168, 153, 0.16);
+}
+
+/* small/strong di dalam role-option memakai --text-muted; pada opsi yang
+   terpilih kontrasnya hanya 3,8:1. Naikkan ke warna terang penuh. */
+[data-theme='copper'] .public-site .role-option small,
+[data-theme='copper'] .public-site .role-option strong {
+    color: #ccd3dd;
+}
+
+[data-theme='copper'] .public-site .account-switch a {
+    color: var(--copper);
+}
+
+/* --- 5. Kartu kontak ----------------------------------------------------- */
+[data-theme='copper'] .public-site :is(.contact-label, .contact-value.is-empty, .contact-action.is-static) {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] .public-site .contact-item .contact-icon {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper-light);
+    background: rgba(216, 168, 153, 0.18);
+}
+
+/* --- 6. Panel pembagian kategori otomatis -------------------------------- */
+/* account-portal.css memakai latar terang (#f6faf7) yang tidak ada di tema
+   tembaga, jadi seluruh panel ini perlu diganti ke panel gelap. */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-assign {
+    border-color: var(--copper-dim);
+    background: var(--surface-dark);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-assign-copy h2 {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-assign-copy p {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-distribution li {
+    border-color: var(--line);
+    background: rgba(0, 0, 0, 0.28);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-distribution strong {
+    color: var(--text-white);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-distribution span {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-assign-action .submission-approve {
+    color: #241a0c;
+    background: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-assign-warning {
+    color: #f0d3c4;
+    background: rgba(216, 168, 153, 0.16);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-summary-details summary {
+    color: var(--copper);
+}
+
+/* --- 7. Tabel daftar peserta & filter kolom ----------------------------- */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filters {
+    border-bottom-color: var(--line);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filter > span {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filter input,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filter select {
+    border-color: var(--line);
+    color: var(--text-white) !important;
+    background: #1f2126;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filter input::placeholder {
+    color: var(--text-muted);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filter select option {
+    color: var(--text-white);
+    background: #1f2126;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-filter-reset {
+    color: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table thead th {
+    border-bottom-color: var(--line);
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-sort:hover,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-sort.is-active {
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody th,
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody td {
+    border-bottom-color: var(--line);
+    color: var(--text-light) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody th strong {
+    color: var(--text-white) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody th small {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody tr.event-roster-group-row {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody tr.event-roster-group-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table tbody tr.event-roster-group-row th {
+    border-bottom-color: var(--line);
+    color: var(--text-white) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-group-meta {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table .event-registration-edit-link {
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table .event-payment-status {
+    border-color: var(--copper);
+    color: var(--copper-light) !important;
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table .event-payment-status.payment-paid {
+    border-color: var(--copper-light);
+    color: var(--copper-light) !important;
+    background: rgba(216, 168, 153, 0.12);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table .event-payment-status.payment-unpaid {
+    border-color: rgba(216, 122, 90, 0.55);
+    color: #f0b39a !important;
+    background: rgba(216, 122, 90, 0.16);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table .guest-registration-status {
+    color: var(--copper-light) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-table .guest-registration-status.status-rejected {
+    color: #f0b39a !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-confirm-button {
+    border-color: var(--copper);
+    color: var(--copper-light) !important;
+    background: rgba(216, 168, 153, 0.14);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-confirm-button:hover {
+    color: #241a0c !important;
+    background: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-amount-field > span {
+    color: var(--text-light) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-amount-field input {
+    border-color: var(--line);
+    color: var(--text-white);
+    background: #1f2126;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-amount-field select {
+    border-color: var(--line);
+    color: var(--text-white);
+    background: #1f2126;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-amount-field select option {
+    color: var(--text-white);
+    background: #1f2126;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.event-payment-amount-hint, .event-payment-lock-hint) {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-payment-lock-hint {
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-empty-row .guest-dashboard-empty :is(strong, p) {
+    color: var(--text-light) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-public-roster .event-registration-readonly-label {
+    color: var(--text-muted) !important;
+}
+
+/* ==========================================================================
+   8. CHIP & BANNER BERLATAR TERANG YANG BOCOR KE TEMA TEMBAGA
+   --------------------------------------------------------------------------
+   Akar masalah yang sama seperti di glass-theme-contrast.css: beberapa chip
+   masih memakai warna tema terang dari CSS dasar dan tidak pernah memiliki
+   padanan gelapnya, lalu aturan blanket .public-site memaksa teksnya putih.
+
+   Selain itu glass-theme.css L466-479 (pil status) memakai warna tema
+   terang dengan spesifisitas (0,4,0) yang lebih tinggi dari aturan tembaga
+   di L1046 (0,3,0), sehingga hijau gelap "#3c8058" ikut bocor ke tema
+   tembaga dan hilang di panel gelap.
+   ========================================================================== */
+
+/* 8a. Tombol aksi baris di halaman publik.
+   tembaga-theme.css L1485 hanya mencakup .app-shell, sehingga dasbor
+   peserta memakai tombol putih dari account-portal.css L94. */
+[data-theme='copper'] .public-site :is(.account-edit-link, .account-verify-link) {
+    border-color: var(--copper-dim);
+    border-radius: 12px 6px 14px 8px;
+    color: var(--copper) !important;
+    background: #1a1c21;
+}
+
+[data-theme='copper'] .public-site .account-verify-link {
+    border-color: rgba(126, 190, 148, 0.42);
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.22);
+}
+
+[data-theme='copper'] .public-site :is(.account-edit-link, .account-verify-link) :is(span, small, strong) {
+    color: inherit !important;
+}
+
+[data-theme='copper'] .public-site :is(.account-edit-link, .account-verify-link):hover {
+    border-color: var(--copper);
+    color: var(--copper-light) !important;
+    background: var(--copper-dim);
+}
+
+[data-theme='copper'] .public-site .account-verify-link:hover {
+    border-color: rgba(126, 190, 148, 0.7);
+    background: rgba(74, 119, 91, 0.34);
+}
+
+/* 8b. Teks di dalam badge tanggal, nomor langkah, dan chip peran.
+   tembaga-theme.css sudah memberi latar gelap yang benar (L515-535, L834,
+   L1612-1618), tetapi blanket .public-site (:is(kartu) :is(span,strong))
+   berspesifisitas (0,2,2) mengalahkan aturan (0,2,0) sehingga teksnya
+   dipaksa putih. Di sini dikembalikan ke warna tembaga. */
+[data-theme='copper'] .public-site :is(.guest-event-date, .event-date) :is(span, strong, small) {
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .form-step {
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] .public-site .profile-role {
+    color: var(--copper) !important;
+}
+
+/* 8c. Panel info pembagian kategori + instruksi pembayaran */
+[data-theme='copper'] .public-site .category-assignment-preview {
+    border-color: var(--copper-dim);
+    color: var(--text-muted) !important;
+    background: rgba(216, 168, 153, 0.08);
+}
+
+[data-theme='copper'] .public-site .category-assignment-preview.is-assigned {
+    border-color: rgba(126, 190, 148, 0.45);
+    color: #b7d4c1 !important;
+    background: rgba(74, 119, 91, 0.2);
+}
+
+[data-theme='copper'] .public-site .event-payment-instructions {
+    border-color: var(--copper-dim);
+    background: rgba(216, 168, 153, 0.07);
+}
+
+[data-theme='copper'] .public-site .event-payment-instructions strong {
+    color: var(--text-white) !important;
+}
+
+[data-theme='copper'] .public-site .event-payment-instructions p {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='copper'] .public-site .event-payment-instructions small {
+    color: var(--text-muted) !important;
+}
+
+/* 8d. Pil status pengajuan/pendaftaran - tutup kebocoran dari glass-theme.css */
+[data-theme='copper'] .public-site .profile-submissions .profile-submission-status,
+[data-theme='copper'] .public-site .guest-registration-card .guest-registration-status {
+    color: var(--copper-light) !important;
+}
+
+[data-theme='copper'] .public-site .profile-submissions .profile-submission-status.status-approved,
+[data-theme='copper'] .public-site .guest-registration-card .guest-registration-status.status-approved {
+    color: #a9d6b8 !important;
+}
+
+[data-theme='copper'] .public-site .profile-submissions .profile-submission-status.status-rejected,
+[data-theme='copper'] .public-site .guest-registration-card .guest-registration-status.status-rejected {
+    color: #f0b39a !important;
+}
+/* 8e. Paginasi Laravel (view paginator bawaan Tailwind).
+   Markup paginator memakai utility class Tailwind (bg-white, text-gray-700).
+   Utilitas Tailwind berada di @layer utilities sehingga kalah dari CSS di
+   luar layer - jadi tombol nomor halaman tetap putih di panel gelap. */
+[data-theme='copper'] .account-pagination nav {
+    color: var(--text-muted) !important;
+}
+
+/* 8f. Panel putih di halaman pendaftaran: gelombang tarif, rekening pembayaran,
+   dan umpan balik pembacaan NIK. Semuanya masih memakai warna terang dari
+   account-portal.css sehingga terlihat seperti RestartUI di panel gelap. */
+[data-theme='copper'] .public-site :is(.event-pricing-waves, .event-payment-account) {
+    border-color: var(--copper-dim);
+    background: rgba(0, 0, 0, 0.22);
+}
+
+[data-theme='copper'] .public-site .event-pricing-waves > span:first-child,
+[data-theme='copper'] .public-site .event-pricing-wave-group > b {
+    color: var(--copper) !important;
+}
+
+[data-theme='copper'] .public-site .event-pricing-wave {
+    color: var(--text-muted) !important;
+}
+
+[data-theme='copper'] .public-site .event-pricing-wave.is-active {
+    color: var(--text-light) !important;
+}
+
+[data-theme='copper'] .public-site .event-pricing-wave.is-active em {
+    color: var(--copper-light) !important;
+}
+
+[data-theme='copper'] .public-site .event-payment-account :is(span, strong) {
+    color: var(--text-light) !important;
+}
+
+[data-theme='copper'] .public-site .event-payment-account strong {
+    color: var(--text-white) !important;
+    letter-spacing: .04em;
+}
+
+/* 8g. Umpan balik NIK: hijau muda dari tema terang perlu diganti agar teks
+   terang dari glass-theme tetap terbaca. */
+[data-theme='copper'] .public-site .nik-feedback {
+    border-color: rgba(169, 214, 184, 0.32);
+    background: rgba(169, 214, 184, 0.1);
+}
+
+[data-theme='copper'] .public-site .nik-feedback:not(.is-error) {
+    color: #a9d6b8 !important;
+}
+
+[data-theme='copper'] .public-site .nik-feedback.is-error {
+    border-color: rgba(240, 179, 154, 0.4);
+    background: rgba(240, 179, 154, 0.1);
+}
+
+[data-theme='copper'] .public-site .nik-feedback.is-error {
+    color: #f0b39a !important;
+}
+
+[data-theme='copper'] .account-pagination nav :is(a, span) {
+    border-color: var(--copper-dim) !important;
+    color: var(--text-muted) !important;
+    background: #1a1c21 !important;
+}
+
+[data-theme='copper'] .account-pagination nav :is(a, span):hover {
+    border-color: var(--copper) !important;
+    color: var(--copper-light) !important;
+    background: var(--copper-dim) !important;
+}
+
+[data-theme='copper'] .account-pagination nav :is(a, span).active,
+[data-theme='copper'] .account-pagination nav :is(span[aria-current='page']) {
+    border-color: var(--copper) !important;
+    color: #241a0c !important;
+    background: var(--copper) !important;
+}
+/* 8f. Ikon "i" pada notifikasi form event.
+   tembaga-theme.css L310 sudah memberi .form-example-notice panel gelap,
+   tetapi .notice-icon (event-form.css L10) tetap memakai lingkaran krem. */
+[data-theme='copper'] .notice-icon {
+    border: 1px solid var(--copper-dim);
+    color: var(--copper);
+    background: var(--copper-dim);
+}
+/* 8g. Halaman kategori event /dasbor-peserta/kejuaraan/{event}/kategori.
+   Halaman ini memakai layout admin (.app-shell.is-sidebarless), bukan
+   .public-site, sehingga override lama tembaga-theme.css tidak pernah
+   cocok. account-portal.css memberi latar terang pada tiga komponen ini
+   sementara teksnya dipaksa .public-site blanket menjadi nyaris putih,
+   hasilnya rasio 1.0 - 1.03:1. Yang perlu diubah hanya latar dan border;
+   warna teks yang sudah gelap-panel sudah adequate. */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page :is(
+    .registration-readiness-option,
+    .birth-year-chip,
+    .category-pricing-fields
+) {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-pair-prompt {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-pair-prompt button {
+    border-color: var(--copper-dim);
+    color: var(--copper);
+    background: #1a1c21;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-pair-prompt .category-pair-confirm {
+    border-color: var(--copper);
+    color: #14161b;
+    background: var(--copper);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-name-controls input[readonly] {
+    border-color: var(--copper-dim);
+    color: var(--text-light);
+    background: var(--panel-solid);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-outside-race-picker {
+    border-color: var(--copper-dim);
+    background: var(--panel-bg);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-outside-race-picker > legend {
+    color: var(--copper-light);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-outside-race-picker > label {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .category-outside-race-picker .field-hint {
+    color: var(--text-muted);
+}
+
+/* 8h. Inisial avatar memakai teks gelap #14161b di atas gradasi tembaga.
+   Ujung gelapnya (--copper-dark #8c6a5d) hanya 3.74:1, jadi gradasi
+   diturunkan agar seluruh jejaknya berada di atas 4.5:1. */
+[data-theme='copper'] :is(.avatar, .avatar-small, .profile-avatar, .module-athlete-avatar) {
+    background: radial-gradient(circle at 30% 30%, var(--copper-light), #a5857a);
+}
+/* 8i. Inisial avatar: blanket copper memaksa teks hampir putih, padahal
+   gradasi 8h sudah terang. Kunci kembali ke teks gelap. */
+[data-theme='copper'] :is(.avatar, .avatar-small, .profile-avatar, .module-athlete-avatar) {
+    color: #14161b !important;
+}
+
+/* 8j. Tanda centang tema aktif. theme-settings.css L89 memberi #14161b,
+   tetapi blanket copper menggantinya menjadi hampir putih di atas
+   --settings-accent #d8a899 sehingga hanya 1.75:1. */
+[data-theme='copper'] .theme-option.is-active .theme-option-check {
+    color: #14161b !important;
+}
+/* 8k. .event-form-actions p strong (#6557cf event-form.css L34) tidak punya
+   padanan di tema copper; hanya 3.1:1 di atas panel gelap. */
+[data-theme='copper'] .event-form-actions p strong {
+    color: var(--copper-light);
+}
+/* 8l. Aksen --orange milik light theme (landing.css L2 #e67855) tidak pernah
+   di-override, jadi warna terang light bocor ke tema copper: heading besar
+   "semua terhubung." hanya 2.72:1 dan label 9px di halaman /masuk dan
+   /daftar ikut di bawah ambang. Dipakai juga .organizer-mark, .art-swoosh,
+   dan cincin fokus. */
+[data-theme='copper'] .public-site {
+    --orange: var(--copper-light);
+}
+
+[data-theme='copper'] .account-intro h1 span {
+    color: var(--copper-light);
+}
+/* 8m. Aksen #d66f4f milik light theme (account-portal.css L68 & L131,
+   landing.css L26) tidak pernah di-override; tautan "Buka panel admin" dan
+   "Lihat semua event" hanya 4.33:1 di copper. */
+[data-theme='copper'] :is(.public-site, .app-shell) :is(
+    .account-switch a,
+    .profile-panel-link,
+    .guest-dashboard-all-events,
+    .public-nav a.is-current
+),
+[data-theme='copper'] :is(.event-registration-edit-link, .listing-roster-link, .event-roster-filter-reset):hover,
+[data-theme='copper'] .account-back-link:hover {
+    color: var(--copper-light);
+}
+
+/* 8n. Dua sisipan yang hanya meleset sedikit: panah modul 4.44:1 dan
+   teks keadaan kosong 4.35:1. Menaikkan alpha sudah cukup. */
+[data-theme='copper'] .module-arrow {
+    color: rgba(245, 245, 244, 0.82);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .listing-empty-state :is(h3, p) {
+    color: rgba(245, 245, 244, 0.88);
+}
+/* 8o. Tombol "Rilis daftar peserta". tembaga-theme.css L1750 menimpa
+   latarnya menjadi --copper #d8a899 yang terang, tetapi warnanya tetap
+   --text-white #e2e8f0 sehingga hanya 1.71:1. Versi light aslinya
+   (#a75c43 + putih) justru 4.88:1. */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-roster-publication .submission-approve {
+    color: #14161b;
+}
+/* 8p. Padanan 16y untuk copper: label 9px dengan alpha 0.55 hanya 4.2:1. */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page :is(.field-hint, .optional-label) {
+    color: var(--text-light);
+}
+/* 8q. Dua teks kecil copper yang benar-benar di bawah AA (bukan artefak
+   gradasien, sudah diukur dengan alpha sesuai posisi elemen):
+   - .event-form-actions p #858797 (event-form.css L33) 9px -> 4.21:1
+   - .page-subtitle pada halaman kategori 11px -> 4.37:1, karena letaknya
+     masih di inti terang gradasien radial body (alpha 0.62).
+   Warna dinaikkan secukupnya agar tetap di bawah luminans judul h1
+   (--copper #d8a899, Y=0.450) supaya hierarki tidak ikut berubah. */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-form-actions p {
+    color: var(--text-light);
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-category-page .event-form-heading .page-subtitle {
+    color: #adb3bc;
+}
+/* --- 9. Halaman keuangan event ----------------------------------------- */
+/* Padanan section 22 untuk tema copper: warna hijau/merah dari
+   event-finance.css kontrasnya hanya 5.0:1 dan 5.6:1 di atas panel copper,
+   sedangkan nilai di bawah dibuat lebih terang supaya tetap aman. */
+[data-theme='copper'] .event-finance-page {
+    --finance-income: #a7e3bd;
+    --finance-expense: #f5c2ae;
+}
+/* Padanan section22 untuk tema copper: lihat catatan di file glass. */
+[data-theme='copper'] .event-finance-page .finance-summary-warn {
+    color: #f3dcb0 !important;
+}
+/* --- 10. Halaman atur perlombaan + hari lomba ------------------------- */
+/* Padanan section 24 untuk tema copper. Nilai warna dibuat lebih terang
+   karena latar panel copper lebih hangat dan lebih terang dari panel kaca. */
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) :is(td, small) {
+    color: rgba(245, 245, 244, 0.88) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) strong {
+    color: #f7f5f3 !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) th {
+    border-bottom-color: rgba(216, 168, 153, 0.24) !important;
+    color: rgba(245, 245, 244, 0.76) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.race-heat-table, .race-standings-table) td {
+    border-bottom-color: rgba(216, 168, 153, 0.18) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .race-lane-row[data-race-status='no_show'] strong,
+[data-theme='copper'] :is(.public-site, .app-shell) .race-lane-row[data-race-status='dnf'] strong,
+[data-theme='copper'] :is(.public-site, .app-shell) .race-lane-row[data-race-status='dsq'] strong {
+    color: #a9aab2 !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .race-heat-table :is(input, select) {
+    border-color: rgba(216, 168, 153, 0.28) !important;
+    color: #f7f5f3 !important;
+    background: rgba(20, 16, 14, 0.34) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .race-heat-table select option {
+    color: #f7f5f3;
+    background: #2a2320;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .race-quick {
+    border-color: rgba(216, 168, 153, 0.26) !important;
+    color: #d5d2cf !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .race-quick.is-win {
+    border-color: rgba(169, 214, 184, 0.5) !important;
+    color: #a9d6b8 !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.race-quick.is-no-show, .race-quick.is-dnf, .race-quick.is-dsq) {
+    border-color: rgba(245, 194, 174, 0.42) !important;
+    color: #f5c2ae !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-race-page .form-cancel-button {
+    border-color: rgba(216, 168, 153, 0.3) !important;
+    color: #f0c0b4 !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .race-format-summary-item small {
+    color: rgba(245, 245, 244, 0.78) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) :is(.race-format-card-meta, .race-heat-meta, .race-heat-actions p) {
+    color: rgba(245, 245, 244, 0.76) !important;
+}
+/* 10b. Padanan section 24 untuk copper: .form-section-heading hanya ditulis
+   ulang di dalam .app-shell (glass-theme.css L546), sedangkan halaman
+   perlombaan dirender di dalam .public-site. */
+[data-theme='copper'] :is(.public-site, .app-shell) .event-race-page .form-section-heading :is(h2, p) {
+    color: rgba(245, 245, 244, 0.9) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-race-page .form-section-heading h2 {
+    color: #f7f5f3 !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-race-page .form-section-heading {
+    border-bottom-color: rgba(216, 168, 153, 0.24) !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-race-page .race-control-copy h2 {
+    color: #f7f5f3 !important;
+}
+
+[data-theme='copper'] :is(.public-site, .app-shell) .event-race-page .race-control-copy p {
+    color: rgba(245, 245, 244, 0.78) !important;
+}

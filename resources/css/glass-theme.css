@@ -1,0 +1,685 @@
+﻿:root {
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.22);
+    --glass-shadow: rgba(0, 0, 0, 0.28);
+    --glass-hover: rgba(255, 255, 255, 0.19);
+    --emerald: #078568;
+    --emerald-light: #41d6a5;
+    --gold: #d8ad72;
+    --coral: #ec886d;
+    --bg-dark: #0a1511;
+    --bg-gradient-1: #0d1e17;
+    --bg-gradient-2: #152c23;
+    --bg-gradient-3: #1b342a;
+}
+
+/* Selector memakai :root (bukan html) karena dashboard.css L1-11 sudah
+   menuliskan :root { background: #f4f6fa } dengan spesifisitas (0,1,0) -
+   lebih tinggi dari html (0,0,1) - sehingga latar canvas <html> tetap
+   terang pada tema gelap. glass-theme.css diimpor setelah dashboard.css,
+   jadi pada spesifisitas yang sama aturan di bawah tetap menang. */
+:root,
+html {
+    min-height: 100%;
+    background: var(--bg-dark);
+}
+
+body,
+body.public-home,
+body.auth-page {
+    min-height: 100vh;
+    color: #f5f5f4;
+    background:
+        radial-gradient(ellipse 52rem 36rem at 8% 12%, rgba(5, 150, 105, 0.2), transparent 70%),
+        radial-gradient(ellipse 42rem 34rem at 95% 68%, rgba(212, 165, 116, 0.17), transparent 72%),
+        linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2) 54%, var(--bg-gradient-3));
+    font-family: 'Instrument Sans', 'Segoe UI', sans-serif;
+}
+
+.public-site {
+    min-height: 100vh;
+    color: #f5f5f4;
+    background: rgba(8, 20, 15, 0.62);
+    box-shadow: 0 0 90px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+.public-site a:focus-visible,
+.app-shell a:focus-visible,
+.app-shell button:focus-visible {
+    outline-color: var(--emerald-light);
+}
+
+.public-header {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.public-site :is(.public-nav a, .public-login, .public-footer, .footer-tagline, .footer-copyright) {
+    color: rgba(245, 245, 244, 0.78);
+}
+
+.public-site :is(
+    .account-intro h1,
+    .profile-heading h1,
+    .event-form-heading h1,
+    .listing-intro h1,
+    .public-section-heading h2,
+    .public-community h2,
+    .public-community h3,
+    .about-inlinesia p
+) {
+    color: #f5f5f4;
+}
+
+.public-site :is(.account-intro > p, .profile-heading > p, .page-subtitle, .listing-intro > p, .public-section-label) {
+    color: rgba(245, 245, 244, 0.69);
+}
+
+.public-site .public-hero {
+    background: linear-gradient(112deg, rgba(22, 49, 38, 0.9), rgba(15, 36, 28, 0.74) 58%, rgba(10, 26, 20, 0.68));
+}
+
+.public-home:not(.event-listing-page) .public-site .public-hero {
+    background: linear-gradient(112deg, rgba(22, 49, 38, 0.9), rgba(15, 36, 28, 0.74) 58%, rgba(10, 26, 20, 0.68));
+}
+
+.public-site .public-community {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.public-site :is(.public-championships, .public-events, .about-inlinesia) {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.public-site :is(.public-overline, .hero-bottom-note, .public-community-note p, .public-event-tag, .service-number) {
+    color: rgba(245, 245, 244, 0.62);
+}
+
+.public-site .community-values {
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.public-site .community-values article {
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+.public-site :is(.listing-organizer-cta, .listing-empty-state) {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    color: #f5f5f4;
+    background: rgba(255, 255, 255, 0.075);
+}
+
+.public-site .listing-organizer-cta :is(h2, p),
+.public-site .listing-empty-state :is(h3, p) {
+    color: rgba(245, 245, 244, 0.84);
+}
+
+.public-site .public-hero h1 {
+    color: #f5f5f4;
+}
+
+.public-site .public-hero-lead,
+.public-site .public-community p,
+.public-site .about-inlinesia {
+    color: rgba(245, 245, 244, 0.72);
+}
+
+.public-site .public-hero-art {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* Link "kembali" juga dipakai di dalam .app-shell (mis. panel admin dan
+   form kategori event), sehingga cakupannya tidak boleh hanya .public-site. */
+:is(.public-site, .app-shell) :is(.public-text-link, .account-back-link, .form-back-link, .listing-back-link) {
+    color: #e9c998;
+}
+
+/* Navbar harus selalu menempel di atas. Footer tetap mengalir normal. */
+.public-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.public-footer {
+    position: relative;
+}
+
+.public-site :is(
+    .account-card,
+    .account-edit-card,
+    .profile-edit-card,
+    .profile-summary,
+    .profile-notifications,
+    .profile-submissions,
+    .guest-dashboard-section,
+    .guest-event-card,
+    .guest-registration-card,
+    .guest-dashboard-empty,
+    .event-eligible-categories,
+    .event-user-registrations,
+    .form-section,
+    .listing-event-card,
+    .listing-demo-notice,
+    .account-table-card,
+    .submission-card,
+    .category-rule-card,
+    .service-card,
+    .sponsor-card,
+    .sponsor-card-options article,
+    .public-event-card,
+    .contact-item,
+    .contact-foot,
+    .community-values article
+) {
+    border-color: rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    color: #f5f5f4;
+    background: rgba(255, 255, 255, 0.085);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.public-site :is(
+    .account-card,
+    .account-edit-card,
+    .profile-edit-card,
+    .profile-summary,
+    .profile-notifications,
+    .profile-submissions,
+    .guest-dashboard-section,
+    .guest-event-card,
+    .guest-registration-card,
+    .guest-dashboard-empty,
+    .event-eligible-categories,
+    .event-user-registrations,
+    .form-section,
+    .listing-event-card,
+    .listing-demo-notice,
+    .account-table-card,
+    .submission-card,
+    .category-rule-card,
+    .sponsor-card,
+    .public-event-card,
+    .service-card,
+    .sponsor-card-options article,
+    .contact-item,
+    .contact-foot,
+    .community-values article
+) :is(h1, h2, h3, p, strong, label, legend, small, span) {
+    color: rgba(245, 245, 244, 0.86);
+}
+
+.public-site :is(.profile-role, .profile-submission-status, .guest-registration-status, .listing-status) {
+    color: initial;
+}
+
+.public-site .account-card-heading :is(h2, p),
+.public-site .guest-dashboard-section-heading h2,
+.public-site .guest-event-info :is(h3, p, small),
+.public-site .guest-registration-info :is(strong, span, small),
+.public-site .listing-event-body :is(h3, p, span),
+.public-site .event-eligible-categories :is(strong, p, b),
+.public-site .event-user-registrations :is(strong, span) {
+    color: #f5f5f4;
+}
+
+.public-site .account-card-heading p,
+.public-site .guest-event-info small,
+.public-site .guest-registration-info small,
+.public-site .listing-event-body p {
+    color: rgba(245, 245, 244, 0.66);
+}
+
+.public-site :is(.service-card, .listing-event-card, .guest-event-card, .guest-registration-card, .community-values article) {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.public-site .contact-heading h2 {
+    color: #f5f5f4;
+}
+
+.public-site .contact-heading h2 span {
+    color: var(--emerald-light);
+}
+
+.public-site .contact-heading p,
+.public-site .contact-foot p {
+    color: rgba(245, 245, 244, 0.7);
+}
+
+.public-site :is(.contact-label, .contact-value.is-empty, .contact-action.is-static) {
+    color: rgba(245, 245, 244, 0.6);
+}
+
+.public-site .contact-value {
+    color: #f5f5f4;
+}
+
+.public-site a.contact-value:hover,
+.public-site .contact-action:hover {
+    color: var(--emerald-light);
+}
+
+.public-site .contact-action {
+    color: #e9c998;
+}
+
+.public-site .contact-item .contact-icon {
+    color: var(--emerald-light);
+    background: rgba(65, 214, 165, 0.14);
+}
+
+.public-site .contact-item:nth-child(2) .contact-icon {
+    color: #8fd0f0;
+    background: rgba(143, 208, 240, 0.14);
+}
+
+.public-site .contact-item:nth-child(3) .contact-icon {
+    color: var(--gold);
+    background: rgba(216, 173, 114, 0.14);
+}
+
+.public-site .category-rule-card {
+    border-color: rgba(255, 255, 255, 0.17);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.public-site :is(.account-card, .account-edit-card, .profile-edit-card, .profile-summary) {
+    border-radius: 20px;
+}
+
+.public-site .form-section {
+    border-radius: 16px;
+}
+
+.public-site :is(.account-form, .event-form) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    border-color: rgba(255, 255, 255, 0.2);
+    border-radius: 9px;
+    color: #f5f5f4;
+    background: rgba(3, 12, 9, 0.34);
+}
+
+.public-site :is(.account-form, .event-form) :is(input, textarea)::placeholder {
+    color: rgba(245, 245, 244, 0.45);
+}
+
+.public-site :is(.account-form, .event-form) select option {
+    color: #f5f5f4;
+    background: #14251d;
+}
+
+.public-site :is(.account-form, .event-form) :is(input, select, textarea):focus {
+    border-color: var(--emerald-light);
+    box-shadow: 0 0 0 3px rgba(65, 214, 165, 0.16);
+}
+
+.public-site .account-submit,
+.public-site .button-primary {
+    border-radius: 10px;
+    background: linear-gradient(135deg, #08795d, #075c4a);
+    box-shadow: 0 8px 22px rgba(5, 95, 73, 0.18);
+}
+
+.public-site .public-button-orange {
+    border-radius: 9px;
+    background: linear-gradient(135deg, #d89e5e, #b87a42);
+}
+
+.public-site .public-button-dark {
+    border-radius: 9px;
+    background: linear-gradient(135deg, #12392e, #0a241d);
+}
+
+.public-site .eligibility-methods > legend,
+.public-site .eligibility-choice strong {
+    color: #f5f5f4;
+}
+
+.public-site .eligibility-methods > legend span,
+.public-site .eligibility-choice small {
+    color: rgba(245, 245, 244, 0.62);
+}
+
+.public-site .eligibility-choice {
+    border-color: rgba(255, 255, 255, 0.17);
+    background: rgba(255, 255, 255, 0.065);
+}
+
+.public-site .eligibility-choice:has(input:checked) {
+    border-color: rgba(65, 214, 165, 0.7);
+    background: rgba(5, 150, 105, 0.2);
+}
+
+.public-site .event-form .field-hint,
+.public-site .event-form .optional-label {
+    color: rgba(245, 245, 244, 0.55);
+}
+
+.public-site .account-errors,
+.public-site .form-errors {
+    color: #ffd9d1;
+    border-color: rgba(236, 136, 109, 0.42);
+    background: rgba(120, 39, 30, 0.35);
+}
+
+.public-site :is(.public-flash, .account-errors, .form-errors) {
+    border-radius: 10px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.app-shell {
+    min-height: 100vh;
+    background: transparent;
+}
+
+.app-shell .sidebar {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(8, 18, 14, 0.84);
+    box-shadow: 12px 0 38px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+}
+
+.app-shell .sidebar .nav-link.is-active {
+    background: linear-gradient(100deg, rgba(5, 150, 105, 0.28), rgba(255, 255, 255, 0.06));
+    box-shadow: inset 2px 0 var(--emerald-light);
+}
+
+.app-shell .main-content {
+    padding: 0;
+    background: transparent;
+}
+
+.app-shell .topbar {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(11, 24, 18, 0.68);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+.app-shell .breadcrumbs,
+.app-shell .breadcrumbs a,
+.app-shell .crumb-separator {
+    color: rgba(245, 245, 244, 0.65);
+}
+
+.app-shell .breadcrumbs strong {
+    color: #f5f5f4;
+}
+
+.app-shell .season-pill {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(245, 245, 244, 0.82);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.app-shell :is(.welcome-row h1, .event-form-heading h1, .page-content > header h1) {
+    color: #f5f5f4;
+}
+
+.app-shell .page-content > :is(.welcome-row, .event-form-heading) .page-subtitle,
+.app-shell .page-content > .welcome-row .eyebrow {
+    color: rgba(245, 245, 244, 0.68);
+}
+
+.app-shell :is(
+    .panel,
+    .module-card,
+    .module-event-selector,
+    .account-table-card,
+    .account-edit-card,
+    .form-section,
+    .category-rule-card,
+    .submission-card,
+    .profile-notifications,
+    .profile-submissions
+) {
+    border-color: rgba(255, 255, 255, 0.19);
+    border-radius: 16px;
+    color: #f5f5f4;
+    background: rgba(255, 255, 255, 0.085);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.19), inset 0 1px rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.app-shell :is(
+    .panel,
+    .module-card,
+    .module-event-selector,
+    .account-table-card,
+    .account-edit-card,
+    .form-section,
+    .category-rule-card,
+    .submission-card,
+    .profile-notifications,
+    .profile-submissions
+) :is(h1, h2, h3, p, strong, label, legend, small, span, td, th) {
+    color: rgba(245, 245, 244, 0.84);
+}
+
+.public-site .profile-summary .profile-role {
+    color: #765c4a;
+}
+
+.public-site .profile-submissions .profile-submission-status,
+.public-site .guest-registration-card .guest-registration-status {
+    color: #7a6856;
+}
+
+.public-site .profile-submissions .profile-submission-status.status-approved,
+.public-site .guest-registration-card .guest-registration-status.status-approved {
+    color: #3c8058;
+}
+
+.public-site .profile-submissions .profile-submission-status.status-rejected,
+.public-site .guest-registration-card .guest-registration-status.status-rejected {
+    color: #a94b42;
+}
+
+.public-site .listing-event-card .listing-status-open {
+    color: #348168;
+}
+
+.public-site .listing-event-card .listing-status-preparing {
+    color: #987344;
+}
+
+.app-shell .module-status {
+    color: #347654;
+}
+
+.app-shell .module-status.is-review {
+    color: #906c2c;
+}
+
+.app-shell .module-status.is-draft {
+    color: #69728b;
+}
+
+.app-shell :is(.module-card, .panel) :is(input, select, textarea) {
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #f5f5f4;
+    background: rgba(3, 12, 9, 0.34);
+}
+
+.app-shell :is(.module-card, .panel) select option {
+    color: #f5f5f4;
+    background: #14251d;
+}
+
+.app-shell :is(.module-card, .panel) :is(th, .module-card-heading, .module-table th) {
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.app-shell .hero-banner {
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 18px;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.2);
+}
+
+.app-shell :is(.button, .module-publish-button) {
+    border-radius: 9px;
+}
+
+.app-shell .form-field :is(input, select, textarea) {
+    border-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #f5f5f4;
+    background: rgba(3, 12, 9, 0.34);
+}
+
+.app-shell .form-field select option {
+    color: #f5f5f4;
+    background: #14251d;
+}
+
+.app-shell :is(.form-field label, .field-hint, .optional-label, .form-section-heading h2, .form-section-heading p) {
+    color: rgba(245, 245, 244, 0.78);
+}
+
+.app-shell .form-section-heading {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.app-shell .admin-flash {
+    border-radius: 12px;
+    background: rgba(237, 248, 241, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.eligibility-method-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.eligibility-methods {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.eligibility-methods > legend {
+    margin-bottom: 9px;
+    color: #424d48;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.eligibility-methods > legend span {
+    color: #838b85;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+.eligibility-choice {
+    display: flex;
+    min-height: 67px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid rgba(69, 85, 77, 0.16);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.54);
+    cursor: pointer;
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.eligibility-choice:hover {
+    transform: translateY(-1px);
+    border-color: rgba(5, 150, 105, 0.42);
+}
+
+.eligibility-choice:has(input:checked) {
+    border-color: rgba(5, 150, 105, 0.62);
+    background: rgba(5, 150, 105, 0.09);
+    box-shadow: inset 0 0 0 1px rgba(5, 150, 105, 0.12);
+}
+
+.eligibility-choice input {
+    flex: none;
+    margin: 2px 0 0;
+    accent-color: #078568;
+}
+
+.eligibility-choice > span {
+    display: grid;
+    gap: 4px;
+}
+
+.eligibility-choice strong {
+    color: #33413b;
+    font-size: 10px;
+}
+
+.eligibility-choice small {
+    color: #758078;
+    font-size: 9px;
+    font-weight: 450;
+    line-height: 1.45;
+}
+
+.eligibility-fields[hidden] {
+    display: none;
+}
+
+.eligibility-fields:not([hidden]) {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 992px) {
+    .app-shell .sidebar {
+        transform: none;
+    }
+}
+
+@media (max-width: 800px) {
+    .app-shell .sidebar {
+        width: 158px;
+    }
+}
+
+@media (max-width: 700px) {
+    .public-site {
+        background: rgba(8, 20, 15, 0.74);
+    }
+
+    .eligibility-method-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .app-shell .sidebar {
+        width: 46px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

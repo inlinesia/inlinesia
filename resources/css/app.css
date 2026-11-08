@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import './templatemo-glass-admin.css';
+@import './dashboard.css';
+@import './landing.css';
+@import './event-form.css';
+@import './account-portal.css';
+@import './page-context.css';
+@import './theme-settings.css';
+@import './preset-picker.css';
+@import './event-finance.css';
+@import './event-race.css';
+@import 'tailwindcss';
+@import './glass-theme.css';
+@import './glass-theme-contrast.css';
+@import './tembaga-theme.css';
+@import './tembaga-theme-contrast.css';
+@import './neural-theme.css';
+@import './topic-theme.css';
+@import './nav-compact.css';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
