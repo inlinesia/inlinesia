@@ -32,8 +32,10 @@ return new class extends Migration
         $this->assignExistingRowsToTheirFirstRace();
 
         Schema::table('event_category_race_settings', function (Blueprint $table): void {
+            $table->dropForeign(['event_id']);
             $table->dropUnique(['event_id', 'category']);
             $table->unique(['event_id', 'category', 'race'], 'event_category_race_settings_identity');
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
         });
 
         Schema::table('event_race_heats', function (Blueprint $table): void {
@@ -102,9 +104,11 @@ return new class extends Migration
         });
 
         Schema::table('event_category_race_settings', function (Blueprint $table): void {
+            $table->dropForeign(['event_id']);
             $table->dropUnique('event_category_race_settings_identity');
             $table->unique(['event_id', 'category']);
-            $table->dropColumn('race', 'grouping_mode');
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
+            $table->dropColumn(['race', 'grouping_mode']);
         });
     }
 };
