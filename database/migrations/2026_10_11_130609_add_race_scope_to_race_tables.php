@@ -39,15 +39,19 @@ return new class extends Migration
         });
 
         Schema::table('event_race_heats', function (Blueprint $table): void {
+            $table->dropForeign(['event_id']);
             $table->dropUnique('event_race_heat_identity');
             $table->dropIndex(['event_id', 'category', 'stage']);
             $table->unique(['event_id', 'category', 'race', 'stage', 'number'], 'event_race_heat_identity');
             $table->index(['event_id', 'category', 'race', 'stage'], 'event_race_heats_lookup');
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
         });
 
         Schema::table('event_race_entries', function (Blueprint $table): void {
+            $table->dropForeign(['event_id']);
             $table->dropIndex(['event_id', 'category']);
             $table->index(['event_id', 'category', 'race'], 'event_race_entries_lookup');
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
         });
     }
 
@@ -90,16 +94,20 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('event_race_entries', function (Blueprint $table): void {
+            $table->dropForeign(['event_id']);
             $table->dropIndex('event_race_entries_lookup');
             $table->index(['event_id', 'category']);
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
             $table->dropColumn('race');
         });
 
         Schema::table('event_race_heats', function (Blueprint $table): void {
+            $table->dropForeign(['event_id']);
             $table->dropUnique('event_race_heat_identity');
             $table->dropIndex('event_race_heats_lookup');
             $table->unique(['event_id', 'category', 'stage', 'number'], 'event_race_heat_identity');
             $table->index(['event_id', 'category', 'stage']);
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
             $table->dropColumn('race');
         });
 
