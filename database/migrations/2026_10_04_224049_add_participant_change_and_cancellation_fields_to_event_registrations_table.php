@@ -25,7 +25,10 @@ return new class extends Migration
         Schema::create('event_registration_financial_entries', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('event_registration_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('event_registration_id');
+            $table->foreign('event_registration_id', 'fin_entry_reg_fk')
+                ->references('id')->on('event_registrations')
+                ->onDelete('cascade');
             $table->string('type', 16);
             $table->unsignedBigInteger('amount');
             $table->string('description', 180);
