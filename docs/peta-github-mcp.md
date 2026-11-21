@@ -68,3 +68,8 @@ dan `auth` + `role:admin` dengan prefix `admin`.
 - K6 (A): Pint selalu `vendor/bin/pint --dirty --format agent`.
 - K7 (A): Balasan ringkas, tetap Bahasa Indonesia.
 - K8 (A): Sub-agent paralel hanya untuk tugas besar/multi-halaman.
+- **K9 (A, terbaru & pemutus konflik): Setelah selesai mengerjakan, wajib
+  `git pull` → `git add` → `git commit` → `git push` ke server.** Bukan lagi
+  sekadar "usahakan". K9 menang atas aturan/keputusan lain yang bertentangan.
+  Pengecualian: tidak ada perubahan, atau push gagal karena autentikasi/jaringan
+  (lapor ke pemilik). Konflik **merge Git** tetap ditanyakan terlebih dahulu.

@@ -169,8 +169,9 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 ## Kontrol Versi (Source Control)
 
 - Repo Git diinisialisasi atas persetujuan pemilik (owner decision K3), sehingga aturan pull/push di bawah ini berlaku.
-- Setelah selesai mengubah file, selalu usahakan `pull` dan `push`.
-- Bila terjadi konflik, tanyakan terlebih dahulu.
+- **Owner decision K9 (keputusan terbaru, pemutus konflik):** Setiap kali selesai mengerjakan tugas, **wajib** `git pull`, `git add`, `git commit`, dan `git push` ke server — bukan sekadar "usahakan". K9 menggantikan dan menang atas aturan/keputusan lain yang bertentangan, termasuk narasi "usahakan pull/push" di atas. Pengecualian hanya bila tidak ada perubahan sama sekali, atau bila push gagal karena masalah autentikasi/jaringan (lapor ke pemilik).
+- Jalankan urutan: `git pull` → verifikasi (Pint + tes terdampak) → `git add <file yang diubah>` → `git commit` → `git push origin <branch>`. Lakukan dalam satu tugas yang sama dengan perubahan kode, jangan menyusul di tugas lain.
+- Bila terjadi **konflik merge Git**, tanyakan terlebih dahulu kepada pemilik proyek — jangan menyelesaikan konflik sendiri (K9 tidak mengubah ini).
 - Jangan menghapus file yang belum terdaftar (untracked) atau yang telah dimodifikasi tanpa izin pemilik proyek.
 - Bila ada file yang tidak terdaftar atau telah diubah, mintalah pengujian sebelum menghapus.
 
