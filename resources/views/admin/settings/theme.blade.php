@@ -110,6 +110,27 @@
                         <span class="theme-option-check" aria-hidden="true">&#10003;</span>
                     </span>
                 </label>
+
+                <label class="theme-option" data-theme-option>
+                    <input type="radio" name="theme" value="ceria" @checked(old('theme') === 'ceria')>
+                    <span class="theme-option-preview theme-preview-ceria">
+                        <span class="theme-preview-chrome">
+                            <span class="theme-preview-pill"></span>
+                            <span class="theme-preview-pill"></span>
+                        </span>
+                        <span class="theme-preview-cards">
+                            <span class="theme-preview-card"></span>
+                            <span class="theme-preview-card"></span>
+                        </span>
+                    </span>
+                    <span class="theme-option-meta">
+                        <span>
+                            <strong>Ceria</strong>
+                            <small>Tema ramah anak: warna pastel cerah dan stiker sepatu roda di halaman publik.</small>
+                        </span>
+                        <span class="theme-option-check" aria-hidden="true">&#10003;</span>
+                    </span>
+                </label>
             </div>
 
             <div class="theme-settings-footer">

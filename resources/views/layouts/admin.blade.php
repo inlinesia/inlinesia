@@ -14,7 +14,7 @@
             } catch (error) {
                 theme = null;
             }
-            if (['copper', 'glass', 'neural', 'topic'].indexOf(theme) === -1) {
+            if (['copper', 'glass', 'neural', 'topic', 'ceria'].indexOf(theme) === -1) {
                 theme = 'copper';
             }
             document.documentElement.setAttribute('data-theme', theme);

@@ -15,7 +15,7 @@ class ThemeSettingController extends Controller
      *
      * @var list<string>
      */
-    private const THEMES = ['glass', 'copper', 'neural', 'topic'];
+    private const THEMES = ['glass', 'copper', 'neural', 'topic', 'ceria'];
 
     public function edit(): View
     {

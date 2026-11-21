@@ -1,0 +1,500 @@
+/* ==========================================================================
+   CERIA — tema ramah anak: cerah, pastel, penuh stiker sepatu roda.
+   Aktif saat <html data-theme="ceria">.
+
+   Aturan penting:
+   - Warna tema berlaku di seluruh halaman seperti tema lainnya.
+   - Stiker emoji HANYA tampil di halaman yang bisa diakses publik
+     (body.ceria-sticker-page), bukan dasbor/penyelenggara/admin.
+   - Semua stiker statis: tidak ada @keyframes maupun transisi berulang.
+   ========================================================================== */
+
+[data-theme='ceria'] {
+    --ceria-bg: #fff9f0;
+    --ceria-bg-deep: #fff1e6;
+    --ceria-panel: rgba(255, 255, 255, 0.92);
+    --ceria-panel-solid: #ffffff;
+    --ceria-ink: #3b3355;
+    --ceria-muted: #7b7191;
+    --ceria-yellow: #ffd76a;
+    --ceria-sky: #8fd6ff;
+    --ceria-pink: #ffb3d1;
+    --ceria-mint: #a8e6cf;
+    --ceria-lilac: #c9b6ff;
+    --ceria-orange: #ffab73;
+    --ceria-line: rgba(123, 113, 145, 0.18);
+    --ceria-shadow: 0 10px 30px rgba(123, 113, 145, 0.14);
+
+    --bg-color: var(--ceria-bg);
+    --bg-deep: var(--ceria-bg-deep);
+    --panel-bg: var(--ceria-panel);
+    --panel-solid: var(--ceria-panel-solid);
+    --panel-hover: var(--ceria-panel-solid);
+    --accent: #8b6fd6;
+    --accent-light: #b49af0;
+    --accent-glow: rgba(201, 182, 255, 0.35);
+    --text-light: var(--ceria-ink);
+    --text-muted: var(--ceria-muted);
+    --text-white: var(--ceria-ink);
+    --line: var(--ceria-line);
+    --line-soft: rgba(123, 113, 145, 0.1);
+    --border-melt: 22px 18px 26px 20px;
+    --shadow-panel: var(--ceria-shadow);
+    --shadow-panel-hover: 0 16px 40px rgba(123, 113, 145, 0.2);
+    --font-display: 'Trebuchet MS', 'Instrument Sans', ui-sans-serif, sans-serif;
+    --font-body: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+html[data-theme='ceria'] {
+    min-height: 100%;
+    background: var(--ceria-bg);
+}
+
+[data-theme='ceria'] body,
+[data-theme='ceria'] body.public-home,
+[data-theme='ceria'] body.auth-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: var(--ceria-ink);
+    font-family: var(--font-body);
+    background-color: var(--ceria-bg);
+    background-image:
+        radial-gradient(ellipse 55% 35% at 8% 0%, rgba(255, 215, 106, 0.35) 0%, transparent 62%),
+        radial-gradient(ellipse 50% 35% at 92% 8%, rgba(143, 214, 255, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 100%, rgba(168, 230, 207, 0.4) 0%, transparent 62%),
+        linear-gradient(180deg, var(--ceria-bg) 0%, var(--ceria-bg-deep) 100%);
+    background-attachment: fixed;
+}
+
+[data-theme='ceria'] h1,
+[data-theme='ceria'] h2,
+[data-theme='ceria'] h3,
+[data-theme='ceria'] h4 {
+    color: #6a4fa8;
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+[data-theme='ceria'] a {
+    color: #6a4fa8;
+}
+
+[data-theme='ceria'] a:hover {
+    color: #a06ad6;
+}
+
+[data-theme='ceria'] ::selection {
+    background: var(--ceria-lilac);
+    color: var(--ceria-ink);
+}
+
+[data-theme='ceria'] :is(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid #8b6fd6;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgba(201, 182, 255, 0.4);
+}
+
+[data-theme='ceria'] .public-site,
+[data-theme='ceria'] .app-shell,
+[data-theme='ceria'] .page-content,
+[data-theme='ceria'] .main-content {
+    background: transparent;
+    color: var(--ceria-ink);
+}
+
+[data-theme='ceria'] .public-header {
+    position: relative;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid var(--ceria-line);
+    box-shadow: var(--ceria-shadow);
+    border-radius: 0 0 26px 26px;
+}
+
+[data-theme='ceria'] .public-brand {
+    position: relative;
+}
+
+[data-theme='ceria'] .public-brand .inlinesia-logo-copy strong {
+    color: #6a4fa8;
+}
+
+[data-theme='ceria'] .public-brand .inlinesia-logo-copy small {
+    color: var(--ceria-muted);
+}
+
+[data-theme='ceria'] .public-nav-link {
+    color: var(--ceria-ink);
+}
+
+[data-theme='ceria'] .public-nav-link:hover,
+[data-theme='ceria'] .public-nav-link.is-active {
+    color: #6a4fa8;
+    background: rgba(201, 182, 255, 0.28);
+}
+
+[data-theme='ceria'] .button-primary,
+[data-theme='ceria'] .account-submit,
+[data-theme='ceria'] .listing-register-link,
+[data-theme='ceria'] .public-button-orange {
+    color: var(--ceria-ink);
+    background: linear-gradient(135deg, var(--ceria-yellow) 0%, var(--ceria-orange) 100%);
+    border: none;
+    box-shadow: 0 8px 20px rgba(255, 171, 115, 0.35);
+    font-weight: 700;
+}
+
+[data-theme='ceria'] .button-primary:hover,
+[data-theme='ceria'] .account-submit:hover,
+[data-theme='ceria'] .listing-register-link:hover,
+[data-theme='ceria'] .public-button-orange:hover {
+    filter: brightness(1.03);
+}
+
+[data-theme='ceria'] .public-button-dark {
+    color: var(--ceria-ink);
+    background: var(--ceria-sky);
+}
+
+[data-theme='ceria'] .public-button-light {
+    color: var(--ceria-ink);
+    background: var(--ceria-panel-solid);
+    border: 1px solid var(--ceria-line);
+}
+
+[data-theme='ceria'] :is(.panel, .account-card, .account-table-card, .event-category-card,
+    .listing-card, .listing-event-card, .service-card, .public-event-card, .sponsor-card,
+    .listing-organizer-cta, .contact-grid .contact-item, .listing-empty-state) {
+    color: var(--ceria-ink);
+    background: var(--ceria-panel);
+    border: 1px solid var(--ceria-line);
+    border-radius: 22px 18px 26px 20px;
+    box-shadow: var(--ceria-shadow);
+}
+
+[data-theme='ceria'] .form-field :is(input, select, textarea),
+[data-theme='ceria'] .account-form :is(input, select, textarea) {
+    color: var(--ceria-ink);
+    background: var(--ceria-panel-solid);
+    border: 1px solid var(--ceria-line);
+    border-radius: 14px;
+}
+
+[data-theme='ceria'] .form-field :is(input, select, textarea):focus,
+[data-theme='ceria'] .account-form :is(input, select, textarea):focus {
+    border-color: #8b6fd6;
+    box-shadow: 0 0 0 4px rgba(201, 182, 255, 0.35);
+}
+
+[data-theme='ceria'] .public-footer {
+    position: relative;
+    border-top-color: var(--ceria-line);
+    background: rgba(255, 255, 255, 0.72);
+}
+
+[data-theme='ceria'] .footer-tagline,
+[data-theme='ceria'] .footer-copyright,
+[data-theme='ceria'] .footer-admin-link {
+    color: var(--ceria-muted);
+}
+
+[data-theme='ceria'] .public-home .public-hero {
+    position: relative;
+    background: linear-gradient(120deg, rgba(255, 215, 106, 0.42) 0%, rgba(255, 179, 209, 0.35) 48%, rgba(143, 214, 255, 0.4) 100%);
+}
+
+[data-theme='ceria'] .public-home .public-hero-art {
+    position: relative;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--ceria-line);
+}
+
+[data-theme='ceria'] .public-home .hero h1,
+[data-theme='ceria'] .public-home .hero p {
+    color: #5d467f;
+}
+
+[data-theme='ceria'] .public-section-label,
+[data-theme='ceria'] .public-overline,
+[data-theme='ceria'] .listing-intro > p {
+    color: var(--ceria-muted);
+}
+
+[data-theme='ceria'] .listing-event-date {
+    background: var(--ceria-mint);
+    color: var(--ceria-ink);
+}
+
+[data-theme='ceria'] .listing-event-date :is(strong, span, small) {
+    color: var(--ceria-ink);
+}
+
+[data-theme='ceria'] .listing-status-open {
+    color: var(--ceria-ink);
+    background: var(--ceria-mint);
+    border-color: rgba(90, 160, 130, 0.4);
+}
+
+[data-theme='ceria'] .account-intro h1,
+[data-theme='ceria'] .account-card-heading h2 {
+    color: #6a4fa8;
+}
+
+[data-theme='ceria'] .account-intro > p,
+[data-theme='ceria'] .account-card-heading p,
+[data-theme='ceria'] .field-hint,
+[data-theme='ceria'] .optional-label {
+    color: var(--ceria-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Stiker sepatu roda — STATIS, hanya di halaman publik.
+   Elemen dekoratif: pointer-events:none agar tidak menghalangi klik.
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] body.ceria-sticker-page :is(
+    .public-header, .public-brand, .public-hero-art,
+    .listing-event-card, .service-card, .public-event-card,
+    .listing-empty-state, .account-card, .account-table-card,
+    .public-directory .account-table-card, .public-footer, .listing-organizer-cta
+)::before,
+[data-theme='ceria'] body.ceria-sticker-page :is(
+    .public-header, .public-hero, .public-hero-art, .listing-event-card,
+    .service-card, .public-event-card, .account-card, .public-footer
+)::after {
+    pointer-events: none;
+    position: absolute;
+    z-index: 3;
+    line-height: 1;
+    filter: drop-shadow(0 4px 6px rgba(91, 69, 130, 0.18));
+}
+
+/* Header & logo */
+[data-theme='ceria'] body.ceria-sticker-page .public-header::after {
+    content: '🛼';
+    top: 12px;
+    left: 28%;
+    font-size: 1.4rem;
+    transform: rotate(-12deg);
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .public-brand::after {
+    content: '⛑️';
+    top: 2px;
+    right: -26px;
+    font-size: 1.15rem;
+}
+
+/* Hero beranda */
+[data-theme='ceria'] body.ceria-sticker-page .public-hero::after {
+    content: '🏅';
+    right: 5%;
+    top: 12%;
+    font-size: 3rem;
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .public-hero-art::before {
+    content: '✨';
+    left: 10px;
+    top: 10px;
+    font-size: 1.6rem;
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .public-hero-art::after {
+    content: '🛼';
+    right: 12px;
+    bottom: 12px;
+    font-size: 2rem;
+    transform: rotate(14deg);
+}
+
+/* Kartu daftar kejuaraan */
+[data-theme='ceria'] body.ceria-sticker-page .listing-event-card::after {
+    content: '🛼';
+    top: 10px;
+    right: 12px;
+    font-size: 1.5rem;
+    opacity: 0.85;
+    transform: rotate(-10deg);
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .listing-empty-state::before {
+    content: '🛼';
+    top: 14px;
+    right: 18px;
+    font-size: 2rem;
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .listing-organizer-cta::before {
+    content: '🏅';
+    top: 14px;
+    right: 18px;
+    font-size: 2rem;
+}
+
+/* Fitur & kartu event di beranda */
+[data-theme='ceria'] body.ceria-sticker-page .service-card::after {
+    content: '⛑️';
+    top: 10px;
+    right: 12px;
+    font-size: 1.3rem;
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .public-event-card::after {
+    content: '🏅';
+    top: 10px;
+    right: 12px;
+    font-size: 1.3rem;
+}
+
+/* Direktori klub/atlet & halaman masuk/daftar */
+[data-theme='ceria'] body.ceria-sticker-page :is(.account-card, .account-table-card)::after {
+    content: '🛼';
+    top: 12px;
+    right: 14px;
+    font-size: 1.6rem;
+    transform: rotate(-8deg);
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .account-card::before {
+    content: '✨';
+    left: 14px;
+    top: 12px;
+    font-size: 1.2rem;
+}
+
+/* Footer */
+[data-theme='ceria'] body.ceria-sticker-page .public-footer::before {
+    content: '⛑️';
+    left: 24px;
+    top: 50%;
+    font-size: 1.5rem;
+    transform: translateY(-50%);
+}
+
+[data-theme='ceria'] body.ceria-sticker-page .public-footer::after {
+    content: '🛼';
+    right: 24px;
+    top: 50%;
+    font-size: 1.7rem;
+    transform: translateY(-50%) rotate(10deg);
+}
+
+/* --------------------------------------------------------------------------
+   Override aturan global glass-theme.css yang menggelapkan halaman publik.
+   Tanpa blok ini hero tetap hijau gelap dan teks nav tetap putih.
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] .public-home:not(.event-listing-page) .public-site .public-hero {
+    background: linear-gradient(120deg, rgba(255, 215, 106, 0.5) 0%, rgba(255, 179, 209, 0.42) 48%, rgba(143, 214, 255, 0.5) 100%) !important;
+}
+
+[data-theme='ceria'] .public-site .public-hero-art {
+    border: 1px solid var(--ceria-line) !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+}
+
+[data-theme='ceria'] .public-site .public-hero h1 {
+    color: #5d467f !important;
+}
+
+[data-theme='ceria'] .public-site .public-hero h1 span {
+    color: #d8734f !important;
+}
+
+[data-theme='ceria'] .public-site :is(.public-nav a, .public-login, .public-logout, .public-footer,
+    .footer-tagline, .footer-copyright, .footer-admin-link) {
+    color: var(--ceria-ink) !important;
+}
+
+[data-theme='ceria'] .public-site :is(.account-intro > p, .profile-heading > p, .page-subtitle,
+    .listing-intro > p, .public-section-label) {
+    color: var(--ceria-muted) !important;
+}
+
+[data-theme='ceria'] .public-site :is(.account-intro h1, .profile-heading h1, .event-form-heading h1,
+    .listing-intro h1, .public-section-heading h2, .public-community h2,
+    .public-community h3, .about-inlinesia p) {
+    color: #6a4fa8 !important;
+}
+
+[data-theme='ceria'] .public-site :is(.public-overline, .hero-bottom-note, .public-community-note p,
+    .public-event-tag, .service-number) {
+    color: var(--ceria-muted) !important;
+}
+
+[data-theme='ceria'] .public-site :is(.listing-organizer-cta, .listing-empty-state) {
+    border: 1px solid var(--ceria-line) !important;
+    color: var(--ceria-ink) !important;
+    background: var(--ceria-panel) !important;
+}
+
+[data-theme='ceria'] .public-site :is(.listing-organizer-cta, .listing-empty-state) :is(h2, h3, p) {
+    color: var(--ceria-ink) !important;
+}
+
+[data-theme='ceria'] .public-site .public-hero-lead,
+[data-theme='ceria'] .public-site .public-community p,
+[data-theme='ceria'] .public-site .about-inlinesia {
+    color: var(--ceria-ink) !important;
+}
+
+[data-theme='ceria'] :is(.public-site, .app-shell) :is(.public-text-link, .account-back-link,
+    .form-back-link, .listing-back-link) {
+    color: #6a4fa8 !important;
+}
+
+/* Teks di dalam kartu: glass-theme.css mewarnainya putih transparan. */
+[data-theme='ceria'] .public-site :is(
+    .account-card, .account-edit-card, .profile-edit-card, .profile-summary,
+    .profile-notifications, .profile-submissions, .guest-dashboard-section,
+    .guest-event-card, .guest-registration-card, .guest-dashboard-empty,
+    .event-eligible-categories, .event-user-registrations, .form-section,
+    .listing-event-card, .listing-demo-notice, .account-table-card,
+    .submission-card, .category-rule-card, .sponsor-card, .public-event-card,
+    .service-card, .sponsor-card-options article, .contact-item, .contact-foot,
+    .community-values article
+) :is(h1, h2, h3, h4, p, strong, label, legend, small, span, em, b) {
+    color: var(--ceria-ink) !important;
+}
+
+[data-theme='ceria'] .public-site :is(.service-card, .listing-event-card, .public-event-card,
+    .sponsor-card, .sponsor-card-options article, .contact-item, .contact-foot,
+    .community-values article) {
+    background: var(--ceria-panel) !important;
+    border-color: var(--ceria-line) !important;
+    box-shadow: var(--ceria-shadow) !important;
+}
+
+[data-theme='ceria'] .public-site :is(.service-card h3, .community-values h3,
+    .sponsor-card h2, .listing-event-body h3, .contact-heading h2) {
+    color: #6a4fa8 !important;
+}
+
+[data-theme='ceria'] .public-site :is(.contact-heading p, .contact-foot p, .contact-label,
+    .contact-value.is-empty, .contact-action.is-static, .service-card p, .sponsor-card p) {
+    color: var(--ceria-muted) !important;
+}
+
+[data-theme='ceria'] .public-site .contact-value {
+    color: var(--ceria-ink) !important;
+}
+
+/* CTA penyelenggara: ubah blok gelap bawaan jadi pastel. */
+[data-theme='ceria'] .club-cta {
+    color: var(--ceria-ink);
+    background: linear-gradient(120deg, #ffd76a 0%, #ffb3d1 55%, #c9b6ff 100%);
+    border-radius: 22px;
+}
+
+[data-theme='ceria'] .club-cta :is(h2, p) {
+    color: var(--ceria-ink) !important;
+}
+
+[data-theme='ceria'] .club-cta .public-section-label {
+    color: #6a4fa8 !important;
+}
+
+[data-theme='ceria'] .club-cta .public-button-light {
+    color: var(--ceria-ink) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-color: var(--ceria-line) !important;
+}

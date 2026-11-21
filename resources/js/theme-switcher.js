@@ -5,8 +5,16 @@
 // oleh script di layouts/*.blade.php agar tidak ada kedipan tema.
 (function () {
     const STORAGE_KEY = 'inlinesia-theme';
-    const THEMES = ['glass', 'copper', 'neural', 'topic'];
+    const THEMES = ['glass', 'copper', 'neural', 'topic', 'ceria'];
     const DEFAULT_THEME = 'copper';
+
+    const STATUS_MESSAGES = {
+        glass: 'Tema glass aktif. Pilihan tersimpan di peramban ini.',
+        copper: 'Tema tembaga aktif. Pilihan tersimpan di peramban ini.',
+        neural: 'Tema neural aktif. Pilihan tersimpan di peramban ini.',
+        topic: 'Tema topic aktif. Pilihan tersimpan di peramban ini.',
+        ceria: 'Tema ceria aktif. Stiker sepatu roda tampil di halaman publik.',
+    };
 
     const normalize = (value) => (THEMES.includes(value) ? value : DEFAULT_THEME);
 
@@ -29,7 +37,7 @@
     const apply = (theme) => {
         const value = normalize(theme);
         document.documentElement.setAttribute('data-theme', value);
-        document.documentElement.style.colorScheme = value === 'copper' ? 'dark' : 'dark';
+        document.documentElement.style.colorScheme = value === 'ceria' ? 'light' : 'dark';
 
         document.querySelectorAll('[data-theme-option]').forEach((option) => {
             const input = option.querySelector('input');
@@ -55,10 +63,7 @@
 
                 const message = form.querySelector('[data-theme-status]');
                 if (message) {
-                    message.textContent =
-                        theme === 'copper'
-                            ? 'Tema tembaga aktif. Pilihan tersimpan di peramban ini.'
-                            : 'Tema glass aktif. Pilihan tersimpan di peramban ini.';
+                    message.textContent = STATUS_MESSAGES[theme];
                 }
             });
 

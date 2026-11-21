@@ -17,6 +17,7 @@
 @import './tembaga-theme-contrast.css';
 @import './neural-theme.css';
 @import './topic-theme.css';
+@import './ceria-theme.css';
 @import './nav-compact.css';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

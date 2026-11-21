@@ -280,7 +280,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/admin/data/delete-confirmation.blade.php` — 50 baris
 - `resources/views/admin/data/delete.blade.php` — 57 baris
 - `resources/views/admin/event-submissions/index.blade.php` — 48 baris
-- `resources/views/admin/settings/theme.blade.php` — 123 baris
+- `resources/views/admin/settings/theme.blade.php` — 144 baris
 - `resources/views/auth/login.blade.php` — 42 baris
 - `resources/views/auth/profile.blade.php` — 110 baris
 - `resources/views/auth/register.blade.php` — 73 baris
@@ -296,7 +296,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/components/topbar.blade.php` — 9 baris
 - `resources/views/components/user-badge.blade.php` — 18 baris
 - `resources/views/layouts/admin.blade.php` — 41 baris
-- `resources/views/layouts/public.blade.php` — 43 baris
+- `resources/views/layouts/public.blade.php` — 57 baris
 - `resources/views/publik/beranda.blade.php` — 203 baris
 - `resources/views/publik/direktori/atlet.blade.php` — 90 baris
 - `resources/views/publik/direktori/index.blade.php` — 155 baris
@@ -316,7 +316,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/verified/events/race/order.blade.php` — 93 baris
 - `resources/views/verified/events/race/partials/heat.blade.php` — 174 baris
 
-### Pengujian (tests/) (24 file)
+### Pengujian (tests/) (25 file)
 
 - `tests/Feature/AccountPortalTest.php` — 473 baris — `AccountPortalTest` — method: `test_guests_can_open_registration_and_login_pages`, `test_public_registration_creates_and_signs_in_a_non_admin_account`, `test_registration_sends_a_verification_email_and_the_signed_link_verifies_the_account`, `test_public_registration_cannot_select_admin_role`, `test_users_can_login_update_their_profile_and_logout`, `test_primary_admin_email_is_fixed_in_profiles_and_when_saving_the_account`, `test_admin_can_edit_an_account_and_email_changes_require_reverification`, `test_admin_can_search_filter_and_sort_the_account_list`, …
 - `tests/Feature/AdminDataManagementTest.php` — 182 baris — `AdminDataManagementTest` — method: `test_guest_is_redirected_from_data_management_pages`, `test_non_admin_cannot_access_data_management_pages`, `test_admin_can_review_and_delete_a_selected_catalog`, `test_deletion_requires_a_fresh_review_when_catalog_contents_change`, `test_user_catalog_deletion_preserves_admin_accounts`, `test_selected_catalog_is_not_deleted_without_confirmation`, `test_admin_can_download_and_restore_a_valid_backup`, `test_restore_rejects_a_tampered_backup_without_changing_data`
@@ -338,6 +338,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `tests/Feature/NikAutofillTest.php` — 191 baris — `NikAutofillTest` — method: `test_authenticated_user_can_read_a_nik_into_region_gender_and_birth_date`, `test_nik_lookup_reads_female_nik_from_a_day_above_forty`, `test_nik_lookup_rejects_unknown_region_code`, `test_nik_lookup_requires_sixteen_digits`, `test_nik_lookup_requires_an_account`, `test_registration_page_exposes_the_nik_feedback_container_for_the_region_notice`, `test_registration_rejects_nik_that_does_not_match_the_given_gender`, `test_registration_rejects_nik_that_does_not_match_the_given_birth_date`, …
 - `tests/Feature/PageContextWidgetTest.php` — 119 baris — `PageContextWidgetTest` — method: `test_user_badge_menampilkan_nama_dan_role_pada_setiap_halaman`, `test_lokasi_blade_hanya_muncul_untuk_admin`, `test_halaman_pendaftaran_menampilkan_navbar_di_atas_dan_konten_di_dalam_layout`
 - `tests/Feature/ProjectMapTest.php` — 36 baris — `ProjectMapTest` — method: `test_project_map_contains_every_named_route`, `test_project_map_keeps_the_auto_generated_markers`
+- `tests/Feature/ThemeSettingTest.php` — 57 baris — `ThemeSettingTest` — method: `test_theme_settings_page_offers_the_ceria_theme`, `test_admin_can_save_the_ceria_theme`, `test_theme_settings_rejects_an_unknown_theme`, `test_ceria_stickers_are_marked_only_on_public_pages`
 - `tests/TestCase.php` — 46 baris — `TestCase`
 - `tests/Unit/ExampleTest.php` — 16 baris — `ExampleTest` — method: `test_that_true_is_true`
 - `tests/Unit/NikParserTest.php` — 90 baris — `NikParserTest` — method: `it_parses_male_nik_with_region_gender_and_birth_date`, `it_detects_female_nik_from_day_above_forty`, `it_reads_two_digit_year_as_1900s_for_values_above_forty_nine`, `it_rejects_nik_that_is_not_sixteen_digits`, `it_rejects_nik_with_unknown_region_code`, `it_rejects_nik_with_invalid_birth_month`, `it_builds_suggested_address_from_region_names`

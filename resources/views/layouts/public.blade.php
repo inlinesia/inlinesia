@@ -15,15 +15,29 @@
             } catch (error) {
                 theme = null;
             }
-            if (['copper', 'glass', 'neural', 'topic'].indexOf(theme) === -1) {
+            if (['copper', 'glass', 'neural', 'topic', 'ceria'].indexOf(theme) === -1) {
                 theme = 'copper';
             }
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
+    @php
+        // Stiker tema Ceria hanya untuk halaman yang bisa dibuka tanpa login.
+        $ceriaStickerRoutes = [
+            'home',
+            'events.index',
+            'directory.index',
+            'directory.clubs.create',
+            'directory.clubs.store',
+            'login',
+            'login.store',
+            'register',
+            'register.store',
+        ];
+    @endphp
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/theme-switcher.js', 'resources/js/preset-picker.js', 'resources/js/race.js', 'resources/js/page-context.js'])
 </head>
-<body class="@yield('body-class', 'public-home')">
+<body class="@yield('body-class', 'public-home'){{ request()->routeIs($ceriaStickerRoutes) ? ' ceria-sticker-page' : '' }}">
     <div class="public-site">
         <x-navbar />
 
