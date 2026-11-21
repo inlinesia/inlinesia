@@ -251,6 +251,14 @@ html[data-theme='ceria'] {
    Stiker sepatu roda — STATIS, hanya di halaman publik.
    Elemen dekoratif: pointer-events:none agar tidak menghalangi klik.
    -------------------------------------------------------------------------- */
+/* Induk stiker wajib positioned, kalau tidak stiker akan melenceng ke pojok. */
+[data-theme='ceria'] body.ceria-sticker-page :is(
+    .listing-event-card, .service-card, .public-event-card, .listing-empty-state,
+    .account-card, .account-table-card, .listing-organizer-cta
+) {
+    position: relative;
+}
+
 [data-theme='ceria'] body.ceria-sticker-page :is(
     .public-header, .public-brand, .public-hero-art,
     .listing-event-card, .service-card, .public-event-card,
