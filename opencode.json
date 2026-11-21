@@ -1,0 +1,14 @@
+{
+  "mcp": {
+    "servers": {
+      "laravel-boost": {
+        "type": "local",
+        "command": [
+          "php",
+          "artisan",
+          "boost:mcp"
+        ]
+      }
+    }
+  }
+}

@@ -6,6 +6,9 @@
 > rute lebih cepat dan tidak menebak-nebak.
 > File ini dibuat atas izin eksplisit pemilik proyek (pengecualian aturan
 > "hanya buat dokumentasi bila diminta" di `AGENTS.md`).
+>
+> Untuk pemetaan proyek yang lengkap (rute + inventaris file + jebakan), baca
+> `docs/peta-proyek.md`.
 
 ## Cara memakai peta ini
 
