@@ -252,27 +252,33 @@
     position: relative;
     height: 118px;
     background:
-        radial-gradient(circle at 18% 24%, rgba(255, 215, 106, 0.85) 0%, transparent 26%),
-        radial-gradient(circle at 82% 76%, rgba(143, 214, 255, 0.85) 0%, transparent 28%),
-        radial-gradient(circle at 70% 18%, rgba(255, 179, 209, 0.7) 0%, transparent 24%),
-        linear-gradient(135deg, #fff9f0, #fff1e6);
+        radial-gradient(circle at 14% 18%, rgba(255, 210, 63, 0.9) 0%, transparent 26%),
+        radial-gradient(circle at 82% 74%, rgba(56, 189, 248, 0.45) 0%, transparent 28%),
+        radial-gradient(circle at 72% 14%, rgba(255, 77, 141, 0.4) 0%, transparent 24%),
+        linear-gradient(135deg, #fffdf7, #eef9ff);
 }
 
 .theme-preview-ceria .theme-preview-chrome {
-    background: rgba(255, 255, 255, 0.88);
-    box-shadow: 0 6px 14px rgba(123, 113, 145, 0.12);
-    border-radius: 0 0 16px 16px;
+    background: #ffffff;
+    border-bottom: 2.5px solid #2b2d42;
+    border-radius: 0 0 18px 18px;
 }
 
 .theme-preview-ceria .theme-preview-pill {
-    background: linear-gradient(135deg, #ffd76a, #ffab73);
+    background: linear-gradient(135deg, #ffd23f, #ff6b35);
+    border: 2px solid #2b2d42;
 }
 
 .theme-preview-ceria .theme-preview-card {
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid rgba(123, 113, 145, 0.16);
-    border-radius: 14px 11px 16px 12px;
-    box-shadow: 0 8px 18px rgba(123, 113, 145, 0.12);
+    background: #e6fcf5;
+    border: 2.5px solid #2b2d42;
+    border-radius: 14px 10px 16px 11px;
+    box-shadow: 0 3px 0 #2b2d42;
+}
+
+.theme-preview-ceria .theme-preview-card:last-child {
+    background: #f3e8ff;
+    border-radius: 11px 16px 10px 15px;
 }
 
 /* Stiker kecil pada pratinjau — statis */
@@ -284,4 +290,5 @@
     font-size: 1.5rem;
     line-height: 1;
     pointer-events: none;
+    filter: drop-shadow(0 2px 0 #2b2d42);
 }

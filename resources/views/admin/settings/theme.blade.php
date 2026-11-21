@@ -126,7 +126,7 @@
                     <span class="theme-option-meta">
                         <span>
                             <strong>Ceria</strong>
-                            <small>Tema ramah anak: warna pastel cerah dan stiker sepatu roda di halaman publik.</small>
+                            <small>Tema ramah anak: sistem desain Kids Roller Skate — lemon, coral, grape, dan stiker sepatu roda di halaman publik.</small>
                         </span>
                         <span class="theme-option-check" aria-hidden="true">&#10003;</span>
                     </span>
