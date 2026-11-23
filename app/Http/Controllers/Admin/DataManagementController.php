@@ -8,49 +8,57 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DataManagementController extends Controller
 {
-    public function backup(): View
+    public function backup(AdminDataManagementService $dataManagement): View
     {
-        return view('admin.data.backup');
+        return view('admin.data.backup', [
+            'backups' => $dataManagement->listBackups(),
+        ]);
     }
 
-    public function downloadBackup(AdminDataManagementService $dataManagement): StreamedResponse
+    public function createBackup(AdminDataManagementService $dataManagement): RedirectResponse
     {
-        $contents = $dataManagement->makeBackup();
-        $filename = 'inlinesia-backup-'.now()->format('Ymd-His').'.json';
+        $name = $dataManagement->createBackup();
 
-        return response()->streamDownload(
-            static function () use ($contents): void {
-                echo $contents;
-            },
-            $filename,
-            ['Content-Type' => 'application/json; charset=UTF-8'],
-        );
+        return redirect()->route('admin.data.backup')
+            ->with('status', "Backup {$name} berhasil dibuat di server.");
     }
 
     public function restore(Request $request, AdminDataManagementService $dataManagement): RedirectResponse
     {
+        $available = collect($dataManagement->listBackups())->pluck('name')->all();
+
         $validated = $request->validate([
-            'backup' => ['required', 'file', 'mimes:json', 'max:102400'],
+            'backup' => ['required', 'string', Rule::in($available)],
             'confirmed' => ['required', 'accepted'],
         ]);
 
-        $contents = file_get_contents($validated['backup']->getRealPath());
-        if (! is_string($contents)) {
-            throw ValidationException::withMessages([
-                'backup' => 'File backup gagal dibaca.',
-            ]);
-        }
-
-        $dataManagement->restore($contents, (int) $request->user()->id, $request->session()->getId());
+        $dataManagement->restoreBackup(
+            $validated['backup'],
+            (int) $request->user()->id,
+            $request->session()->getId(),
+        );
 
         return redirect()->route('admin.data.backup')
             ->with('status', 'Backup berhasil dipulihkan. Data aplikasi sekarang mengikuti isi backup tersebut.');
+    }
+
+    public function destroyBackup(Request $request, AdminDataManagementService $dataManagement): RedirectResponse
+    {
+        $available = collect($dataManagement->listBackups())->pluck('name')->all();
+
+        $validated = $request->validate([
+            'backup' => ['required', 'string', Rule::in($available)],
+            'confirmed' => ['required', 'accepted'],
+        ]);
+
+        $dataManagement->deleteBackup($validated['backup']);
+
+        return redirect()->route('admin.data.backup')
+            ->with('status', "Backup {$validated['backup']} dihapus dari server.");
     }
 
     public function delete(Request $request, AdminDataManagementService $dataManagement): View

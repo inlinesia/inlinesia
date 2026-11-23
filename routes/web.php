@@ -211,8 +211,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/pengaturan/tema', [ThemeSettingController::class, 'edit'])->name('settings.theme.edit');
     Route::patch('/pengaturan/tema', [ThemeSettingController::class, 'update'])->name('settings.theme.update');
     Route::get('/data/backup', [DataManagementController::class, 'backup'])->name('data.backup');
-    Route::post('/data/backup', [DataManagementController::class, 'downloadBackup'])->name('data.backup.download');
+    Route::post('/data/backup', [DataManagementController::class, 'createBackup'])->name('data.backup.create');
     Route::post('/data/restore', [DataManagementController::class, 'restore'])->name('data.restore');
+    Route::post('/data/backup/hapus', [DataManagementController::class, 'destroyBackup'])->name('data.backup.destroy');
     Route::get('/data/hapus', [DataManagementController::class, 'delete'])->name('data.delete');
     Route::post('/data/hapus/konfirmasi', [DataManagementController::class, 'reviewDeletion'])->name('data.delete.review');
     Route::post('/data/hapus', [DataManagementController::class, 'destroySelected'])->name('data.delete.destroy');

@@ -127,7 +127,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 
 <!-- AUTO:START -->
 
-### Rute (81)
+### Rute (82)
 
 | Method | URI | Nama | Aksi | Middleware |
 |---|---|---|---|---|
@@ -141,7 +141,8 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 | POST | `admin/akun/{user}/kirim-verifikasi` | `admin.accounts.verification.resend` | `App\Http\Controllers\Admin\UserController@resendVerification` | web, auth, role:admin, throttle:6,1 |
 | POST | `admin/akun/{user}/verifikasi-manual` | `admin.accounts.verification.verify` | `App\Http\Controllers\Admin\UserController@verifyEmail` | web, auth, role:admin |
 | GET\|HEAD | `admin/data/backup` | `admin.data.backup` | `App\Http\Controllers\Admin\DataManagementController@backup` | web, auth, role:admin |
-| POST | `admin/data/backup` | `admin.data.backup.download` | `App\Http\Controllers\Admin\DataManagementController@downloadBackup` | web, auth, role:admin |
+| POST | `admin/data/backup` | `admin.data.backup.create` | `App\Http\Controllers\Admin\DataManagementController@createBackup` | web, auth, role:admin |
+| POST | `admin/data/backup/hapus` | `admin.data.backup.destroy` | `App\Http\Controllers\Admin\DataManagementController@destroyBackup` | web, auth, role:admin |
 | GET\|HEAD | `admin/data/hapus` | `admin.data.delete` | `App\Http\Controllers\Admin\DataManagementController@delete` | web, auth, role:admin |
 | POST | `admin/data/hapus` | `admin.data.delete.destroy` | `App\Http\Controllers\Admin\DataManagementController@destroySelected` | web, auth, role:admin |
 | POST | `admin/data/hapus/konfirmasi` | `admin.data.delete.review` | `App\Http\Controllers\Admin\DataManagementController@reviewDeletion` | web, auth, role:admin |
@@ -218,7 +219,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Console/Commands/BackfillDirectory.php` — 50 baris — `BackfillDirectory` — method: `handle`
 - `app/Console/Commands/BootstrapPrimaryAdmin.php` — 73 baris — `BootstrapPrimaryAdmin` — method: `handle`
 - `app/Console/Commands/ReleaseClosedParticipantLists.php` — 48 baris — `ReleaseClosedParticipantLists` — method: `handle`
-- `app/Http/Controllers/Admin/DataManagementController.php` — 130 baris — `DataManagementController` — method: `backup`, `downloadBackup`, `restore`, `delete`, `reviewDeletion`, `destroySelected`
+- `app/Http/Controllers/Admin/DataManagementController.php` — 138 baris — `DataManagementController` — method: `backup`, `createBackup`, `restore`, `destroyBackup`, `delete`, `reviewDeletion`, `destroySelected`
 - `app/Http/Controllers/Admin/EventOwnershipController.php` — 46 baris — `EventOwnershipController` — method: `update`
 - `app/Http/Controllers/Admin/EventSubmissionController.php` — 84 baris — `EventSubmissionController` — method: `index`, `approve`, `reject`
 - `app/Http/Controllers/Admin/ThemeSettingController.php` — 35 baris — `ThemeSettingController` — method: `edit`, `update`
@@ -259,7 +260,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Notifications/EventSubmittedNotification.php` — 43 baris — `EventSubmittedNotification` — method: `via`, `toMail`, `toArray`
 - `app/Providers/AppServiceProvider.php` — 45 baris — `AppServiceProvider` — method: `register`, `boot`
 - `app/Rules/NikMatchesIdentity.php` — 72 baris — `NikMatchesIdentity` — method: `validate`
-- `app/Services/AdminDataManagementService.php` — 499 baris — `AdminDataManagementService` — method: `catalogs`, `makeBackup`, `deletionSnapshot`, `deleteSelected`, `restore`
+- `app/Services/AdminDataManagementService.php` — 714 baris — `AdminDataManagementService` — method: `catalogs`, `listBackups`, `createBackup`, `deleteBackup`, `deletionSnapshot`, `deleteSelected`, `restoreBackup`
 - `app/Services/AssignRegistrationCategories.php` — 190 baris — `AssignRegistrationCategories` — method: `assign`, `preview`
 - `app/Services/CategoryFeeCalculator.php` — 516 baris — `CategoryFeeCalculator` — method: `pricing`, `requiredRaces`, `breakdown`, `breakdownForPayment`, `ruleByName`, `sync`, `hasPricing`, `hasAnyPricing`, …
 - `app/Services/NikParser.php` — 249 baris — `NikParser` — method: `parse`, `suggestAddress`
@@ -276,7 +277,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/admin/accounts/form.blade.php` — 86 baris
 - `resources/views/admin/accounts/index.blade.php` — 267 baris
 - `resources/views/admin/dashboard.blade.php` — 132 baris
-- `resources/views/admin/data/backup.blade.php` — 65 baris
+- `resources/views/admin/data/backup.blade.php` — 95 baris
 - `resources/views/admin/data/delete-confirmation.blade.php` — 50 baris
 - `resources/views/admin/data/delete.blade.php` — 57 baris
 - `resources/views/admin/event-submissions/index.blade.php` — 48 baris
@@ -319,7 +320,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 ### Pengujian (tests/) (26 file)
 
 - `tests/Feature/AccountPortalTest.php` — 473 baris — `AccountPortalTest` — method: `test_guests_can_open_registration_and_login_pages`, `test_public_registration_creates_and_signs_in_a_non_admin_account`, `test_registration_sends_a_verification_email_and_the_signed_link_verifies_the_account`, `test_public_registration_cannot_select_admin_role`, `test_users_can_login_update_their_profile_and_logout`, `test_primary_admin_email_is_fixed_in_profiles_and_when_saving_the_account`, `test_admin_can_edit_an_account_and_email_changes_require_reverification`, `test_admin_can_search_filter_and_sort_the_account_list`, …
-- `tests/Feature/AdminDataManagementTest.php` — 182 baris — `AdminDataManagementTest` — method: `test_guest_is_redirected_from_data_management_pages`, `test_non_admin_cannot_access_data_management_pages`, `test_admin_can_review_and_delete_a_selected_catalog`, `test_deletion_requires_a_fresh_review_when_catalog_contents_change`, `test_user_catalog_deletion_preserves_admin_accounts`, `test_selected_catalog_is_not_deleted_without_confirmation`, `test_admin_can_download_and_restore_a_valid_backup`, `test_restore_rejects_a_tampered_backup_without_changing_data`
+- `tests/Feature/AdminDataManagementTest.php` — 266 baris — `AdminDataManagementTest` — method: `test_guest_is_redirected_from_data_management_pages`, `test_non_admin_cannot_access_data_management_pages`, `test_admin_can_review_and_delete_a_selected_catalog`, `test_deletion_requires_a_fresh_review_when_catalog_contents_change`, `test_user_catalog_deletion_preserves_admin_accounts`, `test_selected_catalog_is_not_deleted_without_confirmation`, `test_admin_can_create_list_and_restore_a_server_backup`, `test_restore_rejects_a_tampered_server_backup_without_changing_data`, …
 - `tests/Feature/AdminEventFormTest.php` — 203 baris — `AdminEventFormTest` — method: `test_admin_submits_event_from_the_shared_dashboard_flow`, `test_admin_can_mark_an_event_as_free`, `test_admin_configures_categories_from_the_shared_dashboard`, `test_event_forms_ask_only_for_categories_and_races`, `test_age_groups_can_no_longer_be_submitted_from_the_event_form`, `test_legacy_admin_create_mode_does_not_open_an_admin_event_form`, `test_event_end_date_cannot_precede_its_start_date`
 - `tests/Feature/AdminEventManagementTest.php` — 103 baris — `AdminEventManagementTest` — method: `test_admin_reviews_submissions_in_notifications_and_manages_events_in_the_shared_dashboard`, `test_public_listing_hides_pending_events_and_management_actions_for_every_role`, `test_the_legacy_admin_event_management_endpoint_is_removed`
 - `tests/Feature/AdminSidebarTest.php` — 53 baris — `AdminSidebarTest` — method: `test_admin_sidebar_has_a_toggle_and_no_help_card`, `test_admin_sidebar_only_links_to_modules_that_exist`, `test_placeholder_admin_module_pages_have_been_removed`
@@ -339,7 +340,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `tests/Feature/NikAutofillTest.php` — 191 baris — `NikAutofillTest` — method: `test_authenticated_user_can_read_a_nik_into_region_gender_and_birth_date`, `test_nik_lookup_reads_female_nik_from_a_day_above_forty`, `test_nik_lookup_rejects_unknown_region_code`, `test_nik_lookup_requires_sixteen_digits`, `test_nik_lookup_requires_an_account`, `test_registration_page_exposes_the_nik_feedback_container_for_the_region_notice`, `test_registration_rejects_nik_that_does_not_match_the_given_gender`, `test_registration_rejects_nik_that_does_not_match_the_given_birth_date`, …
 - `tests/Feature/PageContextWidgetTest.php` — 119 baris — `PageContextWidgetTest` — method: `test_user_badge_menampilkan_nama_dan_role_pada_setiap_halaman`, `test_lokasi_blade_hanya_muncul_untuk_admin`, `test_halaman_pendaftaran_menampilkan_navbar_di_atas_dan_konten_di_dalam_layout`
 - `tests/Feature/ProjectMapTest.php` — 36 baris — `ProjectMapTest` — method: `test_project_map_contains_every_named_route`, `test_project_map_keeps_the_auto_generated_markers`
-- `tests/Feature/ThemeSettingTest.php` — 57 baris — `ThemeSettingTest` — method: `test_theme_settings_page_offers_the_ceria_theme`, `test_admin_can_save_the_ceria_theme`, `test_theme_settings_rejects_an_unknown_theme`, `test_ceria_stickers_are_marked_only_on_public_pages`
+- `tests/Feature/ThemeSettingTest.php` — 59 baris — `ThemeSettingTest` — method: `test_theme_settings_page_offers_the_ceria_theme`, `test_admin_can_save_the_ceria_theme`, `test_theme_settings_rejects_an_unknown_theme`, `test_ceria_stickers_are_marked_only_on_public_pages`
 - `tests/TestCase.php` — 46 baris — `TestCase`
 - `tests/Unit/ExampleTest.php` — 16 baris — `ExampleTest` — method: `test_that_true_is_true`
 - `tests/Unit/NikParserTest.php` — 90 baris — `NikParserTest` — method: `it_parses_male_nik_with_region_gender_and_birth_date`, `it_detects_female_nik_from_day_above_forty`, `it_reads_two_digit_year_as_1900s_for_values_above_forty_nine`, `it_rejects_nik_that_is_not_sixteen_digits`, `it_rejects_nik_with_unknown_region_code`, `it_rejects_nik_with_invalid_birth_month`, `it_builds_suggested_address_from_region_names`
@@ -399,7 +400,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `config/session.php` — 233 baris
 - `config/user-roles.php` — 8 baris
 - `routes/console.php` — 8 baris
-- `routes/web.php` — 219 baris
+- `routes/web.php` — 220 baris
 - `scripts/fetch-wilayah-data.php` — 99 baris
 - `scripts/generate-peta-proyek.php` — 220 baris
 - `scripts/inspect-dev-data.php` — 30 baris

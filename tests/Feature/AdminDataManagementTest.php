@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Services\AdminDataManagementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -109,28 +108,29 @@ class AdminDataManagementTest extends TestCase
         $this->assertDatabaseCount('notifications', 1);
     }
 
-    public function test_admin_can_download_and_restore_a_valid_backup(): void
+    public function test_admin_can_create_list_and_restore_a_server_backup(): void
     {
         Storage::fake('local');
-        $admin = User::factory()->create([
-            'role' => 'admin',
-            'is_primary_admin' => true,
-        ]);
+        $admin = $this->primaryAdmin();
         $archivedParticipant = User::factory()->create(['role' => 'individual']);
 
-        $download = $this->actingAs($admin)
-            ->post(route('admin.data.backup.download'));
-        $download->assertDownload();
-        $contents = $download->streamedContent();
+        $this->actingAs($admin)
+            ->post(route('admin.data.backup.create'))
+            ->assertRedirect(route('admin.data.backup'))
+            ->assertSessionHas('status');
 
-        $this->assertStringContainsString('"format":"inlinesia-data-backup"', $contents);
-        $this->assertStringContainsString('"users":[', $contents);
+        $backups = app(AdminDataManagementService::class)->listBackups();
+        $this->assertCount(1, $backups);
+
+        $name = $backups[0]['name'];
+        $sql = Storage::disk('local')->get('backups/'.$name.'/database.sql');
+        $this->assertIsString($sql);
+        $this->assertStringContainsString('INSERT INTO', $sql);
 
         $laterParticipant = User::factory()->create(['role' => 'individual']);
-        $backupFile = UploadedFile::fake()->createWithContent('inlinesia-backup.json', $contents);
 
         $this->post(route('admin.data.restore'), [
-            'backup' => $backupFile,
+            'backup' => $name,
             'confirmed' => '1',
         ])
             ->assertRedirect(route('admin.data.backup'))
@@ -141,20 +141,19 @@ class AdminDataManagementTest extends TestCase
         $this->assertModelExists($admin);
     }
 
-    public function test_restore_rejects_a_tampered_backup_without_changing_data(): void
+    public function test_restore_rejects_a_tampered_server_backup_without_changing_data(): void
     {
-        $admin = User::factory()->create([
-            'name' => 'Admin Original',
-            'role' => 'admin',
-            'is_primary_admin' => true,
-        ]);
-        $backup = app(AdminDataManagementService::class)->makeBackup();
-        $tamperedBackup = str_replace('"Admin Original"', '"Admin Modified"', $backup);
+        Storage::fake('local');
+        $admin = $this->primaryAdmin(['name' => 'Admin Original']);
+
+        $name = app(AdminDataManagementService::class)->createBackup();
+        $path = 'backups/'.$name.'/database.sql';
+        Storage::disk('local')->put($path, str_replace('Admin Original', 'Admin Modified', (string) Storage::disk('local')->get($path)));
 
         $this->actingAs($admin)
             ->from(route('admin.data.backup'))
             ->post(route('admin.data.restore'), [
-                'backup' => UploadedFile::fake()->createWithContent('tampered.json', $tamperedBackup),
+                'backup' => $name,
                 'confirmed' => '1',
             ])
             ->assertRedirect(route('admin.data.backup'))
@@ -164,6 +163,91 @@ class AdminDataManagementTest extends TestCase
             'id' => $admin->id,
             'name' => 'Admin Original',
         ]);
+    }
+
+    public function test_restore_rejects_an_unknown_backup_name(): void
+    {
+        Storage::fake('local');
+        $admin = $this->primaryAdmin();
+
+        $this->actingAs($admin)
+            ->from(route('admin.data.backup'))
+            ->post(route('admin.data.restore'), [
+                'backup' => 'inlinesia-20260101-000000-aaaa',
+                'confirmed' => '1',
+            ])
+            ->assertSessionHasErrors('backup');
+    }
+
+    public function test_backup_and_restore_include_payment_proofs(): void
+    {
+        Storage::fake('local');
+        $admin = $this->primaryAdmin();
+        Storage::disk('local')->put('payment-proofs/bukti-1.png', 'isi-bukti');
+
+        $name = app(AdminDataManagementService::class)->createBackup();
+        $this->assertTrue(Storage::disk('local')->exists('backups/'.$name.'/payment-proofs/bukti-1.png'));
+
+        Storage::disk('local')->delete('payment-proofs/bukti-1.png');
+
+        $this->actingAs($admin)
+            ->post(route('admin.data.restore'), [
+                'backup' => $name,
+                'confirmed' => '1',
+            ])
+            ->assertSessionHas('status');
+
+        $this->assertTrue(Storage::disk('local')->exists('payment-proofs/bukti-1.png'));
+    }
+
+    public function test_backup_preserves_multiline_text_values(): void
+    {
+        Storage::fake('local');
+        $admin = $this->primaryAdmin(['name' => "Admin\nDua Baris"]);
+
+        $name = app(AdminDataManagementService::class)->createBackup();
+        $admin->update(['name' => 'Admin Berubah']);
+
+        $this->actingAs($admin)
+            ->post(route('admin.data.restore'), [
+                'backup' => $name,
+                'confirmed' => '1',
+            ])
+            ->assertSessionHas('status');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $admin->id,
+            'name' => "Admin\nDua Baris",
+        ]);
+    }
+
+    public function test_admin_can_delete_a_saved_backup(): void
+    {
+        Storage::fake('local');
+        $admin = $this->primaryAdmin();
+        $name = app(AdminDataManagementService::class)->createBackup();
+
+        $this->actingAs($admin)
+            ->post(route('admin.data.backup.destroy'), [
+                'backup' => $name,
+                'confirmed' => '1',
+            ])
+            ->assertRedirect(route('admin.data.backup'))
+            ->assertSessionHas('status');
+
+        $this->assertFalse(Storage::disk('local')->exists('backups/'.$name));
+    }
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    private function primaryAdmin(array $attributes = []): User
+    {
+        return User::factory()->create(array_merge([
+            'role' => 'admin',
+            'is_primary_admin' => true,
+            'email' => config('primary-admin.email'),
+        ], $attributes));
     }
 
     private function insertNotification(int $userId): void
