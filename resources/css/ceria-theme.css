@@ -481,9 +481,7 @@ html[data-theme='ceria'] {
 [data-theme='ceria'] .public-home .public-hero {
     position: relative;
     padding: 43px 0 57px;
-    background:
-        radial-gradient(circle 520px at var(--pointer-x) var(--pointer-y), rgba(255, 210, 63, 0.9) 0%, rgba(255, 77, 141, 0.5) 45%, transparent 75%),
-        linear-gradient(120deg, rgba(255, 210, 63, 0.85) 0%, rgba(255, 77, 141, 0.62) 48%, rgba(56, 189, 248, 0.88) 100%);
+    background: linear-gradient(120deg, rgba(255, 210, 63, 0.42) 0%, rgba(255, 77, 141, 0.3) 48%, rgba(56, 189, 248, 0.42) 100%);
 }
 
 [data-theme='ceria'] .public-home .public-hero-art {
@@ -566,9 +564,7 @@ html[data-theme='ceria'] {
    Override aturan global glass-theme.css yang menggelapkan halaman publik.
    -------------------------------------------------------------------------- */
 [data-theme='ceria'] .public-home:not(.event-listing-page) .public-site .public-hero {
-    background:
-        radial-gradient(circle 520px at var(--pointer-x) var(--pointer-y), rgba(255, 210, 63, 0.9) 0%, rgba(255, 77, 141, 0.5) 45%, transparent 75%),
-        linear-gradient(120deg, rgba(255, 210, 63, 0.85) 0%, rgba(255, 77, 141, 0.62) 48%, rgba(56, 189, 248, 0.88) 100%) !important;
+    background: linear-gradient(120deg, rgba(255, 210, 63, 0.42) 0%, rgba(255, 77, 141, 0.3) 48%, rgba(56, 189, 248, 0.42) 100%) !important;
 }
 
 [data-theme='ceria'] .public-site :is(.public-nav a, .public-login, .public-logout,
@@ -649,6 +645,177 @@ html[data-theme='ceria'] {
     position: relative;
     border-top: 2.5px solid var(--border-ink);
     background: var(--bg-surface);
+}
+
+/* --------------------------------------------------------------------------
+   Panel admin — seluruhnya memakai tema Ceria.
+   Mengganti aturan global gelap dari glass-theme.css pada .app-shell.
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] .app-shell .sidebar {
+    background: var(--bg-surface);
+    border-right: 2.5px solid var(--border-ink);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    box-shadow: var(--shadow-sticker-sm);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='ceria'] .app-shell :is(.sidebar .workspace-label, .sidebar .nav-link,
+    .sidebar .user-copy strong, .sidebar .user-copy small, .sidebar .brand) {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .app-shell .sidebar .nav-link {
+    border: 2px solid transparent;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-weight: 600;
+}
+
+[data-theme='ceria'] .app-shell .sidebar .nav-link:hover {
+    background: var(--bg-soft-sky);
+    color: var(--color-grape) !important;
+}
+
+[data-theme='ceria'] .app-shell .sidebar .nav-link.is-active {
+    background: var(--color-lemon);
+    border-color: var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 2px 0 var(--border-ink);
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .app-shell .sidebar-toggle {
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+}
+
+[data-theme='ceria'] .app-shell .sidebar .nav-count {
+    color: var(--text-inverse);
+    background: var(--color-coral);
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+}
+
+[data-theme='ceria'] .app-shell .sidebar .avatar {
+    color: var(--text-primary);
+    background: var(--color-sky);
+    border: 2px solid var(--border-ink);
+    border-radius: 50%;
+}
+
+[data-theme='ceria'] .app-shell .topbar {
+    background: var(--bg-surface);
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sticker-sm);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='ceria'] .app-shell :is(.breadcrumbs, .breadcrumbs a, .crumb-separator) {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme='ceria'] .app-shell .breadcrumbs strong {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .app-shell .season-pill {
+    color: var(--text-primary);
+    background: var(--bg-soft-lemon);
+    border: 2px solid var(--color-lemon);
+    border-radius: var(--radius-pill);
+}
+
+[data-theme='ceria'] .app-shell :is(.welcome-row h1, .event-form-heading h1, .page-content > header h1) {
+    color: var(--color-grape) !important;
+}
+
+[data-theme='ceria'] .app-shell .page-content > :is(.welcome-row, .event-form-heading) :is(.page-subtitle, .eyebrow) {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme='ceria'] .app-shell :is(
+    .panel, .module-card, .module-event-selector, .account-table-card, .account-edit-card,
+    .form-section, .category-rule-card, .submission-card, .profile-notifications,
+    .profile-submissions, .stats-card, .admin-dashboard-stat
+) {
+    background: var(--bg-surface);
+    border: 2.5px solid var(--border-ink);
+    border-radius: 26px 16px 28px 18px;
+    box-shadow: var(--shadow-sticker-sm);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+[data-theme='ceria'] .app-shell :is(
+    .panel, .module-card, .module-event-selector, .account-table-card, .account-edit-card,
+    .form-section, .category-rule-card, .submission-card, .profile-notifications,
+    .profile-submissions
+) :is(h1, h2, h3, h4, p, strong, label, legend, small, span, td, th):not(.skate-word) {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .app-shell :is(.module-card, .panel, .form-field) :is(input, select, textarea) {
+    color: var(--text-primary);
+    background: var(--bg-canvas);
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-md);
+}
+
+[data-theme='ceria'] .app-shell :is(.module-card, .panel, .form-field) select option {
+    color: var(--text-primary);
+    background: var(--bg-surface);
+}
+
+[data-theme='ceria'] .app-shell :is(.module-card, .panel) :is(th, .module-card-heading, .module-table th) {
+    color: var(--text-primary);
+    background: var(--bg-soft-lemon);
+}
+
+[data-theme='ceria'] .app-shell :is(.form-field label, .field-hint, .optional-label,
+    .form-section-heading h2, .form-section-heading p) {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme='ceria'] .app-shell :is(.button, .module-publish-button, .button-primary) {
+    color: var(--text-inverse);
+    background: var(--color-coral);
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+[data-theme='ceria'] .app-shell .admin-flash {
+    color: var(--text-primary);
+    background: var(--status-success-bg);
+    border: 2px solid var(--status-success);
+    border-radius: var(--radius-md);
+}
+
+[data-theme='ceria'] .app-shell .hero-banner {
+    background: var(--grad-sunny);
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sticker-sm);
+}
+
+[data-theme='ceria'] .app-shell .module-status {
+    color: #166534;
+}
+
+[data-theme='ceria'] .app-shell .module-status.is-review {
+    color: #92400e;
+}
+
+[data-theme='ceria'] .app-shell .module-status.is-draft {
+    color: var(--text-secondary);
 }
 
 /* --------------------------------------------------------------------------

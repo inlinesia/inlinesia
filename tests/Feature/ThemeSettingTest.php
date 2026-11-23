@@ -21,6 +21,8 @@ class ThemeSettingTest extends TestCase
         $this->assertStringContainsString('value="ceria"', $html);
         $this->assertStringContainsString('theme-preview-ceria', $html);
         $this->assertStringContainsString('Tema ramah anak', $html);
+        $this->assertStringContainsString('tampilan bawaan Inlinesia', $html);
+        $this->assertStringContainsString('Berlaku di publik dan panel admin', $html);
     }
 
     public function test_admin_can_save_the_ceria_theme(): void
