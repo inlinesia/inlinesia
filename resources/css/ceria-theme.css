@@ -31,6 +31,10 @@
     --color-berry: #ff4d8d;
     --color-berry-deep: #d92b6b;
 
+    /* Posisi sorotan gradasi yang digerakkan pointer (diperbarui via JS). */
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+
     /* Surface & teks */
     --bg-canvas: #fffdf7;
     --bg-surface: #ffffff;
@@ -124,9 +128,11 @@ html[data-theme='ceria'] {
     line-height: 1.6;
     background-color: var(--bg-canvas);
     background-image:
-        radial-gradient(circle at 8% 6%, rgba(255, 210, 63, 0.22) 0%, transparent 24%),
-        radial-gradient(circle at 92% 12%, rgba(56, 189, 248, 0.18) 0%, transparent 26%),
-        radial-gradient(circle at 85% 88%, rgba(255, 77, 141, 0.12) 0%, transparent 28%);
+        radial-gradient(circle 460px at var(--pointer-x) var(--pointer-y), rgba(255, 210, 63, 0.62) 0%, rgba(255, 107, 53, 0.3) 45%, transparent 72%),
+        radial-gradient(ellipse 60% 45% at 8% 6%, rgba(255, 210, 63, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 40% at 92% 12%, rgba(56, 189, 248, 0.5) 0%, transparent 58%),
+        radial-gradient(ellipse 65% 45% at 85% 88%, rgba(255, 77, 141, 0.4) 0%, transparent 60%),
+        linear-gradient(180deg, #fff9ec 0%, #e9f6ff 100%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
 }
@@ -475,7 +481,9 @@ html[data-theme='ceria'] {
 [data-theme='ceria'] .public-home .public-hero {
     position: relative;
     padding: 43px 0 57px;
-    background: linear-gradient(120deg, rgba(255, 210, 63, 0.42) 0%, rgba(255, 77, 141, 0.3) 48%, rgba(56, 189, 248, 0.42) 100%);
+    background:
+        radial-gradient(circle 520px at var(--pointer-x) var(--pointer-y), rgba(255, 210, 63, 0.9) 0%, rgba(255, 77, 141, 0.5) 45%, transparent 75%),
+        linear-gradient(120deg, rgba(255, 210, 63, 0.85) 0%, rgba(255, 77, 141, 0.62) 48%, rgba(56, 189, 248, 0.88) 100%);
 }
 
 [data-theme='ceria'] .public-home .public-hero-art {
@@ -558,7 +566,9 @@ html[data-theme='ceria'] {
    Override aturan global glass-theme.css yang menggelapkan halaman publik.
    -------------------------------------------------------------------------- */
 [data-theme='ceria'] .public-home:not(.event-listing-page) .public-site .public-hero {
-    background: linear-gradient(120deg, rgba(255, 210, 63, 0.42) 0%, rgba(255, 77, 141, 0.3) 48%, rgba(56, 189, 248, 0.42) 100%) !important;
+    background:
+        radial-gradient(circle 520px at var(--pointer-x) var(--pointer-y), rgba(255, 210, 63, 0.9) 0%, rgba(255, 77, 141, 0.5) 45%, transparent 75%),
+        linear-gradient(120deg, rgba(255, 210, 63, 0.85) 0%, rgba(255, 77, 141, 0.62) 48%, rgba(56, 189, 248, 0.88) 100%) !important;
 }
 
 [data-theme='ceria'] .public-site :is(.public-nav a, .public-login, .public-logout,

@@ -20,7 +20,7 @@
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/theme-switcher.js', 'resources/js/rainbow-titles.js', 'resources/js/preset-picker.js', 'resources/js/race.js', 'resources/js/page-context.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/theme-switcher.js', 'resources/js/rainbow-titles.js', 'resources/js/pointer-gradient.js', 'resources/js/preset-picker.js', 'resources/js/race.js', 'resources/js/page-context.js'])
 </head>
 <body>
     @php($hideSidebar = $hideSidebar ?? false)
