@@ -15,7 +15,7 @@ memblok; POST tetap dikirim, lalu server 422 sebagai error generik di reload.
 ## Keputusan
 - Memberdayakan styling kid-skate di aplikasi (global, di `ceria-theme.css`):
   pill bulat 26px, border ink 2.5px, bg canvas, hover mint, checked: border
-  coral + bg lemon + checkmark/dot coral (native), invalid focus & disabled
+  coral + bg lemon + checkmark/dot coral (native), state focus & disabled
   sama dengan kontoh library.
 - Menambah variabel `--ceria-panel`, `--ceria-mint` (alias token).
 - Blade pendaftaran lomba: tambah `required` ke checkbox `races[]`.
