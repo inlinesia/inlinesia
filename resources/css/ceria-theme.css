@@ -974,6 +974,104 @@ html[data-theme='ceria'] {
 [data-theme='ceria'] .c-pink { color: var(--color-berry); }
 
 /* --------------------------------------------------------------------------
+   Data displays & cards — ekstensi untuk class asli aplikasi
+   (dot data display library: sponsor, community, angka kartu, dll).
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] .guest-event-card,
+[data-theme='ceria'] .guest-registration-card,
+[data-theme='ceria'] .guest-dashboard-empty {
+    position: relative;
+    color: var(--text-primary);
+    background: var(--ceria-panel);
+    border: 2.5px solid var(--border-ink);
+    border-radius: 26px 14px 28px 16px;
+    box-shadow: var(--shadow-sticker-sm);
+    transition: transform 0.18s var(--ease-bounce), box-shadow 0.18s var(--ease-bounce);
+}
+
+[data-theme='ceria'] .guest-event-card :is(h3, p),
+[data-theme='ceria'] .guest-registration-card :is(strong, span, small) {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .guest-event-card .listing-register-link,
+[data-theme='ceria'] .guest-registration-card .guest-event-closed {
+    color: var(--color-grape) !important;
+}
+
+[data-theme='ceria'] .listing-card-number {
+    color: var(--color-lemon);
+    font-family: var(--font-display);
+    font-weight: 800;
+    filter: drop-shadow(0 2px 0 var(--border-ink));
+}
+
+[data-theme='ceria'] .sponsor-card-intro :is(h2, p) {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .sponsor-card-options article :is(h3, p) {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .sponsor-option-number {
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--color-lemon), var(--color-coral));
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 2px 0 var(--border-ink);
+}
+
+[data-theme='ceria'] .community-values {
+    display: grid;
+    gap: 14px;
+    border: 2.5px solid var(--border-ink);
+    border-radius: 26px 16px 28px 18px;
+    background: var(--ceria-panel);
+    box-shadow: var(--shadow-sticker-sm);
+}
+
+[data-theme='ceria'] .community-values h3 {
+    color: var(--color-grape) !important;
+}
+
+[data-theme='ceria'] .community-values p {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme='ceria'] .value-number {
+    color: var(--color-lemon);
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+[data-theme='ceria'] .value-mark {
+    color: var(--color-coral);
+}
+
+[data-theme='ceria'] .guest-dashboard-section-heading h2 {
+    color: var(--color-grape) !important;
+}
+
+[data-theme='ceria'] .event-payment-account {
+    border-color: var(--ceria-mint);
+    background: #e6fcf5;
+}
+
+[data-theme='ceria'] .event-payment-account :is(span, strong) {
+    color: var(--color-grape) !important;
+}
+
+[data-theme='ceria'] .stat-spark i {
+    background: var(--color-lemon);
+}
+
+[data-theme='ceria'] .stat-spark i:nth-child(2),
+[data-theme='ceria'] .stat-spark i:nth-child(6) {
+    background: var(--color-sky);
+}
+
+/* --------------------------------------------------------------------------
    Hormati preferensi pengguna mengurangi gerak.
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
