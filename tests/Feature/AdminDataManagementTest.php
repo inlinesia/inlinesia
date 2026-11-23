@@ -221,6 +221,26 @@ class AdminDataManagementTest extends TestCase
         ]);
     }
 
+    public function test_admin_can_view_backup_page_listing_backups(): void
+    {
+        Storage::fake('local');
+        $admin = $this->primaryAdmin();
+
+        $this->actingAs($admin)
+            ->get(route('admin.data.backup'))
+            ->assertOk()
+            ->assertSee('Buat backup di server');
+
+        $name = app(AdminDataManagementService::class)->createBackup();
+
+        $this->actingAs($admin)
+            ->get(route('admin.data.backup'))
+            ->assertOk()
+            ->assertSee($name)
+            ->assertSee(route('admin.data.restore'), false)
+            ->assertSee(route('admin.data.backup.destroy'), false);
+    }
+
     public function test_admin_can_delete_a_saved_backup(): void
     {
         Storage::fake('local');
