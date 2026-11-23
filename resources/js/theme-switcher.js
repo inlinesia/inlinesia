@@ -6,7 +6,7 @@
 (function () {
     const STORAGE_KEY = 'inlinesia-theme';
     const THEMES = ['glass', 'copper', 'neural', 'topic', 'ceria'];
-    const DEFAULT_THEME = 'copper';
+    const DEFAULT_THEME = 'ceria';
 
     const STATUS_MESSAGES = {
         glass: 'Tema glass aktif. Pilihan tersimpan di peramban ini.',

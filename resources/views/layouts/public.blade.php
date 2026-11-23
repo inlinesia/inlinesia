@@ -16,7 +16,7 @@
                 theme = null;
             }
             if (['copper', 'glass', 'neural', 'topic', 'ceria'].indexOf(theme) === -1) {
-                theme = 'copper';
+                theme = 'ceria';
             }
             document.documentElement.setAttribute('data-theme', theme);
         })();

@@ -49,7 +49,7 @@
                 </label>
 
                 <label class="theme-option" data-theme-option>
-                    <input type="radio" name="theme" value="copper" @checked(old('theme', 'copper') === 'copper')>
+                    <input type="radio" name="theme" value="copper" @checked(old('theme') === 'copper')>
                     <span class="theme-option-preview theme-preview-copper">
                         <span class="theme-preview-chrome">
                             <span class="theme-preview-pill"></span>
@@ -112,7 +112,7 @@
                 </label>
 
                 <label class="theme-option" data-theme-option>
-                    <input type="radio" name="theme" value="ceria" @checked(old('theme') === 'ceria')>
+                    <input type="radio" name="theme" value="ceria" @checked(old('theme', 'ceria') === 'ceria')>
                     <span class="theme-option-preview theme-preview-ceria">
                         <span class="theme-preview-chrome">
                             <span class="theme-preview-pill"></span>
