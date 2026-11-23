@@ -35,6 +35,10 @@
     --pointer-x: 50%;
     --pointer-y: 50%;
 
+    /* Alias asisten untuk komponen data display (karetan). */
+    --ceria-panel: var(--bg-surface);
+    --ceria-mint: var(--color-sky);
+
     /* Surface & teks */
     --bg-canvas: #fffdf7;
     --bg-surface: #ffffff;
