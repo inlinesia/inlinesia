@@ -912,7 +912,16 @@ document.querySelectorAll('[data-nik-autofill]').forEach((form) => {
     // Field yang di-disable tidak ikut terkirim bersama form. Karena itu
     // gender dan tanggal lahir dibuka kembali secara diam-diam tepat sebelum
     // form dikirim, supaya nilainya tetap sampai ke server.
-    form.addEventListener('submit', () => {
+    form.addEventListener('submit', (event) => {
+        // Validasi minimal mata lomba: berdasarkan yang sah untuk kategori,
+        // tidak perlu menunggu respons server yang hanya muncul di reload.
+        const checkedRaces = form.querySelectorAll('input[name="races[]"]:checked').length;
+        if (checkedRaces < 1) {
+            event.preventDefault();
+            form.setCustomValidity('Pilih minimal 1 mata lomba yang tersedia.');
+            form.reportValidity();
+        }
+
         if (form.dataset.nikResolved) {
             genderInput.disabled = false;
             dateInput.disabled = false;

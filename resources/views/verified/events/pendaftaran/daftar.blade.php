@@ -89,7 +89,7 @@
             <fieldset class="role-options" data-category-type="paket"><legend>Mata Lomba <span class="optional-label">(Pilih sesuai kategori)</span></legend>
                 <small class="field-hint">Pilih mata lomba yang ingin diikuti. Kategori, mata lomba paket (wajib), dan mata lomba di luar kategori beserta harganya akan muncul otomatis setelah Anda mengisi jenis kelamin dan tanggal lahir.</small>
                 @foreach ($event->races as $race)
-                    <label class="role-option"><input type="checkbox" name="races[]" value="{{ $race }}" @checked(in_array($race, old('races', []), true))><span><strong>{{ $race }}</strong></span></label>
+                    <label class="role-option"><input type="checkbox" name="races[]" value="{{ $race }}" @checked(in_array($race, old('races', []), true)) required><span><strong>{{ $race }}</strong></span></label>
                 @endforeach
             </fieldset>
             @if ($hasOutsideObligation)

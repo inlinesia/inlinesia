@@ -1076,6 +1076,68 @@ html[data-theme='ceria'] {
 }
 
 /* --------------------------------------------------------------------------
+   Checkbox & radio — adaptasi tema Kids Skate Controls & Form Inputs Library.
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] :is(input[type='checkbox'], input[type='radio']) {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    min-height: 26px;
+    margin: 0 8px 0 0;
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    background: var(--bg-canvas);
+    appearance: none;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme='ceria'] :is(input[type='checkbox'], input[type='radio']):hover {
+    border-color: var(--color-sky);
+    background: var(--bg-soft-sky);
+}
+
+[data-theme='ceria'] :is(input[type='checkbox'], input[type='radio']):checked {
+    border-color: var(--color-coral);
+    background: var(--color-lemon);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+[data-theme='ceria'] input[type='checkbox']:checked::before {
+    content: '';
+    width: 12px;
+    height: 7px;
+    border: 2.5px solid var(--color-coral);
+    border-left-color: transparent;
+    border-bottom-color: var(--color-coral);
+    transform: rotate(-45deg) translateY(-1px);
+}
+
+[data-theme='ceria'] input[type='radio']:checked::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-coral);
+    box-shadow: 0 0 0 2px var(--color-lemon);
+}
+
+[data-theme='ceria'] :is(input[type='checkbox'], input[type='radio']):disabled {
+    border-color: var(--border-soft);
+    background: var(--bg-canvas);
+    cursor: default;
+}
+
+/* Ruang grup pilihan bertukar margin agar terlihat pudar */
+[data-theme='ceria'] :is(.choice-row, .role-options, .options-list) {
+    display: grid;
+    gap: 12px;
+    margin: 10px 0;
+}
+
+/* --------------------------------------------------------------------------
    Hormati preferensi pengguna mengurangi gerak.
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
