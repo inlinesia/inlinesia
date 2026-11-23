@@ -494,11 +494,9 @@ html[data-theme='ceria'] {
     letter-spacing: 0.025em;
     line-height: 1.22;
     text-shadow: 0 3px 0 var(--border-ink), 0 6px 14px rgba(43, 45, 66, 0.14);
-    -webkit-text-stroke: 1.3px var(--border-ink);
-    paint-order: stroke fill;
 }
 
-[data-theme='ceria'] .public-site .public-hero h1 span {
+[data-theme='ceria'] .public-site .public-hero h1 span:not(.skate-word) {
     color: var(--color-coral);
 }
 
@@ -617,7 +615,7 @@ html[data-theme='ceria'] {
     .submission-card, .category-rule-card, .sponsor-card, .public-event-card,
     .service-card, .sponsor-card-options article, .contact-item, .contact-foot,
     .community-values article
-) :is(h1, h2, h3, h4, p, strong, label, legend, small, span, em, b) {
+) :is(h1, h2, h3, h4, p, strong, label, legend, small, span, em, b):not(.skate-word) {
     color: var(--text-primary) !important;
 }
 
@@ -767,6 +765,36 @@ html[data-theme='ceria'] {
     font-size: 1.7rem;
     transform: translateY(-50%) rotate(10deg);
 }
+
+/* --------------------------------------------------------------------------
+   Judul halaman warna-warni (setiap kata) + efek pop saat diarahkan pointer.
+   Diterapkan oleh resources/js/rainbow-titles.js pada h1 & judul daftar lomba.
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] :is(h1, h2#listing-heading, [data-rainbow-title]) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: 0.025em;
+    text-shadow: 0 3px 0 var(--border-ink), 0 6px 14px rgba(43, 45, 66, 0.14);
+}
+
+[data-theme='ceria'] .skate-word {
+    display: inline-block;
+    -webkit-text-stroke: 1px var(--border-ink);
+    paint-order: stroke fill;
+    transition: transform 0.25s var(--ease-bounce), color 0.2s ease;
+}
+
+[data-theme='ceria'] .skate-word:hover {
+    transform: translateY(-5px) rotate(-3deg) scale(1.1);
+}
+
+[data-theme='ceria'] .c-yellow { color: var(--color-lemon); }
+[data-theme='ceria'] .c-sky { color: var(--color-sky-blue); }
+[data-theme='ceria'] .c-mint { color: var(--color-sky); }
+[data-theme='ceria'] .c-orange { color: var(--color-coral); }
+[data-theme='ceria'] .c-purple { color: var(--color-grape); }
+[data-theme='ceria'] .c-pink { color: var(--color-berry); }
 
 /* --------------------------------------------------------------------------
    Hormati preferensi pengguna mengurangi gerak.
