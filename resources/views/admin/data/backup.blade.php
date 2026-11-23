@@ -9,7 +9,7 @@
             <div>
                 <div class="eyebrow"><span class="eyebrow-line"></span> PENGELOLAAN DATA</div>
                 <h1>Backup &amp; restore</h1>
-                <p class="page-subtitle">Backup database dibuat langsung di server dan disimpan di <code>storage/app/backups</code>. Pilih salah satu backup di bawah untuk memulihkan data.</p>
+                <p class="page-subtitle">Backup database dibuat langsung di server dan disimpan di <code>storage/app/private/backups</code>. Pilih salah satu backup di bawah untuk memulihkan data.</p>
             </div>
         </section>
 

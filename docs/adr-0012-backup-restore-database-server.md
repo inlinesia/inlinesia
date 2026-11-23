@@ -6,13 +6,13 @@ Diterima.
 ## Konteks
 Mekanisme lama mengunduh file JSON dari browser dan memulihkannya lewat
 unggah. Pemilik proyek meminta backup/restore berasal dari database yang
-tersimpan di server: dump SQL penuh, disimpan di `storage/app/backups`,
+tersimpan di server: dump SQL penuh, disimpan di `storage/app/private/backups`,
 dipilih dari daftar yang tersedia, menggantikan fitur unduh/unggah JSON, dan
 tetap menyertakan file bukti pembayaran.
 
 ## Keputusan
 - `AdminDataManagementService` tidak lagi menghasilkan JSON. `createBackup()`
-  membuat direktori `backups/inlinesia-YYYYMMDD-HHMMSS-xxxx/` berisi:
+  membuat direktori `storage/app/private/backups/inlinesia-YYYYMMDD-HHMMSS-xxxx/` berisi:
   - `database.sql` — pernyataan `DELETE` (urutan anak ke induk) dan `INSERT`
     (urutan induk ke anak) untuk seluruh tabel aplikasi.
   - `payment-proofs/*` — salinan file bukti pembayaran.
