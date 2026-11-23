@@ -11,6 +11,79 @@
             <div class="public-overline"><span></span> PLATFORM EVENT INLINE SKATE</div>
             <h1>Kejuaraan sepatu roda,<br><span>semua terhubung.</span></h1>
             <p class="public-hero-lead">Jelajahi agenda kejuaraan, daftarkan atlet, dan kelola event dari satu tempat. Inlinesia menghubungkan kebutuhan peserta dan penyelenggara.</p>
+
+            @guest
+                <section class="home-auth" aria-label="Masuk atau daftar akun Inlinesia">
+                    <input class="home-auth-radio" type="radio" name="home_auth_tab" id="home-auth-tab-login" @checked(old('_form', 'login') === 'login')>
+                    <input class="home-auth-radio" type="radio" name="home_auth_tab" id="home-auth-tab-register" @checked(old('_form') === 'register')>
+
+                    <div class="home-auth-tabs" role="group" aria-label="Pilih masuk atau daftar">
+                        <label class="home-auth-tab" for="home-auth-tab-login">Masuk</label>
+                        <label class="home-auth-tab" for="home-auth-tab-register">Daftar</label>
+                    </div>
+
+                    <div class="home-auth-panels">
+                        <div class="home-auth-panel home-auth-panel-login">
+                            @if (old('_form') === 'login' && $errors->any())
+                                <div class="home-auth-errors" role="alert">
+                                    @foreach ($errors->all() as $error)<span>{{ $error }}</span>@endforeach
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('login.store') }}">
+                                @csrf
+                                <input type="hidden" name="_form" value="login">
+                                <label class="home-auth-field">Email
+                                    <input name="email" type="email" value="{{ old('email') }}" autocomplete="username" maxlength="255" placeholder="nama@email.com" required>
+                                </label>
+                                <label class="home-auth-field">Kata sandi
+                                    <input name="password" type="password" autocomplete="current-password" placeholder="••••••••" required>
+                                </label>
+                                <label class="home-auth-remember"><input type="checkbox" name="remember" value="1"> Tetap masuk di perangkat ini</label>
+                                <button class="home-auth-submit" type="submit">Masuk ke akun <span aria-hidden="true">→</span></button>
+                            </form>
+                        </div>
+
+                        <div class="home-auth-panel home-auth-panel-register">
+                            @if (old('_form') === 'register' && $errors->any())
+                                <div class="home-auth-errors" role="alert">
+                                    @foreach ($errors->all() as $error)<span>{{ $error }}</span>@endforeach
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('register.store') }}">
+                                @csrf
+                                <input type="hidden" name="_form" value="register">
+                                <label class="home-auth-field">Nama lengkap
+                                    <input name="name" type="text" value="{{ old('name') }}" autocomplete="name" maxlength="120" placeholder="Nama Anda" required>
+                                </label>
+                                <label class="home-auth-field">Email
+                                    <input name="email" type="email" value="{{ old('email') }}" autocomplete="email" maxlength="255" placeholder="nama@email.com" required>
+                                </label>
+                                <label class="home-auth-field">Nomor WhatsApp <span class="home-auth-optional">opsional</span>
+                                    <input name="phone" type="tel" value="{{ old('phone') }}" autocomplete="tel" maxlength="40" placeholder="08xx xxxx xxxx">
+                                </label>
+                                <label class="home-auth-field">Sebagai
+                                    <select name="role" required>
+                                        @foreach (collect(config('user-roles'))->except('admin') as $roleKey => $roleLabel)
+                                            <option value="{{ $roleKey }}" @selected(old('role') === $roleKey)>{{ $roleLabel }}</option>
+                                        @endforeach
+                                    </select>
+                                </label>
+                                <label class="home-auth-field">Kata sandi
+                                    <input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Minimal 8 karakter" required>
+                                </label>
+                                <label class="home-auth-field">Ulangi kata sandi
+                                    <input name="password_confirmation" type="password" autocomplete="new-password" minlength="8" placeholder="Ulangi kata sandi" required>
+                                </label>
+                                <button class="home-auth-submit" type="submit">Buat akun <span aria-hidden="true">→</span></button>
+                            </form>
+                            <p class="home-auth-note">Setelah daftar, verifikasi email dulu sebelum mengikuti event.</p>
+                        </div>
+                    </div>
+                </section>
+            @endguest
+
             <div class="public-hero-actions">
                 <a class="public-button public-button-orange" href="{{ route('events.index') }}">Jelajahi kejuaraan <span aria-hidden="true">→</span></a>
                 <a class="public-text-link" href="#layanan">Lihat fitur platform <span aria-hidden="true">↘</span></a>

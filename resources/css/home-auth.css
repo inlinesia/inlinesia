@@ -1,0 +1,199 @@
+/* ==========================================================================
+   Form masuk / daftar ringkas di hero halaman depan.
+   Memakai design token tema Ceria bila tersedia, dengan fallback untuk tema lain.
+   ========================================================================== */
+
+.home-auth {
+    --auth-ink: var(--border-ink, #2b2d42);
+    --auth-coral: var(--color-coral, #ff6b35);
+    --auth-lemon: var(--color-lemon, #ffd23f);
+    --auth-sky: var(--color-sky, #3bceac);
+    --auth-grape: var(--color-grape, #8338ec);
+    --auth-surface: var(--bg-surface, #ffffff);
+    --auth-canvas: var(--bg-canvas, #fffdf7);
+    --auth-muted: var(--text-secondary, #475569);
+    --auth-line: var(--border-soft, #dce7f2);
+    --auth-display: var(--font-display, 'Fredoka', 'Nunito', sans-serif);
+
+    position: relative;
+    max-width: 430px;
+    margin-top: 18px;
+    padding: 14px 16px 16px;
+    background: var(--auth-surface);
+    border: 2.5px solid var(--auth-ink);
+    border-radius: 26px 14px 28px 16px;
+    box-shadow: 0 3px 0 var(--auth-ink), 0 12px 26px rgba(43, 45, 66, 0.14);
+}
+
+.home-auth-radio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.home-auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 5px;
+    background: var(--bg-soft-sky, #eef9ff);
+    border: 2px solid var(--auth-line);
+    border-radius: 999px;
+}
+
+.home-auth-tab {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    color: var(--auth-muted);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    font-family: var(--auth-display);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.home-auth-tab:hover {
+    color: var(--auth-ink);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+#home-auth-tab-login:checked ~ .home-auth-tabs label[for='home-auth-tab-login'],
+#home-auth-tab-register:checked ~ .home-auth-tabs label[for='home-auth-tab-register'] {
+    color: var(--auth-ink);
+    background: var(--auth-lemon);
+    border-color: var(--auth-ink);
+    box-shadow: 0 2px 0 var(--auth-ink);
+}
+
+.home-auth-panel {
+    display: none;
+}
+
+#home-auth-tab-login:checked ~ .home-auth-panels .home-auth-panel-login,
+#home-auth-tab-register:checked ~ .home-auth-panels .home-auth-panel-register {
+    display: block;
+}
+
+.home-auth-field {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 10px;
+    color: var(--auth-ink);
+    font-family: var(--auth-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.home-auth-field :is(input, select) {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.55rem 0.8rem;
+    color: var(--auth-ink);
+    background: var(--auth-canvas);
+    border: 2px solid var(--auth-line);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.home-auth-field :is(input, select)::placeholder {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.home-auth-field :is(input, select):focus {
+    outline: none;
+    border-color: var(--auth-sky);
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.35);
+}
+
+.home-auth-optional {
+    color: var(--auth-muted);
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+.home-auth-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 2px 0 12px;
+    color: var(--auth-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.home-auth-remember input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--auth-coral);
+}
+
+.home-auth-submit {
+    width: 100%;
+    min-height: 46px;
+    color: #ffffff;
+    background: var(--auth-coral);
+    border: 2.5px solid var(--auth-ink);
+    border-radius: 999px;
+    box-shadow: 0 3px 0 var(--auth-ink);
+    font-family: var(--auth-display);
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.home-auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 var(--auth-ink);
+}
+
+.home-auth-submit:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 var(--auth-ink);
+}
+
+.home-auth-submit:focus-visible {
+    outline: none;
+    box-shadow: 0 3px 0 var(--auth-ink), 0 0 0 4px rgba(56, 189, 248, 0.45);
+}
+
+.home-auth-errors {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    color: #991b1b;
+    background: #fee2e2;
+    border: 2px solid #ef4444;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.home-auth-note {
+    margin: 10px 0 0;
+    color: var(--auth-muted);
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    .home-auth {
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-auth-submit,
+    .home-auth-tab {
+        transition: none;
+    }
+}

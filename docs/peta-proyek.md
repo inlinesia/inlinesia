@@ -297,7 +297,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/components/user-badge.blade.php` — 18 baris
 - `resources/views/layouts/admin.blade.php` — 41 baris
 - `resources/views/layouts/public.blade.php` — 57 baris
-- `resources/views/publik/beranda.blade.php` — 203 baris
+- `resources/views/publik/beranda.blade.php` — 276 baris
 - `resources/views/publik/direktori/atlet.blade.php` — 90 baris
 - `resources/views/publik/direktori/index.blade.php` — 155 baris
 - `resources/views/publik/direktori/klub-edit.blade.php` — 53 baris
@@ -316,7 +316,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/verified/events/race/order.blade.php` — 93 baris
 - `resources/views/verified/events/race/partials/heat.blade.php` — 174 baris
 
-### Pengujian (tests/) (25 file)
+### Pengujian (tests/) (26 file)
 
 - `tests/Feature/AccountPortalTest.php` — 473 baris — `AccountPortalTest` — method: `test_guests_can_open_registration_and_login_pages`, `test_public_registration_creates_and_signs_in_a_non_admin_account`, `test_registration_sends_a_verification_email_and_the_signed_link_verifies_the_account`, `test_public_registration_cannot_select_admin_role`, `test_users_can_login_update_their_profile_and_logout`, `test_primary_admin_email_is_fixed_in_profiles_and_when_saving_the_account`, `test_admin_can_edit_an_account_and_email_changes_require_reverification`, `test_admin_can_search_filter_and_sort_the_account_list`, …
 - `tests/Feature/AdminDataManagementTest.php` — 182 baris — `AdminDataManagementTest` — method: `test_guest_is_redirected_from_data_management_pages`, `test_non_admin_cannot_access_data_management_pages`, `test_admin_can_review_and_delete_a_selected_catalog`, `test_deletion_requires_a_fresh_review_when_catalog_contents_change`, `test_user_catalog_deletion_preserves_admin_accounts`, `test_selected_catalog_is_not_deleted_without_confirmation`, `test_admin_can_download_and_restore_a_valid_backup`, `test_restore_rejects_a_tampered_backup_without_changing_data`
@@ -334,6 +334,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `tests/Feature/EventRegistrationManagementTest.php` — 1430 baris — `EventRegistrationManagementTest` — method: `test_event_owner_can_update_athlete_data_and_confirm_payment_from_the_roster`, `test_admin_can_edit_a_released_roster_but_not_publish_it`, `test_the_managed_roster_shows_full_biodata_and_a_whatsapp_link`, `test_the_public_roster_stays_free_of_biodata_and_contact_details`, `test_the_public_roster_can_be_searched_by_name_or_club`, `test_the_released_roster_can_be_filtered_by_category_race_and_gender`, `test_the_fee_is_shown_only_to_the_event_manager`, `test_only_a_manager_gets_the_printable_category_toggles`, …
 - `tests/Feature/ExampleTest.php` — 101 baris — `ExampleTest` — method: `test_the_public_homepage_highlights_available_event_platform_features`, `test_the_public_homepage_shows_the_event_empty_state_when_no_events_are_upcoming`, `test_the_public_event_listing_only_displays_approved_events`, `test_the_panitia_dashboard_remains_available_separately`
 - `tests/Feature/GuestDashboardTest.php` — 139 baris — `GuestDashboardTest` — method: `test_verified_user_can_open_their_dashboard_and_see_only_their_registrations`, `test_unverified_user_is_prompted_to_verify_and_does_not_see_dashboard_button`, `test_individual_and_club_accounts_can_register_when_registration_is_open`, `test_dashboard_hides_registration_link_until_manager_opens_registration`
+- `tests/Feature/HomeAuthFormTest.php` — 54 baris — `HomeAuthFormTest` — method: `test_guest_sees_login_and_registration_forms_on_homepage`, `test_authenticated_user_does_not_see_homepage_auth_forms`, `test_failed_login_shows_the_error_in_the_homepage_form`
 - `tests/Feature/MergedFormPagesTest.php` — 158 baris — `MergedFormPagesTest` — method: `test_event_create_and_edit_render_the_same_view`, `test_admin_sees_the_same_shell_for_event_create_and_edit`, `test_event_edit_uses_the_unified_url_without_an_edit_suffix`, `test_account_create_and_edit_render_the_same_view`, `test_account_form_switches_only_by_mode`, `test_new_event_still_requires_a_future_start_date_and_deadline`
 - `tests/Feature/NikAutofillTest.php` — 191 baris — `NikAutofillTest` — method: `test_authenticated_user_can_read_a_nik_into_region_gender_and_birth_date`, `test_nik_lookup_reads_female_nik_from_a_day_above_forty`, `test_nik_lookup_rejects_unknown_region_code`, `test_nik_lookup_requires_sixteen_digits`, `test_nik_lookup_requires_an_account`, `test_registration_page_exposes_the_nik_feedback_container_for_the_region_notice`, `test_registration_rejects_nik_that_does_not_match_the_given_gender`, `test_registration_rejects_nik_that_does_not_match_the_given_birth_date`, …
 - `tests/Feature/PageContextWidgetTest.php` — 119 baris — `PageContextWidgetTest` — method: `test_user_badge_menampilkan_nama_dan_role_pada_setiap_halaman`, `test_lokasi_blade_hanya_muncul_untuk_admin`, `test_halaman_pendaftaran_menampilkan_navbar_di_atas_dan_konten_di_dalam_layout`
