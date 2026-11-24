@@ -889,8 +889,9 @@ html[data-theme='ceria'] {
 [data-theme='ceria'] .guest-registration-table .guest-registration-status { color: var(--text-secondary); }
 [data-theme='ceria'] .guest-registration-table th[rowspan] { vertical-align: middle; }
 [data-theme='ceria'] .guest-registration-table .guest-registration-number,
-[data-theme='ceria'] .guest-registration-table .guest-registration-race-cell { text-align: center; }
+[data-theme='ceria'] .guest-registration-table .guest-registration-race-cell { text-align: left; }
 [data-theme='ceria'] .guest-registration-table .guest-registration-race-cell input[type='checkbox'] { margin: 0; }
+[data-theme='ceria'] .guest-registration-table .guest-registration-actions .btn-icon { display: inline-flex; align-items: center; justify-content: center; }
 
 [data-theme='ceria'] .app-shell .admin-flash {
     color: var(--text-primary);
