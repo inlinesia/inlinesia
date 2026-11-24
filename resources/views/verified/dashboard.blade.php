@@ -191,7 +191,9 @@
                             @php
                                 $amountDue = $registration->amountDue();
                                 $wave = $runningWaves[$registration->id] ?? null;
-                                $age = $registration->date_of_birth?->diffInYears($registration->event->start_date);
+                                $age = $registration->date_of_birth
+                                    ? (int) $registration->date_of_birth->diffInYears($registration->event->start_date)
+                                    : null;
                             @endphp
                             <tr>
                                 <td class="guest-registration-actions">

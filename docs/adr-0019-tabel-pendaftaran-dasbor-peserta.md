@@ -30,6 +30,8 @@ dan status bayar.
 - CSS tambahan di `account-portal.css` membatasi lebar sel tombol dan
   merapikan badge/catatan di dalam tabel; gaya tabel Ceria yang sudah ada
   tetap dipakai.
+- Usia dihitung dari tanggal lahir ke tanggal mulai event dan dibulatkan ke
+  bilangan bulat (Carbon mengembalikan desimal bila tidak di-cast).
 - Tes `GuestDashboardTest` diperbarui untuk memastikan header tabel dan kelas
   tabel tampil.
 
