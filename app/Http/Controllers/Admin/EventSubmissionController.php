@@ -59,7 +59,7 @@ class EventSubmissionController extends Controller
                 $submitter->notify(new EventDecisionNotification($event));
             } catch (Throwable $exception) {
                 // Email tidak boleh menjatuhkan permintaan approve — status
-                // sudah diperbarui, error hanya dicatat kedua penyempurnaan.
+                // sudah diubah, error hanya dicatat.
                 report($exception);
             }
         }
@@ -96,7 +96,7 @@ class EventSubmissionController extends Controller
                 $submitter->notify(new EventDecisionNotification($event));
             } catch (Throwable $exception) {
                 // Email tidak boleh menjatuhkan permintaan reject — status
-                // sudah diperbarui, error hanya dicatat kedua penyempurnaan.
+                // sudah diubah, error hanya dicatat.
                 report($exception);
             }
         }
