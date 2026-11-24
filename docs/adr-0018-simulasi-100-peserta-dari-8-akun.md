@@ -15,9 +15,14 @@ yang sama, dengan status pembayaran bervariasi dan kuota/babak disesuaikan.
   `run()` selalu menghasilkan tepat **100 pendaftaran**: 8 contoh awal
   ditambah 92 peserta generated, dibagikan merata ke 8 akun `simulasi.atlet*`
   lewat `$users[$index % 8]`.
-- Status pendaftaran dan pembayaran disebar: sebagian lunas, sebagian belum
-  bayar, sebagian menunggu persetujuan admin; beberapa contoh pembatalan
+- Status pendaftaran dan pembayaran disebar: 75 lunas, 25 belum bayar
+  (termasuk sebagian menunggu persetujuan admin); beberapa contoh pembatalan
   pending tetap dipertahankan.
+- Kolom `nationality` sengaja dibiarkan null. Mengisinya dengan `ID` membuat
+  `EventRegistration::isForeignNational()` bernilai true, sehingga
+  sinkronisasi direktori memakai paspor kosong dan semua atlet satu akun
+  dianggap sama (direktori hanya berisi 8 entri). Dengan null, 100 atlet
+  tersinkron benar memakai NIK.
 - Kuota tiap kategori dinaikkan dari 6 menjadi **40** (total 3 kategori
   mencukupi 100 peserta), dan pengaturan babak memakai mode manual
   6 atlet per babak.

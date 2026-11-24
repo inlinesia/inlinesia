@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Athlete;
 use App\Models\Event;
 use App\Models\EventRaceEntry;
 use App\Models\EventRegistration;
@@ -26,6 +27,8 @@ class EventSimulationSeederTest extends TestCase
         $this->assertSame(40, $event->category_rules[0]['max_registrants']);
         $this->assertSame(100, EventRegistration::query()->where('event_id', $event->id)->count());
         $this->assertSame(8, EventRegistration::query()->where('event_id', $event->id)->distinct('user_id')->count('user_id'));
+        $this->assertSame(75, EventRegistration::query()->where('event_id', $event->id)->where('payment_status', 'paid')->count());
+        $this->assertSame(100, Athlete::query()->whereNotNull('nik_hash')->count());
         $this->assertGreaterThan(0, EventRaceEntry::query()->where('event_id', $event->id)->count());
         $this->assertGreaterThan(0, EventRaceEntry::query()->where('event_id', $event->id)->where('status', 'finished')->count());
 
