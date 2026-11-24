@@ -171,146 +171,167 @@
             <span class="guest-dashboard-count">{{ $registrations->count() }} peserta</span>
         </div>
 
-        @forelse ($registrations as $registration)
-            <article class="guest-registration-card">
-                <div class="guest-registration-info">
-                    <p class="guest-registration-headline">
-                        <span class="guest-registration-event">{{ $registration->event->name }}</span>
-                        <strong>{{ $registration->participant_name }}</strong>
-                        <span>{{ $registration->category ?: 'Kategori setelah konfirmasi pembayaran' }} · {{ $registration->birth_year }} · {{ implode(', ', $registration->races) }}</span>
-                        @php
-                            $amountDue = $registration->amountDue();
-                            $wave = $runningWaves[$registration->id] ?? null;
-                            $waveLabel = $wave
-                                ? ($wave['label']
-                                    ? 'Gelombang '.$wave['label'].' · '.$wave['range']
-                                    : 'Harga kategori')
-                                : null;
-                            $wavePrice = match (true) {
-                                $amountDue > 0 => 'harus dibayar '.\App\Services\CategoryFeeCalculator::rupiah($amountDue),
-                                $registration->fee_total !== null => 'lunas '.\App\Services\CategoryFeeCalculator::rupiah($registration->fee_total),
-                                default => \App\Services\CategoryFeeCalculator::rupiah($wave['price'] ?? 0),
-                            };
-                        @endphp
-                        @if ($wave && $wave['price'] > 0)
-                            <span class="guest-registration-wave">{{ $waveLabel }} · {{ $wavePrice }}</span>
-                        @endif
-                    </p>
-                </div>
-                <div class="guest-registration-actions">
-                    <span class="guest-registration-status status-{{ $registration->status }}">
-                        {{ match ($registration->status) {
-                            'pending' => 'Menunggu panitia',
-                            'approved' => 'Diterima',
-                            'rejected' => 'Perlu ditinjau',
-                            default => ucfirst($registration->status),
-                        } }}
-                    </span>
-                    <span class="event-payment-status payment-{{ $registration->payment_status }}">
-                        {{ match ($registration->payment_status) {
-                            'pending' => 'Menunggu konfirmasi',
-                            'paid' => $registration->event->is_free ? 'Dikonfirmasi' : 'Terbayar',
-                            default => 'Belum bayar',
-                        } }}
-                    </span>
-                    @if ($registration->event->isParticipantListReleased())
-                        <a class="account-edit-link" href="{{ route('events.registrations.index', $registration->event) }}">Lihat daftar peserta <span aria-hidden="true">→</span></a>
-                    @endif
-                    @if ($registration->event->hasReleasedRaceOrder())
-                        <a class="account-edit-link" href="{{ route('events.race.order', $registration->event) }}">Urutan lomba <span aria-hidden="true">→</span></a>
-                    @endif
-                    @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved')
-                        @if ($registration->participant_change_status !== 'pending')
-                            <button class="account-edit-link event-registration-modal-trigger" type="button" data-registration-modal-open="ubah-peserta-{{ $registration->id }}" aria-controls="ubah-peserta-{{ $registration->id }}">Edit data</button>
-                        @endif
-                        @if ($registration->participant_change_status !== 'pending')
-                            <form method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}"
-                                data-confirm="{{ $registration->payment_status === 'paid' || $registration->amountPaid() > 0
-                                    ? 'Ajukan pembatalan pendaftaran ini? Pengelola akan menentukan persetujuan dan nominal refund.'
-                                    : 'Batalkan pendaftaran atlet ini? Data dan bukti pembayaran akan dihapus.' }}">
-                                @csrf
-                                @method('DELETE')
-                                <button class="account-edit-link guest-registration-cancel-button" type="submit">
-                                    {{ $registration->payment_status === 'paid' || $registration->amountPaid() > 0 ? 'Ajukan pembatalan' : 'Batalkan pendaftaran' }}
-                                </button>
-                            </form>
-                        @endif
-                    @endif
-                    @if ($registration->payment_status !== 'paid' && ! in_array($registration->cancellation_status, ['pending', 'approved'], true))
-                        @if (! $registration->event->is_free)
-                            <form method="POST" action="{{ route('events.registration.proof.store', [$registration->event, $registration]) }}" enctype="multipart/form-data" class="guest-payment-proof-form">
-                                @csrf
-                                <label>Bukti pembayaran
-                                    <input type="file" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required>
-                                </label>
-                                <button class="account-edit-link" type="submit">Kirim bukti</button>
-                            </form>
-                        @endif
-                        @if ($registration->event->organizer_whatsapp)
-                            <form method="POST" action="{{ route('events.registration.whatsapp', [$registration->event, $registration]) }}">
-                                @csrf
-                                <button class="account-edit-link" type="submit">{{ $registration->event->is_free ? 'Konfirmasi gratis via WhatsApp' : 'Kirim bukti via WhatsApp' }}</button>
-                            </form>
-                        @else
-                            <small>WhatsApp pengelola kejuaraan belum tersedia.</small>
-                        @endif
-                    @else
-                        @if ($registration->event->is_free)
-                            <span class="event-payment-status payment-paid">Pendaftaran dikonfirmasi</span>
-                        @endif
-                    @endif
-                    @if ($registration->event->status === 'approved' && $registration->event->registration_open && (! $registration->event->registration_deadline || $registration->event->registration_deadline->endOfDay()->isFuture()))
-                        <a class="account-edit-link" href="{{ route('events.registration.create', $registration->event) }}">Tambah atlet <span aria-hidden="true">→</span></a>
-                    @endif
-                </div>
+        @if ($registrations->isNotEmpty())
+            <div class="account-table-wrap guest-registration-table-wrap">
+                <table class="account-table guest-registration-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tombol</th>
+                            <th scope="col">Nama panggilan</th>
+                            <th scope="col">Nama lengkap</th>
+                            <th scope="col">Kategori</th>
+                            <th scope="col">Tahun / usia</th>
+                            <th scope="col">Mata lomba</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">Status bayar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($registrations as $registration)
+                            @php
+                                $amountDue = $registration->amountDue();
+                                $wave = $runningWaves[$registration->id] ?? null;
+                                $age = $registration->date_of_birth?->diffInYears($registration->event->start_date);
+                            @endphp
+                            <tr>
+                                <td class="guest-registration-actions">
+                                    @if ($registration->event->isParticipantListReleased())
+                                        <a class="account-edit-link" href="{{ route('events.registrations.index', $registration->event) }}">Lihat daftar peserta <span aria-hidden="true">→</span></a>
+                                    @endif
+                                    @if ($registration->event->hasReleasedRaceOrder())
+                                        <a class="account-edit-link" href="{{ route('events.race.order', $registration->event) }}">Urutan lomba <span aria-hidden="true">→</span></a>
+                                    @endif
+                                    @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved' && $registration->participant_change_status !== 'pending')
+                                        <button class="account-edit-link event-registration-modal-trigger" type="button" data-registration-modal-open="ubah-peserta-{{ $registration->id }}" aria-controls="ubah-peserta-{{ $registration->id }}">Edit data</button>
+                                        <form method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}"
+                                            data-confirm="{{ $registration->payment_status === 'paid' || $registration->amountPaid() > 0
+                                                ? 'Ajukan pembatalan pendaftaran ini? Pengelola akan menentukan persetujuan dan nominal refund.'
+                                                : 'Batalkan pendaftaran atlet ini? Data dan bukti pembayaran akan dihapus.' }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="account-edit-link guest-registration-cancel-button" type="submit">
+                                                {{ $registration->payment_status === 'paid' || $registration->amountPaid() > 0 ? 'Ajukan pembatalan' : 'Batalkan pendaftaran' }}
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if ($registration->payment_status !== 'paid' && ! in_array($registration->cancellation_status, ['pending', 'approved'], true))
+                                        @if (! $registration->event->is_free)
+                                            <form method="POST" action="{{ route('events.registration.proof.store', [$registration->event, $registration]) }}" enctype="multipart/form-data" class="guest-payment-proof-form">
+                                                @csrf
+                                                <label>Bukti pembayaran
+                                                    <input type="file" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required>
+                                                </label>
+                                                <button class="account-edit-link" type="submit">Kirim bukti</button>
+                                            </form>
+                                        @endif
+                                        @if ($registration->event->organizer_whatsapp)
+                                            <form method="POST" action="{{ route('events.registration.whatsapp', [$registration->event, $registration]) }}">
+                                                @csrf
+                                                <button class="account-edit-link" type="submit">{{ $registration->event->is_free ? 'Konfirmasi gratis via WhatsApp' : 'Kirim bukti via WhatsApp' }}</button>
+                                            </form>
+                                        @else
+                                            <small>WhatsApp pengelola kejuaraan belum tersedia.</small>
+                                        @endif
+                                    @elseif ($registration->event->is_free)
+                                        <span class="event-payment-status payment-paid">Pendaftaran dikonfirmasi</span>
+                                    @endif
+                                    @if ($registration->event->status === 'approved' && $registration->event->registration_open && (! $registration->event->registration_deadline || $registration->event->registration_deadline->endOfDay()->isFuture()))
+                                        <a class="account-edit-link" href="{{ route('events.registration.create', $registration->event) }}">Tambah atlet <span aria-hidden="true">→</span></a>
+                                    @endif
+                                </td>
+                                <td>{{ $registration->nickname ?: '—' }}</td>
+                                <td>
+                                    <strong>{{ $registration->participant_name }}</strong>
+                                    <small>{{ $registration->event->name }}</small>
+                                </td>
+                                <td>{{ $registration->category ?: 'Belum ditetapkan' }}</td>
+                                <td>
+                                    {{ $registration->birth_year ?: '—' }}
+                                    @if ($age !== null)
+                                        <small>{{ $age }} tahun saat event</small>
+                                    @endif
+                                </td>
+                                <td>{{ implode(', ', $registration->races) }}</td>
+                                <td>
+                                    @if ($registration->fee_total !== null)
+                                        <strong>{{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_total) }}</strong>
+                                    @elseif (($wave['price'] ?? 0) > 0)
+                                        <strong>{{ \App\Services\CategoryFeeCalculator::rupiah($wave['price']) }}</strong>
+                                    @else
+                                        <strong>—</strong>
+                                    @endif
+                                    @if ($wave && $wave['label'])
+                                        <small>Gelombang {{ $wave['label'] }}</small>
+                                    @endif
+                                    @if ($registration->amountPaid() > 0 && $amountDue > 0)
+                                        <small>Sudah dibayar {{ \App\Services\CategoryFeeCalculator::rupiah($registration->amountPaid()) }} · sisa <strong>{{ \App\Services\CategoryFeeCalculator::rupiah($amountDue) }}</strong></small>
+                                    @endif
+                                    @if ($registration->payment_status !== 'paid' && ! $registration->event->is_free && $registration->event->hasPaymentAccount())
+                                        <small>Transfer ke {{ $registration->event->payment_bank_name }} <strong>{{ $registration->event->payment_account_number }}</strong>@if ($registration->event->payment_account_holder) a.n. {{ $registration->event->payment_account_holder }}@endif</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span class="event-payment-status payment-{{ $registration->payment_status }}">
+                                        {{ match ($registration->payment_status) {
+                                            'pending' => 'Menunggu konfirmasi',
+                                            'paid' => $registration->event->is_free ? 'Dikonfirmasi' : 'Terbayar',
+                                            default => 'Belum bayar',
+                                        } }}
+                                    </span>
+                                    <small class="guest-registration-status status-{{ $registration->status }}">
+                                        {{ match ($registration->status) {
+                                            'pending' => 'Menunggu panitia',
+                                            'approved' => 'Diterima',
+                                            'rejected' => 'Perlu ditinjau',
+                                            default => ucfirst($registration->status),
+                                        } }}
+                                    </small>
+                                    @if ($registration->participant_change_status === 'pending')
+                                        <small class="guest-registration-request-status is-pending">Perubahan menunggu keputusan pengelola.</small>
+                                    @elseif ($registration->participant_change_status === 'rejected')
+                                        <small class="guest-registration-request-status is-rejected">Perubahan terakhir ditolak.</small>
+                                    @elseif ($registration->participant_change_status === 'approved')
+                                        <small class="guest-registration-request-status is-approved">Perubahan disetujui
+                                            @if ($registration->refund_amount > 0)
+                                                · refund {{ \App\Services\CategoryFeeCalculator::rupiah($registration->refund_amount) }}
+                                            @endif
+                                        </small>
+                                    @endif
+                                    @if ($registration->cancellation_status === 'pending')
+                                        <small class="guest-registration-request-status is-pending">Pembatalan menunggu keputusan pengelola.</small>
+                                    @elseif ($registration->cancellation_status === 'approved')
+                                        <small class="guest-registration-request-status is-rejected">Pendaftaran dibatalkan
+                                            @if ($registration->refund_amount > 0)
+                                                · refund {{ \App\Services\CategoryFeeCalculator::rupiah($registration->refund_amount) }}
+                                            @else
+                                                · tanpa refund
+                                            @endif
+                                        </small>
+                                    @elseif ($registration->cancellation_status === 'rejected')
+                                        <small class="guest-registration-request-status is-rejected">Pembatalan terakhir ditolak.</small>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-                <div class="guest-registration-notes">
-                    <small>{{ $registration->event->fees }}</small>
-                    @if ($registration->amountPaid() > 0 && $registration->amountDue() > 0)
-                        <small>Sudah dibayar {{ \App\Services\CategoryFeeCalculator::rupiah($registration->amountPaid()) }} · sisa tagihan <strong>{{ \App\Services\CategoryFeeCalculator::rupiah($registration->amountDue()) }}</strong></small>
-                    @endif
-                    @if ($registration->payment_status !== 'paid' && ! $registration->event->is_free && $registration->event->hasPaymentAccount())
-                        <small>Transfer ke {{ $registration->event->payment_bank_name }} <strong>{{ $registration->event->payment_account_number }}</strong>@if ($registration->event->payment_account_holder) a.n. {{ $registration->event->payment_account_holder }}@endif</small>
-                    @endif
-                    @if ($registration->participant_change_status === 'pending')
-                        <small class="guest-registration-request-status is-pending">Permintaan perubahan menunggu keputusan pengelola.</small>
-                    @elseif ($registration->participant_change_status === 'rejected')
-                        <small class="guest-registration-request-status is-rejected">Permintaan perubahan terakhir ditolak.</small>
-                    @elseif ($registration->participant_change_status === 'approved')
-                        <small class="guest-registration-request-status is-approved">Perubahan terakhir disetujui
-                            @if ($registration->refund_amount > 0)
-                                · total refund tercatat {{ \App\Services\CategoryFeeCalculator::rupiah($registration->refund_amount) }}
-                            @endif
-                        </small>
-                    @endif
-                    @if ($registration->cancellation_status === 'pending')
-                        <small class="guest-registration-request-status is-pending">Permintaan pembatalan menunggu keputusan pengelola.</small>
-                    @elseif ($registration->cancellation_status === 'approved')
-                        <small class="guest-registration-request-status is-rejected">Pendaftaran dibatalkan
-                            @if ($registration->refund_amount > 0)
-                                · refund {{ \App\Services\CategoryFeeCalculator::rupiah($registration->refund_amount) }}
-                            @else
-                                · tanpa refund
-                            @endif
-                        </small>
-                    @elseif ($registration->cancellation_status === 'rejected')
-                        <small class="guest-registration-request-status is-rejected">Permintaan pembatalan terakhir ditolak.</small>
-                    @endif
-                </div>
-            </article>
-            @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved' && $registration->participant_change_status !== 'pending')
-                @include('verified.events.participants.ubah', [
-                    'event' => $registration->event,
-                    'registration' => $registration,
-                    'isParticipant' => true,
-                ])
-            @endif
-        @empty
+            @foreach ($registrations as $registration)
+                @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved' && $registration->participant_change_status !== 'pending')
+                    @include('verified.events.participants.ubah', [
+                        'event' => $registration->event,
+                        'registration' => $registration,
+                        'isParticipant' => true,
+                    ])
+                @endif
+            @endforeach
+        @else
             <div class="guest-dashboard-empty">
                 <strong>Belum ada pendaftaran.</strong>
                 <p>Pilih event yang tersedia di bawah untuk mulai mendaftarkan peserta.</p>
             </div>
-        @endforelse
+        @endif
     </section>
 
     <section class="guest-dashboard-section" aria-labelledby="guest-events-heading">

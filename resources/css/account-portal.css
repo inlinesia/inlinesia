@@ -162,6 +162,19 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .guest-registration-cancel-button { border-color: #efd3d0; color: #a94b42; }
 .guest-registration-cancel-button:hover { color: #fff; background: #aa5148; }
 .guest-registration-actions .account-edit-link { gap: 7px; }
+
+/* Tabel "Pendaftaran saya" di dasbor peserta. Tombol tetap rapat di dalam
+   sel, tidak memakai aturan baris penuh milih kartu lama. */
+.guest-registration-table td { vertical-align: top; }
+.guest-registration-table .guest-registration-actions { width: auto; order: initial; min-width: 190px; gap: 6px; }
+.guest-registration-table .guest-registration-actions form { display: inline-flex; }
+.guest-registration-table .guest-registration-actions .account-edit-link { min-height: 26px; padding: 0 8px; white-space: nowrap; }
+.guest-registration-table .event-payment-status { display: inline-block; }
+.guest-registration-table .guest-registration-status,
+.guest-registration-table .guest-registration-request-status { display: block; margin-top: 4px; }
+.guest-registration-table .guest-registration-request-status { padding: 4px 6px; }
+.guest-registration-table small { display: block; line-height: 1.5; }
+.guest-registration-table-wrap { padding-bottom: 6px; }
 .guest-event-date { display: grid; width: 54px; min-width: 54px; padding: 7px; place-items: center; color: #b45e42; background: #fbede5; }
 .guest-event-date span, .guest-event-date small { font-size: 8px; font-weight: 650; }
 .guest-event-date strong { font-size: 18px; }
