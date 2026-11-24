@@ -41,6 +41,9 @@ class EventSimulationSeeder extends Seeder
 
     private const OWNER_EMAIL = 'simulasi.owner@kilat.com';
 
+    /** Total pendaftaran, termasuk 8 contoh awal. */
+    private const TOTAL_REGISTRATIONS = 100;
+
     /**
      * @var array<int, array{name: string, gender: string, birth: string, category: string, races: array<int, string>, club: ?string, paid: bool, status: string, cancellation: ?string, change: bool}>
      */
@@ -66,7 +69,7 @@ class EventSimulationSeeder extends Seeder
         $this->createFinances($event, $registrations, $owner);
         $this->createRaceArrangement($event);
 
-        $this->command?->info('Simulasi dibuat: '.$event->name.' (status '.$event->status.').');
+        $this->command?->info('Simulasi dibuat: '.$event->name.' (status '.$event->status.', '.count($registrations).' pendaftaran).');
         $this->command?->info('Login owner: '.self::OWNER_EMAIL.' / '.self::PASSWORD);
         $this->command?->info('Login atlet: simulasi.atlet1@kilat.com ... simulasi.atlet8@kilat.com / '.self::PASSWORD);
     }
@@ -185,7 +188,7 @@ class EventSimulationSeeder extends Seeder
             'genders' => ['male', 'female'],
             'races' => ['Skate Cross', 'Speed Slalom'],
             'required_races' => 1,
-            'max_registrants' => 6,
+            'max_registrants' => 40,
             'registration_override' => 'auto',
             'package_fee' => $row['fee'],
             'extra_race_fee' => 50000,
@@ -230,17 +233,20 @@ class EventSimulationSeeder extends Seeder
     {
         $calculator = app(CategoryFeeCalculator::class);
         $rules = collect($event->category_rules)->keyBy('name');
+        $athletes = array_merge(self::ATHLETES, $this->generatedAthletes());
         $registrations = [];
 
-        foreach (array_values(self::ATHLETES) as $index => $athlete) {
-            $nik = sprintf('357101%010d', $index + 1);
+        foreach ($athletes as $index => $athlete) {
+            $nik = $index < count(self::ATHLETES)
+                ? sprintf('357101%010d', $index + 1)
+                : sprintf('357101%010d', 1000 + $index + 1);
             $rule = $rules->get($athlete['category']);
             $breakdown = $calculator->breakdown($rule, $athlete['races']);
             $fee = (int) $breakdown['total'];
 
             $registrations[] = EventRegistration::query()->create([
                 'event_id' => $event->id,
-                'user_id' => $users[$index]->id,
+                'user_id' => $users[$index % count($users)]->id,
                 'participant_name' => $athlete['name'],
                 'nickname' => 'Simulasi '.($index + 1),
                 'nik' => $nik,
@@ -260,19 +266,64 @@ class EventSimulationSeeder extends Seeder
                 'status' => $athlete['status'],
                 'payment_status' => $athlete['paid'] ? 'paid' : 'unpaid',
                 'payment_channel' => $athlete['paid'] ? 'transfer' : null,
-                'confirmed_paid_at' => $athlete['paid'] ? now()->subDays(10 - $index) : null,
+                'confirmed_paid_at' => $athlete['paid'] ? now()->subDays(1 + ($index % 20)) : null,
                 'cancellation_status' => $athlete['cancellation'],
                 'cancellation_requested_at' => $athlete['cancellation'] !== null ? now()->subDays(3) : null,
                 'cancellation_decided_at' => $athlete['cancellation'] !== null ? now()->subDays(2) : null,
                 'refund_amount' => $athlete['cancellation'] === 'approved' ? $fee : 0,
                 'refunded_at' => $athlete['cancellation'] === 'approved' ? now()->subDays(1) : null,
-                'participant_change_request' => $athlete['change'] ? ['participant_name' => 'Cantika Simulasi Update'] : null,
-                'participant_change_status' => $athlete['change'] ? 'pending' : null,
-                'participant_change_requested_at' => $athlete['change'] ? now()->subDay() : null,
+                'participant_change_request' => null,
+                'participant_change_status' => null,
+                'participant_change_requested_at' => null,
             ]);
         }
 
         return $registrations;
+    }
+
+    /**
+     * Peserta tambahan sampai total 100 pendaftaran. Status bayar dan status
+     * pendaftaran disebar supaya halaman kelola peserta punya variasinya.
+     *
+     * @return array<int, array{name: string, gender: string, birth: string, category: string, races: array<int, string>, club: ?string, paid: bool, status: string, cancellation: ?string, change: bool}>
+     */
+    private function generatedAthletes(): array
+    {
+        $categories = array_merge(
+            array_fill(0, 31, ['Pemula U9', [2018, 2019, 2020]]),
+            array_fill(0, 30, ['Junior U12', [2015, 2016, 2017]]),
+            array_fill(0, 31, ['Remaja U15', [2012, 2013, 2014]]),
+        );
+        $clubs = ['SIMULASI Skate Kediri', 'SIMULASI Roda Jaya', null];
+        $rows = [];
+
+        foreach ($categories as $index => [$category, $years]) {
+            $number = count(self::ATHLETES) + $index + 1;
+            $year = $years[$index % count($years)];
+            $month = 1 + ($index % 12);
+            $day = 1 + ($index % 27);
+            $raceSet = $index % 3;
+            $pending = $number % 10 === 0;
+
+            $rows[] = [
+                'name' => 'Peserta Simulasi '.str_pad((string) $number, 3, '0', STR_PAD_LEFT),
+                'gender' => $index % 2 === 0 ? 'male' : 'female',
+                'birth' => sprintf('%04d-%02d-%02d', $year, $month, $day),
+                'category' => $category,
+                'races' => match ($raceSet) {
+                    0 => ['Skate Cross'],
+                    1 => ['Speed Slalom'],
+                    default => ['Skate Cross', 'Speed Slalom'],
+                },
+                'club' => $clubs[$index % 3],
+                'paid' => ! $pending && $index % 4 !== 0,
+                'status' => $pending ? 'pending' : 'approved',
+                'cancellation' => $index % 25 === 7 ? 'pending' : null,
+                'change' => false,
+            ];
+        }
+
+        return $rows;
     }
 
     /**
@@ -291,7 +342,7 @@ class EventSimulationSeeder extends Seeder
                 'type' => 'payment',
                 'amount' => (int) $registration->fee_total,
                 'description' => 'Pembayaran pendaftaran '.$registration->participant_name,
-                'occurred_at' => now()->subDays(10 - $index),
+                'occurred_at' => now()->subDays(1 + ($index % 20)),
                 'recorded_by' => $owner->id,
             ]);
 
@@ -347,7 +398,7 @@ class EventSimulationSeeder extends Seeder
                     'finalists' => 8,
                     'champion_count' => 3,
                     'opponent_scope' => 'mixed',
-                    'grouping_mode' => 'auto',
+                    'grouping_mode' => 'manual',
                     'athletes_per_group' => 30,
                     'released_at' => $category === 'Pemula U9' && $race === 'Skate Cross'
                         ? now()
@@ -381,8 +432,6 @@ class EventSimulationSeeder extends Seeder
 
         $group->update(['started_at' => now()->subHours(2)]);
 
-        $times = [63450, 65120, 66800, 68900];
-
         foreach ($group->heats()->with('entries')->get() as $heat) {
             $place = 0;
 
@@ -392,8 +441,8 @@ class EventSimulationSeeder extends Seeder
                 $entry->update([
                     'status' => EventRaceEntry::STATUS_FINISHED,
                     'place' => $place,
-                    'time_ms' => $times[$place - 1] ?? null,
-                    'points' => 4 - $place,
+                    'time_ms' => 45000 + ($place * 1250),
+                    'points' => $place,
                     'is_qualified' => $place <= 2,
                 ]);
             }

@@ -23,8 +23,11 @@ class EventSimulationSeederTest extends TestCase
 
         $this->assertSame('pending', $event->status);
         $this->assertCount(3, $event->category_rules);
-        $this->assertSame(8, EventRegistration::query()->where('event_id', $event->id)->count());
+        $this->assertSame(40, $event->category_rules[0]['max_registrants']);
+        $this->assertSame(100, EventRegistration::query()->where('event_id', $event->id)->count());
+        $this->assertSame(8, EventRegistration::query()->where('event_id', $event->id)->distinct('user_id')->count('user_id'));
         $this->assertGreaterThan(0, EventRaceEntry::query()->where('event_id', $event->id)->count());
+        $this->assertGreaterThan(0, EventRaceEntry::query()->where('event_id', $event->id)->where('status', 'finished')->count());
 
         $owner = User::query()->where('email', 'simulasi.owner@kilat.com')->firstOrFail();
         $this->assertSame('club_manager', $owner->role);
@@ -55,7 +58,7 @@ class EventSimulationSeederTest extends TestCase
 
         $this->assertSame(1, Event::query()->where('name', 'SIMULASI Kediri Skatefest 2027')->count());
         $this->assertSame(9, User::query()->where('email', 'like', 'simulasi.%@kilat.com')->count());
-        $this->assertSame(8, EventRegistration::query()->count());
+        $this->assertSame(100, EventRegistration::query()->count());
     }
 
     public function test_purge_removes_simulation_but_keeps_real_accounts(): void
