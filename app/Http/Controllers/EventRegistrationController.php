@@ -27,11 +27,6 @@ class EventRegistrationController extends Controller
 
         return view('verified.events.pendaftaran.daftar', [
             'event' => $event,
-            'registrations' => EventRegistration::query()
-                ->where('event_id', $event->id)
-                ->where('user_id', request()->user()->id)
-                ->latest()
-                ->get(),
         ]);
     }
 

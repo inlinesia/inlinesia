@@ -42,9 +42,6 @@
                 ? 'Nomor paspor sesuai dokumen yang Anda miliki. Tanpa NIK, jenis kelamin dan tanggal lahir diisi sendiri di bawah. Nomor ini disimpan terenkripsi dan hanya dipakai untuk identifikasi pendaftaran.'
                 : '16 digit. Wilayah, jenis kelamin, dan tanggal lahir akan terisi otomatis. Nomor ini disimpan terenkripsi dan hanya digunakan untuk identifikasi pendaftaran.';
         @endphp
-        @if ($registrations->isNotEmpty())
-            <div class="event-user-registrations"><strong>Atlet yang sudah didaftarkan</strong>@foreach ($registrations as $existing)<span>{{ $existing->participant_name }} · {{ $existing->category }} · {{ $existing->status === 'pending' ? 'Menunggu panitia' : $existing->status }}</span>@endforeach @if ($event->isParticipantListReleased())<a class="account-edit-link" href="{{ route('events.registrations.index', $event) }}">Lihat daftar peserta <span aria-hidden="true">→</span></a>@else<a class="account-edit-link" href="{{ route('guest.dashboard') }}#pendaftaran-saya">Lihat pendaftaran saya <span aria-hidden="true">→</span></a>@endif</div>
-        @endif
         <form class="account-form athlete-registration-form" method="POST" action="{{ route('events.registration.store', $event) }}" data-athlete-registration data-nik-autofill data-nik-autofill-endpoint="{{ route('nik.lookup') }}" data-event-date="{{ $event->start_date->format('Y-m-d') }}" data-category-rules="{{ json_encode($event->category_rules, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) }}" data-category-statuses="{{ json_encode(collect(array_column($event->category_rules ?? [], 'name'))->mapWithKeys(fn (string $name): array => [
                 $name => [
                     'open' => $event->isCategoryRegistrationOpen($name),

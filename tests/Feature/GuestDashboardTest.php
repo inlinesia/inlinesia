@@ -72,6 +72,21 @@ class GuestDashboardTest extends TestCase
             ->assertDontSee('Atlet Milik Saya');
     }
 
+    public function test_registration_form_does_not_show_already_registered_athletes(): void
+    {
+        $user = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($user, 'approved');
+        $this->createRegistration($event, $user, 'Atlet Sudah Terdaftar');
+
+        $this->actingAs($user)
+            ->get(route('events.registration.create', $event))
+            ->assertOk()
+            ->assertSee('Biodata atlet')
+            ->assertDontSee('Atlet yang sudah didaftarkan')
+            ->assertDontSee('Atlet Sudah Terdaftar')
+            ->assertDontSee('Lihat pendaftaran saya');
+    }
+
     public function test_unverified_user_is_prompted_to_verify_and_does_not_see_dashboard_button(): void
     {
         $user = User::factory()->unverified()->create(['role' => 'individual']);
