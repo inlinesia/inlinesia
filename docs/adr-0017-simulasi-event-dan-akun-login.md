@@ -36,3 +36,8 @@ sehingga tidak sesuai untuk simulasi kecil yang bisa diulang dan dibersihkan.
   tidak boleh dipakai untuk akun produksi asli.
 - Penanda `SIMULASI ` dipakai pada nama event dan klub; `purge()` menghapus
   klub dengan prefiks tersebut bersama akun simulasi.
+- Contoh permintaan ubah biodata sengaja tidak dibuat: kolom
+  `participant_change_request` di produksi berupa JSON (`json_valid`),
+  sedangkan cast modelnya `encrypted:array` menghasilkan base64, sehingga
+  penyimpanan ditolak MySQL. Ini bukan bagian dari simulasi dan sengaja
+  tidak diubah di sini.
