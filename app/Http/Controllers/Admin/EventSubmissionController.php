@@ -9,6 +9,7 @@ use App\Notifications\EventSubmittedNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Throwable;
 
 class EventSubmissionController extends Controller
 {
@@ -50,7 +51,18 @@ class EventSubmissionController extends Controller
 
         abort_unless($updated === 1, 409, 'Pengajuan sudah diproses admin lain.');
 
-        $event->refresh()->submitter->notify(new EventDecisionNotification($event));
+        $event = $event->refresh();
+        $submitter = $event->submitter;
+
+        if ($submitter !== null) {
+            try {
+                $submitter->notify(new EventDecisionNotification($event));
+            } catch (Throwable $exception) {
+                // Email tidak boleh menjatuhkan permintaan approve — status
+                // sudah diperbarui, error hanya dicatat kedua penyempurnaan.
+                report($exception);
+            }
+        }
 
         return redirect()->route('admin.event-submissions.index')
             ->with('status', "Event “{$event->name}” disetujui dan ditampilkan pada daftar lomba.");
@@ -76,7 +88,18 @@ class EventSubmissionController extends Controller
             ]);
 
         abort_unless($updated === 1, 409, 'Pengajuan sudah ditinjau admin lain.');
-        $event->refresh()->submitter->notify(new EventDecisionNotification($event));
+        $event = $event->refresh();
+        $submitter = $event->submitter;
+
+        if ($submitter !== null) {
+            try {
+                $submitter->notify(new EventDecisionNotification($event));
+            } catch (Throwable $exception) {
+                // Email tidak boleh menjatuhkan permintaan reject — status
+                // sudah diperbarui, error hanya dicatat kedua penyempurnaan.
+                report($exception);
+            }
+        }
 
         return redirect()->route('admin.event-submissions.index')
             ->with('status', "Pengajuan “{$event->name}” ditolak. Pengaju akan menerima catatan Admin.");

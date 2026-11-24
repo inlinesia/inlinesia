@@ -57,6 +57,38 @@ class AdminEventManagementTest extends TestCase
         $this->assertDatabaseHas('events', ['id' => $pendingEvent->id]);
     }
 
+    public function test_admin_can_approve_event_submission_without_500(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $pendingEvent = $this->createEvent($owner, 'pending', 'Pengajuan Menunggu');
+
+        $this->actingAs($admin)
+            ->from(route('admin.event-submissions.index'))
+            ->patch(route('admin.event-submissions.approve', $pendingEvent))
+            ->assertRedirect(route('admin.event-submissions.index'))
+            ->assertSessionHas('status');
+
+        $this->assertDatabaseHas('events', ['id' => $pendingEvent->id, 'status' => 'approved']);
+    }
+
+    public function test_admin_can_reject_event_submission(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $pendingEvent = $this->createEvent($owner, 'pending', 'Pengajuan Menunggu');
+
+        $this->actingAs($admin)
+            ->from(route('admin.event-submissions.index'))
+            ->patch(route('admin.event-submissions.reject', $pendingEvent), [
+                'decision_note' => 'Kurang lengkap.',
+            ])
+            ->assertRedirect(route('admin.event-submissions.index'))
+            ->assertSessionHas('status');
+
+        $this->assertDatabaseHas('events', ['id' => $pendingEvent->id, 'status' => 'rejected']);
+    }
+
     public function test_public_listing_hides_pending_events_and_management_actions_for_every_role(): void
     {
         $owner = User::factory()->create(['role' => 'organizer']);
