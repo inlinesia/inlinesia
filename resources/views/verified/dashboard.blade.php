@@ -172,18 +172,32 @@
         </div>
 
         @if ($registrations->isNotEmpty())
+            @php
+                $raceColumns = $registrations->first()->event->races ?? [];
+                $raceColumnCount = max(1, count($raceColumns));
+            @endphp
             <div class="account-table-wrap guest-registration-table-wrap">
                 <table class="account-table guest-registration-table">
                     <thead>
                         <tr>
-                            <th scope="col">Tombol</th>
-                            <th scope="col">Nama panggilan</th>
-                            <th scope="col">Nama lengkap</th>
-                            <th scope="col">Kategori</th>
-                            <th scope="col">Tahun / usia</th>
-                            <th scope="col">Mata lomba</th>
-                            <th scope="col">Harga</th>
-                            <th scope="col">Status bayar</th>
+                            <th scope="col" rowspan="2">No.</th>
+                            <th scope="col" rowspan="2">Aksi</th>
+                            <th scope="col" rowspan="2">Nama panggilan</th>
+                            <th scope="col" rowspan="2">Nama lengkap</th>
+                            <th scope="col" rowspan="2">NIK</th>
+                            <th scope="col" rowspan="2">Gender</th>
+                            <th scope="col" rowspan="2">Tanggal lahir</th>
+                            <th scope="col" rowspan="2" title="Kategori usia">KU</th>
+                            <th scope="colgroup" colspan="{{ $raceColumnCount }}">Kategori</th>
+                            <th scope="col" rowspan="2">Harga</th>
+                            <th scope="col" rowspan="2">Status bayar</th>
+                        </tr>
+                        <tr>
+                            @forelse ($raceColumns as $race)
+                                <th scope="col">{{ $race }}</th>
+                            @empty
+                                <th scope="col">—</th>
+                            @endforelse
                         </tr>
                     </thead>
                     <tbody>
@@ -191,27 +205,25 @@
                             @php
                                 $amountDue = $registration->amountDue();
                                 $wave = $runningWaves[$registration->id] ?? null;
-                                $age = $registration->date_of_birth
-                                    ? (int) $registration->date_of_birth->diffInYears($registration->event->start_date)
-                                    : null;
                             @endphp
                             <tr>
+                                <td class="guest-registration-number">{{ $loop->iteration }}</td>
                                 <td class="guest-registration-actions">
                                     @if ($registration->event->isParticipantListReleased())
-                                        <a class="account-edit-link" href="{{ route('events.registrations.index', $registration->event) }}">Lihat daftar peserta <span aria-hidden="true">→</span></a>
+                                        <a class="account-edit-link btn-secondary" href="{{ route('events.registrations.index', $registration->event) }}">Lihat daftar peserta <span aria-hidden="true">→</span></a>
                                     @endif
                                     @if ($registration->event->hasReleasedRaceOrder())
-                                        <a class="account-edit-link" href="{{ route('events.race.order', $registration->event) }}">Urutan lomba <span aria-hidden="true">→</span></a>
+                                        <a class="account-edit-link btn-secondary" href="{{ route('events.race.order', $registration->event) }}">Urutan lomba <span aria-hidden="true">→</span></a>
                                     @endif
                                     @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved' && $registration->participant_change_status !== 'pending')
-                                        <button class="account-edit-link event-registration-modal-trigger" type="button" data-registration-modal-open="ubah-peserta-{{ $registration->id }}" aria-controls="ubah-peserta-{{ $registration->id }}">Edit data</button>
+                                        <button class="account-edit-link btn-primary event-registration-modal-trigger" type="button" data-registration-modal-open="ubah-peserta-{{ $registration->id }}" aria-controls="ubah-peserta-{{ $registration->id }}">Edit data</button>
                                         <form method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}"
                                             data-confirm="{{ $registration->payment_status === 'paid' || $registration->amountPaid() > 0
                                                 ? 'Ajukan pembatalan pendaftaran ini? Pengelola akan menentukan persetujuan dan nominal refund.'
                                                 : 'Batalkan pendaftaran atlet ini? Data dan bukti pembayaran akan dihapus.' }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="account-edit-link guest-registration-cancel-button" type="submit">
+                                            <button class="account-edit-link btn-berry guest-registration-cancel-button" type="submit">
                                                 {{ $registration->payment_status === 'paid' || $registration->amountPaid() > 0 ? 'Ajukan pembatalan' : 'Batalkan pendaftaran' }}
                                             </button>
                                         </form>
@@ -223,13 +235,13 @@
                                                 <label>Bukti pembayaran
                                                     <input type="file" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required>
                                                 </label>
-                                                <button class="account-edit-link" type="submit">Kirim bukti</button>
+                                                <button class="account-edit-link btn-accent" type="submit">Kirim bukti</button>
                                             </form>
                                         @endif
                                         @if ($registration->event->organizer_whatsapp)
                                             <form method="POST" action="{{ route('events.registration.whatsapp', [$registration->event, $registration]) }}">
                                                 @csrf
-                                                <button class="account-edit-link" type="submit">{{ $registration->event->is_free ? 'Konfirmasi gratis via WhatsApp' : 'Kirim bukti via WhatsApp' }}</button>
+                                                <button class="account-edit-link btn-grape" type="submit">{{ $registration->event->is_free ? 'Konfirmasi gratis via WhatsApp' : 'Kirim bukti via WhatsApp' }}</button>
                                             </form>
                                         @else
                                             <small>WhatsApp pengelola kejuaraan belum tersedia.</small>
@@ -238,7 +250,7 @@
                                         <span class="event-payment-status payment-paid">Pendaftaran dikonfirmasi</span>
                                     @endif
                                     @if ($registration->event->status === 'approved' && $registration->event->registration_open && (! $registration->event->registration_deadline || $registration->event->registration_deadline->endOfDay()->isFuture()))
-                                        <a class="account-edit-link" href="{{ route('events.registration.create', $registration->event) }}">Tambah atlet <span aria-hidden="true">→</span></a>
+                                        <a class="account-edit-link btn-secondary" href="{{ route('events.registration.create', $registration->event) }}">Tambah atlet <span aria-hidden="true">→</span></a>
                                     @endif
                                 </td>
                                 <td>{{ $registration->nickname ?: '—' }}</td>
@@ -246,14 +258,22 @@
                                     <strong>{{ $registration->participant_name }}</strong>
                                     <small>{{ $registration->event->name }}</small>
                                 </td>
+                                <td>{{ $registration->maskedIdentity() }}</td>
+                                <td>{{ match ($registration->gender) {
+                                    'male' => 'Putra',
+                                    'female' => 'Putri',
+                                    default => ucfirst((string) $registration->gender) ?: '—',
+                                } }}</td>
+                                <td>{{ $registration->date_of_birth?->format('d-m-Y') ?? '—' }}</td>
                                 <td>{{ $registration->category ?: 'Belum ditetapkan' }}</td>
-                                <td>
-                                    {{ $registration->birth_year ?: '—' }}
-                                    @if ($age !== null)
-                                        <small>{{ $age }} tahun saat event</small>
-                                    @endif
-                                </td>
-                                <td>{{ implode(', ', $registration->races) }}</td>
+                                @foreach ($raceColumns as $race)
+                                    <td class="guest-registration-race-cell">
+                                        <input type="checkbox" disabled @checked(in_array($race, $registration->races ?? [], true)) aria-label="{{ $race }}">
+                                    </td>
+                                @endforeach
+                                @if ($raceColumns === [])
+                                    <td class="guest-registration-race-cell">—</td>
+                                @endif
                                 <td>
                                     @if ($registration->fee_total !== null)
                                         <strong>{{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_total) }}</strong>

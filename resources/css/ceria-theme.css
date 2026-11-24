@@ -862,6 +862,36 @@ html[data-theme='ceria'] {
     background: var(--grad-sunny);
 }
 
+/* Tombol aksi pada tabel "Pendaftaran saya", mengikuti varian warna
+   controls-1.button-A dari Kids Skate Controls & Form Inputs Library. */
+[data-theme='ceria'] .guest-registration-table :is(.btn-primary, .btn-secondary, .btn-accent, .btn-grape, .btn-berry) {
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    font-family: var(--font-display);
+    font-weight: 700;
+    transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s ease;
+}
+
+[data-theme='ceria'] .guest-registration-table .btn-primary { color: #fff; background: var(--color-coral); }
+[data-theme='ceria'] .guest-registration-table .btn-secondary { color: var(--text-primary); background: var(--color-sky); }
+[data-theme='ceria'] .guest-registration-table .btn-accent { color: var(--text-primary); background: var(--color-lemon); }
+[data-theme='ceria'] .guest-registration-table .btn-grape { color: #fff; background: var(--color-grape); }
+[data-theme='ceria'] .guest-registration-table .btn-berry { color: #fff; background: var(--color-berry); }
+
+[data-theme='ceria'] .guest-registration-table :is(.btn-primary, .btn-secondary, .btn-accent, .btn-grape, .btn-berry):hover,
+[data-theme='ceria'] .guest-registration-table :is(.btn-primary, .btn-secondary, .btn-accent, .btn-grape, .btn-berry):focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sticker);
+}
+
+[data-theme='ceria'] .guest-registration-table .event-payment-status { color: var(--text-primary); }
+[data-theme='ceria'] .guest-registration-table .guest-registration-status { color: var(--text-secondary); }
+[data-theme='ceria'] .guest-registration-table th[rowspan] { vertical-align: middle; }
+[data-theme='ceria'] .guest-registration-table .guest-registration-number,
+[data-theme='ceria'] .guest-registration-table .guest-registration-race-cell { text-align: center; }
+[data-theme='ceria'] .guest-registration-table .guest-registration-race-cell input[type='checkbox'] { margin: 0; }
+
 [data-theme='ceria'] .app-shell .admin-flash {
     color: var(--text-primary);
     background: var(--status-success-bg);
