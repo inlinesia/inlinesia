@@ -260,7 +260,7 @@ html[data-theme='ceria'] {
     font-weight: 600;
 }
 
-[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field) {
+[data-theme='ceria'] .profile-edit-card .account-form :is(.input-field, .textarea-field) {
     width: 100%;
     min-height: 48px;
     padding: 10px 14px;
@@ -274,19 +274,19 @@ html[data-theme='ceria'] {
     transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
-[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field):focus {
+[data-theme='ceria'] .profile-edit-card .account-form :is(.input-field, .textarea-field):focus {
     outline: none;
     border-color: var(--color-sky-blue);
     background: var(--bg-surface);
     box-shadow: var(--shadow-focus);
 }
 
-[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field).is-valid {
+[data-theme='ceria'] .profile-edit-card .account-form :is(.input-field, .textarea-field).is-valid {
     border-color: var(--status-success);
     background: #f0fdf4;
 }
 
-[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field).is-error {
+[data-theme='ceria'] .profile-edit-card .account-form :is(.input-field, .textarea-field).is-error {
     border-color: var(--status-error);
     background: #fef2f2;
 }

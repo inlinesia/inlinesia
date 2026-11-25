@@ -31,5 +31,8 @@ States** (`controls-2`) yang ada di
 ## Konsekuensi
 - Form profil lebih lega dan konsisten dengan pustaka Controls-2; perilaku
   simpan, validasi, dan field read-only tidak berubah.
+- Selector input diberi `.account-form` tambahan supaya mengalahkan aturan lama
+  `.account-form input:not([type=checkbox]):not([type=radio])` yang memiliki
+  spesifisitas lebih tinggi.
 - Perubahan hanya Blade, CSS, tes, dan build aset — tidak ada perubahan
   controller, rute, atau skema.
