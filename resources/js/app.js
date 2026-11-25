@@ -735,7 +735,7 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                     } catch {
                         eventRaces = [];
                     }
-                    const requiredRaces = new Set(Array.from(category.querySelectorAll('[data-allowed-race]')).map((input) => input.value));
+                    const requiredRaces = new Set(Array.from(category.querySelectorAll('[data-allowed-race]:checked')).map((input) => input.value));
                     outsideRacesCell.innerHTML = eventRaces
                         .filter((race) => !requiredRaces.has(race))
                         .map((race) => {
