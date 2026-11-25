@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Skate Data Displays &amp; Cards Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       KIDS INLINE SKATE — DATA DISPLAYS & CARDS COMPONENT LIBRARY
+       1. Cards  2. Badges & Tags  3. Progress Bars & Stats  4. Tables & Lists
+       ========================================================================== */
+    :root {
+      --color-lemon: #FFD23F;
+      --color-sky: #3BCEAC;
+      --color-sky-blue: #38BDF8;
+      --color-coral: #FF6B35;
+      --color-grape: #8338EC;
+      --color-berry: #FF4D8D;
+
+      --bg-canvas: #FFFDF7;
+      --bg-surface: #FFFFFF;
+      --bg-soft-sky: #EEF9FF;
+      --bg-soft-lemon: #FFF8DC;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --border-soft: #DCE7F2;
+      --border-ink: #2B2D42;
+
+      --font-display: 'Fredoka', 'Nunito', ui-rounded, sans-serif;
+      --font-body: 'Nunito', ui-rounded, system-ui, sans-serif;
+
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-pill: 9999px;
+
+      --shadow-card: 0 8px 20px -6px rgba(43, 45, 66, 0.08), 0 4px 0 rgba(220, 231, 242, 0.9);
+      --shadow-sticker-sm: 0 3px 0 var(--border-ink);
+      --shadow-sticker-hover: 0 7px 0 var(--border-ink);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-canvas);
+      line-height: 1.5;
+    }
+
+    .lib-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .lib-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lib-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2em;
+      text-shadow: 0 2px 0 var(--border-ink);
+      -webkit-text-stroke: 1px var(--border-ink);
+      paint-order: stroke fill;
+    }
+
+    .c-yellow { color: var(--color-lemon); }
+    .c-sky    { color: var(--color-sky-blue); }
+    .c-orange { color: var(--color-coral); }
+    .c-purple { color: var(--color-grape); }
+    .c-pink   { color: var(--color-berry); }
+
+    .lib-card {
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: grid;
+      gap: 18px;
+    }
+
+    .lib-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--border-soft);
+    }
+
+    .lib-card-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .lib-tag {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--color-lemon);
+    }
+
+    /* ==========================================================================
+       1. BADGES & TAGS
+       ========================================================================== */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-size: 0.86rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border-ink);
+      width: fit-content;
+    }
+
+    .badge-beginner { background: var(--color-lemon); color: var(--text-primary); }
+    .badge-balance  { background: var(--color-sky); color: var(--text-primary); }
+    .badge-slalom   { background: var(--color-coral); color: #fff; }
+    .badge-star     { background: var(--color-grape); color: #fff; }
+    .badge-safety   { background: var(--color-berry); color: #fff; }
+
+    .tag-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-sky);
+      border: 1.5px solid var(--color-sky-blue);
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* ==========================================================================
+       2. CARDS (DRILL, PROFILE, CLASS INFO)
+       ========================================================================== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .skate-card {
+      position: relative;
+      background: #E6FCF5;
+      border: 2.5px solid var(--border-ink);
+      border-radius: 34px 18px 36px 20px;
+      padding: 20px;
+      box-shadow: var(--shadow-sticker-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.22s var(--ease-bounce), box-shadow 0.22s var(--ease-bounce);
+    }
+
+    .skate-card::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 2px dashed rgba(43, 45, 66, 0.14);
+      border-radius: 26px 12px 28px 14px;
+      pointer-events: none;
+    }
+
+    .skate-card:nth-child(3n + 1) {
+      background: #E6FCF5; /* Pastel Mint */
+      border-radius: 34px 18px 36px 20px;
+    }
+
+    .skate-card:nth-child(3n + 2) {
+      background: #FFF0E5; /* Pastel Peach */
+      border-radius: 20px 36px 18px 34px;
+    }
+
+    .skate-card:nth-child(3n + 3) {
+      background: #F3E8FF; /* Pastel Lavender */
+      border-radius: 28px 28px 40px 16px;
+    }
+
+    .skate-card:hover {
+      transform: translateY(-5px) rotate(-0.8deg);
+      box-shadow: var(--shadow-sticker-hover);
+    }
+
+    .skate-card:nth-child(even):hover {
+      transform: translateY(-5px) rotate(0.8deg);
+    }
+
+    .skate-card h3 {
+      font-family: var(--font-display);
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .skate-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+
+    .profile-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-sky-blue), var(--color-grape));
+      border: 2.5px solid var(--border-ink);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .btn-card {
+      margin-top: auto;
+      font-family: var(--font-display);
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border-ink);
+      background: var(--color-lemon);
+      cursor: pointer;
+      width: fit-content;
+      box-shadow: 0 2px 0 var(--border-ink);
+    }
+
+    /* ==========================================================================
+       3. PROGRESS BARS & STAT CARDS
+       ========================================================================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .stat-card {
+      background: #E7F5FF; /* Pastel Sky Blue */
+      border: 2.5px solid var(--border-ink);
+      border-radius: 26px 14px 28px 16px;
+      padding: 16px;
+      box-shadow: var(--shadow-sticker-sm);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.18s var(--ease-bounce);
+    }
+
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card:nth-child(4n + 1) { background: #E7F5FF; border-radius: 26px 14px 28px 16px; } /* Pastel Sky */
+    .stat-card:nth-child(4n + 2) { background: #FFF9DB; border-radius: 16px 28px 14px 26px; } /* Pastel Butter */
+    .stat-card:nth-child(4n + 3) { background: #E6FCF5; border-radius: 24px 24px 12px 28px; } /* Pastel Mint */
+    .stat-card:nth-child(4n + 4) { background: #FFE8F0; border-radius: 14px 26px 26px 14px; } /* Pastel Pink */
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--color-grape);
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+    }
+
+    .progress-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .progress-wrap {
+      display: grid;
+      gap: 6px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 20px;
+      border-radius: var(--radius-pill);
+      background: #E2E8F0;
+      border: 2px solid var(--border-ink);
+      overflow: hidden;
+    }
+
+    @keyframes stripe-move {
+      from { background-position: 0 0; }
+      to { background-position: 36px 0; }
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-pill);
+      background-color: var(--color-sky);
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.28) 0 10px,
+        transparent 10px 20px
+      );
+      background-size: 36px 36px;
+      animation: stripe-move 1.4s linear infinite;
+      transition: width 0.35s ease;
+    }
+
+    /* ==========================================================================
+       4. TABLES & FRIENDLY LEADERBOARD LIST
+       ========================================================================== */
+    .split-tables {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .skate-table-wrap {
+      overflow-x: auto;
+      border: 2px solid var(--border-soft);
+      border-radius: var(--radius-md);
+    }
+
+    .skate-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .skate-table th {
+      font-family: var(--font-display);
+      background: var(--bg-soft-lemon);
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border-soft);
+    }
+
+    .skate-table td {
+      padding: 12px 14px;
+      border-bottom: 1.5px solid var(--border-soft);
+      font-weight: 700;
+    }
+
+    .skate-table tbody tr:last-child td { border-bottom: none; }
+    .skate-table tbody tr:hover { background: var(--bg-soft-sky); }
+
+    .leaderboard-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .leader-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-soft);
+      background: var(--bg-canvas);
+      font-weight: 800;
+    }
+
+    .leader-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rank-medal {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border-ink);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      background: var(--color-lemon);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .progress-fill { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lib-container">
+    <div class="lib-header">
+      <h1 class="lib-title">
+        <span class="c-yellow">Kids</span>
+        <span class="c-sky">Skate</span>
+        <span class="c-orange">Data</span>
+        <span class="c-purple">&amp;</span>
+        <span class="c-pink">Displays</span>
+      </h1>
+      <span class="lib-tag">Data Displays Sub-Component Library</span>
+    </div>
+
+    <!-- 1. BADGES & TAGS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>1. Level Badges &amp; Skill Tags</h2>
+        <span class="lib-tag">High-Contrast Pills</span>
+      </div>
+      <div class="badge-row">
+        <span class="badge badge-beginner">🐣 Beginner</span>
+        <span class="badge badge-balance">⚖️ Balanced Wheels</span>
+        <span class="badge badge-slalom">🔶 Slalom Junior</span>
+        <span class="badge badge-star">⭐ Rising Star</span>
+        <span class="badge badge-safety">🪖 Safety Pro</span>
+      </div>
+      <div class="badge-row">
+        <span class="tag-soft">⏱️ 20 Mins</span>
+        <span class="tag-soft">🌤️ Outdoor Rink</span>
+        <span class="tag-soft">🔶 8 Cones</span>
+        <span class="tag-soft">👟 Ages 6–11</span>
+      </div>
+    </section>
+
+    <!-- 2. CARDS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>2. Drill, Profile &amp; Class Cards</h2>
+        <span class="lib-tag">Sticker Hover Lift</span>
+      </div>
+
+      <div class="cards-grid">
+        <article class="skate-card">
+          <span class="badge badge-balance">⚖️ Balanced Wheels</span>
+          <h3>Heel Brake Safe Stop</h3>
+          <p>Practice rolling smoothly and pressing your heel brake while keeping knees softly bent.</p>
+          <div class="progress-wrap">
+            <div class="progress-meta"><span>Mastery</span><span>75%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+          </div>
+          <button type="button" class="btn-card">Start Drill →</button>
+        </article>
+
+        <article class="skate-card">
+          <div class="profile-head">
+            <div class="avatar-circle">R</div>
+            <div>
+              <h3 style="margin-bottom: 2px;">Raka Pratama</h3>
+              <span class="badge badge-slalom">🔶 Slalom Junior</span>
+            </div>
+          </div>
+          <p>Favorite trick: 8-cone zig-zag! Helmet &amp; pads always checked before rolling.</p>
+          <div class="badge-row">
+            <span class="tag-soft">⚡ 840 XP</span>
+            <span class="tag-soft">🏅 5 Badges</span>
+          </div>
+        </article>
+
+        <article class="skate-card">
+          <span class="badge badge-star">⭐ Rising Star</span>
+          <h3>Saturday Morning Skate</h3>
+          <p>07:30 – 09:00 AM at Sunny Rink A with Coach Tara. Includes cone relay games!</p>
+          <div class="badge-row">
+            <span class="tag-soft">👥 4 Spots Left</span>
+          </div>
+          <button type="button" class="btn-card" style="background: var(--color-sky);">Reserve Spot</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. STATS & PROGRESS BARS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>3. Stat Cards &amp; Animated Progress Bars</h2>
+        <button type="button" class="btn-card" onclick="boostXP()">+10% XP Demo</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span style="font-size: 2rem;">🏅</span>
+          <div><div class="stat-value">12</div><div class="stat-label">Sessions Attended</div></div>
+        </div>
+        <div class="stat-card">
+          <span style="font-size: 2rem;">⚡</span>
+          <div><div class="stat-value" style="color: var(--color-coral);">840</div><div class="stat-label">Spirit Points</div></div>
+        </div>
+        <div class="stat-card">
+          <span style="font-size: 2rem;">🔶</span>
+          <div><div class="stat-value" style="color: #22A689;">48</div><div class="stat-label">Cones Cleared</div></div>
+        </div>
+        <div class="stat-card">
+          <span style="font-size: 2rem;">🌟</span>
+          <div><div class="stat-value" style="color: var(--color-berry);">5</div><div class="stat-label">Badges Unlocked</div></div>
+        </div>
+      </div>
+
+      <div class="progress-stack">
+        <div class="progress-wrap">
+          <div class="progress-meta"><span>Weekly Skate Goal</span><span id="xp-label">60%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="xp-bar" style="width: 60%;"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span>Slalom Cone Mastery</span><span>85%</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width: 85%; background-color: var(--color-coral);"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TABLES & FRIENDLY LEADERBOARD -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>4. Schedule Table &amp; Friendly Leaderboard</h2>
+        <span class="lib-tag">Easy to Scan</span>
+      </div>
+
+      <div class="split-tables">
+        <div class="skate-table-wrap">
+          <table class="skate-table">
+            <thead>
+              <tr>
+                <th>Day &amp; Time</th>
+                <th>Session</th>
+                <th>Coach</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sat, 07:30 AM</td>
+                <td>Balance &amp; Glide</td>
+                <td>Coach Bima</td>
+              </tr>
+              <tr>
+                <td>Sun, 08:00 AM</td>
+                <td>Cone Slalom Fun</td>
+                <td>Coach Tara</td>
+              </tr>
+              <tr>
+                <td>Wed, 04:00 PM</td>
+                <td>Freestyle Relay</td>
+                <td>Coach Dimas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul class="leaderboard-list" aria-label="Friendly Spirit Leaderboard">
+          <li class="leader-row">
+            <div class="leader-left"><span class="rank-medal">1</span><span>Nadia Putri</span></div>
+            <span class="badge badge-star">920 XP</span>
+          </li>
+          <li class="leader-row">
+            <div class="leader-left"><span class="rank-medal" style="background: var(--color-sky);">2</span><span>Raka Pratama</span></div>
+            <span class="badge badge-slalom">840 XP</span>
+          </li>
+          <li class="leader-row">
+            <div class="leader-left"><span class="rank-medal" style="background: var(--color-coral); color: #fff;">3</span><span>Leo Santoso</span></div>
+            <span class="badge badge-balance">790 XP</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let xp = 60;
+    function boostXP() {
+      xp = xp >= 100 ? 20 : xp + 10;
+      document.getElementById('xp-bar').style.width = `${xp}%`;
+      document.getElementById('xp-label').textContent = `${xp}%`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Skate Alerts, Modals &amp; Feedback States</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       KIDS INLINE SKATE — ALERTS, MODALS & FEEDBACK STATES LIBRARY
+       Inherits Foundations from Kids Inline Skate CSS Style System
+       ========================================================================== */
+    :root {
+      --color-lemon: #FFD23F;
+      --color-lemon-deep: #E5B417;
+      --color-sky: #3BCEAC;
+      --color-sky-blue: #38BDF8;
+      --color-coral: #FF6B35;
+      --color-grape: #8338EC;
+      --color-berry: #FF4D8D;
+
+      --bg-canvas: #FFFDF7;
+      --bg-surface: #FFFFFF;
+      --bg-soft-sky: #EEF9FF;
+      --bg-soft-lemon: #FFF8DC;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --text-inverse: #FFFFFF;
+      --border-soft: #DCE7F2;
+      --border-ink: #2B2D42;
+
+      --status-success: #22C55E;
+      --status-success-bg: #DCFCE7;
+      --status-info: #38BDF8;
+      --status-info-bg: #E0F2FE;
+      --status-warning: #F59E0B;
+      --status-warning-bg: #FEF3C7;
+      --status-error: #EF4444;
+      --status-error-bg: #FEE2E2;
+
+      --font-display: 'Fredoka', 'Nunito', ui-rounded, sans-serif;
+      --font-body: 'Nunito', ui-rounded, system-ui, sans-serif;
+
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-pill: 9999px;
+
+      --shadow-card: 0 8px 20px -6px rgba(43, 45, 66, 0.08), 0 4px 0 rgba(220, 231, 242, 0.9);
+      --shadow-sticker: 0 4px 0 var(--border-ink);
+      --shadow-sticker-sm: 0 3px 0 var(--border-ink);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-canvas);
+      line-height: 1.5;
+    }
+
+    .lib-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .lib-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lib-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2em;
+      text-shadow: 0 2px 0 var(--border-ink);
+      -webkit-text-stroke: 1px var(--border-ink);
+      paint-order: stroke fill;
+    }
+
+    .c-yellow { color: var(--color-lemon); }
+    .c-sky    { color: var(--color-sky-blue); }
+    .c-orange { color: var(--color-coral); }
+    .c-purple { color: var(--color-grape); }
+    .c-pink   { color: var(--color-berry); }
+
+    .lib-card {
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: grid;
+      gap: 18px;
+    }
+
+    .lib-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--border-soft);
+    }
+
+    .lib-card-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .lib-tag {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--color-lemon);
+    }
+
+    .btn {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-ink);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sticker-sm);
+      transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sticker); }
+    .btn:active { transform: translateY(2px); box-shadow: none; }
+
+    .btn-coral  { background: var(--color-coral); color: #fff; }
+    .btn-sky    { background: var(--color-sky); color: var(--text-primary); }
+    .btn-lemon  { background: var(--color-lemon); color: var(--text-primary); }
+    .btn-grape  { background: var(--color-grape); color: #fff; }
+    .btn-berry  { background: var(--color-berry); color: #fff; }
+    .btn-icon   { width: 40px; height: 40px; min-height: 40px; padding: 0; justify-content: center; border-radius: 50%; }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       1. ALERTS & SAFETY BANNERS
+       ========================================================================== */
+    .alerts-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .skate-alert {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      border: 2.5px solid var(--border-ink);
+      font-weight: 700;
+      box-shadow: 0 3px 0 rgba(43, 45, 66, 0.12);
+    }
+
+    .alert-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .alert-icon {
+      font-size: 1.45rem;
+      line-height: 1.1;
+      flex-shrink: 0;
+    }
+
+    .alert-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .alert-safety  { background: var(--status-warning-bg); border-color: var(--color-coral); }
+    .alert-success { background: var(--status-success-bg); border-color: var(--status-success); }
+    .alert-info    { background: var(--status-info-bg); border-color: var(--color-sky-blue); }
+    .alert-warning { background: #FFF1F2; border-color: var(--color-berry); }
+
+    .alert-close {
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid var(--border-ink);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    /* ==========================================================================
+       2. TOAST NOTIFICATIONS
+       ========================================================================== */
+    .toast-preview-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .toast-sample {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-ink);
+      box-shadow: var(--shadow-sticker-sm);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .toast-grape { background: var(--color-grape); color: #fff; }
+    .toast-sky   { background: var(--color-sky); color: var(--text-primary); }
+    .toast-lemon { background: var(--color-lemon); color: var(--text-primary); }
+    .toast-berry { background: var(--color-berry); color: #fff; }
+
+    .live-toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 80;
+      opacity: 0;
+      transform: translateY(18px) scale(0.96);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s var(--ease-bounce);
+    }
+
+    .live-toast.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       3. MODALS & SLIDE-OVER DRAWER
+       ========================================================================== */
+    .modal-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .skate-modal-card {
+      background: var(--bg-surface);
+      border: 3px solid var(--border-ink);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sticker);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-head h3 {
+      font-family: var(--font-display);
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(30, 41, 59, 0.48);
+      backdrop-filter: blur(4px);
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.is-open { display: grid; }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 95;
+      background: rgba(30, 41, 59, 0.45);
+      backdrop-filter: blur(3px);
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .drawer-backdrop.is-open { display: flex; }
+
+    .skate-drawer {
+      width: min(380px, 100%);
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 3px solid var(--border-ink);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    /* ==========================================================================
+       4. LOADING STATES, SPINNERS & EMPTY STATE
+       ========================================================================== */
+    .loaders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .loader-box {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-soft);
+      background: var(--bg-canvas);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    @keyframes spin-wheel {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes cone-hop {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-9px); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .wheel-spinner-lg {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 5px solid var(--border-ink);
+      border-top-color: var(--color-coral);
+      border-right-color: var(--color-sky);
+      border-bottom-color: var(--color-lemon);
+      background: radial-gradient(circle, var(--border-ink) 22%, transparent 25%);
+      animation: spin-wheel 0.9s linear infinite;
+    }
+
+    .loading-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--color-lemon-deep);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    .wheel-spinner-sm {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid var(--border-ink);
+      border-top-color: var(--color-berry);
+      border-right-color: var(--color-sky);
+      animation: spin-wheel 0.85s linear infinite;
+    }
+
+    .cone-dots {
+      display: inline-flex;
+      gap: 8px;
+      padding: 10px 0;
+    }
+
+    .cone-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--border-ink);
+      animation: cone-hop 1.1s ease-in-out infinite;
+    }
+
+    .cone-dot:nth-child(1) { background: var(--color-lemon); }
+    .cone-dot:nth-child(2) { background: var(--color-sky); animation-delay: 0.15s; }
+    .cone-dot:nth-child(3) { background: var(--color-coral); animation-delay: 0.3s; }
+
+    .skeleton-line {
+      height: 14px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, #E2E8F0 25%, #F8FAFC 50%, #E2E8F0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+
+    .empty-state {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 2.5px dashed var(--color-sky);
+      background: var(--bg-soft-sky);
+      text-align: center;
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lib-container">
+    <div class="lib-header">
+      <h1 class="lib-title">
+        <span class="c-yellow">Alerts,</span>
+        <span class="c-sky">Modals</span>
+        <span class="c-orange">&amp;</span>
+        <span class="c-purple">Feedback</span>
+        <span class="c-pink">States</span>
+      </h1>
+      <span class="lib-tag">Kids Skate Feedback Library</span>
+    </div>
+
+    <!-- 1. ALERTS & SAFETY BANNERS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>1. Alerts &amp; Safety Banners</h2>
+        <span class="lib-tag">Dismissible • High Contrast</span>
+      </div>
+      <div class="alerts-grid">
+        <div class="skate-alert alert-safety" role="note">
+          <div class="alert-body">
+            <span class="alert-icon" aria-hidden="true">🪖</span>
+            <div>
+              <span class="alert-title">Safety Gear Check</span>
+              Always wear your helmet, knee pads, elbow pads, and wrist guards before rolling onto the track!
+            </div>
+          </div>
+          <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">✕</button>
+        </div>
+
+        <div class="skate-alert alert-success" role="status">
+          <div class="alert-body">
+            <span class="alert-icon" aria-hidden="true">🎉</span>
+            <div>
+              <span class="alert-title">Attendance Saved!</span>
+              Great job! You earned +25 Spirit Points for today's morning glide session.
+            </div>
+          </div>
+          <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">✕</button>
+        </div>
+
+        <div class="skate-alert alert-info" role="status">
+          <div class="alert-body">
+            <span class="alert-icon" aria-hidden="true">🌤️</span>
+            <div>
+              <span class="alert-title">Morning Track Open</span>
+              Outdoor rink gates open at 07:30 AM. Bring a water bottle for hydration breaks!
+            </div>
+          </div>
+        </div>
+
+        <div class="skate-alert alert-warning" role="alert">
+          <div class="alert-body">
+            <span class="alert-icon" aria-hidden="true">💧</span>
+            <div>
+              <span class="alert-title">Damp Track Notice</span>
+              Outdoor lane B is drying—today's slalom cones moved to the covered pavilion.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TOAST NOTIFICATIONS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>2. Toast Notifications</h2>
+        <span class="lib-tag">Click to Preview Live Toast</span>
+      </div>
+
+      <div class="toast-preview-row">
+        <div class="toast-sample toast-grape"><span>⭐</span><span>New Badge Unlocked!</span></div>
+        <div class="toast-sample toast-sky"><span>✅</span><span>Attendance Saved!</span></div>
+        <div class="toast-sample toast-lemon"><span>🪖</span><span>Safety Check Passed!</span></div>
+        <div class="toast-sample toast-berry"><span>⚠️</span><span>Check Wheel Straps!</span></div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-grape" onclick="triggerToast('⭐ New Badge Unlocked: Balance Star!', 'toast-grape')">Trigger Badge Toast</button>
+        <button type="button" class="btn btn-sky" onclick="triggerToast('✅ Class attendance saved!', 'toast-sky')">Trigger Success Toast</button>
+        <button type="button" class="btn btn-lemon" onclick="triggerToast('🪖 Helmet &amp; pads verified!', 'toast-lemon')">Trigger Safety Toast</button>
+        <button type="button" class="btn btn-berry" onclick="triggerToast('⚠️ Please tighten left ankle buckle', 'toast-berry')">Trigger Reminder Toast</button>
+      </div>
+    </section>
+
+    <!-- 3. MODALS & DRAWER -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>3. Modals &amp; Slide-Over Drawer</h2>
+        <span class="lib-tag">Dialog • Celebration • Side Drawer</span>
+      </div>
+
+      <div class="modal-preview-grid">
+        <div class="skate-modal-card">
+          <div class="modal-head">
+            <h3>🏆 Badge Celebration</h3>
+            <span class="lib-tag">Pop-Up</span>
+          </div>
+          <p style="margin: 0; color: var(--text-secondary); font-weight: 700;">
+            Awesome balance! You completed 5 cone slalom runs without wobbling.
+          </p>
+          <div class="btn-row" style="justify-content: flex-end; margin-top: auto;">
+            <button type="button" class="btn btn-lemon" onclick="openModal('badge')">Preview Live Modal</button>
+          </div>
+        </div>
+
+        <div class="skate-modal-card">
+          <div class="modal-head">
+            <h3>📅 Class Info Drawer</h3>
+            <span class="lib-tag">Slide-Over</span>
+          </div>
+          <p style="margin: 0; color: var(--text-secondary); font-weight: 700;">
+            Side panel for viewing Saturday session details, coach notes, and gear checklist.
+          </p>
+          <div class="btn-row" style="justify-content: flex-end; margin-top: auto;">
+            <button type="button" class="btn btn-coral" onclick="openDrawer()">Open Side Drawer</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. LOADING STATES, SPINNERS & EMPTY STATE -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>4. Spinners, Loading &amp; Empty States</h2>
+        <span class="lib-tag">Motion-Safe</span>
+      </div>
+
+      <div class="loaders-grid">
+        <div class="loader-box">
+          <div class="wheel-spinner-lg" aria-label="Loading"></div>
+          <strong>Urethane Wheel Spinner</strong>
+        </div>
+
+        <div class="loader-box">
+          <div class="loading-pill">
+            <span class="wheel-spinner-sm" aria-hidden="true"></span>
+            <span>Loading drills...</span>
+          </div>
+          <strong>Inline Loading Pill</strong>
+        </div>
+
+        <div class="loader-box">
+          <div class="cone-dots" aria-label="Loading">
+            <span class="cone-dot"></span>
+            <span class="cone-dot"></span>
+            <span class="cone-dot"></span>
+          </div>
+          <strong>Bouncing Cone Dots</strong>
+        </div>
+
+        <div class="loader-box" style="align-items: stretch;">
+          <div class="skeleton-line" style="width: 55%; height: 18px;"></div>
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line" style="width: 80%;"></div>
+          <strong style="margin-top: 4px;">Card Skeleton</strong>
+        </div>
+      </div>
+
+      <div class="empty-state">
+        <span style="font-size: 2.2rem;" aria-hidden="true">🛼</span>
+        <strong style="font-family: var(--font-display); font-size: 1.1rem;">No Saved Drills Yet</strong>
+        <p style="margin: 0; color: var(--text-secondary); max-width: 420px;">
+          Pick your favorite balance or slalom drill to build your morning practice list!
+        </p>
+        <button type="button" class="btn btn-sky" style="margin-top: 6px;">Browse Beginner Drills</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Live Floating Toast -->
+  <div id="live-toast" class="toast-sample toast-grape live-toast" role="status" aria-live="polite">
+    <span id="live-toast-text">New Badge Unlocked!</span>
+  </div>
+
+  <!-- Live Celebration Modal -->
+  <div id="live-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="live-modal-title">
+    <div class="skate-modal-card" style="max-width: 430px; width: 100%;">
+      <div class="modal-head">
+        <h3 id="live-modal-title">🏆 New Badge Unlocked!</h3>
+        <button type="button" class="btn btn-icon" onclick="closeModal()" aria-label="Close">✕</button>
+      </div>
+      <p style="margin: 0; color: var(--text-secondary); font-weight: 700;">
+        Woohoo! You mastered the Heel Brake Stop and earned the <strong>Balance Star</strong> sticker.
+      </p>
+      <div class="btn-row" style="justify-content: flex-end;">
+        <button type="button" class="btn" onclick="closeModal()">Close</button>
+        <button type="button" class="btn btn-lemon" onclick="closeModal(); triggerToast('⭐ Sticker added to your profile!', 'toast-lemon')">Collect Sticker</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Slide-Over Drawer -->
+  <div id="live-drawer" class="drawer-backdrop" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <div class="skate-drawer">
+      <div class="modal-head">
+        <h3 id="drawer-title">📅 Saturday Morning Skate</h3>
+        <button type="button" class="btn btn-icon" onclick="closeDrawer()" aria-label="Close drawer">✕</button>
+      </div>
+      <div class="skate-alert alert-info" style="margin: 0;">
+        <div class="alert-body">
+          <span class="alert-icon">🕖</span>
+          <div><strong>07:30 – 09:00 AM</strong><br />Outdoor Rink A • Coach Tara</div>
+        </div>
+      </div>
+      <p style="margin: 0; color: var(--text-secondary); font-weight: 700;">
+        Focus for today: smooth T-stop braking, zig-zagging through 8 colorful cones, and a fun relay game!
+      </p>
+      <div class="btn-row" style="margin-top: auto;">
+        <button type="button" class="btn btn-coral" style="width: 100%; justify-content: center;" onclick="closeDrawer(); triggerToast('✅ Enrolled in Saturday Skate!', 'toast-sky')">Confirm Spot</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let toastTimer;
+    function triggerToast(message, variantClass) {
+      const el = document.getElementById('live-toast');
+      el.className = `toast-sample ${variantClass} live-toast is-visible`;
+      document.getElementById('live-toast-text').innerHTML = message;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('is-visible'), 2800);
+    }
+
+    function openModal() {
+      document.getElementById('live-modal').classList.add('is-open');
+    }
+
+    function closeModal() {
+      document.getElementById('live-modal').classList.remove('is-open');
+    }
+
+    function openDrawer() {
+      document.getElementById('live-drawer').classList.add('is-open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('live-drawer').classList.remove('is-open');
+    }
+  </script>
+</body>
+</html>

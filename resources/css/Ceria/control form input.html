@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Skate Controls &amp; Form Inputs Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       KIDS INLINE SKATE — CONTROLS & FORM INPUTS COMPONENT LIBRARY
+       Inherits Foundations from Kids Inline Skate CSS Style System
+       ========================================================================== */
+    :root {
+      --color-lemon: #FFD23F;
+      --color-sky: #3BCEAC;
+      --color-sky-blue: #38BDF8;
+      --color-coral: #FF6B35;
+      --color-grape: #8338EC;
+      --color-berry: #FF4D8D;
+
+      --bg-canvas: #FFFDF7;
+      --bg-surface: #FFFFFF;
+      --bg-soft-sky: #EEF9FF;
+      --bg-soft-lemon: #FFF8DC;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --text-inverse: #FFFFFF;
+      --border-soft: #DCE7F2;
+      --border-ink: #2B2D42;
+
+      --status-success: #22C55E;
+      --status-error: #EF4444;
+
+      --font-display: 'Fredoka', 'Nunito', ui-rounded, sans-serif;
+      --font-body: 'Nunito', ui-rounded, system-ui, sans-serif;
+
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-pill: 9999px;
+
+      --shadow-card: 0 8px 20px -6px rgba(43, 45, 66, 0.08), 0 4px 0 rgba(220, 231, 242, 0.9);
+      --shadow-sticker: 0 4px 0 var(--border-ink);
+      --shadow-sticker-sm: 0 3px 0 var(--border-ink);
+      --shadow-focus: 0 0 0 4px rgba(56, 189, 248, 0.45);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-canvas);
+      line-height: 1.5;
+    }
+
+    .lib-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .lib-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lib-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2em;
+      text-shadow: 0 2px 0 var(--border-ink);
+      -webkit-text-stroke: 1px var(--border-ink);
+      paint-order: stroke fill;
+    }
+
+    .c-yellow { color: var(--color-lemon); }
+    .c-sky    { color: var(--color-sky-blue); }
+    .c-orange { color: var(--color-coral); }
+    .c-purple { color: var(--color-grape); }
+    .c-pink   { color: var(--color-berry); }
+
+    .lib-card {
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: grid;
+      gap: 18px;
+    }
+
+    .lib-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--border-soft);
+    }
+
+    .lib-card-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .lib-tag {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--color-lemon);
+    }
+
+    .variant-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ==========================================================================
+       1. BUTTONS (STICKER PRESS & FOCUS STATES)
+       ========================================================================== */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1;
+      min-height: 46px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-ink);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sticker-sm);
+      transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s ease;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sticker);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-sticker-sm), var(--shadow-focus);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      background: #E2E8F0;
+      color: #64748B;
+    }
+
+    .btn-primary   { background: var(--color-coral); color: #fff; }
+    .btn-secondary { background: var(--color-sky); color: var(--text-primary); }
+    .btn-accent    { background: var(--color-lemon); color: var(--text-primary); }
+    .btn-grape     { background: var(--color-grape); color: #fff; }
+    .btn-berry     { background: var(--color-berry); color: #fff; }
+    .btn-ghost     { background: var(--bg-soft-sky); color: var(--text-primary); }
+
+    .btn-sm { min-height: 36px; padding: 6px 14px; font-size: 0.86rem; }
+    .btn-lg { min-height: 54px; padding: 14px 26px; font-size: 1.1rem; }
+
+    .btn-icon {
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border-radius: 50%;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-spinner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ==========================================================================
+       2. FORM INPUTS (LARGE TOUCH TARGETS & VALIDATION)
+       ========================================================================== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+
+    .input-field,
+    .select-field,
+    .textarea-field {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      min-height: 48px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 2.5px solid var(--border-soft);
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    .input-field.has-icon { padding-left: 42px; }
+
+    .input-field:focus,
+    .select-field:focus,
+    .textarea-field:focus {
+      outline: none;
+      border-color: var(--color-sky-blue);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .input-field.is-valid { border-color: var(--status-success); background: #F0FDF4; }
+    .input-field.is-error { border-color: var(--status-error); background: #FEF2F2; }
+
+    .helper-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .helper-text.is-valid { color: #15803D; }
+    .helper-text.is-error { color: #B91C1C; }
+
+    /* ==========================================================================
+       3. CHECKBOXES & RADIO CARDS
+       ========================================================================== */
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .choice-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-soft);
+      background: var(--bg-canvas);
+      font-weight: 800;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s var(--ease-bounce);
+    }
+
+    .choice-pill:hover {
+      border-color: var(--color-sky);
+      background: var(--bg-soft-sky);
+      transform: translateY(-1px);
+    }
+
+    .choice-pill input {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--color-coral);
+      cursor: pointer;
+    }
+
+    .radio-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .radio-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 2.5px solid var(--border-soft);
+      background: var(--bg-canvas);
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.16s var(--ease-bounce);
+    }
+
+    .radio-card:has(input:checked) {
+      border-color: var(--border-ink);
+      background: var(--bg-soft-lemon);
+      box-shadow: var(--shadow-sticker-sm);
+    }
+
+    .radio-card input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--color-grape);
+    }
+
+    /* ==========================================================================
+       4. TOGGLES, NUMBER STEPPER & SKATE TRACK SLIDERS
+       ========================================================================== */
+    .controls-split {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+
+    .toggle-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .toggle-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      min-height: 44px;
+    }
+
+    .toggle-switch input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      width: 58px;
+      height: 32px;
+      border-radius: var(--radius-pill);
+      background: #CBD5E1;
+      border: 2.5px solid var(--border-ink);
+      position: relative;
+      flex-shrink: 0;
+      transition: background-color 0.2s ease;
+    }
+
+    .toggle-track::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-ink);
+      transition: transform 0.22s var(--ease-bounce);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--color-sky);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(24px);
+      background: var(--color-lemon);
+    }
+
+    /* Number Stepper */
+    .number-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-ink);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-sticker-sm);
+    }
+
+    .stepper-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--border-ink);
+      background: var(--color-lemon);
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .stepper-val {
+      font-family: var(--font-display);
+      font-weight: 700;
+      min-width: 72px;
+      text-align: center;
+    }
+
+    /* Skate Track Range Slider */
+    .slider-box {
+      display: grid;
+      gap: 10px;
+    }
+
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    .slider-badge {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--color-grape);
+      color: #fff;
+      border: 2px solid var(--border-ink);
+    }
+
+    .skate-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 14px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, var(--color-sky) 0%, var(--color-lemon) 55%, var(--color-coral) 100%);
+      border: 2px solid var(--border-ink);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .skate-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-berry);
+      border: 3px solid var(--border-ink);
+      box-shadow: 0 2px 0 var(--border-ink);
+      cursor: grab;
+      transition: transform 0.15s var(--ease-bounce);
+    }
+
+    .skate-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lib-container">
+    <div class="lib-header">
+      <h1 class="lib-title">
+        <span class="c-yellow">Kids</span>
+        <span class="c-sky">Skate</span>
+        <span class="c-orange">Controls</span>
+        <span class="c-purple">&amp;</span>
+        <span class="c-pink">Inputs</span>
+      </h1>
+      <span class="lib-tag">Controls Component Library</span>
+    </div>
+
+    <!-- 1. BUTTONS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>1. Buttons &amp; Interactive States</h2>
+        <span class="lib-tag">Springy Press • Focus Ring</span>
+      </div>
+
+      <div>
+        <span class="variant-label">A. Brand Color Variants</span>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary">Start Practice</button>
+          <button type="button" class="btn btn-secondary">View Schedule</button>
+          <button type="button" class="btn btn-accent">Claim Star ⭐</button>
+          <button type="button" class="btn btn-grape">Unlock Badge</button>
+          <button type="button" class="btn btn-berry">Safety Check</button>
+          <button type="button" class="btn btn-ghost">Learn More</button>
+        </div>
+      </div>
+
+      <div>
+        <span class="variant-label">B. Sizes, Icon Buttons, Loading &amp; Disabled</span>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary btn-sm">Small</button>
+          <button type="button" class="btn btn-primary">Medium Default</button>
+          <button type="button" class="btn btn-accent btn-lg">Large CTA 🛼</button>
+          <button type="button" class="btn btn-grape btn-icon" aria-label="Play Music">🎵</button>
+          <button type="button" class="btn btn-primary" aria-busy="true"><span class="btn-spinner" aria-hidden="true"></span> Saving...</button>
+          <button type="button" class="btn" disabled>Locked</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. FORM INPUTS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>2. Form Inputs &amp; Validation States</h2>
+        <span class="lib-tag">48px Touch Targets</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="ctrl-name">Skater Name</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">🛼</span>
+            <input id="ctrl-name" class="input-field has-icon" type="text" placeholder="e.g. Raka Pratama" />
+          </div>
+          <span class="helper-text">Use your nickname or full name</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ctrl-class">Class Group</label>
+          <select id="ctrl-class" class="select-field">
+            <option>Beginner (Balance Basics)</option>
+            <option>Slalom Junior (Cone Zig-Zag)</option>
+            <option>Rising Star (Freestyle)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ctrl-valid">Parent Email (Valid)</label>
+          <input id="ctrl-valid" class="input-field is-valid" type="email" value="mama.raka@example.com" />
+          <span class="helper-text is-valid">✓ Looks good! Schedule alerts enabled</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ctrl-error">Shoe Size (Error)</label>
+          <input id="ctrl-error" class="input-field is-error" type="text" value="99" />
+          <span class="helper-text is-error">✕ Please enter a size between 26 and 42</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. CHECKBOXES & RADIO CARDS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>3. Checkboxes &amp; Radio Selectors</h2>
+        <span class="lib-tag">Gear Checklist • Level Pick</span>
+      </div>
+
+      <div>
+        <span class="variant-label">A. Safety Gear Checklist (Multi-Select Pills)</span>
+        <div class="choice-row">
+          <label class="choice-pill"><input type="checkbox" checked /> 🪖 Helmet</label>
+          <label class="choice-pill"><input type="checkbox" checked /> 🦵 Knee Pads</label>
+          <label class="choice-pill"><input type="checkbox" checked /> 💪 Elbow Pads</label>
+          <label class="choice-pill"><input type="checkbox" /> 🧤 Wrist Guards</label>
+        </div>
+      </div>
+
+      <div>
+        <span class="variant-label">B. Skill Track Radio Cards</span>
+        <div class="radio-cards">
+          <label class="radio-card"><input type="radio" name="track" checked /> <span>🐣 Beginner</span></label>
+          <label class="radio-card"><input type="radio" name="track" /> <span>🔶 Slalom Junior</span></label>
+          <label class="radio-card"><input type="radio" name="track" /> <span>⭐ Rising Star</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TOGGLES, STEPPER & SLIDER -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>4. Toggles, Stepper &amp; Skate Track Sliders</h2>
+        <span class="lib-tag">Interactive Controls</span>
+      </div>
+
+      <div class="controls-split">
+        <div class="toggle-list">
+          <span class="variant-label">A. Pill Toggle Switches</span>
+          <label class="toggle-switch">
+            <input type="checkbox" checked />
+            <span class="toggle-track"></span>
+            <span>Cheerful Sound Effects</span>
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" checked />
+            <span class="toggle-track"></span>
+            <span>Morning Practice Reminder</span>
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" />
+            <span class="toggle-track"></span>
+            <span>Reduced Motion Mode</span>
+          </label>
+        </div>
+
+        <div style="display: grid; gap: 18px;">
+          <div>
+            <span class="variant-label">B. Cone Count Stepper</span>
+            <div class="number-stepper">
+              <button type="button" class="stepper-btn" onclick="stepCones(-1)" aria-label="Decrease cones">−</button>
+              <span class="stepper-val" id="cone-count">8 Cones</span>
+              <button type="button" class="stepper-btn" onclick="stepCones(1)" aria-label="Increase cones">+</button>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-head">
+              <span>C. Target Glide Speed</span>
+              <span class="slider-badge" id="speed-badge">Level 7</span>
+            </div>
+            <input class="skate-slider" type="range" min="1" max="10" value="7" oninput="document.getElementById('speed-badge').textContent = 'Level ' + this.value" aria-label="Target Glide Speed" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let cones = 8;
+    function stepCones(delta) {
+      cones = Math.max(2, Math.min(20, cones + delta));
+      document.getElementById('cone-count').textContent = `${cones} Cones`;
+    }
+  </script>
+</body>
+</html>

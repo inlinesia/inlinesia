@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Skate Foundations &amp; Design Tokens Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       KIDS INLINE SKATE — FOUNDATIONS & DESIGN TOKENS LIBRARY
+       1. Color Tokens  2. Typography  3. Spacing & Radii  4. Elevation & Motion
+       ========================================================================== */
+    :root {
+      --color-lemon: #FFD23F;
+      --color-sky: #3BCEAC;
+      --color-sky-blue: #38BDF8;
+      --color-coral: #FF6B35;
+      --color-grape: #8338EC;
+      --color-berry: #FF4D8D;
+
+      --bg-canvas: #FFFDF7;
+      --bg-surface: #FFFFFF;
+      --bg-soft-sky: #EEF9FF;
+      --bg-soft-lemon: #FFF8DC;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --border-soft: #DCE7F2;
+      --border-ink: #2B2D42;
+
+      --status-success: #22C55E;
+      --status-info: #38BDF8;
+      --status-warning: #F59E0B;
+      --status-error: #EF4444;
+
+      --grad-sunny: linear-gradient(135deg, #FFD23F 0%, #FF6B35 100%);
+      --grad-sky-roll: linear-gradient(135deg, #38BDF8 0%, #3BCEAC 100%);
+      --grad-berry-pop: linear-gradient(135deg, #FF4D8D 0%, #8338EC 100%);
+
+      --font-display: 'Fredoka', 'Nunito', ui-rounded, sans-serif;
+      --font-body: 'Nunito', ui-rounded, system-ui, sans-serif;
+
+      --space-xs: 6px;
+      --space-sm: 12px;
+      --space-md: 20px;
+      --space-lg: 28px;
+      --space-xl: 40px;
+
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --radius-pill: 9999px;
+
+      --shadow-card: 0 8px 20px -6px rgba(43, 45, 66, 0.1), 0 4px 0 rgba(220, 231, 242, 0.9);
+      --shadow-sticker-sm: 0 3px 0 var(--border-ink);
+      --shadow-sticker: 0 5px 0 var(--border-ink);
+      --shadow-focus: 0 0 0 4px rgba(56, 189, 248, 0.45);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-canvas);
+      line-height: 1.5;
+    }
+
+    .lib-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .lib-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lib-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2em;
+      text-shadow: 0 2px 0 var(--border-ink);
+      -webkit-text-stroke: 1px var(--border-ink);
+      paint-order: stroke fill;
+    }
+
+    .c-yellow { color: var(--color-lemon); }
+    .c-sky    { color: var(--color-sky-blue); }
+    .c-mint   { color: var(--color-sky); }
+    .c-orange { color: var(--color-coral); }
+    .c-purple { color: var(--color-grape); }
+    .c-pink   { color: var(--color-berry); }
+
+    .lib-card {
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: grid;
+      gap: 18px;
+    }
+
+    .lib-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--border-soft);
+    }
+
+    .lib-card-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .lib-tag {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--color-lemon);
+    }
+
+    .variant-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ==========================================================================
+       1. COLOR TOKENS & GRADIENTS
+       ========================================================================== */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch-card {
+      border: 2px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.15s var(--ease-bounce), border-color 0.15s ease;
+    }
+
+    .swatch-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-ink);
+    }
+
+    .swatch-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--border-ink);
+      flex-shrink: 0;
+    }
+
+    .swatch-info strong {
+      display: block;
+      font-size: 0.86rem;
+      line-height: 1.2;
+    }
+
+    .swatch-info small {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+
+    .grad-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .grad-box {
+      height: 64px;
+      border-radius: var(--radius-md);
+      border: 2.5px solid var(--border-ink);
+      box-shadow: var(--shadow-sticker-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ==========================================================================
+       2. TYPOGRAPHY & RAINBOW TITLE
+       ========================================================================== */
+    .rainbow-demo {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: var(--bg-soft-sky);
+      border: 2px solid var(--border-soft);
+      text-align: center;
+    }
+
+    .skate-title-fun {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+      font-weight: 700;
+      line-height: 1.22;
+      letter-spacing: 0.025em;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.18em;
+      margin: 0;
+      text-shadow: 0 3px 0 var(--border-ink), 0 6px 14px rgba(43, 45, 66, 0.14);
+      -webkit-text-stroke: 1.5px var(--border-ink);
+      paint-order: stroke fill;
+    }
+
+    .skate-title-fun span {
+      display: inline-block;
+      transition: transform 0.22s var(--ease-bounce);
+    }
+
+    .skate-title-fun span:hover {
+      transform: translateY(-4px) rotate(-3deg) scale(1.06);
+    }
+
+    .type-scale {
+      display: grid;
+      gap: 10px;
+    }
+
+    .type-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-canvas);
+      border: 1.5px solid var(--border-soft);
+    }
+
+    .type-meta {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      font-family: monospace;
+    }
+
+    /* ==========================================================================
+       3. SPACING & RADII
+       ========================================================================== */
+    .split-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .spacing-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .spacing-bar {
+      height: 16px;
+      border-radius: var(--radius-pill);
+      background: var(--color-sky);
+      border: 2px solid var(--border-ink);
+    }
+
+    .radii-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+    }
+
+    .radius-box {
+      height: 76px;
+      background: var(--bg-soft-lemon);
+      border: 2.5px solid var(--border-ink);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       4. ELEVATION & MOTION
+       ========================================================================== */
+    .elevation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .elev-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-ink);
+      text-align: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    @keyframes bounce-roll {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(6deg); }
+    }
+
+    @keyframes spin-wheel {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .motion-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .motion-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-ink);
+      background: var(--bg-soft-sky);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    .anim-bounce { display: inline-block; animation: bounce-roll 1.8s ease-in-out infinite; }
+    .anim-spin   { display: inline-block; animation: spin-wheel 2.2s linear infinite; }
+
+    .reduced-motion .anim-bounce,
+    .reduced-motion .anim-spin {
+      animation: none !important;
+    }
+
+    .copy-toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--color-grape);
+      color: #fff;
+      border: 2.5px solid var(--border-ink);
+      box-shadow: var(--shadow-sticker-sm);
+      font-family: var(--font-display);
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+
+    .copy-toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim-bounce, .anim-spin { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lib-container" id="foundations-root">
+    <div class="lib-header">
+      <h1 class="lib-title">
+        <span class="c-yellow">Kids</span>
+        <span class="c-sky">Skate</span>
+        <span class="c-orange">Foundations</span>
+        <span class="c-purple">&amp;</span>
+        <span class="c-pink">Tokens</span>
+      </h1>
+      <span class="lib-tag">Foundations Sub-Component Library</span>
+    </div>
+
+    <!-- 1. COLOR TOKENS & GRADIENTS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>1. Color Tokens (:root) &amp; Gradients</h2>
+        <span class="lib-tag">Click any swatch to copy token</span>
+      </div>
+
+      <div>
+        <span class="variant-label">A. Brand &amp; Status Palette</span>
+        <div class="swatch-grid">
+          <div class="swatch-card" onclick="copyToken('--color-lemon')">
+            <span class="swatch-dot" style="background: var(--color-lemon);"></span>
+            <div class="swatch-info"><strong>Lemon Kinetic</strong><small>--color-lemon • #FFD23F</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--color-sky')">
+            <span class="swatch-dot" style="background: var(--color-sky);"></span>
+            <div class="swatch-info"><strong>Skate Sky</strong><small>--color-sky • #3BCEAC</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--color-sky-blue')">
+            <span class="swatch-dot" style="background: var(--color-sky-blue);"></span>
+            <div class="swatch-info"><strong>Sky Blue</strong><small>--color-sky-blue • #38BDF8</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--color-coral')">
+            <span class="swatch-dot" style="background: var(--color-coral);"></span>
+            <div class="swatch-info"><strong>Cone Slalom</strong><small>--color-coral • #FF6B35</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--color-grape')">
+            <span class="swatch-dot" style="background: var(--color-grape);"></span>
+            <div class="swatch-info"><strong>Grape Roll</strong><small>--color-grape • #8338EC</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--color-berry')">
+            <span class="swatch-dot" style="background: var(--color-berry);"></span>
+            <div class="swatch-info"><strong>Pink Berry</strong><small>--color-berry • #FF4D8D</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--bg-canvas')">
+            <span class="swatch-dot" style="background: var(--bg-canvas);"></span>
+            <div class="swatch-info"><strong>Warm Cream</strong><small>--bg-canvas • #FFFDF7</small></div>
+          </div>
+          <div class="swatch-card" onclick="copyToken('--text-primary')">
+            <span class="swatch-dot" style="background: var(--text-primary);"></span>
+            <div class="swatch-info"><strong>Ink Primary</strong><small>--text-primary • #1E293B</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="variant-label">B. Playful Gradients</span>
+        <div class="grad-grid">
+          <div class="grad-box" style="background: var(--grad-sunny);"><span>Sunny Track</span><span>--grad-sunny</span></div>
+          <div class="grad-box" style="background: var(--grad-sky-roll);"><span>Sky Roll</span><span>--grad-sky-roll</span></div>
+          <div class="grad-box" style="background: var(--grad-berry-pop);"><span>Berry Pop</span><span>--grad-berry-pop</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TYPOGRAPHY & RAINBOW TITLE -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>2. Typography &amp; Rainbow Title</h2>
+        <span class="lib-tag">Fredoka Display • Nunito Body</span>
+      </div>
+
+      <div class="rainbow-demo">
+        <p class="skate-title-fun">
+          <span class="c-yellow">Roll</span>
+          <span class="c-sky">Fast,</span>
+          <span class="c-orange">Glide</span>
+          <span class="c-purple">Safe,</span>
+          <span class="c-pink">Have</span>
+          <span class="c-mint">Fun!</span>
+        </p>
+      </div>
+
+      <div class="type-scale">
+        <div class="type-row">
+          <span style="font-family: var(--font-display); font-size: 1.85rem; font-weight: 700;">Heading XL — Arena Pagi</span>
+          <span class="type-meta">Fredoka 700 • clamp(1.45rem, 1.85rem)</span>
+        </div>
+        <div class="type-row">
+          <span style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;">Heading LG — Kelas Slalom Junior</span>
+          <span class="type-meta">Fredoka 600 • clamp(1.18rem, 1.35rem)</span>
+        </div>
+        <div class="type-row">
+          <span style="font-size: 1.1rem; font-weight: 700;">Body Base — Gunakan helm dan pelindung lutut sebelum meluncur.</span>
+          <span class="type-meta">Nunito 700 • line-height 1.6</span>
+        </div>
+        <div class="type-row">
+          <span style="font-size: 0.875rem; font-weight: 700; color: var(--text-secondary);">Caption XS — Jadwal diperbarui setiap pagi</span>
+          <span class="type-meta">Nunito 700 • 0.875rem</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SPACING & RADII -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>3. Spacing Scale &amp; Rounded Radii</h2>
+        <span class="lib-tag">Urethane Wheel Curves</span>
+      </div>
+
+      <div class="split-grid">
+        <div class="spacing-list">
+          <span class="variant-label">A. Spacing Scale</span>
+          <div class="spacing-row"><span style="width: 85px;">--space-xs</span><div class="spacing-bar" style="width: 12px;"></div><span>6px</span></div>
+          <div class="spacing-row"><span style="width: 85px;">--space-sm</span><div class="spacing-bar" style="width: 24px;"></div><span>12px</span></div>
+          <div class="spacing-row"><span style="width: 85px;">--space-md</span><div class="spacing-bar" style="width: 48px;"></div><span>20px</span></div>
+          <div class="spacing-row"><span style="width: 85px;">--space-lg</span><div class="spacing-bar" style="width: 72px;"></div><span>28px</span></div>
+          <div class="spacing-row"><span style="width: 85px;">--space-xl</span><div class="spacing-bar" style="width: 110px;"></div><span>40px</span></div>
+        </div>
+
+        <div>
+          <span class="variant-label">B. Border Radii</span>
+          <div class="radii-grid">
+            <div class="radius-box" style="border-radius: var(--radius-sm);">--radius-sm<br />12px</div>
+            <div class="radius-box" style="border-radius: var(--radius-md);">--radius-md<br />18px</div>
+            <div class="radius-box" style="border-radius: var(--radius-lg);">--radius-lg<br />26px</div>
+            <div class="radius-box" style="border-radius: var(--radius-pill);">--radius-pill<br />9999px</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ELEVATION & MOTION -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>4. Elevation Shadows &amp; Motion</h2>
+        <span class="lib-tag">Sticker Pop • Reduced Motion</span>
+      </div>
+
+      <div class="elevation-grid">
+        <div class="elev-card" style="border-color: var(--border-soft); box-shadow: var(--shadow-card);">--shadow-card</div>
+        <div class="elev-card" style="box-shadow: var(--shadow-sticker-sm);">--shadow-sticker-sm</div>
+        <div class="elev-card" style="box-shadow: var(--shadow-sticker);">--shadow-sticker</div>
+        <div class="elev-card" style="box-shadow: var(--shadow-focus);">--shadow-focus</div>
+      </div>
+
+      <div class="motion-row">
+        <div class="motion-chip"><span class="anim-bounce">🛼</span><span>bounce-roll</span></div>
+        <div class="motion-chip"><span class="anim-spin">⚙️</span><span>spin-wheel</span></div>
+        <button type="button" onclick="toggleReducedMotion()" style="font-family: var(--font-display); font-weight: 600; padding: 10px 16px; border-radius: 9999px; border: 2px solid var(--border-ink); background: var(--color-lemon); cursor: pointer;">
+          Toggle Reduced Motion Preview
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div id="copy-toast" class="copy-toast" role="status">Copied!</div>
+
+  <script>
+    let copyTimer;
+    function copyToken(token) {
+      if (navigator.clipboard) navigator.clipboard.writeText(`var(${token})`).catch(() => {});
+      const toast = document.getElementById('copy-toast');
+      toast.textContent = `Copied var(${token})`;
+      toast.classList.add('is-visible');
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => toast.classList.remove('is-visible'), 2000);
+    }
+
+    function toggleReducedMotion() {
+      document.getElementById('foundations-root').classList.toggle('reduced-motion');
+    }
+  </script>
+</body>
+</html>

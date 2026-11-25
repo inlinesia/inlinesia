@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Skate Navigation &amp; Tabs Component Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       KIDS INLINE SKATE — NAVIGATION & TABS COMPONENT LIBRARY
+       Inherits Foundations from Kids Inline Skate CSS Style System
+       ========================================================================== */
+    :root {
+      --color-lemon: #FFD23F;
+      --color-sky: #3BCEAC;
+      --color-sky-blue: #38BDF8;
+      --color-coral: #FF6B35;
+      --color-grape: #8338EC;
+      --color-berry: #FF4D8D;
+
+      --bg-canvas: #FFFDF7;
+      --bg-surface: #FFFFFF;
+      --bg-soft-sky: #EEF9FF;
+      --bg-soft-lemon: #FFF8DC;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --text-inverse: #FFFFFF;
+      --border-soft: #DCE7F2;
+      --border-ink: #2B2D42;
+
+      --font-display: 'Fredoka', 'Nunito', ui-rounded, sans-serif;
+      --font-body: 'Nunito', ui-rounded, system-ui, sans-serif;
+
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-pill: 9999px;
+
+      --shadow-card: 0 8px 20px -6px rgba(43, 45, 66, 0.08), 0 4px 0 rgba(220, 231, 242, 0.9);
+      --shadow-sticker: 0 4px 0 var(--border-ink);
+      --shadow-sticker-sm: 0 3px 0 var(--border-ink);
+      --shadow-focus: 0 0 0 4px rgba(56, 189, 248, 0.45);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-canvas);
+      line-height: 1.5;
+    }
+
+    .lib-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .lib-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lib-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2em;
+      text-shadow: 0 2px 0 var(--border-ink);
+      -webkit-text-stroke: 1px var(--border-ink);
+      paint-order: stroke fill;
+    }
+
+    .c-yellow { color: var(--color-lemon); }
+    .c-sky    { color: var(--color-sky-blue); }
+    .c-orange { color: var(--color-coral); }
+    .c-purple { color: var(--color-grape); }
+    .c-pink   { color: var(--color-berry); }
+
+    .lib-card {
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: grid;
+      gap: 18px;
+    }
+
+    .lib-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--border-soft);
+    }
+
+    .lib-card-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .lib-tag {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--color-lemon);
+    }
+
+    .variant-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ==========================================================================
+       1. TOP NAVBARS & BOTTOM TAB BAR
+       ========================================================================== */
+    .skate-navbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-ink);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sticker);
+    }
+
+    .skate-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .skate-brand-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-lemon), var(--color-coral));
+      border: 2.5px solid var(--border-ink);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+    }
+
+    .skate-nav-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .skate-nav-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      transition: transform 0.16s var(--ease-bounce), background-color 0.15s ease;
+    }
+
+    .skate-nav-item:hover {
+      background: var(--bg-soft-sky);
+      transform: translateY(-1px);
+    }
+
+    .skate-nav-item.is-active {
+      background: var(--color-sky);
+      border-color: var(--border-ink);
+      box-shadow: 0 2px 0 var(--border-ink);
+    }
+
+    .btn-cta {
+      font-family: var(--font-display);
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      border: 2.5px solid var(--border-ink);
+      background: var(--color-coral);
+      color: var(--text-inverse);
+      box-shadow: var(--shadow-sticker-sm);
+      cursor: pointer;
+      transition: transform 0.15s var(--ease-bounce), box-shadow 0.15s ease;
+    }
+
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-sticker); }
+    .btn-cta:active { transform: translateY(2px); box-shadow: none; }
+
+    .skater-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 6px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-soft-lemon);
+      border: 2px solid var(--border-ink);
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .skater-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-grape);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+    }
+
+    /* Mobile Bottom Tab Bar Preview */
+    .mobile-bottom-bar {
+      max-width: 420px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 8px 10px;
+      background: var(--bg-surface);
+      border: 2.5px solid var(--border-ink);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sticker);
+    }
+
+    .bottom-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 8px 4px;
+      border-radius: var(--radius-md);
+      border: 2px solid transparent;
+      background: transparent;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.18s var(--ease-bounce);
+    }
+
+    .bottom-tab span.ico { font-size: 1.2rem; line-height: 1; }
+
+    .bottom-tab.is-active {
+      background: var(--color-lemon);
+      color: var(--text-primary);
+      border-color: var(--border-ink);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       2. TABS, SEGMENTED CONTROLS & FILTER CHIPS
+       ========================================================================== */
+    .tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* Pill Tabs */
+    .skate-tabs-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 6px;
+      background: var(--bg-soft-sky);
+      border: 2px solid var(--border-soft);
+      border-radius: var(--radius-pill);
+    }
+
+    .skate-tab-btn {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      border: 2px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.18s var(--ease-bounce);
+    }
+
+    .skate-tab-btn:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.75); }
+
+    .skate-tab-btn.is-active {
+      background: var(--color-lemon);
+      color: var(--text-primary);
+      border-color: var(--border-ink);
+      box-shadow: 0 2px 0 var(--border-ink);
+    }
+
+    /* Underline Cone Tabs */
+    .skate-tabs-underline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      border-bottom: 3px solid var(--border-soft);
+    }
+
+    .underline-tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 4px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .underline-tab .count {
+      font-size: 0.75rem;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--border-soft);
+      color: var(--text-primary);
+    }
+
+    .underline-tab.is-active {
+      color: var(--color-coral);
+    }
+
+    .underline-tab.is-active .count {
+      background: var(--color-coral);
+      color: #fff;
+    }
+
+    .underline-tab.is-active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 4px;
+      border-radius: var(--radius-pill);
+      background: var(--color-coral);
+    }
+
+    /* Segmented Skill Switcher */
+    .segmented-control {
+      display: inline-grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      background: var(--bg-canvas);
+      border: 2.5px solid var(--border-ink);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .seg-btn {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .seg-btn.is-active {
+      background: var(--color-grape);
+      color: #fff;
+    }
+
+    /* Filter Chips */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border-ink);
+      background: var(--bg-surface);
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 0 var(--border-ink);
+      transition: transform 0.15s var(--ease-bounce), background-color 0.15s ease;
+    }
+
+    .filter-chip:hover { transform: translateY(-2px); }
+
+    .filter-chip.is-active {
+      background: var(--color-berry);
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       3. BREADCRUMBS & STEPPER TRAIL
+       ========================================================================== */
+    .skate-breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      padding: 10px 16px;
+      background: var(--bg-soft-sky);
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border-soft);
+      font-weight: 800;
+      font-size: 0.92rem;
+      width: fit-content;
+    }
+
+    .skate-breadcrumb a {
+      color: var(--color-grape);
+      text-decoration: none;
+    }
+
+    .skate-breadcrumb a:hover { text-decoration: underline; }
+    .skate-breadcrumb .sep { color: var(--color-coral); }
+
+    /* Stepper */
+    .skate-stepper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-soft);
+      background: var(--bg-canvas);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--border-ink);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+    }
+
+    .step-item.is-done {
+      background: #DCFCE7;
+      border-color: #22C55E;
+    }
+
+    .step-item.is-done .step-num {
+      background: #22C55E;
+      color: #fff;
+    }
+
+    .step-item.is-current {
+      background: var(--bg-soft-lemon);
+      border-color: var(--border-ink);
+      box-shadow: 0 3px 0 var(--border-ink);
+    }
+
+    .step-item.is-current .step-num {
+      background: var(--color-lemon);
+    }
+
+    /* ==========================================================================
+       4. PAGINATION
+       ========================================================================== */
+    .pagination-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .skate-pagination {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-btn {
+      min-width: 42px;
+      height: 42px;
+      padding: 0 10px;
+      border-radius: 50%;
+      border: 2px solid var(--border-soft);
+      background: var(--bg-surface);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: transform 0.15s var(--ease-bounce), border-color 0.15s ease;
+    }
+
+    .page-btn:hover {
+      border-color: var(--border-ink);
+      transform: translateY(-2px);
+    }
+
+    .page-btn.is-active {
+      background: var(--color-sky);
+      border-color: var(--border-ink);
+      box-shadow: 0 2px 0 var(--border-ink);
+    }
+
+    .compact-pager {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border-ink);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-sticker-sm);
+    }
+
+    .pager-arrow {
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--border-ink);
+      background: var(--color-lemon);
+      font-family: var(--font-display);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .pager-status {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0 6px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lib-container">
+    <div class="lib-header">
+      <h1 class="lib-title">
+        <span class="c-yellow">Kids</span>
+        <span class="c-sky">Skate</span>
+        <span class="c-orange">Navigation</span>
+        <span class="c-purple">&amp;</span>
+        <span class="c-pink">Tabs</span>
+      </h1>
+      <span class="lib-tag">Interactive Component Library</span>
+    </div>
+
+    <!-- 1. TOP NAVBARS & MOBILE BOTTOM BAR -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>1. Top Navbars &amp; Mobile Bottom Bar</h2>
+        <span class="lib-tag">Header • Icon Nav • Bottom Bar</span>
+      </div>
+
+      <div>
+        <span class="variant-label">A. Standard Club Header</span>
+        <header class="skate-navbar">
+          <a href="#" class="skate-brand">
+            <span class="skate-brand-dot" aria-hidden="true">🛼</span>
+            <span>Sunny Rollers</span>
+          </a>
+          <nav aria-label="Club Navigation">
+            <ul class="skate-nav-list">
+              <li><button type="button" class="skate-nav-item is-active" onclick="activateItem(this, '.skate-nav-item')">Home</button></li>
+              <li><button type="button" class="skate-nav-item" onclick="activateItem(this, '.skate-nav-item')">Drills</button></li>
+              <li><button type="button" class="skate-nav-item" onclick="activateItem(this, '.skate-nav-item')">Schedule</button></li>
+              <li><button type="button" class="skate-nav-item" onclick="activateItem(this, '.skate-nav-item')">Safety</button></li>
+            </ul>
+          </nav>
+          <button type="button" class="btn-cta">Join Class</button>
+        </header>
+      </div>
+
+      <div>
+        <span class="variant-label">B. Kid-Friendly Icon Header with Skater Chip</span>
+        <header class="skate-navbar">
+          <a href="#" class="skate-brand">
+            <span class="skate-brand-dot" style="background: linear-gradient(135deg, var(--color-sky), var(--color-grape));" aria-hidden="true">⭐</span>
+            <span>Skate Club</span>
+          </a>
+          <ul class="skate-nav-list">
+            <li><button type="button" class="skate-nav-item is-active" onclick="activateItem(this, '.skate-nav-item')">🏠 Arena</button></li>
+            <li><button type="button" class="skate-nav-item" onclick="activateItem(this, '.skate-nav-item')">🔶 Slalom</button></li>
+            <li><button type="button" class="skate-nav-item" onclick="activateItem(this, '.skate-nav-item')">🏅 Badges</button></li>
+          </ul>
+          <div class="skater-chip">
+            <span class="skater-avatar">R</span>
+            <span>Raka • 840 XP</span>
+          </div>
+        </header>
+      </div>
+
+      <div>
+        <span class="variant-label">C. Mobile Bottom Tab Bar</span>
+        <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
+          <button type="button" class="bottom-tab is-active" onclick="activateItem(this, '.bottom-tab')"><span class="ico">🏠</span><span>Home</span></button>
+          <button type="button" class="bottom-tab" onclick="activateItem(this, '.bottom-tab')"><span class="ico">🛼</span><span>Drills</span></button>
+          <button type="button" class="bottom-tab" onclick="activateItem(this, '.bottom-tab')"><span class="ico">📅</span><span>Schedule</span></button>
+          <button type="button" class="bottom-tab" onclick="activateItem(this, '.bottom-tab')"><span class="ico">🪖</span><span>Safety</span></button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 2. TABS, SEGMENTED CONTROLS & CHIPS -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>2. Tabs, Segmented Controls &amp; Filter Chips</h2>
+        <span class="lib-tag">4 Interactive Variants</span>
+      </div>
+
+      <div class="tabs-grid">
+        <div>
+          <span class="variant-label">A. Pill Tabs</span>
+          <div class="skate-tabs-pill" role="tablist">
+            <button type="button" class="skate-tab-btn is-active" onclick="activateItem(this, '.skate-tab-btn')">Basics</button>
+            <button type="button" class="skate-tab-btn" onclick="activateItem(this, '.skate-tab-btn')">Slalom</button>
+            <button type="button" class="skate-tab-btn" onclick="activateItem(this, '.skate-tab-btn')">Jumps</button>
+            <button type="button" class="skate-tab-btn" onclick="activateItem(this, '.skate-tab-btn')">Games</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="variant-label">B. Underline Cone Tabs</span>
+          <div class="skate-tabs-underline" role="tablist">
+            <button type="button" class="underline-tab is-active" onclick="activateItem(this, '.underline-tab')">All Drills <span class="count">12</span></button>
+            <button type="button" class="underline-tab" onclick="activateItem(this, '.underline-tab')">Completed <span class="count">7</span></button>
+            <button type="button" class="underline-tab" onclick="activateItem(this, '.underline-tab')">Saved <span class="count">3</span></button>
+          </div>
+        </div>
+
+        <div>
+          <span class="variant-label">C. Segmented Skill Switcher</span>
+          <div class="segmented-control" role="group" aria-label="Skill Level">
+            <button type="button" class="seg-btn is-active" onclick="activateItem(this, '.seg-btn')">Beginner</button>
+            <button type="button" class="seg-btn" onclick="activateItem(this, '.seg-btn')">Junior</button>
+            <button type="button" class="seg-btn" onclick="activateItem(this, '.seg-btn')">Pro</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="variant-label">D. Multi-Select Filter Chips</span>
+          <div class="chip-row">
+            <button type="button" class="filter-chip is-active" onclick="this.classList.toggle('is-active')">🪖 Helmet Ready</button>
+            <button type="button" class="filter-chip" onclick="this.classList.toggle('is-active')">🔶 Cone Slalom</button>
+            <button type="button" class="filter-chip" onclick="this.classList.toggle('is-active')">⚡ Speed</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. BREADCRUMBS & STEPPER -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>3. Breadcrumbs &amp; Level Stepper</h2>
+        <span class="lib-tag">Wayfinding</span>
+      </div>
+
+      <div>
+        <span class="variant-label">A. Playful Breadcrumb</span>
+        <ol class="skate-breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="sep" aria-hidden="true">★</li>
+          <li><a href="#">Classes</a></li>
+          <li class="sep" aria-hidden="true">▸</li>
+          <li><a href="#">Slalom Junior</a></li>
+          <li class="sep" aria-hidden="true">▸</li>
+          <li>Cone Zig-Zag</li>
+        </ol>
+      </div>
+
+      <div>
+        <span class="variant-label">B. Training Progress Stepper</span>
+        <div class="skate-stepper">
+          <div class="step-item is-done"><span class="step-num">✓</span><span>1. Gear Up</span></div>
+          <div class="step-item is-done"><span class="step-num">✓</span><span>2. Balance</span></div>
+          <div class="step-item is-current"><span class="step-num">3</span><span>3. Glide</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>4. Slalom</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PAGINATION -->
+    <section class="lib-card">
+      <div class="lib-card-head">
+        <h2>4. Pagination</h2>
+        <span class="lib-tag">Wheel &amp; Compact Pagers</span>
+      </div>
+
+      <div class="pagination-row">
+        <div>
+          <span class="variant-label">A. Urethane Wheel Pagination</span>
+          <div class="skate-pagination">
+            <button type="button" class="page-btn" aria-label="Previous">‹</button>
+            <button type="button" class="page-btn is-active" onclick="activateItem(this, '.page-btn')">1</button>
+            <button type="button" class="page-btn" onclick="activateItem(this, '.page-btn')">2</button>
+            <button type="button" class="page-btn" onclick="activateItem(this, '.page-btn')">3</button>
+            <button type="button" class="page-btn" onclick="activateItem(this, '.page-btn')">4</button>
+            <button type="button" class="page-btn" aria-label="Next">›</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="variant-label">B. Compact Pill Pager</span>
+          <div class="compact-pager">
+            <button type="button" class="pager-arrow" onclick="stepPage(-1)">← Prev</button>
+            <span class="pager-status" id="pager-status">Page 2 of 6</span>
+            <button type="button" class="pager-arrow" onclick="stepPage(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function activateItem(el, selector) {
+      const parent = el.closest('.skate-nav-list, .mobile-bottom-bar, .skate-tabs-pill, .skate-tabs-underline, .segmented-control, .skate-pagination');
+      if (!parent) return;
+      parent.querySelectorAll(selector).forEach(node => node.classList.remove('is-active'));
+      el.classList.add('is-active');
+    }
+
+    let currentPage = 2;
+    function stepPage(delta) {
+      currentPage = Math.max(1, Math.min(6, currentPage + delta));
+      document.getElementById('pager-status').textContent = `Page ${currentPage} of 6`;
+    }
+  </script>
+</body>
+</html>
