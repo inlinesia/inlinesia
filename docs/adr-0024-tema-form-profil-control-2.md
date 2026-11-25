@@ -31,8 +31,10 @@ States** (`controls-2`) yang ada di
 ## Konsekuensi
 - Form profil lebih lega dan konsisten dengan pustaka Controls-2; perilaku
   simpan, validasi, dan field read-only tidak berubah.
-- Selector input diberi `.account-form` tambahan supaya mengalahkan aturan lama
-  `.account-form input:not([type=checkbox]):not([type=radio])` yang memiliki
-  spesifisitas lebih tinggi.
+- Selector input diberi `.public-site .profile-edit-card .account-form`
+  supaya mengalahkan aturan lama
+  `.account-form input:not([type=checkbox]):not([type=radio])` serta aturan
+  `.public-site :is(.account-form, .event-form) ...` di `glass-theme.css` yang
+  tidak di-scope tema dan sebelumnya membuat teks input pucat.
 - Perubahan hanya Blade, CSS, tes, dan build aset — tidak ada perubahan
   controller, rute, atau skema.
