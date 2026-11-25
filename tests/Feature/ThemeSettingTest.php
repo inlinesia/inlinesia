@@ -34,6 +34,21 @@ class ThemeSettingTest extends TestCase
             ->assertSessionHas('status', 'Tema ceria tersimpan. Pilihan berlaku di peramban ini.');
     }
 
+    public function test_saved_theme_is_written_before_client_scripts_run(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']))
+            ->patch(route('admin.settings.theme.update'), ['theme' => 'ceria'])
+            ->assertRedirect()
+            ->assertSessionHas('theme', 'ceria');
+
+        $html = $this->get(route('admin.settings.theme.edit'))
+            ->assertOk()
+            ->getContent();
+
+        $this->assertStringContainsString('var serverTheme = "ceria"', $html);
+        $this->assertStringContainsString("window.localStorage.setItem('inlinesia-theme', theme)", $html);
+    }
+
     public function test_theme_settings_rejects_an_unknown_theme(): void
     {
         $this->actingAs(User::factory()->create(['role' => 'admin']))

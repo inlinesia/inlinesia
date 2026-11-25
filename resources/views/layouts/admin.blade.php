@@ -14,6 +14,15 @@
             } catch (error) {
                 theme = null;
             }
+            var serverTheme = @json(session('theme'));
+            if (['copper', 'glass', 'neural', 'topic', 'ceria'].indexOf(serverTheme) !== -1) {
+                theme = serverTheme;
+                try {
+                    window.localStorage.setItem('inlinesia-theme', theme);
+                } catch (error) {
+                    /* localStorage diblokir; tema tetap berlaku di halaman ini. */
+                }
+            }
             if (['copper', 'glass', 'neural', 'topic', 'ceria'].indexOf(theme) === -1) {
                 theme = 'ceria';
             }
