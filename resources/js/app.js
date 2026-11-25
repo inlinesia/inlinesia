@@ -639,6 +639,9 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                 row.innerHTML = `
                     <td data-cell="no"></td>
                     <td class="category-editor-actions">
+                        ${['male', 'female'].includes(valueOf(category, '[data-category-gender-group]'))
+                            ? `<button type="button" class="category-row-pair" title="Tambah KU yang sama untuk lawan jenis" aria-label="Tambah KU pasangan KU ${index + 1}">Pasangan</button>`
+                            : ''}
                         <button type="button" class="category-row-remove" aria-label="Hapus KU ${index + 1}">Hapus</button>
                     </td>
                     <td data-cell="name">
@@ -828,6 +831,10 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
 
             if (target.closest('.category-row-remove')) {
                 category.querySelector('[data-remove-category]')?.click();
+                return;
+            }
+            if (target.closest('.category-row-pair')) {
+                category.querySelector('[data-create-counterpart]')?.click();
                 return;
             }
             if (target.closest('.category-wave-add-table')) {

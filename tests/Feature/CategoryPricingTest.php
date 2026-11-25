@@ -939,6 +939,16 @@ class CategoryPricingTest extends TestCase
             ->assertSee('data-category-rules-form', false);
     }
 
+    public function test_category_table_offers_pair_button_only_for_single_gender_categories(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']))
+            ->get(route('owner.events.categories.edit', $this->createEventWithRules()[1]))
+            ->assertOk()
+            ->assertSee('data-category-table-body', false)
+            ->assertSee('data-create-counterpart', false)
+            ->assertSee('data-category-gender-group', false);
+    }
+
     public function test_roster_shows_the_stored_fee_for_each_participant(): void
     {
         [$owner, $event] = $this->createEventWithRules();

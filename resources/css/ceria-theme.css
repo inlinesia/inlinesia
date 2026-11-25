@@ -985,6 +985,7 @@ html[data-theme='ceria'] {
 }
 [data-theme='ceria'] .category-editor-actions .category-row-edit { color: #fff; background: var(--color-coral); }
 [data-theme='ceria'] .category-editor-actions .category-row-remove { color: #fff; background: var(--color-berry); }
+[data-theme='ceria'] .category-editor-actions .category-row-pair { color: var(--text-primary); background: var(--color-sky); }
 
 [data-theme='ceria'] .category-table-toolbar .category-rule-add {
     color: #fff;
