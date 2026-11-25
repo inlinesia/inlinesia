@@ -33,6 +33,9 @@
                 <div><h2>KU (Kelompok Usia) dan kelayakan atlet</h2><p>Pilih tepat satu metode kelayakan: rentang tanggal lahir, tahun lahir, atau usia pada hari pertama kejuaraan.</p></div>
             </div>
             <div class="category-table-editor" data-category-table>
+                <div class="category-table-toolbar">
+                    <button class="category-rule-add" type="button" data-add-category>+ Tambah KU (Kelompok Usia)</button>
+                </div>
                 <div class="account-table-wrap category-table-wrap">
                     <table class="account-table category-editor-table">
                         <thead>
@@ -57,9 +60,10 @@
                         <tbody data-category-table-body></tbody>
                     </table>
                 </div>
-                <p class="category-table-hint">Ubah langsung nilai di tabel, atau klik baris untuk membuka detail lengkap KU. Geser tabel ke kiri/kanan untuk melihat semua kolom.</p>
+                <p class="category-table-hint">Ubah langsung nilai di tabel. Geser tabel ke kiri/kanan untuk melihat semua kolom.</p>
             </div>
-            <div class="category-rule-list" data-category-rule-list>
+            {{-- Penyimpan data tersembunyi: semua field tetap dikirim lewat form. --}}
+            <div class="category-rule-list" data-category-rule-list hidden>
                 @foreach (old('category_rules', $rules) as $index => $rule)
                     @php($eligibilityTypes = $rule['eligibility_types'] ?? ['birth_date'])
                     @php($baseCategoryName = old("category_rules.{$index}.base_name", $rule['base_name'] ?? ''))
@@ -321,7 +325,6 @@
                     </fieldset>
                 @endforeach
             </div>
-            <button class="category-rule-add" type="button" data-add-category>+ Tambah KU (Kelompok Usia)</button>
         </section>
 
         @if ($event->status === 'approved')

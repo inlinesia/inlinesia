@@ -639,7 +639,6 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                 row.innerHTML = `
                     <td data-cell="no"></td>
                     <td class="category-editor-actions">
-                        <button type="button" class="category-row-edit" aria-label="Edit KU ${index + 1}">Edit</button>
                         <button type="button" class="category-row-remove" aria-label="Hapus KU ${index + 1}">Hapus</button>
                     </td>
                     <td data-cell="name">
@@ -755,35 +754,7 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                 empty.innerHTML = '<td colspan="12">Belum ada KU.</td>';
                 tableBody.append(empty);
             }
-            syncExpanded();
         };
-
-        const syncExpanded = () => {
-            const expanded = list.querySelector('[data-category-rule]:not([hidden])');
-            tableBody.querySelectorAll('[data-category-row]').forEach((row) => {
-                const active = expanded instanceof HTMLElement
-                    && row.dataset.categoryRow === expanded.dataset.categoryIndex;
-                row.classList.toggle('is-active', active);
-                row.setAttribute('aria-expanded', active ? 'true' : 'false');
-            });
-        };
-
-        const expandCategory = (category) => {
-            const alreadyOpen = !category.hasAttribute('hidden');
-            list.querySelectorAll('[data-category-rule]').forEach((item) => {
-                item.hidden = true;
-            });
-            if (!alreadyOpen) category.removeAttribute('hidden');
-            syncExpanded();
-            if (!alreadyOpen) category.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        };
-
-        if (list.querySelector('[data-category-rule]')) {
-            list.querySelectorAll('[data-category-rule]').forEach((item) => {
-                item.hidden = true;
-            });
-            list.querySelector('[data-category-rule]').removeAttribute('hidden');
-        }
 
         const categoryForRow = (row) => Array.from(list.querySelectorAll('[data-category-rule]'))
             .find((item) => item.dataset.categoryIndex === row.dataset.categoryRow);
@@ -868,8 +839,8 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                 category.querySelector('[data-add-pricing-wave]')?.click();
                 return;
             }
-            if (target.closest('input, select, label, button')) return;
-            expandCategory(category);
+            // Semua pengeditan terjadi di dalam tabel.
+            return;
         });
 
         list.addEventListener('click', () => window.setTimeout(renderTable, 0));

@@ -193,6 +193,7 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 /* Editor mode tabel untuk aturan KU. */
 .category-table-editor { margin-bottom: 14px; }
 .event-category-page .form-section { min-width: 0; }
+.category-table-toolbar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
 .category-table-wrap { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .category-editor-table { width: 100%; min-width: 2100px; border-collapse: collapse; text-align: left; }
 .category-editor-table th,
