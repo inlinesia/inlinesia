@@ -314,15 +314,47 @@ class Event extends Model
     }
 
     /**
+     * Cakupan jenis kelamin yang memakai kuota sebuah kategori.
+     *
+     * Nilai "both" menghitung seluruh atlet, sedangkan "female"/"male" hanya
+     * menghitung satu gender. Ini berbeda dari "Campuran" pada gender_group:
+     * campuran berarti putra dan putri boleh saling bertanding, bukan berarti
+     * kuotanya digabung.
+     *
+     * @return 'both'|'female'|'male'
+     */
+    public function categoryQuotaScope(string $category): string
+    {
+        $rule = $this->categoryRule($category) ?? [];
+        $scope = (string) ($rule['quota_scope'] ?? '');
+        $genders = $rule['genders'] ?? [];
+
+        if (in_array($scope, ['female', 'male', 'both'], true)) {
+            return $scope;
+        }
+
+        // Aturan lama belum punya quota_scope: kategori satu gender
+        // otomatis memakai kuota gender itu, kategori campuran memakai both.
+        if (count($genders) === 1) {
+            return in_array($genders[0], ['female', 'male'], true) ? $genders[0] : 'both';
+        }
+
+        return 'both';
+    }
+
+    /**
      * Jumlah atlet yang sudah lunas dan sudah diterima pada satu kategori.
      *
      * Pembatalan yang sudah disetujui tidak dihitung karena atletnya sudah
-     * tidak lagi ikut lomba.
+     * tidak lagi ikut lomba. Filter gender mengikuti cakupan kuota kategori.
      */
     public function confirmedCategoryCount(string $category): int
     {
+        $scope = $this->categoryQuotaScope($category);
+
         return $this->registrations()
             ->where('category', $category)
+            ->when($scope !== 'both', fn ($query) => $query->where('gender', $scope))
             ->where('payment_status', 'paid')
             ->where('status', 'approved')
             ->where(function ($query): void {

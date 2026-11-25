@@ -43,6 +43,38 @@ class CategoryQuotaTest extends TestCase
         $this->assertSame(1, $event->categoryRemainingQuota('Junior Putra'));
     }
 
+    public function test_quota_scope_can_count_only_female_only_male_or_both(): void
+    {
+        $event = $this->createEvent(maxRegistrants: 2);
+        $rules = $event->category_rules;
+        $rules[0]['genders'] = ['male', 'female'];
+        $rules[0]['quota_scope'] = 'both';
+        $event->update(['category_rules' => $rules]);
+
+        $confirmed = ['payment_status' => 'paid', 'status' => 'approved'];
+        $this->createRegistration($event, User::factory()->create(), ['gender' => 'female', ...$confirmed]);
+        $this->createRegistration($event, User::factory()->create(), ['gender' => 'male', ...$confirmed]);
+
+        $this->assertSame(2, $event->confirmedCategoryCount('Junior Putra'));
+        $this->assertSame('both', $event->categoryQuotaScope('Junior Putra'));
+
+        $rules[0]['quota_scope'] = 'female';
+        $event->update(['category_rules' => $rules]);
+        $this->assertSame(1, $event->fresh()->confirmedCategoryCount('Junior Putra'));
+        $this->assertSame('female', $event->fresh()->categoryQuotaScope('Junior Putra'));
+
+        $rules[0]['quota_scope'] = 'male';
+        $event->update(['category_rules' => $rules]);
+        $this->assertSame(1, $event->fresh()->confirmedCategoryCount('Junior Putra'));
+    }
+
+    public function test_single_gender_category_defaults_to_its_own_quota_scope(): void
+    {
+        $event = $this->createEvent(maxRegistrants: 1);
+
+        $this->assertSame('male', $event->categoryQuotaScope('Junior Putra'));
+    }
+
     public function test_a_full_category_closes_itself_once_the_quota_is_reached(): void
     {
         $event = $this->createEvent(maxRegistrants: 2);

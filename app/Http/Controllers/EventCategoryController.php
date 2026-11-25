@@ -30,6 +30,7 @@ class EventCategoryController extends Controller
                 'races' => $event->races,
                 'required_races' => 1,
                 'max_registrants' => null,
+                'quota_scope' => 'both',
                 'registration_override' => 'auto',
                 'package_fee' => 0,
                 'extra_race_fee' => 0,
@@ -59,6 +60,7 @@ class EventCategoryController extends Controller
                     'eligibility_types' => [$eligibilityType],
                     'required_races' => max(1, (int) ($rule['required_races'] ?? 1)),
                     'max_registrants' => $this->normalizeQuota($rule['max_registrants'] ?? null),
+                    'quota_scope' => $this->normalizeQuotaScope($rule),
                     'registration_override' => $this->normalizeOverride($rule['registration_override'] ?? null),
                     'package_fee' => max(0, (int) ($rule['package_fee'] ?? 0)),
                     'extra_race_fee' => max(0, (int) ($rule['extra_race_fee'] ?? 0)),
@@ -132,6 +134,25 @@ class EventCategoryController extends Controller
     }
 
     /**
+     * Cakupan gender yang memakai kuota. Kategori satu gender otomatis
+     * memakai gender itu; kategori campuran boleh memilih salah satu atau
+     * keduanya (misalnya satu KU putra+putri dengan kuota bersama).
+     *
+     * @param  array<string, mixed>  $rule
+     */
+    private function normalizeQuotaScope(array $rule): string
+    {
+        $genders = $rule['genders'] ?? [];
+        if (count($genders) === 1) {
+            return in_array($genders[0], ['female', 'male'], true) ? $genders[0] : 'both';
+        }
+
+        $scope = (string) ($rule['quota_scope'] ?? 'both');
+
+        return in_array($scope, ['both', 'female', 'male'], true) ? $scope : 'both';
+    }
+
+    /**
      * Keadaan buka/tutup kategori yang disimpan pengelola.
      */
     private function normalizeOverride(mixed $value): string
@@ -173,6 +194,10 @@ class EventCategoryController extends Controller
                     'female' => ['female'],
                     'mixed' => ['male', 'female'],
                 };
+                // KU satu gender tidak boleh memakai kuota gender lain.
+                if ($genderLabel !== 'Campuran') {
+                    $categoryRules[$index]['quota_scope'] = $rule['gender_group'];
+                }
             }
 
             $request->merge(['category_rules' => $categoryRules]);
@@ -198,6 +223,7 @@ class EventCategoryController extends Controller
             'category_rules.*.races.*' => ['required', Rule::in($event->races)],
             'category_rules.*.required_races' => ['sometimes', 'nullable', 'integer', 'min:1', 'max:50'],
             'category_rules.*.max_registrants' => ['sometimes', 'nullable', 'integer', 'min:1', 'max:1000'],
+            'category_rules.*.quota_scope' => ['sometimes', 'nullable', Rule::in(['both', 'female', 'male'])],
             'category_rules.*.registration_override' => ['sometimes', 'nullable', Rule::in(['auto', 'open', 'closed'])],
             'category_rules.*.package_fee' => ['sometimes', 'nullable', 'integer', 'min:0'],
             'category_rules.*.extra_race_fee' => ['sometimes', 'nullable', 'integer', 'min:0'],
@@ -296,6 +322,7 @@ class EventCategoryController extends Controller
                 return [
                     'name' => trim($rule['name']),
                     'max_registrants' => $this->normalizeQuota($rule['max_registrants'] ?? null),
+                    'quota_scope' => $this->normalizeQuotaScope($rule),
                     'registration_override' => $this->normalizeOverride($rule['registration_override'] ?? null),
                     'eligibility_type' => $eligibilityType,
                     'birth_date_from' => $eligibilityType === 'birth_date' ? $rule['birth_date_from'] : null,

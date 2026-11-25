@@ -37,19 +37,27 @@
                     <table class="account-table category-editor-table">
                         <thead>
                             <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Aksi</th>
-                                <th scope="col">Nama KU</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Kelayakan</th>
-                                <th scope="col">Batas peserta</th>
-                                <th scope="col">Harga</th>
+                                <th scope="col" rowspan="2">No.</th>
+                                <th scope="col" rowspan="2">Aksi</th>
+                                <th scope="col" rowspan="2">Nama KU</th>
+                                <th scope="col" rowspan="2">Persyaratan usia</th>
+                                <th scope="col" rowspan="2" data-category-age-header>Rentang tanggal lahir</th>
+                                <th scope="col" rowspan="2">Mata lomba yang diizinkan</th>
+                                <th scope="col" rowspan="2">Wajib ikut berapa mata lomba</th>
+                                <th scope="col" rowspan="2">Batas peserta</th>
+                                <th scope="col" rowspan="2">Cakupan kuota</th>
+                                <th scope="col" rowspan="2">Harga</th>
+                                <th scope="colgroup" colspan="2">Gelombang</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Tarif gelombang</th>
+                                <th scope="col">Masa berlaku gelombang</th>
                             </tr>
                         </thead>
                         <tbody data-category-table-body></tbody>
                     </table>
                 </div>
-                <p class="category-table-hint">Klik baris untuk membuka detail KU. Semua pengaturan tetap tersimpan saat disimpan.</p>
+                <p class="category-table-hint">Ubah langsung nilai di tabel, atau klik baris untuk membuka detail lengkap KU.</p>
             </div>
             <div class="category-rule-list" data-category-rule-list>
                 @foreach (old('category_rules', $rules) as $index => $rule)
@@ -85,7 +93,7 @@
                                 </div>
                             </div>
                             <fieldset class="eligibility-methods form-field-full" data-eligibility-picker>
-                                <legend>Metode kelayakan <span>* pilih satu</span></legend>
+                                <legend>Persyaratan usia <span>* pilih satu</span></legend>
                                 <div class="eligibility-method-list">
                                     <label class="eligibility-choice">
                                         <input type="checkbox" name="category_rules[{{ $index }}][eligibility_types][]" value="birth_date" data-eligibility-type="birth_date" @checked(in_array('birth_date', $eligibilityTypes, true))>
@@ -179,6 +187,15 @@
                                                 <input id="category-{{ $index }}-max-registrants" name="category_rules[{{ $index }}][max_registrants]" type="number" min="1" step="1" value="{{ old("category_rules.{$index}.max_registrants", $rule['max_registrants'] ?? '') }}" placeholder="Tanpa batas" data-max-registrants>
                                                 <small class="field-hint">Kosongkan bila KU ini tidak dibatasi. Batas dihitung dari atlet yang sudah lunas dan sudah diterima.</small>
                                                 @error("category_rules.{$index}.max_registrants")<small class="field-error">{{ $message }}</small>@enderror
+                                            </div>
+                                            <div class="form-field">
+                                                <label for="category-{{ $index }}-quota-scope">Cakupan batas peserta <span class="optional-label">opsional</span></label>
+                                                <select id="category-{{ $index }}-quota-scope" name="category_rules[{{ $index }}][quota_scope]" data-quota-scope>
+                                                    <option value="both" @selected(old("category_rules.{$index}.quota_scope", $rule['quota_scope'] ?? 'both') === 'both')>Putra dan putri (1 kuota bersama)</option>
+                                                    <option value="female" @selected(old("category_rules.{$index}.quota_scope", $rule['quota_scope'] ?? 'both') === 'female')>Putri saja</option>
+                                                    <option value="male" @selected(old("category_rules.{$index}.quota_scope", $rule['quota_scope'] ?? 'both') === 'male')>Putra saja</option>
+                                                </select>
+                                                <small class="field-hint">Pilih Putri saja, Putra saja, atau satu kuota bersama untuk putra dan putri. Campuran pada gender hanya berarti boleh saling bertanding.</small>
                                             </div>
                                             <div class="form-field">
                                                 <label for="category-{{ $index }}-registration-override">Status pendaftaran KU</label>
@@ -362,7 +379,7 @@
                 </div>
             </div>
             <fieldset class="eligibility-methods form-field-full" data-eligibility-picker>
-                <legend>Metode kelayakan <span>* pilih satu</span></legend>
+                <legend>Persyaratan usia <span>* pilih satu</span></legend>
                 <div class="eligibility-method-list">
                     <label class="eligibility-choice">
                         <input type="checkbox" name="category_rules[__INDEX__][eligibility_types][]" value="birth_date" data-eligibility-type="birth_date" checked>
@@ -445,6 +462,15 @@
                                 <label for="category-__INDEX__-max-registrants">Maksimal calon pendaftar <span class="optional-label">opsional</span></label>
                                 <input id="category-__INDEX__-max-registrants" name="category_rules[__INDEX__][max_registrants]" type="number" min="1" step="1" placeholder="Tanpa batas" data-max-registrants>
                                 <small class="field-hint">Kosongkan bila KU ini tidak dibatasi. Batas dihitung dari atlet yang sudah lunas dan sudah diterima.</small>
+                            </div>
+                            <div class="form-field">
+                                <label for="category-__INDEX__-quota-scope">Cakupan batas peserta <span class="optional-label">opsional</span></label>
+                                <select id="category-__INDEX__-quota-scope" name="category_rules[__INDEX__][quota_scope]" data-quota-scope>
+                                    <option value="both" selected>Putra dan putri (1 kuota bersama)</option>
+                                    <option value="female">Putri saja</option>
+                                    <option value="male">Putra saja</option>
+                                </select>
+                                <small class="field-hint">Pilih Putri saja, Putra saja, atau satu kuota bersama untuk putra dan putri. Campuran pada gender hanya berarti boleh saling bertanding.</small>
                             </div>
                             <div class="form-field">
                                 <label for="category-__INDEX__-registration-override">Status pendaftaran KU</label>

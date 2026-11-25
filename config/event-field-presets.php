@@ -93,7 +93,7 @@ return [
             'Pendaftaran melalui portal Inlinesia pada halaman ini',
             'Wajib mengikuti technical meeting',
             'Musik Classic Slalom: format MP3, bitrate minimal 128 Kbps',
-            'Datang 30 menit sebelum jadwal nomor',
+            'Datang 60 menit sebelum jadwal nomor',
         ],
     ],
 
@@ -116,7 +116,7 @@ return [
             'Juara umum',
             'MVP putra dan putri',
             'Sertifikat untuk juara 1 sampai 3',
-            'Sertifikat partisipasi untuk semua peserta',            
+            'Sertifikat partisipasi untuk semua peserta',
         ],
     ],
 

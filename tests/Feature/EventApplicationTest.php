@@ -296,7 +296,7 @@ class EventApplicationTest extends TestCase
             ->assertSee('Tanggal lahir sampai')
             ->assertSee('Usia minimal')
             ->assertSee('Usia maksimal')
-            ->assertSee('Metode kelayakan')
+            ->assertSee('Persyaratan usia')
             ->assertSee('Pilih satu')
             ->assertSee('data-eligibility-type="birth_date"', false)
             ->assertSee('data-eligibility-type="birth_year"', false)

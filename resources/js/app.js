@@ -604,54 +604,34 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
     refreshCategories();
 
     /*
-     * Editor mode tabel: satu baris ringkasan per KU. Klik baris atau tombol
-     * Edit hanya membuka detail KU tersebut; tombol Hapus meneruskan klik ke
-     * tombol hapus asli di dalam fieldset supaya logika lama tetap dipakai.
+     * Editor mode tabel: satu baris ringkasan per KU. Nilai di tabel diedit
+     * langsung (tanpa name, supaya tidak dobel submit) lalu disalin ke input
+     * asli di fieldset lewat event change. Klik baris membuka detail lengkap.
      */
     const table = form.querySelector('[data-category-table]');
     const tableBody = form.querySelector('[data-category-table-body]');
+    const ageHeader = form.querySelector('[data-category-age-header]');
     if (table instanceof HTMLElement && tableBody instanceof HTMLTableSectionElement) {
-        const labelFor = (category, selector, fallback = '—') => {
+        const methodLabels = {
+            birth_date: 'Rentang tanggal lahir',
+            birth_year: 'Tahun lahir',
+            age: 'Rentang usia',
+        };
+        const valueOf = (category, selector, fallback = '') => {
             const input = category.querySelector(selector);
             if (!(input instanceof HTMLInputElement || input instanceof HTMLSelectElement)) return fallback;
-            const value = String(input.value ?? '').trim();
-            return value || fallback;
+            return String(input.value ?? '').trim() || fallback;
         };
-
-        const fillRow = (row, category) => {
-            const cell = (key) => row.querySelector(`[data-cell="${key}"]`);
-            const number = cell('no');
-            if (number) number.textContent = row.dataset.rowNumber ?? '—';
-            const name = cell('name');
-            if (name) name.textContent = labelFor(category, '[data-category-name-preview]', labelFor(category, '[data-category-base-name]'));
-            const gender = cell('gender');
-            if (gender) {
-                const select = category.querySelector('[data-category-gender-group]');
-                gender.textContent = select instanceof HTMLSelectElement
-                    ? (select.selectedOptions[0]?.textContent.trim() || '—')
-                    : '—';
-            }
-            const eligibility = cell('eligibility');
-            if (eligibility) {
-                const method = category.querySelector('[data-eligibility-type]:checked');
-                eligibility.textContent = method instanceof HTMLInputElement
-                    ? (method.closest('label')?.querySelector('strong')?.textContent.trim() || '—')
-                    : '—';
-            }
-            const quota = cell('quota');
-            if (quota) quota.textContent = labelFor(category, '[data-max-registrants]');
-            const price = cell('price');
-            if (price) {
-                const fee = labelFor(category, '[data-package-fee]');
-                price.textContent = fee === '—' ? fee : `Rp ${Number(fee).toLocaleString('id-ID')}`;
-            }
-        };
+        const activeMethod = (category) => category.querySelector('[data-eligibility-type]:checked')?.value ?? 'birth_date';
 
         const renderTable = () => {
             const categories = Array.from(list.querySelectorAll('[data-category-rule]'));
+            const firstMethod = categories.length ? activeMethod(categories[0]) : 'birth_date';
+            if (ageHeader instanceof HTMLElement) ageHeader.textContent = methodLabels[firstMethod] ?? methodLabels.birth_date;
             tableBody.replaceChildren();
 
             categories.forEach((category, index) => {
+                const method = activeMethod(category);
                 const row = document.createElement('tr');
                 row.className = 'category-editor-row';
                 row.dataset.categoryRow = category.dataset.categoryIndex ?? '';
@@ -662,18 +642,117 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                         <button type="button" class="category-row-edit" aria-label="Edit KU ${index + 1}">Edit</button>
                         <button type="button" class="category-row-remove" aria-label="Hapus KU ${index + 1}">Hapus</button>
                     </td>
-                    <td data-cell="name"></td>
-                    <td data-cell="gender"></td>
-                    <td data-cell="eligibility"></td>
-                    <td data-cell="quota"></td>
-                    <td data-cell="price"></td>`;
-                fillRow(row, category);
+                    <td data-cell="name">
+                        <select data-mirror="[data-category-base-name]" aria-label="Nama KU ${index + 1}">
+                            ${Array.from(category.querySelectorAll('[data-category-base-name] option')).map((option) => `<option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.textContent}</option>`).join('')}
+                        </select>
+                        <select data-mirror="[data-category-gender-group]" aria-label="Gender KU ${index + 1}">
+                            ${Array.from(category.querySelectorAll('[data-category-gender-group] option')).map((option) => `<option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.textContent}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td data-cell="method">
+                        <select data-mirror="[data-eligibility-type]" aria-label="Persyaratan usia KU ${index + 1}">
+                            ${Object.entries(methodLabels).map(([value, label]) => `<option value="${value}" ${value === method ? 'selected' : ''}>${label}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td data-cell="detail"></td>
+                    <td data-cell="races"></td>
+                    <td data-cell="required">
+                        <input type="number" min="1" data-mirror="[data-required-races]" aria-label="Wajib ikut berapa mata lomba KU ${index + 1}">
+                    </td>
+                    <td data-cell="quota">
+                        <input type="number" min="1" data-mirror="[data-max-registrants]" aria-label="Batas peserta KU ${index + 1}" placeholder="Tanpa batas">
+                    </td>
+                    <td data-cell="quota-scope">
+                        <select data-mirror="[data-quota-scope]" aria-label="Cakupan kuota KU ${index + 1}">
+                            <option value="both">Putra dan putri (1 kuota)</option>
+                            <option value="female">Putri saja</option>
+                            <option value="male">Putra saja</option>
+                        </select>
+                    </td>
+                    <td data-cell="price">
+                        <input type="number" min="0" step="1000" data-mirror="[data-package-fee]" aria-label="Harga KU ${index + 1}">
+                    </td>
+                    <td data-cell="wave-tariff"></td>
+                    <td data-cell="wave-period"></td>`;
+
+                const number = row.querySelector('[data-cell="no"]');
+                if (number) number.textContent = String(index + 1);
+                const required = row.querySelector('[data-mirror="[data-required-races]"]');
+                if (required instanceof HTMLInputElement) required.value = valueOf(category, '[data-required-races]', '1');
+                const quota = row.querySelector('[data-mirror="[data-max-registrants]"]');
+                if (quota instanceof HTMLInputElement) quota.value = valueOf(category, '[data-max-registrants]');
+                const quotaScope = row.querySelector('[data-mirror="[data-quota-scope]"]');
+                if (quotaScope instanceof HTMLSelectElement) quotaScope.value = valueOf(category, '[data-quota-scope]', 'both');
+                const price = row.querySelector('[data-mirror="[data-package-fee]"]');
+                if (price instanceof HTMLInputElement) price.value = valueOf(category, '[data-package-fee]', '0');
+
+                // Detail mengikuti persyaratan usia yang dipilih.
+                const detail = row.querySelector('[data-cell="detail"]');
+                if (detail instanceof HTMLElement) {
+                    if (method === 'birth_date') {
+                        detail.innerHTML = `
+                            <input type="date" data-mirror="[data-eligibility-panel='birth_date'] [name$='[birth_date_from]']" aria-label="Tanggal lahir dari KU ${index + 1}">
+                            <input type="date" data-mirror="[data-eligibility-panel='birth_date'] [name$='[birth_date_to]']" aria-label="Tanggal lahir sampai KU ${index + 1}">`;
+                    } else if (method === 'birth_year') {
+                        const years = Array.from(category.querySelectorAll('[data-birth-year-list] input')).map((input) => input.value);
+                        detail.innerHTML = `
+                            <input type="text" data-birth-years="${years.join(', ')}" value="${years.join(', ')}" aria-label="Tahun lahir KU ${index + 1}" placeholder="2014, 2015">`;
+                    } else {
+                        detail.innerHTML = `
+                            <input type="number" min="0" max="120" data-mirror="[name$='[minimum_age]']" aria-label="Usia minimal KU ${index + 1}" placeholder="Min">
+                            <input type="number" min="0" max="120" data-mirror="[name$='[maximum_age]']" aria-label="Usia maksimal KU ${index + 1}" placeholder="Maks">`;
+                    }
+                    detail.querySelectorAll('[data-mirror]').forEach((input) => {
+                        if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement) {
+                            input.value = valueOf(category, input.dataset.mirror);
+                        }
+                    });
+                }
+
+                // Mata lomba yang diizinkan: checkbox yang langsung mengubah aturan.
+                const races = row.querySelector('[data-cell="races"]');
+                if (races instanceof HTMLElement) {
+                    races.innerHTML = Array.from(category.querySelectorAll('[data-allowed-race]')).map((input, raceIndex) => `
+                        <label class="category-race-option">
+                            <input type="checkbox" data-race-value="${input.value}" ${input.checked ? 'checked' : ''} aria-label="${input.value} KU ${index + 1}">
+                            <span>${input.value}</span>
+                        </label>`).join('');
+                }
+
+                // Gelombang: tarif dan masa berlaku per baris gelombang.
+                const waves = Array.from(category.querySelectorAll('[data-pricing-wave]'));
+                const tariffCell = row.querySelector('[data-cell="wave-tariff"]');
+                const periodCell = row.querySelector('[data-cell="wave-period"]');
+                if (tariffCell instanceof HTMLElement && periodCell instanceof HTMLElement) {
+                    if (waves.length === 0) {
+                        tariffCell.textContent = '—';
+                        periodCell.textContent = '—';
+                    } else {
+                        tariffCell.innerHTML = waves.map((wave, waveIndex) => {
+                            const label = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[label]'))?.value || `Gelombang ${waveIndex + 1}`;
+                            const fee = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[package_fee]'))?.value ?? '';
+                            return `<label class="category-wave-line"><span>${label}</span><input type="number" min="0" step="1000" data-wave="package_fee" data-wave-index="${waveIndex}" value="${fee}" aria-label="Tarif ${label} KU ${index + 1}"></label>`;
+                        }).join('');
+                        periodCell.innerHTML = waves.map((wave, waveIndex) => {
+                            const starts = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[starts_on]'))?.value ?? '';
+                            const ends = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[ends_on]'))?.value ?? '';
+                            return `<div class="category-wave-line"><input type="date" data-wave="starts_on" data-wave-index="${waveIndex}" value="${starts}" aria-label="Mulai gelombang ${waveIndex + 1} KU ${index + 1}"><input type="date" data-wave="ends_on" data-wave-index="${waveIndex}" value="${ends}" aria-label="Berakhir gelombang ${waveIndex + 1} KU ${index + 1}"></div>`;
+                        }).join('');
+                    }
+                    const addWave = document.createElement('button');
+                    addWave.type = 'button';
+                    addWave.className = 'category-wave-add-table';
+                    addWave.textContent = '+ Gelombang';
+                    tariffCell.append(addWave);
+                }
+
                 tableBody.append(row);
             });
 
             if (categories.length === 0) {
                 const empty = document.createElement('tr');
-                empty.innerHTML = '<td colspan="7">Belum ada KU.</td>';
+                empty.innerHTML = '<td colspan="12">Belum ada KU.</td>';
                 tableBody.append(empty);
             }
             syncExpanded();
@@ -706,19 +785,90 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
             list.querySelector('[data-category-rule]').removeAttribute('hidden');
         }
 
+        const categoryForRow = (row) => Array.from(list.querySelectorAll('[data-category-rule]'))
+            .find((item) => item.dataset.categoryIndex === row.dataset.categoryRow);
+
+        // Salin nilai dari kontrol tabel ke input asli di fieldset.
+        tableBody.addEventListener('change', (event) => {
+            const target = event.target;
+            if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) return;
+            const row = target.closest('[data-category-row]');
+            if (!(row instanceof HTMLElement)) return;
+            const category = categoryForRow(row);
+            if (!(category instanceof HTMLElement)) return;
+
+            if (target.dataset.mirror) {
+                if (target.dataset.mirror === '[data-eligibility-type]') {
+                    const option = category.querySelector(`[data-eligibility-type="${target.value}"]`);
+                    if (option instanceof HTMLInputElement) {
+                        option.checked = true;
+                        option.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                } else {
+                    const original = category.querySelector(target.dataset.mirror);
+                    if (original instanceof HTMLInputElement || original instanceof HTMLSelectElement) {
+                        original.value = target.value;
+                        original.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
+            } else if (target.hasAttribute('data-race-value')) {
+                const race = Array.from(category.querySelectorAll('[data-allowed-race]'))
+                    .find((input) => input.value === target.dataset.raceValue);
+                if (race instanceof HTMLInputElement) {
+                    race.checked = target.checked;
+                    race.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            } else if (target.hasAttribute('data-birth-years')) {
+                const yearList = category.querySelector('[data-birth-year-list]');
+                const inputName = category.querySelector('[data-birth-year-select]')?.dataset.inputName ?? '';
+                if (yearList instanceof HTMLElement && inputName) {
+                    yearList.replaceChildren();
+                    target.value.split(',').map((year) => year.trim()).filter(Boolean).forEach((year) => {
+                        const chip = document.createElement('span');
+                        chip.className = 'birth-year-chip';
+                        const hidden = document.createElement('input');
+                        hidden.type = 'hidden';
+                        hidden.name = inputName;
+                        hidden.value = year;
+                        const label = document.createElement('span');
+                        label.textContent = year;
+                        const remove = document.createElement('button');
+                        remove.type = 'button';
+                        remove.dataset.removeBirthYear = '';
+                        remove.setAttribute('aria-label', `Hapus tahun ${year}`);
+                        remove.textContent = '×';
+                        chip.append(hidden, label, remove);
+                        yearList.append(chip);
+                    });
+                }
+            } else if (target.dataset.wave) {
+                const wave = category.querySelectorAll('[data-pricing-wave]')[Number(target.dataset.waveIndex)];
+                const field = Array.from(wave?.querySelectorAll('input') ?? [])
+                    .find((input) => input.getAttribute('name')?.endsWith(`[${target.dataset.wave}]`));
+                if (field instanceof HTMLInputElement) {
+                    field.value = target.value;
+                    field.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }
+        });
+
         tableBody.addEventListener('click', (event) => {
             const target = event.target;
             if (!(target instanceof Element)) return;
             const row = target.closest('[data-category-row]');
             if (!(row instanceof HTMLElement)) return;
-            const category = Array.from(list.querySelectorAll('[data-category-rule]'))
-                .find((item) => item.dataset.categoryIndex === row.dataset.categoryRow);
+            const category = categoryForRow(row);
             if (!(category instanceof HTMLElement)) return;
 
             if (target.closest('.category-row-remove')) {
                 category.querySelector('[data-remove-category]')?.click();
                 return;
             }
+            if (target.closest('.category-wave-add-table')) {
+                category.querySelector('[data-add-pricing-wave]')?.click();
+                return;
+            }
+            if (target.closest('input, select, label, button')) return;
             expandCategory(category);
         });
 
