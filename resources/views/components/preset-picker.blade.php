@@ -57,6 +57,6 @@
     </div>
 
     <p class="preset-picker-note" data-preset-note @if ($customLines !== []) hidden @endif>
-        Centang pilihan di atas, atau pilih “{{ $custom }}” untuk menulis sendiri.
+        Centang pilihan di atas, atau pilih “{{ $custom }}” untuk menulis sendiri, enter untuk menambahkan baris baru.
     </p>
 </div>

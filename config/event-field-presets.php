@@ -17,6 +17,7 @@ return [
     'scale' => [
         'custom' => 'Tambah skala event lain',
         'options' => [
+            'klub',
             'Sekolah',
             'Kecamatan',
             'Kota',
@@ -55,9 +56,9 @@ return [
         'custom' => 'Tambah kondisi venue lain',
         'options' => [
             'Lantai basement dan interlock',
-            'Permukaan beton halus, tersedia semua',
+            'Permukaan beton halus (acian)',
             'Lantai vinyl indoor dengan pendingin udara',
-            'Ruang luas dengan area pong',
+            'Ruang luas dengan area tribun penonton',
             'Toilet dan ruang ganti tersedia',
             'Area parkir dan tribun penonton tersedia',
         ],
@@ -66,25 +67,24 @@ return [
     'categories' => [
         'custom' => 'Tambah kategori peserta lain',
         'options' => [
-            'Pr Beginner',
             'Beginner',
-            'Non-Beginner',
-            'Regu (3 orang)',
-            'Putra',
-            'Putri',
+            'U9 (9 tahun ke bawah)',
+            'U12 (10-12 tahun)',
+            'U15 (13-15 tahun)',
+            'U19 (16-19 tahun)',
         ],
     ],
 
     'races' => [
         'custom' => 'Tambah mata lomba lain',
         'options' => [
+            'Fish Slalom',
             'Classic Slalom',
             'Speed Slalom',
-            'Battle Slalom',
-            'Battle Slide',
-            'Fish Slalom',
+            'Freestyle Slide',
             'Skate Cross',
-            'Showcase / Demo',
+            'Relay',
+            ''
         ],
     ],
 
@@ -101,8 +101,8 @@ return [
     'fees' => [
         'custom' => 'Tambah biaya dan ketentuan lain',
         'options' => [
-            'Pendaftaran awal Rp100.000 per mata lomba',
-            'Pendaftaran tambahan Rp50.000 per mata lomba',
+            'Pendaftaran awal Rp 150.000 per mata lomba',
+            'Pendaftaran tambahan Rp 125.000 per mata lomba',
             'Early bird potongan 25% hingga 2 minggu sebelum event',
             'Biaya tidak dapat dikembalikan bila peserta membatalkan',
             'Rekening pembayaran diisi penyelenggara sebelum event diterbitkan',
@@ -117,6 +117,7 @@ return [
             'Juara umum',
             'MVP putra dan putri',
             'Sertifikat untuk juara 1 sampai 3',
+            'Sertifikat partisipasi untuk semua peserta',            
         ],
     ],
 
