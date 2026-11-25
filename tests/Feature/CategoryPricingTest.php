@@ -934,7 +934,7 @@ class CategoryPricingTest extends TestCase
             ->assertSee('category-editor-table', false)
             ->assertSee('Nama KU')
             ->assertSee('Batas peserta')
-            ->assertSee('Harga')
+            ->assertSee('Tarif')
             ->assertSee('data-remove-category', false)
             ->assertSee('data-category-rules-form', false);
     }

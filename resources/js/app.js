@@ -669,9 +669,6 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                             <option value="male">Putra saja</option>
                         </select>
                     </td>
-                    <td data-cell="price">
-                        <input type="number" min="0" step="1000" data-mirror="[data-package-fee]" aria-label="Harga KU ${index + 1}">
-                    </td>
                     <td data-cell="wave-tariff"></td>
                     <td data-cell="wave-period"></td>`;
 
@@ -683,8 +680,6 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                 if (quota instanceof HTMLInputElement) quota.value = valueOf(category, '[data-max-registrants]');
                 const quotaScope = row.querySelector('[data-mirror="[data-quota-scope]"]');
                 if (quotaScope instanceof HTMLSelectElement) quotaScope.value = valueOf(category, '[data-quota-scope]', 'both');
-                const price = row.querySelector('[data-mirror="[data-package-fee]"]');
-                if (price instanceof HTMLInputElement) price.value = valueOf(category, '[data-package-fee]', '0');
 
                 // Detail mengikuti persyaratan usia yang dipilih.
                 const detail = row.querySelector('[data-cell="detail"]');
@@ -731,7 +726,7 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                         tariffCell.innerHTML = waves.map((wave, waveIndex) => {
                             const label = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[label]'))?.value || `Gelombang ${waveIndex + 1}`;
                             const fee = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[package_fee]'))?.value ?? '';
-                            return `<label class="category-wave-line"><span>${label}</span><input type="number" min="0" step="1000" data-wave="package_fee" data-wave-index="${waveIndex}" value="${fee}" aria-label="Tarif ${label} KU ${index + 1}"></label>`;
+                            return `<div class="category-wave-line"><input type="text" data-wave="label" data-wave-index="${waveIndex}" value="${label}" aria-label="Nama gelombang ${waveIndex + 1} KU ${index + 1}" placeholder="Nama gelombang"><input type="number" min="0" step="1000" data-wave="package_fee" data-wave-index="${waveIndex}" value="${fee}" aria-label="Tarif ${label} KU ${index + 1}"></div>`;
                         }).join('');
                         periodCell.innerHTML = waves.map((wave, waveIndex) => {
                             const starts = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[starts_on]'))?.value ?? '';
@@ -751,7 +746,7 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
 
             if (categories.length === 0) {
                 const empty = document.createElement('tr');
-                empty.innerHTML = '<td colspan="12">Belum ada KU.</td>';
+                empty.innerHTML = '<td colspan="11">Belum ada KU.</td>';
                 tableBody.append(empty);
             }
         };

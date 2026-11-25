@@ -192,7 +192,10 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .guest-dashboard-empty p { margin: 5px 0 0; color: #777c81; font-size: 10px; line-height: 1.6; }
 /* Editor mode tabel untuk aturan KU. */
 .category-table-editor { margin-bottom: 14px; }
-.event-category-page .form-section { min-width: 0; }
+/* Kartu tabel atur KU memakai lebar penuh seperti navbar. */
+.event-category-page { max-width: none; width: 100%; padding-right: 20px; padding-left: 20px; }
+.event-category-page .event-form { display: block; width: 100%; }
+.event-category-page .form-section { min-width: 0; width: 100%; }
 .category-table-toolbar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
 .category-table-wrap { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .category-editor-table { width: 100%; min-width: 2100px; border-collapse: collapse; text-align: left; }

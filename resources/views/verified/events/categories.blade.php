@@ -49,12 +49,8 @@
                                 <th scope="col" rowspan="2">Wajib ikut berapa mata lomba</th>
                                 <th scope="col" rowspan="2">Batas peserta</th>
                                 <th scope="col" rowspan="2">Cakupan kuota</th>
-                                <th scope="col" rowspan="2">Harga</th>
-                                <th scope="colgroup" colspan="2">Gelombang</th>
-                            </tr>
-                            <tr>
-                                <th scope="col">Tarif gelombang</th>
-                                <th scope="col">Masa berlaku gelombang</th>
+                                <th scope="col" rowspan="2">Tarif</th>
+                                <th scope="col" rowspan="2">Masa berlaku gelombang</th>
                             </tr>
                         </thead>
                         <tbody data-category-table-body></tbody>
