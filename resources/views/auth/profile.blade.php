@@ -51,8 +51,6 @@
             @if ($user->role === 'admin')
                 <a class="profile-panel-link" href="{{ route('admin.dashboard') }}">Buka panel admin <span aria-hidden="true">↗</span></a>
                 <a class="profile-panel-link" href="{{ route('guest.dashboard') }}">Kelola event <span aria-hidden="true">↗</span></a>
-            @elseif ($user->hasVerifiedEmail())
-                <a class="profile-panel-link" href="{{ route('guest.dashboard') }}">Buka dasbor peserta <span aria-hidden="true">↗</span></a>
             @endif
         </aside>
 

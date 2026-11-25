@@ -69,6 +69,10 @@
 
             form.querySelectorAll('input[name="theme"]').forEach((input) => {
                 input.addEventListener('change', () => {
+                    // Simpan seketika pilihan radio supaya tema tidak kembali ke
+                    // tema lama saat pengguna berpindah halaman tanpa menekan
+                    // tombol "Simpan tema".
+                    writeStored(input.value);
                     apply(input.value);
                 });
             });

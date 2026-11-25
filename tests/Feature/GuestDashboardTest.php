@@ -25,7 +25,8 @@ class GuestDashboardTest extends TestCase
             ->get(route('profile.show'))
             ->assertOk()
             ->assertSee(route('guest.dashboard'), false)
-            ->assertSee('Buka dasbor peserta');
+            ->assertSee('Buka dasbor')
+            ->assertDontSee('Buka dasbor peserta');
 
         $this->get(route('guest.dashboard'))
             ->assertOk()

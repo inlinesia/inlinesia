@@ -151,7 +151,7 @@ class AccountPortalTest extends TestCase
             ->assertSee('Alur penggunaan')
             ->assertSee('Tentang kami')
             ->assertSee('Buka dasbor')
-            ->assertSee(route('guest.dashboard').'#pendaftaran-saya', false)
+            ->assertDontSee(route('guest.dashboard').'#pendaftaran-saya', false)
             ->assertSee(route('event-applications.create'), false)
             ->assertSee('Daftarkan event');
 
@@ -220,9 +220,9 @@ class AccountPortalTest extends TestCase
             ->assertSee('Alur penggunaan')
             ->assertSee('Tentang kami')
             ->assertSee('Buka dasbor')
-            ->assertSee(route('guest.dashboard').'#pendaftaran-saya', false)
+            ->assertDontSee(route('guest.dashboard').'#pendaftaran-saya', false)
             ->assertSee(route('event-applications.create'), false)
-            ->assertSee('Pendaftaran saya');
+            ->assertDontSee('Pendaftaran saya');
 
         $this->get(route('guest.dashboard'))
             ->assertOk()

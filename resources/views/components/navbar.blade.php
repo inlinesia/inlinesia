@@ -17,7 +17,6 @@
             <a class="public-login" href="{{ route('profile.show') }}">Profil</a>
             @if (auth()->user()->role === 'admin' || auth()->user()->hasVerifiedEmail())
                 <a class="public-button public-button-orange" href="{{ route('guest.dashboard') }}">Buka dasbor <span aria-hidden="true">↗</span></a>
-                <a class="public-login" href="{{ route('guest.dashboard') }}#pendaftaran-saya">Pendaftaran saya</a>
                 <a class="public-login" href="{{ route('event-applications.create') }}">Daftarkan event</a>
             @endif
             <form method="POST" action="{{ route('logout') }}">
