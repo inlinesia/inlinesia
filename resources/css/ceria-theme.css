@@ -986,6 +986,24 @@ html[data-theme='ceria'] {
 [data-theme='ceria'] .category-editor-actions .category-row-edit { color: #fff; background: var(--color-coral); }
 [data-theme='ceria'] .category-editor-actions .category-row-remove { color: #fff; background: var(--color-berry); }
 
+[data-theme='ceria'] .category-table-toolbar .category-rule-add {
+    color: #fff;
+    background: var(--color-coral);
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    font-family: var(--font-display);
+    font-weight: 700;
+    transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s ease;
+}
+
+[data-theme='ceria'] .category-table-toolbar .category-rule-add:hover,
+[data-theme='ceria'] .category-table-toolbar .category-rule-add:focus-visible {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sticker);
+}
+
 [data-theme='ceria'] .app-shell .admin-flash {
     color: var(--text-primary);
     background: var(--status-success-bg);
