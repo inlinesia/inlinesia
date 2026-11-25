@@ -57,7 +57,7 @@
                         <tbody data-category-table-body></tbody>
                     </table>
                 </div>
-                <p class="category-table-hint">Ubah langsung nilai di tabel, atau klik baris untuk membuka detail lengkap KU.</p>
+                <p class="category-table-hint">Ubah langsung nilai di tabel, atau klik baris untuk membuka detail lengkap KU. Geser tabel ke kiri/kanan untuk melihat semua kolom.</p>
             </div>
             <div class="category-rule-list" data-category-rule-list>
                 @foreach (old('category_rules', $rules) as $index => $rule)
