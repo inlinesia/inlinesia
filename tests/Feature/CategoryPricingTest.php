@@ -922,6 +922,23 @@ class CategoryPricingTest extends TestCase
             ->assertSee('&quot;discount_percent&quot;:10', false);
     }
 
+    public function test_category_page_uses_a_table_editor_with_expandable_rows(): void
+    {
+        [$user, $event] = $this->createEventWithRules();
+
+        $this->actingAs($user)
+            ->get(route('owner.events.categories.edit', $event))
+            ->assertOk()
+            ->assertSee('data-category-table', false)
+            ->assertSee('data-category-table-body', false)
+            ->assertSee('category-editor-table', false)
+            ->assertSee('Nama KU')
+            ->assertSee('Batas peserta')
+            ->assertSee('Harga')
+            ->assertSee('data-remove-category', false)
+            ->assertSee('data-category-rules-form', false);
+    }
+
     public function test_roster_shows_the_stored_fee_for_each_participant(): void
     {
         [$owner, $event] = $this->createEventWithRules();

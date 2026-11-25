@@ -959,6 +959,33 @@ html[data-theme='ceria'] {
     box-shadow: var(--shadow-sticker);
 }
 
+/* Tabel editor KU mengikuti gaya tabel Ceria yang sudah ada. */
+[data-theme='ceria'] .category-editor-table th {
+    color: var(--text-primary);
+    background: var(--bg-soft-lemon);
+    border-bottom: 2px solid var(--border-soft);
+    font-family: var(--font-display);
+}
+
+[data-theme='ceria'] .category-editor-table td {
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border-bottom: 1.5px solid var(--border-soft);
+    font-weight: 700;
+}
+
+[data-theme='ceria'] .category-editor-row:hover td { background: var(--bg-soft-sky); }
+[data-theme='ceria'] .category-editor-row.is-active td { background: var(--bg-soft-lemon); }
+[data-theme='ceria'] .category-editor-actions button {
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+[data-theme='ceria'] .category-editor-actions .category-row-edit { color: #fff; background: var(--color-coral); }
+[data-theme='ceria'] .category-editor-actions .category-row-remove { color: #fff; background: var(--color-berry); }
+
 [data-theme='ceria'] .app-shell .admin-flash {
     color: var(--text-primary);
     background: var(--status-success-bg);

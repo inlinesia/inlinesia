@@ -190,6 +190,21 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .guest-event-card .listing-register-link { flex-shrink: 0; }
 .guest-dashboard-empty { padding: 17px 0 5px; border-top: 1px solid #f0eee8; color: #293747; font-size: 11px; }
 .guest-dashboard-empty p { margin: 5px 0 0; color: #777c81; font-size: 10px; line-height: 1.6; }
+/* Editor mode tabel untuk aturan KU. */
+.category-table-editor { margin-bottom: 14px; }
+.category-table-wrap { overflow-x: auto; }
+.category-editor-table { width: 100%; border-collapse: collapse; text-align: left; }
+.category-editor-table th,
+.category-editor-table td { padding: 7px 10px; border-bottom: 1px solid #f0f1f4; font-size: 10px; line-height: 1.2; white-space: nowrap; text-align: left; }
+.category-editor-table th { color: #8b8e9d; font-weight: 700; letter-spacing: .45px; text-transform: uppercase; }
+.category-editor-row { cursor: pointer; }
+.category-editor-row:hover td { background: #faf7ee; }
+.category-editor-row.is-active td { background: #fff8dc; font-weight: 700; }
+.category-editor-actions { display: flex; gap: 5px; }
+.category-editor-actions button { min-height: 24px; padding: 0 8px; border: 1px solid #e2e5eb; border-radius: 999px; background: #fff; color: #42485a; font: inherit; font-size: 9px; font-weight: 700; cursor: pointer; }
+.category-editor-actions .category-row-remove { border-color: #efd3d0; color: #a94b42; }
+.category-table-hint { margin: 6px 0 0; color: #777c81; font-size: 9px; }
+
 .category-rule-list { display: grid; gap: 12px; }
 .category-rule-card { position: relative; min-width: 0; padding: 16px; border: 1px solid #e4e5eb; border-radius: 6px; }
 .category-rule-card > legend { padding: 0 7px; color: #343648; font-size: 11px; font-weight: 700; }

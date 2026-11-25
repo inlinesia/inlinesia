@@ -32,6 +32,25 @@
                 <span class="form-step">01</span>
                 <div><h2>KU (Kelompok Usia) dan kelayakan atlet</h2><p>Pilih tepat satu metode kelayakan: rentang tanggal lahir, tahun lahir, atau usia pada hari pertama kejuaraan.</p></div>
             </div>
+            <div class="category-table-editor" data-category-table>
+                <div class="account-table-wrap category-table-wrap">
+                    <table class="account-table category-editor-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">Aksi</th>
+                                <th scope="col">Nama KU</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Kelayakan</th>
+                                <th scope="col">Batas peserta</th>
+                                <th scope="col">Harga</th>
+                            </tr>
+                        </thead>
+                        <tbody data-category-table-body></tbody>
+                    </table>
+                </div>
+                <p class="category-table-hint">Klik baris untuk membuka detail KU. Semua pengaturan tetap tersimpan saat disimpan.</p>
+            </div>
             <div class="category-rule-list" data-category-rule-list>
                 @foreach (old('category_rules', $rules) as $index => $rule)
                     @php($eligibilityTypes = $rule['eligibility_types'] ?? ['birth_date'])

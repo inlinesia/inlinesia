@@ -602,6 +602,133 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
     });
 
     refreshCategories();
+
+    /*
+     * Editor mode tabel: satu baris ringkasan per KU. Klik baris atau tombol
+     * Edit hanya membuka detail KU tersebut; tombol Hapus meneruskan klik ke
+     * tombol hapus asli di dalam fieldset supaya logika lama tetap dipakai.
+     */
+    const table = form.querySelector('[data-category-table]');
+    const tableBody = form.querySelector('[data-category-table-body]');
+    if (table instanceof HTMLElement && tableBody instanceof HTMLTableSectionElement) {
+        const labelFor = (category, selector, fallback = '—') => {
+            const input = category.querySelector(selector);
+            if (!(input instanceof HTMLInputElement || input instanceof HTMLSelectElement)) return fallback;
+            const value = String(input.value ?? '').trim();
+            return value || fallback;
+        };
+
+        const fillRow = (row, category) => {
+            const cell = (key) => row.querySelector(`[data-cell="${key}"]`);
+            const number = cell('no');
+            if (number) number.textContent = row.dataset.rowNumber ?? '—';
+            const name = cell('name');
+            if (name) name.textContent = labelFor(category, '[data-category-name-preview]', labelFor(category, '[data-category-base-name]'));
+            const gender = cell('gender');
+            if (gender) {
+                const select = category.querySelector('[data-category-gender-group]');
+                gender.textContent = select instanceof HTMLSelectElement
+                    ? (select.selectedOptions[0]?.textContent.trim() || '—')
+                    : '—';
+            }
+            const eligibility = cell('eligibility');
+            if (eligibility) {
+                const method = category.querySelector('[data-eligibility-type]:checked');
+                eligibility.textContent = method instanceof HTMLInputElement
+                    ? (method.closest('label')?.querySelector('strong')?.textContent.trim() || '—')
+                    : '—';
+            }
+            const quota = cell('quota');
+            if (quota) quota.textContent = labelFor(category, '[data-max-registrants]');
+            const price = cell('price');
+            if (price) {
+                const fee = labelFor(category, '[data-package-fee]');
+                price.textContent = fee === '—' ? fee : `Rp ${Number(fee).toLocaleString('id-ID')}`;
+            }
+        };
+
+        const renderTable = () => {
+            const categories = Array.from(list.querySelectorAll('[data-category-rule]'));
+            tableBody.replaceChildren();
+
+            categories.forEach((category, index) => {
+                const row = document.createElement('tr');
+                row.className = 'category-editor-row';
+                row.dataset.categoryRow = category.dataset.categoryIndex ?? '';
+                row.dataset.rowNumber = String(index + 1);
+                row.innerHTML = `
+                    <td data-cell="no"></td>
+                    <td class="category-editor-actions">
+                        <button type="button" class="category-row-edit" aria-label="Edit KU ${index + 1}">Edit</button>
+                        <button type="button" class="category-row-remove" aria-label="Hapus KU ${index + 1}">Hapus</button>
+                    </td>
+                    <td data-cell="name"></td>
+                    <td data-cell="gender"></td>
+                    <td data-cell="eligibility"></td>
+                    <td data-cell="quota"></td>
+                    <td data-cell="price"></td>`;
+                fillRow(row, category);
+                tableBody.append(row);
+            });
+
+            if (categories.length === 0) {
+                const empty = document.createElement('tr');
+                empty.innerHTML = '<td colspan="7">Belum ada KU.</td>';
+                tableBody.append(empty);
+            }
+            syncExpanded();
+        };
+
+        const syncExpanded = () => {
+            const expanded = list.querySelector('[data-category-rule]:not([hidden])');
+            tableBody.querySelectorAll('[data-category-row]').forEach((row) => {
+                const active = expanded instanceof HTMLElement
+                    && row.dataset.categoryRow === expanded.dataset.categoryIndex;
+                row.classList.toggle('is-active', active);
+                row.setAttribute('aria-expanded', active ? 'true' : 'false');
+            });
+        };
+
+        const expandCategory = (category) => {
+            const alreadyOpen = !category.hasAttribute('hidden');
+            list.querySelectorAll('[data-category-rule]').forEach((item) => {
+                item.hidden = true;
+            });
+            if (!alreadyOpen) category.removeAttribute('hidden');
+            syncExpanded();
+            if (!alreadyOpen) category.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        if (list.querySelector('[data-category-rule]')) {
+            list.querySelectorAll('[data-category-rule]').forEach((item) => {
+                item.hidden = true;
+            });
+            list.querySelector('[data-category-rule]').removeAttribute('hidden');
+        }
+
+        tableBody.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            const row = target.closest('[data-category-row]');
+            if (!(row instanceof HTMLElement)) return;
+            const category = Array.from(list.querySelectorAll('[data-category-rule]'))
+                .find((item) => item.dataset.categoryIndex === row.dataset.categoryRow);
+            if (!(category instanceof HTMLElement)) return;
+
+            if (target.closest('.category-row-remove')) {
+                category.querySelector('[data-remove-category]')?.click();
+                return;
+            }
+            expandCategory(category);
+        });
+
+        list.addEventListener('click', () => window.setTimeout(renderTable, 0));
+        list.addEventListener('input', () => window.setTimeout(renderTable, 0));
+        list.addEventListener('change', () => window.setTimeout(renderTable, 0));
+        new MutationObserver(renderTable).observe(list, { childList: true });
+
+        renderTable();
+    }
 });
 
 document.querySelectorAll('[data-athlete-registration]').forEach((form) => {
