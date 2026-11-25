@@ -303,7 +303,7 @@ class EventApplicationTest extends TestCase
             ->assertSee('data-eligibility-type="age"', false)
             ->assertSee('Tahun lahir')
             ->assertSee('Gender yang diizinkan')
-            ->assertSee('Mata lomba yang diizinkan');
+            ->assertSee('Mata lomba yang diwajibkan');
 
         $this->put(route('owner.events.categories.update', $event), [
             'category_rules' => [

@@ -39,6 +39,40 @@ class CategoryPricingTest extends TestCase
         $this->assertSame(129500, $withOutside['total']);
     }
 
+    public function test_wave_tariffs_charge_package_once_and_extras_per_race(): void
+    {
+        $calculator = app(CategoryFeeCalculator::class);
+        $rule = $this->pricedRule([
+            'races' => ['Classic Slalom', 'Speed Slalom', 'Relay', 'Downhill'],
+            'required_races' => 2,
+            'extra_race_fee' => 50000,
+            'outside_race_fee' => 5000,
+            'discount_percent' => null,
+            'discount_amount' => null,
+            'pricing_waves' => [[
+                'label' => 'Early Bird',
+                'starts_on' => '2026-10-01',
+                'ends_on' => '2026-10-31',
+                'package_fee' => 150000,
+            ]],
+        ]);
+
+        $minimal = $calculator->breakdown($rule, ['Classic Slalom', 'Speed Slalom'], now()->parse('2026-10-15'));
+        $this->assertSame(150000, $minimal['package_fee'], 'Tarif paket dikenakan sekali, bukan per mata lomba.');
+        $this->assertSame(0, $minimal['extra_races']);
+        $this->assertSame(150000, $minimal['total']);
+
+        $extra = $calculator->breakdown($rule, ['Classic Slalom', 'Speed Slalom', 'Relay'], now()->parse('2026-10-15'));
+        $this->assertSame(1, $extra['extra_races']);
+        $this->assertSame(50000, $extra['extra_race_total']);
+        $this->assertSame(200000, $extra['total']);
+
+        $outside = $calculator->breakdown($rule, ['Classic Slalom', 'Speed Slalom', 'Relay', 'Skate Cross'], now()->parse('2026-10-15'));
+        $this->assertSame(['Skate Cross'], $outside['outside_races']);
+        $this->assertSame(5000, $outside['outside_race_total'], 'Tarif luar kewajiban tetap per mata lomba pada gelombang.');
+        $this->assertSame(205000, $outside['total']);
+    }
+
     public function test_fee_calculator_never_returns_a_negative_total(): void
     {
         $breakdown = app(CategoryFeeCalculator::class)->breakdown(
@@ -933,8 +967,13 @@ class CategoryPricingTest extends TestCase
             ->assertSee('data-category-table-body', false)
             ->assertSee('category-editor-table', false)
             ->assertSee('Nama KU')
+            ->assertSee('Mata lomba yang diwajibkan')
+            ->assertSee('Minimal mata lomba')
+            ->assertSee('Mata lomba di luar kewajiban')
             ->assertSee('Batas peserta')
-            ->assertSee('Tarif')
+            ->assertSee('Tarif paket')
+            ->assertSee('Tarif tambahan')
+            ->assertSee('Tarif mata lomba di luar kewajiban')
             ->assertSee('data-remove-category', false)
             ->assertSee('data-category-rules-form', false);
     }

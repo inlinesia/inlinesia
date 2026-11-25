@@ -660,8 +660,9 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                     <td data-cell="detail"></td>
                     <td data-cell="races"></td>
                     <td data-cell="required">
-                        <input type="number" min="1" data-mirror="[data-required-races]" aria-label="Wajib ikut berapa mata lomba KU ${index + 1}">
+                        <input type="number" min="1" data-mirror="[data-required-races]" aria-label="Minimal mata lomba KU ${index + 1}">
                     </td>
+                    <td data-cell="outside-races"></td>
                     <td data-cell="quota">
                         <input type="number" min="1" data-mirror="[data-max-registrants]" aria-label="Batas peserta KU ${index + 1}" placeholder="Tanpa batas">
                     </td>
@@ -673,6 +674,8 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                         </select>
                     </td>
                     <td data-cell="wave-tariff"></td>
+                    <td data-cell="extra-tariff"></td>
+                    <td data-cell="outside-tariff"></td>
                     <td data-cell="wave-period"></td>`;
 
                 const number = row.querySelector('[data-cell="no"]');
@@ -683,6 +686,10 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                 if (quota instanceof HTMLInputElement) quota.value = valueOf(category, '[data-max-registrants]');
                 const quotaScope = row.querySelector('[data-mirror="[data-quota-scope]"]');
                 if (quotaScope instanceof HTMLSelectElement) quotaScope.value = valueOf(category, '[data-quota-scope]', 'both');
+                const extraFee = row.querySelector('[data-cell="extra-tariff"] [data-base-fee="extra_race_fee"]');
+                if (extraFee instanceof HTMLInputElement) extraFee.value = valueOf(category, '[data-extra-race-fee]', '0');
+                const outsideFee = row.querySelector('[data-cell="outside-tariff"] [data-base-fee="outside_race_fee"]');
+                if (outsideFee instanceof HTMLInputElement) outsideFee.value = valueOf(category, '[data-outside-race-fee]', '0');
 
                 // Detail mengikuti persyaratan usia yang dipilih.
                 const detail = row.querySelector('[data-cell="detail"]');
@@ -717,6 +724,28 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                         </label>`).join('');
                 }
 
+                // Lomba di luar daftar wajib: semua lomba event yang tidak
+                // termasuk required races. Checkbox ini memakai field lama
+                // data-outside-race-option sehingga KU tambahan otomatis dibuat.
+                const outsideRacesCell = row.querySelector('[data-cell="outside-races"]');
+                if (outsideRacesCell instanceof HTMLElement) {
+                    let eventRaces = [];
+                    try {
+                        eventRaces = JSON.parse(table.dataset.eventRaces ?? '[]');
+                    } catch {
+                        eventRaces = [];
+                    }
+                    const requiredRaces = new Set(Array.from(category.querySelectorAll('[data-allowed-race]')).map((input) => input.value));
+                    outsideRacesCell.innerHTML = eventRaces
+                        .filter((race) => !requiredRaces.has(race))
+                        .map((race) => {
+                            const checked = Array.from(category.querySelectorAll('[data-outside-race-option]'))
+                                .some((input) => input.value === race && input.checked);
+                            return `<label class="category-race-option"><input type="checkbox" data-outside-race-value="${race}" ${checked ? 'checked' : ''} aria-label="${race} di luar kewajiban KU ${index + 1}"><span>${race}</span></label>`;
+                        })
+                        .join('') || '<span>—</span>';
+                }
+
                 // Gelombang: tarif dan masa berlaku per baris gelombang.
                 const waves = Array.from(category.querySelectorAll('[data-pricing-wave]'));
                 const tariffCell = row.querySelector('[data-cell="wave-tariff"]');
@@ -725,12 +754,26 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
                     if (waves.length === 0) {
                         tariffCell.textContent = '—';
                         periodCell.textContent = '—';
+                        const extraCell = row.querySelector('[data-cell="extra-tariff"]');
+                        const outsideCell = row.querySelector('[data-cell="outside-tariff"]');
+                        if (extraCell instanceof HTMLElement) extraCell.innerHTML = `<input type="number" min="0" step="1000" data-base-fee="extra_race_fee" aria-label="Tarif tambahan KU ${index + 1}" placeholder="Tarif dasar">`;
+                        if (outsideCell instanceof HTMLElement) outsideCell.innerHTML = `<input type="number" min="0" step="1000" data-base-fee="outside_race_fee" aria-label="Tarif luar kewajiban KU ${index + 1}" placeholder="Tarif dasar">`;
                     } else {
                         tariffCell.innerHTML = waves.map((wave, waveIndex) => {
                             const label = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[label]'))?.value || `Gelombang ${waveIndex + 1}`;
                             const fee = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[package_fee]'))?.value ?? '';
                             return `<div class="category-wave-line"><input type="text" data-wave="label" data-wave-index="${waveIndex}" value="${label}" aria-label="Nama gelombang ${waveIndex + 1} KU ${index + 1}" placeholder="Nama gelombang"><input type="number" min="0" step="1000" data-wave="package_fee" data-wave-index="${waveIndex}" value="${fee}" aria-label="Tarif ${label} KU ${index + 1}"></div>`;
                         }).join('');
+                        const extraCell = row.querySelector('[data-cell="extra-tariff"]');
+                        const outsideCell = row.querySelector('[data-cell="outside-tariff"]');
+                        const waveFee = (wave, field) => Array.from(wave.querySelectorAll('input'))
+                            .find((input) => input.getAttribute('name')?.endsWith(`[${field}]`))?.value ?? '';
+                        if (extraCell instanceof HTMLElement) {
+                            extraCell.innerHTML = `<input type="number" min="0" step="1000" data-base-fee="extra_race_fee" aria-label="Tarif tambahan KU ${index + 1}" placeholder="Tarif dasar">` + waves.map((wave, waveIndex) => `<label class="category-wave-line"><span>${waveFee(wave, 'label') || `Gelombang ${waveIndex + 1}`}</span><input type="number" min="0" step="1000" data-wave="extra_race_fee" data-wave-index="${waveIndex}" value="${waveFee(wave, 'extra_race_fee')}" aria-label="Tarif tambahan gelombang ${waveIndex + 1} KU ${index + 1}" placeholder="Ikuti dasar"></label>`).join('');
+                        }
+                        if (outsideCell instanceof HTMLElement) {
+                            outsideCell.innerHTML = `<input type="number" min="0" step="1000" data-base-fee="outside_race_fee" aria-label="Tarif luar kewajiban KU ${index + 1}" placeholder="Tarif dasar">` + waves.map((wave, waveIndex) => `<label class="category-wave-line"><span>${waveFee(wave, 'label') || `Gelombang ${waveIndex + 1}`}</span><input type="number" min="0" step="1000" data-wave="outside_race_fee" data-wave-index="${waveIndex}" value="${waveFee(wave, 'outside_race_fee')}" aria-label="Tarif luar gelombang ${waveIndex + 1} KU ${index + 1}" placeholder="Ikuti dasar"></label>`).join('');
+                        }
                         periodCell.innerHTML = waves.map((wave, waveIndex) => {
                             const starts = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[starts_on]'))?.value ?? '';
                             const ends = Array.from(wave.querySelectorAll('input')).find((input) => input.getAttribute('name')?.endsWith('[ends_on]'))?.value ?? '';
@@ -749,7 +792,7 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
 
             if (categories.length === 0) {
                 const empty = document.createElement('tr');
-                empty.innerHTML = '<td colspan="11">Belum ada KU.</td>';
+                empty.innerHTML = '<td colspan="14">Belum ada KU.</td>';
                 tableBody.append(empty);
             }
         };
@@ -766,7 +809,21 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
             const category = categoryForRow(row);
             if (!(category instanceof HTMLElement)) return;
 
-            if (target.dataset.mirror) {
+            if (target.hasAttribute('data-base-fee')) {
+                const selector = target.dataset.baseFee === 'extra_race_fee' ? '[data-extra-race-fee]' : '[data-outside-race-fee]';
+                const original = category.querySelector(selector);
+                if (original instanceof HTMLInputElement) {
+                    original.value = target.value;
+                    original.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            } else if (target.hasAttribute('data-outside-race-value')) {
+                const option = Array.from(category.querySelectorAll('[data-outside-race-option]'))
+                    .find((input) => input.value === target.dataset.outsideRaceValue);
+                if (option instanceof HTMLInputElement) {
+                    option.checked = target.checked;
+                    option.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            } else if (target.dataset.mirror) {
                 if (target.dataset.mirror === '[data-eligibility-type]') {
                     const option = category.querySelector(`[data-eligibility-type="${target.value}"]`);
                     if (option instanceof HTMLInputElement) {

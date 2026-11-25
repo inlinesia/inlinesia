@@ -32,7 +32,7 @@
                 <span class="form-step">01</span>
                 <div><h2>KU (Kelompok Usia) dan kelayakan atlet</h2><p>Pilih tepat satu metode kelayakan: rentang tanggal lahir, tahun lahir, atau usia pada hari pertama kejuaraan.</p></div>
             </div>
-            <div class="category-table-editor" data-category-table>
+            <div class="category-table-editor" data-category-table data-event-races="{{ json_encode($event->races, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) }}">
                 <div class="category-table-toolbar">
                     <button class="category-rule-add" type="button" data-add-category>+ Tambah KU (Kelompok Usia)</button>
                 </div>
@@ -45,11 +45,14 @@
                                 <th scope="col" rowspan="2">Nama KU</th>
                                 <th scope="col" rowspan="2">Persyaratan usia</th>
                                 <th scope="col" rowspan="2" data-category-age-header>Rentang tanggal lahir</th>
-                                <th scope="col" rowspan="2">Mata lomba yang diizinkan</th>
-                                <th scope="col" rowspan="2">Wajib ikut berapa mata lomba</th>
+                                <th scope="col" rowspan="2">Mata lomba yang diwajibkan</th>
+                                <th scope="col" rowspan="2">Minimal mata lomba</th>
+                                <th scope="col" rowspan="2">Mata lomba di luar kewajiban</th>
                                 <th scope="col" rowspan="2">Batas peserta</th>
                                 <th scope="col" rowspan="2">Cakupan kuota</th>
-                                <th scope="col" rowspan="2">Tarif</th>
+                                <th scope="col" rowspan="2">Tarif paket</th>
+                                <th scope="col" rowspan="2">Tarif tambahan</th>
+                                <th scope="col" rowspan="2">Tarif mata lomba di luar kewajiban</th>
                                 <th scope="col" rowspan="2">Masa berlaku gelombang</th>
                             </tr>
                         </thead>
