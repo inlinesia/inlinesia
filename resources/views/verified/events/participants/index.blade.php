@@ -44,17 +44,17 @@
     @if ($canManage)
         @if ($summary = session('category_summary'))
             <div class="account-note event-category-summary" role="status">
-                <strong>Hasil pembagian kategori</strong>
+                <strong>Hasil pembagian KU</strong>
                 <ul>
-                    <li>{{ $summary['assigned'] }} peserta dipindahkan ke kategori otomatis.</li>
-                    <li>{{ $summary['unchanged'] }} peserta sudah berada di kategori yang benar.</li>
+                    <li>{{ $summary['assigned'] }} peserta dipindahkan ke KU otomatis.</li>
+                    <li>{{ $summary['unchanged'] }} peserta sudah berada di KU yang benar.</li>
                     <li>{{ $summary['awaiting_payment'] }} peserta masih menunggu pembayaran.</li>
                     <li>{{ $summary['incomplete'] }} peserta datanya belum lengkap.</li>
-                    <li>{{ $summary['no_match'] }} peserta tidak cocok dengan aturan kategori.</li>
+                    <li>{{ $summary['no_match'] }} peserta tidak cocok dengan aturan KU.</li>
                 </ul>
                 @if ($summary['unassigned'])
                     <details class="event-category-summary-details">
-                        <summary>Lihat {{ count($summary['unassigned']) }} peserta yang belum terkategori</summary>
+                        <summary>Lihat {{ count($summary['unassigned']) }} peserta yang belum memiliki KU</summary>
                         <ul>
                             @foreach ($summary['unassigned'] as $row)
                                 <li>{{ $row['participant_name'] }} — {{ $row['reason'] }}</li>
@@ -65,15 +65,15 @@
             </div>
         @endif
 
-        <section class="event-category-assign" aria-label="Pembagian kategori peserta">
+        <section class="event-category-assign" aria-label="Pembagian KU peserta">
             <div class="event-category-assign-copy">
-                <span class="account-eyebrow">PEMBAGIAN KATEGORI</span>
-                <h2>Siapa masuk kategori mana</h2>
-                <p>Aturan kategori memakai tanggal lahir, gender, dan mata lomba yang dipilih atlet — sama persis seperti saat pembayaran dikonfirmasi satu per satu. Hanya peserta yang pembayarannya sudah terkonfirmasi yang ikut dibagi.</p>
+                <span class="account-eyebrow">PEMBAGIAN KU</span>
+                <h2>Siapa masuk KU mana</h2>
+                <p>Aturan KU memakai tanggal lahir, gender, dan mata lomba yang dipilih atlet — sama persis seperti saat pembayaran dikonfirmasi satu per satu. Hanya peserta yang pembayarannya sudah terkonfirmasi yang ikut dibagi.</p>
             </div>
 
             @if ($categoryBreakdown)
-                <ul class="event-category-distribution" aria-label="Distribusi kategori saat ini">
+                <ul class="event-category-distribution" aria-label="Distribusi KU saat ini">
                     @foreach ($categoryBreakdown as $categoryName => $total)
                         <li>
                             <strong>{{ $categoryName }}</strong>
@@ -85,12 +85,12 @@
 
             <form method="POST" action="{{ route('events.registrations.categories.assign', $event) }}" class="event-category-assign-action">
                 @csrf
-                <button class="submission-approve" type="submit">Bagikan kategori otomatis</button>
+                <button class="submission-approve" type="submit">Bagikan KU otomatis</button>
             </form>
 
             @if ($paidWithoutCategory > 0)
                 <p class="event-category-assign-warning" role="alert">
-                    {{ $paidWithoutCategory }} peserta sudah lunas tetapi belum memiliki kategori. Tekan tombol di atas sebelum melepas daftar peserta ke publik.
+                    {{ $paidWithoutCategory }} peserta sudah lunas tetapi belum memiliki KU. Tekan tombol di atas sebelum melepas daftar peserta ke publik.
                 </p>
             @endif
         </section>
@@ -129,7 +129,7 @@
                 ['key' => 'kontak', 'label' => 'Kontak', 'sortable' => true, 'printable' => false],
                 ['key' => 'wali', 'label' => 'Wali', 'sortable' => false, 'printable' => false],
                 ['key' => 'klub', 'label' => 'Klub', 'sortable' => true, 'printable' => true],
-                ['key' => 'kategori', 'label' => 'Kategori', 'sortable' => true, 'printable' => true],
+                ['key' => 'kategori', 'label' => 'KU (Kelompok Usia)', 'sortable' => true, 'printable' => true],
                 ['key' => 'mata-lomba', 'label' => 'Mata lomba', 'sortable' => false, 'printable' => true],
                 ['key' => 'tahun', 'label' => 'Tahun lahir', 'sortable' => true, 'printable' => false],
                 ['key' => 'pembayaran', 'label' => 'Pembayaran', 'sortable' => true, 'printable' => false],
@@ -155,7 +155,7 @@
 
             @if ($canManage)
                 <a class="account-edit-link event-roster-group-toggle" href="{{ route('events.registrations.index', array_merge(['event' => $event], $rosterQuery, ['group' => $groupByCategory ? '0' : '1'])) }}">
-                    {{ $groupByCategory ? 'Tampilkan sebagai satu tabel' : 'Kelompokkan per kategori' }}
+                    {{ $groupByCategory ? 'Tampilkan sebagai satu tabel' : 'Kelompokkan per KU' }}
                     <span aria-hidden="true">→</span>
                 </a>
             @endif
@@ -172,10 +172,10 @@
                 </label>
 
                 <label class="event-roster-filter">
-                    <span>Kategori</span>
+                    <span>KU (Kelompok Usia)</span>
                     <select name="category">
                         <option value="">Semua</option>
-                        <option value="__none__" @selected($filters['category'] === '__none__')>Belum berkategori</option>
+                        <option value="__none__" @selected($filters['category'] === '__none__')>Belum memiliki KU</option>
                         @foreach ($filterOptions['categories'] as $category)
                             <option value="{{ $category }}" @selected($filters['category'] === $category)>{{ $category }}</option>
                         @endforeach
@@ -244,8 +244,8 @@
                 {{-- Pengelola memilih kategori mana yang ikut dicetak atau
                      di-export PDF. Kategori nonaktif ikut tersembunyi di layar,
                      jadi yang tampil di kertas memang hanya yang aktif. --}}
-                <div class="event-roster-category-toggles no-print" role="group" aria-label="Kategori yang ikut dicetak">
-                    <span class="event-roster-category-toggles-label">Kategori dicetak</span>
+                <div class="event-roster-category-toggles no-print" role="group" aria-label="KU yang ikut dicetak">
+                    <span class="event-roster-category-toggles-label">KU dicetak</span>
                     <div class="event-roster-category-toggles-list">
                         @foreach ($categoriesOnPage as $category)
                             <button
@@ -253,10 +253,10 @@
                                 type="button"
                                 aria-pressed="true"
                                 data-category-toggle="{{ $category }}"
-                            >{{ $category !== '' ? $category : 'Belum berkategori' }}</button>
+                            >{{ $category !== '' ? $category : 'Belum memiliki KU' }}</button>
                         @endforeach
                     </div>
-                    <small>Hanya kategori aktif yang ikut dicetak atau di-export PDF.</small>
+                    <small>Hanya KU aktif yang ikut dicetak atau di-export PDF.</small>
                 </div>
             @endif
 
@@ -293,7 +293,7 @@
                                 @php($previousCategory = $registration->category)
                                 <tr class="event-roster-group-row" data-category="{{ $registration->category }}">
                                     <th scope="colgroup" colspan="{{ count($rosterColumns) + 1 }}">
-                                        {{ $registration->category ?: 'Belum berkategori' }}
+                                        {{ $registration->category ?: 'Belum memiliki KU' }}
                                         <span class="event-roster-group-meta">
                                             {{ $registrations->getCollection()->where('category', $registration->category)->count() }} peserta di halaman ini
                                         </span>
@@ -340,7 +340,7 @@
                                 </td>
                                 <td data-label="Wali" class="event-print-optional">{{ $registration->guardian_name ?: '—' }}</td>
                                 <td data-label="Klub">{{ $registration->club_name ?: 'Mandiri' }}</td>
-                                <td data-label="Kategori">{{ $registration->category ?: '—' }}</td>
+                                <td data-label="KU (Kelompok Usia)">{{ $registration->category ?: '—' }}</td>
                                 <td data-label="Mata lomba">{{ implode(', ', $registration->races) }}</td>
                                 <td data-label="Tahun lahir" class="event-print-optional">{{ $registration->birth_year }}</td>
                                 <td data-label="Pembayaran" class="event-roster-payment-cell event-print-optional">
@@ -465,7 +465,7 @@
                                 </td>
                                 <td data-label="Biaya" class="event-roster-fee-cell">
                                     @if ($registration->fee_total === null)
-                                        <span class="event-roster-fee-empty">{{ $registration->category ? 'Belum ada harga' : 'Menunggu kategori' }}</span>
+                                        <span class="event-roster-fee-empty">{{ $registration->category ? 'Belum ada harga' : 'Menunggu KU' }}</span>
                                     @else
                                         <strong>{{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_total) }}</strong>
                                         @if ($registration->amountPaid() > 0 && $registration->amountDue() > 0)
@@ -476,7 +476,7 @@
                                             <small>Tambahan {{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_breakdown['extra_race_total']) }}</small>
                                         @endif
                                         @if (($registration->fee_breakdown['outside_race_total'] ?? 0) > 0)
-                                            <small>Luar kategori {{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_breakdown['outside_race_total']) }}</small>
+                                            <small>Luar KU {{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_breakdown['outside_race_total']) }}</small>
                                         @endif
                                         @if (($registration->fee_breakdown['discount_total'] ?? 0) > 0)
                                             <small>Diskon −{{ \App\Services\CategoryFeeCalculator::rupiah($registration->fee_breakdown['discount_total']) }}</small>
@@ -519,7 +519,7 @@
             </div>
 
             {{-- Peserta boleh menyaring daftar yang sudah dirilis, tetapi hanya
-                 pada kolom yang memang mereka lihat: kategori, mata lomba, dan
+                 pada kolom yang memang mereka lihat: KU, mata lomba, dan
                  gender. Kolom pembayaran tidak ikut disaring karena tidak
                  ditampilkan kepada mereka. --}}
             <form method="GET" action="{{ route('events.registrations.index', $event) }}" class="event-roster-filters no-print">
@@ -529,10 +529,10 @@
                 </label>
 
                 <label class="event-roster-filter">
-                    <span>Kategori</span>
+                    <span>KU (Kelompok Usia)</span>
                     <select name="category">
                         <option value="">Semua</option>
-                        <option value="__none__" @selected($filters['category'] === '__none__')>Belum berkategori</option>
+                        <option value="__none__" @selected($filters['category'] === '__none__')>Belum memiliki KU</option>
                         @foreach ($filterOptions['categories'] as $category)
                             <option value="{{ $category }}" @selected($filters['category'] === $category)>{{ $category }}</option>
                         @endforeach
@@ -571,7 +571,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Nama</th>
-                            <th scope="col">Kategori</th>
+                            <th scope="col">KU (Kelompok Usia)</th>
                             <th scope="col">Mata lomba</th>
                             <th scope="col">Klub</th>
                         </tr>
@@ -583,7 +583,7 @@
                                 @php($previousCategory = $registration->category)
                                 <tr class="event-roster-group-row">
                                     <th scope="colgroup" colspan="4">
-                                        {{ $registration->category ?: 'Belum berkategori' }}
+                                        {{ $registration->category ?: 'Belum memiliki KU' }}
                                         <span class="event-roster-group-meta">
                                             {{ $registrations->getCollection()->where('category', $registration->category)->count() }} peserta di halaman ini
                                         </span>
@@ -592,7 +592,7 @@
                             @endif
                             <tr>
                                 <th scope="row" data-label="Nama">{{ $registration->participant_name }}</th>
-                                <td data-label="Kategori">{{ $registration->category }}</td>
+                                <td data-label="KU (Kelompok Usia)">{{ $registration->category }}</td>
                                 <td data-label="Mata lomba">{{ implode(', ', $registration->races) }}</td>
                                 <td data-label="Klub">{{ $registration->club_name ?: 'Mandiri' }}</td>
                             </tr>

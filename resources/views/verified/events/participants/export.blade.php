@@ -36,8 +36,8 @@
 
         @if ($canManage && $categories !== [])
             {{-- Hanya kategori aktif yang ikut tercetak atau disimpan sebagai PDF. --}}
-            <div class="event-roster-category-toggles no-print" role="group" aria-label="Kategori yang ikut dicetak">
-                <span class="event-roster-category-toggles-label">Kategori dicetak</span>
+            <div class="event-roster-category-toggles no-print" role="group" aria-label="KU yang ikut dicetak">
+                <span class="event-roster-category-toggles-label">KU dicetak</span>
                 <div class="event-roster-category-toggles-list">
                     @foreach ($categories as $category)
                         <button
@@ -45,10 +45,10 @@
                             type="button"
                             aria-pressed="true"
                             data-category-toggle="{{ $category }}"
-                        >{{ $category !== '' ? $category : 'Belum berkategori' }}</button>
+                        >{{ $category !== '' ? $category : 'Belum memiliki KU' }}</button>
                     @endforeach
                 </div>
-                <small>Hanya kategori aktif yang ikut dicetak atau di-export PDF.</small>
+                <small>Hanya KU aktif yang ikut dicetak atau di-export PDF.</small>
             </div>
         @endif
 
@@ -69,7 +69,7 @@
                             <th scope="col">Wali</th>
                         @endif
                         <th scope="col">Klub</th>
-                        <th scope="col">Kategori</th>
+                        <th scope="col">KU (Kelompok Usia)</th>
                         <th scope="col">Mata lomba</th>
                         @if ($canManage)
                             <th scope="col">Tahun lahir</th>
@@ -88,7 +88,7 @@
                             @php($previousCategory = $registration->category)
                             <tr class="event-roster-group-row" data-category="{{ $registration->category }}">
                                 <th scope="colgroup" colspan="{{ $canManage ? 17 : 6 }}">
-                                    {{ $registration->category ?: 'Belum berkategori' }}
+                                    {{ $registration->category ?: 'Belum memiliki KU' }}
                                     <span class="event-roster-group-meta">
                                         {{ $registrations->where('category', $registration->category)->count() }} peserta
                                     </span>
@@ -131,7 +131,7 @@
                                 <td data-label="Wali">{{ $registration->guardian_name ?: '—' }}</td>
                             @endif
                             <td data-label="Klub">{{ $registration->club_name ?: 'Mandiri' }}</td>
-                            <td data-label="Kategori">{{ $registration->category ?: '—' }}</td>
+                            <td data-label="KU (Kelompok Usia)">{{ $registration->category ?: '—' }}</td>
                             <td data-label="Mata lomba">{{ implode(', ', $registration->races) }}</td>
                             @if ($canManage)
                                 <td data-label="Tahun lahir">{{ $registration->birth_year }}</td>

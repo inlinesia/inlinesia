@@ -107,7 +107,7 @@ class EventListingTest extends TestCase
             ->assertSee('Pengajuan Menunggu')
             ->assertSee(route('admin.event-submissions.approve', $pendingEvent), false)
             ->assertDontSee('Ubah event')
-            ->assertDontSee('Atur kategori')
+            ->assertDontSee('Atur KU')
             ->assertDontSee('Hapus event')
             ->assertDontSee('Tambah event')
             ->assertDontSee(route('event-applications.edit', $pendingEvent), false);

@@ -46,7 +46,7 @@
                         @if ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast())
                             <span class="listing-status listing-status-preparing">Pendaftaran ditutup</span>
                         @elseif (empty($event->category_rules))
-                            <span class="listing-status listing-status-preparing">Kategori disiapkan</span>
+                            <span class="listing-status listing-status-preparing">KU disiapkan</span>
                         @elseif (! $event->registration_open)
                             <span class="listing-status listing-status-preparing">Pendaftaran segera dibuka</span>
                         @else
@@ -72,7 +72,7 @@
                     @elseif ($registrationIsOpen)
                         <a class="listing-register-link" href="{{ route('login') }}">Masuk untuk mendaftar <span aria-hidden="true">→</span></a>
                     @else
-                        <span class="guest-event-closed">{{ empty($event->category_rules) ? 'Kategori disiapkan pengelola' : ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast() ? 'Pendaftaran ditutup' : 'Pendaftaran segera dibuka') }}</span>
+                        <span class="guest-event-closed">{{ empty($event->category_rules) ? 'KU disiapkan pengelola' : ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast() ? 'Pendaftaran ditutup' : 'Pendaftaran segera dibuka') }}</span>
                     @endif
                     @if (($isVerified || $isAdmin) && $event->isParticipantListReleased())
                         <a class="listing-roster-link" href="{{ route('events.registrations.index', $event) }}">Lihat peserta <span aria-hidden="true">→</span></a>

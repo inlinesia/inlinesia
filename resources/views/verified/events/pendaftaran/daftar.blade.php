@@ -14,7 +14,7 @@
         <a class="account-back-link" href="{{ route('events.index') }}">← Kembali ke daftar lomba</a>
     </section>
     <section class="account-card">
-        <div class="account-card-heading"><span class="account-eyebrow">AKUN {{ auth()->user()->email }}</span><h2>Biodata atlet</h2><p>Kategori baru ditetapkan setelah {{ $event->is_free ? 'pendaftaran dikonfirmasi' : 'pembayaran dikonfirmasi' }} oleh pemilik kejuaraan, berdasarkan tanggal lahir, gender, mata lomba, dan aturan kategori. Setelah dikirim, data hanya dapat diubah pemilik kejuaraan.</p></div>
+        <div class="account-card-heading"><span class="account-eyebrow">AKUN {{ auth()->user()->email }}</span><h2>Biodata atlet</h2><p>KU (Kelompok Usia) baru ditetapkan setelah {{ $event->is_free ? 'pendaftaran dikonfirmasi' : 'pembayaran dikonfirmasi' }} oleh pemilik kejuaraan, berdasarkan tanggal lahir, gender, mata lomba, dan aturan KU. Setelah dikirim, data hanya dapat diubah pemilik kejuaraan.</p></div>
         @if ($errors->any())<div class="account-errors" role="alert"><strong>Periksa kembali data pendaftaran.</strong><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
         <div class="event-payment-instructions">
             <strong>{{ $event->is_free ? 'Pendaftaran gratis' : 'Biaya & ketentuan pembayaran' }}</strong>
@@ -76,21 +76,21 @@
             </label>
             <label>Tanggal lahir <input name="date_of_birth" type="date" value="{{ old('date_of_birth') }}" max="{{ today()->format('Y-m-d') }}" required id="registration-dob">
                 <small class="field-hint" data-identity-local>Terisi otomatis dari NIK dan dikunci, karena tanggal lahir merupakan bagian dari NIK. Jika ada perbedaan, silakan periksa kembali NIK Anda.</small>
-                <small class="field-hint" data-identity-foreign hidden>Warga negara lain diisi sendiri. Tanggal lahir ini yang menentukan kategori umur.</small>
+                <small class="field-hint" data-identity-foreign hidden>Warga negara lain diisi sendiri. Tanggal lahir ini yang menentukan KU (Kelompok Usia).</small>
             </label>
             <label>Alamat lengkap terbaru <textarea name="address" rows="3" maxlength="1000" autocomplete="street-address" required>{{ old('address') }}</textarea><small class="field-hint">Terisi otomatis dari wilayah NIK bila NIK tersedia, dan tetap dapat disunting bila peserta berpindah domisili.</small></label>
             <label>Nama orang tua / wali <input name="guardian_name" value="{{ old('guardian_name', auth()->user()->role === 'individual' ? '' : auth()->user()->name) }}" maxlength="120" required></label>
             <label>WhatsApp yang bisa dihubungi <input name="whatsapp" type="tel" autocomplete="tel" value="{{ old('whatsapp', auth()->user()->phone) }}" maxlength="40" required></label>
             <label>Klub <span class="optional-label">opsional</span><input name="club_name" value="{{ old('club_name', auth()->user()->organization) }}" maxlength="180"></label>
-            <p class="category-assignment-preview" data-category-assignment-preview aria-live="polite">Kategori atlet akan ditetapkan setelah {{ $event->is_free ? 'pendaftaran dikonfirmasi' : 'pembayaran dikonfirmasi' }}.</p>
-            <fieldset class="role-options" data-category-type="paket"><legend>Mata Lomba <span class="optional-label">(Pilih sesuai kategori)</span></legend>
-                <small class="field-hint">Pilih mata lomba yang ingin diikuti. Kategori, mata lomba paket (wajib), dan mata lomba di luar kategori beserta harganya akan muncul otomatis setelah Anda mengisi jenis kelamin dan tanggal lahir.</small>
+            <p class="category-assignment-preview" data-category-assignment-preview aria-live="polite">KU atlet akan ditetapkan setelah {{ $event->is_free ? 'pendaftaran dikonfirmasi' : 'pembayaran dikonfirmasi' }}.</p>
+            <fieldset class="role-options" data-category-type="paket"><legend>Mata Lomba <span class="optional-label">(Pilih sesuai KU)</span></legend>
+                <small class="field-hint">Pilih mata lomba yang ingin diikuti. KU (Kelompok Usia), mata lomba paket (wajib), dan mata lomba di luar KU beserta harganya akan muncul otomatis setelah Anda mengisi jenis kelamin dan tanggal lahir.</small>
                 @foreach ($event->races as $race)
                     <label class="role-option"><input type="checkbox" name="races[]" value="{{ $race }}" @checked(in_array($race, old('races', []), true)) required><span><strong>{{ $race }}</strong></span></label>
                 @endforeach
             </fieldset>
             @if ($hasOutsideObligation)
-                <p class="field-hint" style="margin-top:-8px;">Mata lomba yang termasuk <strong>di luar kategori</strong> (tambahan) dikenakan biaya per mata lomba terpisah dari harga paket. Rinciannya muncul di pratinjau kategori setelah Anda memilih mata lomba.</p>
+                <p class="field-hint" style="margin-top:-8px;">Mata lomba yang termasuk <strong>di luar KU</strong> (tambahan) dikenakan biaya per mata lomba terpisah dari harga paket. Rinciannya muncul di pratinjau KU setelah Anda memilih mata lomba.</p>
             @endif
             <button class="account-submit" type="submit">Kirim pendaftaran <span aria-hidden="true">→</span></button>
         </form>

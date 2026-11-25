@@ -91,13 +91,13 @@
         </div>
     </section>
 
-    {{-- Rincian pengeluaran per kategori --}}
+    {{-- Rincian pengeluaran per KU --}}
     @if ($expenseBreakdown->isNotEmpty())
-        <section class="finance-breakdown" aria-label="Rincian pengeluaran per kategori">
+        <section class="finance-breakdown" aria-label="Rincian pengeluaran per KU">
             <div class="finance-chart-heading">
                 <div>
                     <span class="form-step">02</span>
-                    <h2>Pengeluaran per kategori</h2>
+                    <h2>Pengeluaran per KU</h2>
                 </div>
             </div>
             <ul class="finance-breakdown-list">
@@ -130,7 +130,7 @@
                 </select>
             </div>
             <div class="form-field">
-                <label for="finance-category">Kategori <span>*</span></label>
+                <label for="finance-category">KU (Kelompok Usia) <span>*</span></label>
                 <select id="finance-category" name="category" required data-finance-category>
                     @foreach (\App\Models\EventFinanceTransaction::categoriesFor(old('type', 'income')) as $value => $label)
                         <option value="{{ $value }}" @selected(old('category') === $value)>{{ $label }}</option>
@@ -214,7 +214,7 @@
                         <tr>
                             <th scope="col">Tanggal</th>
                             <th scope="col">Keterangan</th>
-                            <th scope="col">Kategori</th>
+                            <th scope="col">KU (Kelompok Usia)</th>
                             <th scope="col" class="finance-numeric">Nominal</th>
                             <th scope="col"><span class="sr-only">Aksi</span></th>
                         </tr>
@@ -227,7 +227,7 @@
                                     <strong>{{ $transaction->description }}</strong>
                                     @if ($transaction->notes)<small>{{ $transaction->notes }}</small>@endif
                                 </td>
-                                <td data-label="Kategori"><span class="finance-badge is-{{ $transaction->type }}">{{ $transaction->categoryLabel() }}</span></td>
+                                <td data-label="KU (Kelompok Usia)"><span class="finance-badge is-{{ $transaction->type }}">{{ $transaction->categoryLabel() }}</span></td>
                                 <td data-label="Nominal" class="finance-numeric">{{ $transaction->isIncome() ? '+' : '−' }} Rp {{ number_format((int) $transaction->amount, 0, ',', '.') }}</td>
                                 <td class="finance-row-actions">
                                     <details class="finance-edit">

@@ -29,7 +29,7 @@
                 <details class="submission-details"><summary>Lihat seluruh informasi pengajuan</summary>
                     <div class="submission-description">
                         <p><strong>Peraturan:</strong> {{ $event->regulations }}</p><p><strong>Official:</strong> {{ $event->officials }}</p><p><strong>Kondisi venue:</strong> {{ $event->venue_conditions }}</p>
-                        <p><strong>Kategori:</strong> {{ implode(', ', $event->categories) }}</p><p><strong>Mata lomba:</strong> {{ implode(', ', $event->races) }}</p>
+                        <p><strong>KU:</strong> {{ implode(', ', $event->categories) }}</p><p><strong>Mata lomba:</strong> {{ implode(', ', $event->races) }}</p>
                         <p><strong>Pendaftaran:</strong> {{ $event->registration_info }}</p><p><strong>Biaya:</strong> {{ $event->fees }}</p><p><strong>Hadiah:</strong> {{ $event->awards }}</p><p><strong>Force majeure:</strong> {{ $event->force_majeure }}</p>
                         <p><strong>Jadwal:</strong></p><ul>@foreach ($event->schedule as $item)<li>{{ $item }}</li>@endforeach</ul>
                     </div>

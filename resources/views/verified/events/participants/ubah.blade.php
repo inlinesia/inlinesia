@@ -24,7 +24,7 @@
             <div>
                 <span class="account-eyebrow">{{ $event->name }}</span>
                 <h2 id="ubah-peserta-title-{{ $registration->id }}">Ubah data atlet</h2>
-                <p>{{ $registration->participant_name }} · kategori: {{ $registration->category ?: 'Menunggu konfirmasi pembayaran' }}</p>
+                <p>{{ $registration->participant_name }} · KU: {{ $registration->category ?: 'Menunggu konfirmasi pembayaran' }}</p>
             </div>
             <button class="event-registration-modal-close" type="button" data-registration-modal-close aria-label="Tutup">×</button>
         </header>
@@ -88,7 +88,7 @@
                 <textarea name="address" rows="3" maxlength="1000" autocomplete="street-address" required>{{ $value('address', $registration->address) }}</textarea>
             </label>
 
-            <!-- Kategori Paket (Wajibikuti) -->
+            <!-- KU Paket (Wajibikuti) -->
 <fieldset class="role-options event-registration-races" data-category-type="paket">
     <legend>Mata Lomba Paket <span class="optional-label">(Wajibikuti)</span></legend>
     @foreach ($event->races as $race)
@@ -99,11 +99,11 @@
     @endforeach
 </fieldset>
 
-<!-- Kategori Tambahan (Luar Kategori) -->
+<!-- KU Tambahan (Luar KU) -->
 @if (! empty($registration->category) && ! empty($registration->category->outside_obligation))
     @if ($registration->category->outside_obligation)
         <fieldset class="role-options event-registration-races" data-category-type="tambahan">
-            <legend>Mata Lomba Tambahan <span class="optional-label">(Luar Kategori)</span></legend>
+            <legend>Mata Lomba Tambahan <span class="optional-label">(Luar KU)</span></legend>
             @foreach ($event->races as $race)
                 <label class="role-option">
                     <input type="checkbox" name="races_tambahan[]" value="{{ $race }}" @checked(in_array($race, old('races_tambahan', []), true))]

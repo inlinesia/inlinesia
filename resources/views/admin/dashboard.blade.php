@@ -122,7 +122,7 @@
                     <div class="module-intro"><span class="section-kicker">SATU TEMPAT UNTUK SEMUANYA</span><h2>Semua bagian lomba, saling terhubung.</h2></div>
                     <div class="module-list">
                         <div class="module-item" id="hasil"><span class="module-icon module-medal">★</span><span><strong>Hasil &amp; podium</strong><small>Catat hasil dan juara</small></span><span class="module-arrow">↗</span></div>
-                        <div class="module-item"><span class="module-icon module-race">⌁</span><span><strong>Mata lomba &amp; kategori</strong><small>Atur nomor dan kelompok usia</small></span><span class="module-arrow">↗</span></div>
+                        <div class="module-item"><span class="module-icon module-race">⌁</span><span><strong>Mata lomba &amp; KU</strong><small>Atur nomor dan kelompok usia</small></span><span class="module-arrow">↗</span></div>
                         <div class="module-item" id="keuangan"><span class="module-icon module-money">Rp</span><span><strong>Keuangan</strong><small>Biaya, pembayaran, laporan</small></span><span class="module-arrow">↗</span></div>
                     </div>
                 </section>

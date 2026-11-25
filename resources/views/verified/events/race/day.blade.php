@@ -37,14 +37,14 @@
         </div>
     @endif
 
-    <nav class="race-category-tabs" aria-label="Pilih kategori">
+    <nav class="race-category-tabs" aria-label="Pilih KU">
         @foreach ($categories as $categoryName)
             <a class="race-category-tab {{ $categoryName === $category ? 'is-active' : '' }}"
                href="{{ route('owner.events.race.day', [$event, 'kategori' => $categoryName]) }}">{{ $categoryName }}</a>
         @endforeach
     </nav>
 
-    {{-- Babak dibagi per mata lomba, bukan hanya per kategori: atlet yang
+    {{-- Babak dibagi per mata lomba, bukan hanya per KU: atlet yang
          memilih dua mata lomba tidak bisa balapan bersamaan. --}}
     <nav class="race-category-tabs race-mata-lomba-tabs" aria-label="Pilih mata lomba">
         @foreach ($races as $raceName)
@@ -53,7 +53,7 @@
         @endforeach
     </nav>
 
-    <section class="race-format-summary" aria-label="Aturan kategori terpilih">
+    <section class="race-format-summary" aria-label="Aturan KU terpilih">
         <span class="race-format-summary-item"><small>Mata lomba</small><strong>{{ $race }}</strong></span>
         <span class="race-format-summary-item"><small>Per babak</small><strong>{{ $setting->effectiveRunnersPerHeat($entrants) }} orang</strong></span>
         <span class="race-format-summary-item"><small>Per grup</small><strong>{{ $setting->effectiveAthletesPerGroup($entrants) }} atlet</strong></span>
@@ -199,7 +199,7 @@
 
             <div class="race-standings-table-wrap">
                 <table class="account-table race-standings-table">
-                    <caption class="sr-only">Papan hasil kategori {{ $category }} mata lomba {{ $race }}</caption>
+                    <caption class="sr-only">Papan hasil KU {{ $category }} mata lomba {{ $race }}</caption>
                     <thead>
                         <tr>
                             <th scope="col">#</th>

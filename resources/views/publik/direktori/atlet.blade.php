@@ -62,7 +62,7 @@
             <label>Tanggal lahir
                 <input name="date_of_birth" type="date" value="{{ old('date_of_birth') }}" max="{{ today()->format('Y-m-d') }}" required id="directory-dob">
                 <small class="field-hint" data-identity-local>Terisi otomatis dari NIK dan dikunci.</small>
-                <small class="field-hint" data-identity-foreign hidden>Tanggal lahir ini yang menentukan kategori umur saat mendaftar lomba.</small>
+                <small class="field-hint" data-identity-foreign hidden>Tanggal lahir ini yang menentukan KU (Kelompok Usia) saat mendaftar lomba.</small>
             </label>
             <label>Alamat <span class="optional-label">opsional</span>
                 <textarea name="address" rows="2" maxlength="1000">{{ old('address') }}</textarea>

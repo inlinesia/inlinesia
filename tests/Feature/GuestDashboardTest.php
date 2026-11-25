@@ -42,7 +42,7 @@ class GuestDashboardTest extends TestCase
             ->assertSee('Gender')
             ->assertSee('Tanggal lahir')
             ->assertSee('KU', false)
-            ->assertSee('Kategori')
+            ->assertSee('KU (Kelompok Usia)')
             ->assertSee('Status bayar')
             ->assertSee('Tambah peserta')
             ->assertSee('Belum bayar')

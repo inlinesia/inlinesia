@@ -95,7 +95,7 @@ class AdminEventFormTest extends TestCase
         $this->actingAs($admin)
             ->get(route('event-applications.create'))
             ->assertOk()
-            ->assertSee('Kategori & nomor lomba')
+            ->assertSee('KU (Kelompok Usia) & nomor lomba')
             ->assertSee('name="categories"', false)
             ->assertSee('name="races"', false)
             ->assertDontSee('name="age_groups"', false)

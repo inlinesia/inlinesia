@@ -140,7 +140,7 @@ class EventApplicationTest extends TestCase
             ->assertOk()
             ->assertSee('Pengajuan event “Kediri Roller Cup” disetujui dan telah tampil di daftar lomba.')
             ->assertSee('Disetujui · tampil di daftar lomba')
-            ->assertSee('Atur kategori');
+            ->assertSee('Atur KU');
 
         $this->actingAs($admin)
             ->get(route('admin.dashboard'))
@@ -236,7 +236,7 @@ class EventApplicationTest extends TestCase
             ->assertSee('Junior Putra')
             ->assertSee('NIK')
             ->assertSee('Nama orang tua / wali')
-            ->assertSee('Kategori atlet akan ditetapkan setelah');
+            ->assertSee('KU atlet akan ditetapkan setelah');
 
         $this->post(route('events.registration.store', $event), [
             'nik' => $this->nikFor('male', now()->subYears(12)->format('Y-m-d'), 1),
@@ -341,8 +341,8 @@ class EventApplicationTest extends TestCase
         $this->actingAs($owner)
             ->get(route('guest.dashboard'))
             ->assertOk()
-            ->assertSee('Atur kategori')
-            ->assertSee('2 kategori');
+            ->assertSee('Atur KU')
+            ->assertSee('2 KU');
     }
 
     public function test_registration_uses_age_on_the_first_event_day_and_enforces_both_bounds(): void
@@ -722,7 +722,7 @@ class EventApplicationTest extends TestCase
             ->assertDontSee('Pengajuan Menunggu')
             ->assertDontSee('Ubah event')
             ->assertDontSee('Hapus event')
-            ->assertDontSee('Atur kategori');
+            ->assertDontSee('Atur KU');
     }
 
     public function test_event_owner_can_delete_an_event_and_its_registrations(): void

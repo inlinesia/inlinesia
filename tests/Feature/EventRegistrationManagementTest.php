@@ -265,7 +265,7 @@ class EventRegistrationManagementTest extends TestCase
             ->get(route('events.registrations.index', $event))
             ->assertOk()
             ->assertSee('data-category-toggle="Junior Putra"', false)
-            ->assertSee('Hanya kategori aktif yang ikut dicetak');
+            ->assertSee('Hanya KU aktif yang ikut dicetak');
 
         $this->actingAs($participant)
             ->get(route('events.registrations.index', $event))
@@ -847,7 +847,7 @@ class EventRegistrationManagementTest extends TestCase
         $this->actingAs($owner)
             ->get(route('events.registrations.index', $event))
             ->assertOk()
-            ->assertSee('Bagikan kategori otomatis')
+            ->assertSee('Bagikan KU otomatis')
             ->assertSee(route('events.registrations.categories.assign', $event), false);
 
         $this->actingAs($owner)
@@ -1294,7 +1294,7 @@ class EventRegistrationManagementTest extends TestCase
             ->assertDontSee('event-roster-group-row');
     }
 
-    public function test_peserta_hanya_melihat_tombol_daftar_peserta_untuk_event_yang_dirilis(): void
+    public function test_dasbor_peserta_tidak_memuat_tautan_daftar_peserta_lagi(): void
     {
         $owner = User::factory()->create(['role' => 'club_manager']);
         $participant = User::factory()->create(['role' => 'individual']);
@@ -1307,14 +1307,15 @@ class EventRegistrationManagementTest extends TestCase
             ->assertOk()
             ->assertDontSee('Lihat daftar peserta');
 
+        // Tautan daftar peserta sengaja dihapus dari dasbor, termasuk setelah
+        // daftar dirilis, supaya tabel pendaftaran tetap ringkas.
         $event->update(['participants_published' => true, 'participants_published_at' => now()]);
 
         $this->actingAs($participant)
             ->get(route('guest.dashboard'))
             ->assertOk()
-            ->assertSee('Lihat daftar peserta');
+            ->assertDontSee('Lihat daftar peserta');
 
-        // Akun yang tidak mendaftar tidak boleh mendapat tautan tersebut.
         $this->actingAs($bystander)
             ->get(route('guest.dashboard'))
             ->assertOk()

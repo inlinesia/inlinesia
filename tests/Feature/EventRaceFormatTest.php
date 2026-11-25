@@ -1416,7 +1416,7 @@ class EventRaceFormatTest extends TestCase
             ->get(route('owner.events.race.format', $event))
             ->assertOk()
             ->assertSee('Susunan urutan lomba')
-            ->assertSee('Rilis kategori ini')
+            ->assertSee('Rilis KU ini')
             ->assertSee('Grup 1');
 
         $this->actingAs($owner)

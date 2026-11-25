@@ -109,10 +109,10 @@
         </section>
 
         <section class="form-section">
-            <div class="form-section-heading"><span class="form-step">03</span><div><h2>Kategori &amp; nomor lomba</h2><p>Tulis satu pilihan per baris. Rentang usia tiap kategori diatur di halaman pengaturan kategori.</p></div></div>
+            <div class="form-section-heading"><span class="form-step">03</span><div><h2>KU (Kelompok Usia) &amp; nomor lomba</h2><p>Tulis satu pilihan per baris. Rentang usia tiap KU diatur di halaman pengaturan KU.</p></div></div>
             <div class="form-fields">
                 <div class="form-field form-field-full">
-                    <x-preset-picker name="categories" label="Kategori peserta" :rows="6" :maxlength="5000"
+                    <x-preset-picker name="categories" label="KU (Kelompok Usia) peserta" :rows="6" :maxlength="5000"
                         :value="$lines('categories')" :options="$presets['categories']['options']"
                         :custom="$presets['categories']['custom']"
                         hint="Contoh: Beginner putra/putri." />

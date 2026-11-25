@@ -31,7 +31,7 @@
         <div class="listing-empty-state">
             <span aria-hidden="true">🏁</span>
             <h3>Belum ada urutan lomba yang dirilis</h3>
-            <p>Panitia akan menampilkan urutan lomba di sini setelah kategori disusun dan dirilis.</p>
+            <p>Panitia akan menampilkan urutan lomba di sini setelah KU disusun dan dirilis.</p>
         </div>
     @else
         @foreach ($sections as $section)

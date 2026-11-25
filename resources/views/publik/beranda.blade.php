@@ -110,7 +110,7 @@
             </a>
             <a class="platform-preview-link" href="{{ route('events.index') }}">
                 <span class="platform-preview-number">02</span>
-                <span><small>UNTUK ATLET</small><strong>Pendaftaran lomba</strong><em>Atlet, kategori, dan nomor lomba</em></span>
+                <span><small>UNTUK ATLET</small><strong>Pendaftaran lomba</strong><em>Atlet, KU, dan nomor lomba</em></span>
                 <span class="platform-preview-arrow" aria-hidden="true">↗</span>
             </a>
             @if (auth()->check() && (auth()->user()->hasVerifiedEmail() || auth()->user()->role === 'admin'))
@@ -121,7 +121,7 @@
                 <a class="platform-preview-link" href="{{ route('register') }}">
             @endif
                 <span class="platform-preview-number">03</span>
-                <span><small>UNTUK PENGELOLA</small><strong>Dasbor event</strong><em>Event, kategori, peserta</em></span>
+                <span><small>UNTUK PENGELOLA</small><strong>Dasbor event</strong><em>Event, KU, peserta</em></span>
                 <span class="platform-preview-arrow" aria-hidden="true">↗</span>
             </a>
         </aside>
@@ -151,7 +151,7 @@
                             @if ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast())
                                 <span class="listing-status listing-status-preparing">Pendaftaran ditutup</span>
                             @elseif (empty($event->category_rules))
-                                <span class="listing-status listing-status-preparing">Kategori disiapkan</span>
+                                <span class="listing-status listing-status-preparing">KU disiapkan</span>
                             @elseif (! $event->registration_open)
                                 <span class="listing-status listing-status-preparing">Pendaftaran segera dibuka</span>
                             @else
@@ -173,7 +173,7 @@
                     @elseif ($registrationIsOpen)
                         <a class="listing-register-link" href="{{ route('login') }}">Masuk untuk mendaftar <span aria-hidden="true">→</span></a>
                     @else
-                        <span class="guest-event-closed">{{ empty($event->category_rules) ? 'Kategori disiapkan pengelola' : ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast() ? 'Pendaftaran ditutup' : 'Pendaftaran segera dibuka') }}</span>
+                        <span class="guest-event-closed">{{ empty($event->category_rules) ? 'KU disiapkan pengelola' : ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast() ? 'Pendaftaran ditutup' : 'Pendaftaran segera dibuka') }}</span>
                     @endif
                 </article>
             @empty
@@ -198,11 +198,11 @@
             </article>
             <article class="service-card">
                 <span class="service-number">02</span><span class="service-icon">◎</span>
-                <div><span class="public-event-tag">PENDAFTARAN ATLET</span><h3>Daftar mata lomba</h3><p>Daftarkan atlet ke kejuaraan yang membuka pendaftaran dan ikuti kategori yang sesuai.</p><a class="public-text-link" href="{{ route('events.index') }}">Cari lomba terbuka <span aria-hidden="true">→</span></a></div>
+                <div><span class="public-event-tag">PENDAFTARAN ATLET</span><h3>Daftar mata lomba</h3><p>Daftarkan atlet ke kejuaraan yang membuka pendaftaran dan ikuti KU yang sesuai.</p><a class="public-text-link" href="{{ route('events.index') }}">Cari lomba terbuka <span aria-hidden="true">→</span></a></div>
             </article>
             <article class="service-card">
                 <span class="service-number">03</span><span class="service-icon">✳</span>
-                <div><span class="public-event-tag">DASBOR PENGELOLA</span><h3>Kelola event</h3><p>Ajukan event, atur kategori dan mata lomba, lalu pantau data peserta dari dasbor.</p>
+                <div><span class="public-event-tag">DASBOR PENGELOLA</span><h3>Kelola event</h3><p>Ajukan event, atur KU dan mata lomba, lalu pantau data peserta dari dasbor.</p>
                     @if (auth()->check() && (auth()->user()->hasVerifiedEmail() || auth()->user()->role === 'admin'))
                         <a class="public-text-link" href="{{ route('guest.dashboard') }}">Buka dasbor <span aria-hidden="true">→</span></a>
                     @elseif (auth()->check())
@@ -246,12 +246,12 @@
         <div class="community-values">
             <article><span class="value-number">01</span><div><h3>Jelajahi agenda</h3><p>Temukan kejuaraan berdasarkan jadwal dan lokasi.</p></div><span class="value-mark">↗</span></article>
             <article><span class="value-number">02</span><div><h3>Daftarkan atlet</h3><p>Pilih kejuaraan yang membuka pendaftaran dan mata lomba.</p></div><span class="value-mark">↗</span></article>
-            <article><span class="value-number">03</span><div><h3>Kelola kejuaraan</h3><p>Atur kategori, pendaftaran, dan data peserta dari dasbor.</p></div><span class="value-mark">↗</span></article>
+            <article><span class="value-number">03</span><div><h3>Kelola kejuaraan</h3><p>Atur KU, pendaftaran, dan data peserta dari dasbor.</p></div><span class="value-mark">↗</span></article>
         </div>
     </section>
 
     <section class="club-cta" id="rencana-event">
-        <div><span class="public-section-label">PENGELOLA EVENT</span><h2>Siapkan kejuaraan berikutnya.</h2><p>Buat akun untuk mengajukan event dan mengelola kategori, pendaftaran, serta data peserta melalui dasbor Inlinesia.</p></div>
+        <div><span class="public-section-label">PENGELOLA EVENT</span><h2>Siapkan kejuaraan berikutnya.</h2><p>Buat akun untuk mengajukan event dan mengelola KU, pendaftaran, serta data peserta melalui dasbor Inlinesia.</p></div>
         <div class="club-cta-actions">
             @if (auth()->check() && (auth()->user()->hasVerifiedEmail() || auth()->user()->role === 'admin'))
                 <a class="public-button public-button-orange" href="{{ route('event-applications.create') }}">Ajukan event <span aria-hidden="true">→</span></a>

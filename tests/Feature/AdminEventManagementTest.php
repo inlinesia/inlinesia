@@ -50,7 +50,7 @@ class AdminEventManagementTest extends TestCase
             ->assertDontSee(route('event-applications.edit', $pendingEvent), false)
             ->assertDontSee('Tambah event')
             ->assertDontSee('Ubah event')
-            ->assertDontSee('Atur kategori')
+            ->assertDontSee('Atur KU')
             ->assertDontSee('Hapus event');
 
         $this->assertDatabaseHas('events', ['id' => $approvedEvent->id]);
@@ -103,7 +103,7 @@ class AdminEventManagementTest extends TestCase
             ->assertDontSee(route('event-applications.edit', $publicEvent), false)
             ->assertDontSee('Ubah event')
             ->assertDontSee('Hapus event')
-            ->assertDontSee('Atur kategori');
+            ->assertDontSee('Atur KU');
     }
 
     public function test_the_legacy_admin_event_management_endpoint_is_removed(): void

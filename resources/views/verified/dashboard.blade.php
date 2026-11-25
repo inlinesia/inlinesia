@@ -90,7 +90,7 @@
                         @if ($isAdmin)
                             <small>Pemilik: {{ $ownedEvent->submitter?->name ?? 'Admin Inlinesia' }}</small>
                         @endif
-                        <small>{{ ucfirst($ownedEvent->status) }} · {{ count($ownedEvent->category_rules ?? []) }} kategori · {{ count($ownedEvent->races) }} mata lomba</small>
+                        <small>{{ ucfirst($ownedEvent->status) }} · {{ count($ownedEvent->category_rules ?? []) }} KU · {{ count($ownedEvent->races) }} mata lomba</small>
                     </div>
                     <div class="guest-event-actions">
                         @if ($ownedEvent->status === 'approved' && ($ownedEvent->submitted_by === $user->id || $ownedEvent->isParticipantListReleased()))
@@ -125,7 +125,7 @@
                             <button class="account-edit-link event-delete-button" type="submit">Hapus event</button>
                         </form>
                         @if ($isAdmin || ($ownedEvent->submitted_by === $user->id && $ownedEvent->status === 'approved'))
-                            <a class="account-edit-link" href="{{ route('owner.events.categories.edit', $ownedEvent) }}">Atur kategori &amp; batas peserta <span aria-hidden="true">→</span></a>
+                            <a class="account-edit-link" href="{{ route('owner.events.categories.edit', $ownedEvent) }}">Atur KU (Kelompok Usia) &amp; batas peserta <span aria-hidden="true">→</span></a>
                         @endif
                         @if ($isAdmin || $ownedEvent->status === 'approved')
                             <a class="account-edit-link" href="{{ route('owner.events.race.format', $ownedEvent) }}">Atur perlombaan <span aria-hidden="true">→</span></a>
@@ -199,8 +199,8 @@
                             <th scope="col" rowspan="2">NIK</th>
                             <th scope="col" rowspan="2">Gender</th>
                             <th scope="col" rowspan="2">Tanggal lahir</th>
-                            <th scope="col" rowspan="2" title="Kategori usia">KU</th>
-                            <th scope="colgroup" colspan="{{ $raceColumnCount }}">Kategori</th>
+                            <th scope="col" rowspan="2" title="KU (Kelompok Usia)">KU</th>
+                            <th scope="colgroup" colspan="{{ $raceColumnCount }}">KU (Kelompok Usia)</th>
                             <th scope="col" rowspan="2">Harga</th>
                             <th scope="col" rowspan="2">Status bayar</th>
                         </tr>
@@ -334,7 +334,7 @@
                     </small>
                 </div>
                 @if (empty($event->category_rules))
-                    <span class="guest-event-closed">Kategori belum disiapkan</span>
+                    <span class="guest-event-closed">KU belum disiapkan</span>
                 @elseif ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast())
                     <span class="guest-event-closed">Pendaftaran ditutup</span>
                 @elseif ($event->registration_open)

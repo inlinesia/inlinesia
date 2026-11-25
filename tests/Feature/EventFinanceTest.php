@@ -18,7 +18,7 @@ use Tests\TestCase;
  *    (pembayaran berstatus "paid"), tidak pernah dari catatan manual. Kalau
  *    tidak begitu, nominal di halaman bisa berbeda dari yang dilihat pengelola
  *    di "Kelola peserta & pembayaran".
- * 2. Akses mengikuti halaman "Atur kategori": pemilik event yang sudah
+ * 2. Akses mengikuti halaman "Atur KU": pemilik event yang sudah
  *    disetujui, atau Admin. Pengguna lain harus 403.
  */
 class EventFinanceTest extends TestCase

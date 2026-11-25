@@ -21,7 +21,7 @@
                     'kategori' => $firstCard['category'] ?? null,
                     'mata_lomba' => $firstCard['race'] ?? null,
                 ])) }}">Hari lomba →</a>
-            <a class="form-back-link" href="{{ route('owner.events.categories.edit', $event) }}">← Atur kategori</a>
+            <a class="form-back-link" href="{{ route('owner.events.categories.edit', $event) }}">← Atur KU</a>
         </div>
     </section>
 
@@ -46,9 +46,9 @@
     @if ($cards->isEmpty())
         <div class="listing-empty-state">
             <span aria-hidden="true">⚙</span>
-            <h3>Kategori belum disiapkan</h3>
-            <p>Aturan perlombaan mengikuti kategori, jadi siapkan kategorinya terlebih dahulu.</p>
-            <a class="account-edit-link" href="{{ route('owner.events.categories.edit', $event) }}">Atur kategori <span aria-hidden="true">→</span></a>
+            <h3>KU belum disiapkan</h3>
+            <p>Aturan perlombaan mengikuti KU, jadi siapkan KU terlebih dahulu.</p>
+            <a class="account-edit-link" href="{{ route('owner.events.categories.edit', $event) }}">Atur KU <span aria-hidden="true">→</span></a>
         </div>
     @else
         <script>
@@ -70,11 +70,11 @@
                 <div class="form-section-heading">
                     <span class="form-step">01</span>
                     <div>
-                        <h2>Cara satu kategori dan mata lomba dilombakan</h2>
+                        <h2>Cara satu KU dan mata lomba dilombakan</h2>
                         <p>
                             Tiap mata lomba punya aturan sendiri, karena jumlah peserta dan cara
                             membagi babaknya bisa berbeda. Tombol “Terapkan ke mata lomba yang sama”
-                            menyalin aturan satu kartu ke kategori lain yang memakai mata lomba serupa.
+                            menyalin aturan satu kartu ke KU lain yang memakai mata lomba serupa.
                         </p>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                                     ]) }}">Buka hari lomba <span aria-hidden="true">→</span></a>
                             </div>
                             <p class="race-format-note">
-                                “Terapkan ke mata lomba yang sama” menyalin aturan kartu ini ke kategori lain
+                                “Terapkan ke mata lomba yang sama” menyalin aturan kartu ini ke KU lain
                                 yang memakai mata lomba {{ $card['race'] }}. Tekan “Simpan pengaturan” setelahnya
                                 supaya salinannya tersimpan.
                             </p>
@@ -258,7 +258,7 @@
                     <h2>Susunan urutan lomba</h2>
                     <p>
                         Bagi peserta menjadi grup, lalu tiap grup dipecah menjadi beberapa babak.
-                        Setelah disusun, tekan “Rilis kategori ini” supaya susunannya tampil di
+                        Setelah disusun, tekan “Rilis KU ini” supaya susunannya tampil di
                         halaman urutan lomba untuk semua peserta dan klub yang masuk.
                     </p>
                 </div>
@@ -336,7 +336,7 @@
                                         @csrf
                                         <input type="hidden" name="kategori" value="{{ $card['category'] }}">
                                         <input type="hidden" name="mata_lomba" value="{{ $card['race'] }}">
-                                        <button class="account-edit-link" type="submit">Rilis kategori ini <span aria-hidden="true">→</span></button>
+                                        <button class="account-edit-link" type="submit">Rilis KU ini <span aria-hidden="true">→</span></button>
                                     </form>
                                 @endif
                                 <form method="POST" action="{{ route('owner.events.race.heats.build', $event) }}"

@@ -224,7 +224,7 @@ class CategoryPricingTest extends TestCase
             ->assertSee('Mata lomba di luar paket')
             ->assertSee('data-create-counterpart', false)
             ->assertSee('data-dismiss-counterpart', false)
-            ->assertSee('Apakah ingin membuat kategori yang sama untuk', false)
+            ->assertSee('Apakah ingin membuat KU yang sama untuk', false)
             ->assertSee('>Campuran</option>', false)
             ->assertSee('<option value="Beginner"', false)
             ->assertSee('<option value="Non-Beginner"', false)
@@ -461,7 +461,7 @@ class CategoryPricingTest extends TestCase
         $this->actingAs($owner)
             ->get(route('owner.events.categories.update', $event))
             ->assertOk()
-            ->assertSee('Terapkan ke semua kategori')
+            ->assertSee('Terapkan ke semua KU')
             ->assertSee('data-apply-wave-to-all', false);
     }
 
@@ -948,7 +948,7 @@ class CategoryPricingTest extends TestCase
             ->assertSee('Biaya')
             ->assertSee('Rp 174.500')
             ->assertSee('Tambahan Rp 50.000')
-            ->assertSee('Luar kategori Rp 5.000');
+            ->assertSee('Luar KU Rp 5.000');
     }
 
     /**
