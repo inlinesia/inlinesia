@@ -252,6 +252,53 @@ html[data-theme='ceria'] {
     font-weight: 500;
 }
 
+/* Data profil — Kids Skate Controls 2: Form Inputs & Validation States. */
+[data-theme='ceria'] .profile-edit-card .form-label {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+
+[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field) {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    color: var(--text-primary);
+    background: var(--bg-canvas);
+    border: 2.5px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field):focus {
+    outline: none;
+    border-color: var(--color-sky-blue);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-focus);
+}
+
+[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field).is-valid {
+    border-color: var(--status-success);
+    background: #f0fdf4;
+}
+
+[data-theme='ceria'] .profile-edit-card :is(.input-field, .textarea-field).is-error {
+    border-color: var(--status-error);
+    background: #fef2f2;
+}
+
+[data-theme='ceria'] .profile-edit-card .helper-text {
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+
+[data-theme='ceria'] .profile-edit-card .helper-text.is-valid { color: #15803d; }
+[data-theme='ceria'] .profile-edit-card .helper-text.is-error { color: #b91c1c; }
+
 [data-theme='ceria'] .choice-pill,
 [data-theme='ceria'] .role-option,
 [data-theme='ceria'] .category-toggle {

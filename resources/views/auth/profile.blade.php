@@ -68,38 +68,54 @@
                     <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
                 </div>
             @endif
-            <form class="account-form" method="POST" action="{{ route('profile.update') }}">
+            <form class="account-form form-grid" method="POST" action="{{ route('profile.update') }}">
                 @csrf
                 @method('PUT')
-                <label>Nama lengkap
-                    <input name="name" type="text" value="{{ old('name', $user->name) }}" maxlength="120" autocomplete="name" required>
+                <label class="form-group">
+                    <span class="form-label">Nama lengkap</span>
+                    <input class="input-field @error('name') is-error @enderror" name="name" type="text" value="{{ old('name', $user->name) }}" maxlength="120" autocomplete="name" required>
+                    @error('name')<small class="helper-text is-error">{{ $message }}</small>@enderror
                 </label>
-                <label>Email
-                    <input type="email" value="{{ $user->email }}" readonly>
+                <label class="form-group">
+                    <span class="form-label">Email</span>
+                    <input class="input-field" type="email" value="{{ $user->email }}" readonly>
+                    <small class="helper-text">Email tidak dapat diubah.</small>
                 </label>
-                <label>Jenis akun
-                    <input type="text" value="{{ $user->roleLabel() }}" readonly>
+                <label class="form-group">
+                    <span class="form-label">Jenis akun</span>
+                    <input class="input-field" type="text" value="{{ $user->roleLabel() }}" readonly>
                 </label>
-                <label>Nomor WhatsApp
-                    <input name="phone" type="tel" value="{{ old('phone', $user->phone) }}" maxlength="40" autocomplete="tel">
+                <label class="form-group">
+                    <span class="form-label">Nomor WhatsApp</span>
+                    <input class="input-field @error('phone') is-error @enderror" name="phone" type="tel" value="{{ old('phone', $user->phone) }}" maxlength="40" autocomplete="tel">
+                    @error('phone')<small class="helper-text is-error">{{ $message }}</small>@enderror
                 </label>
-                <label>Nama klub / instansi
-                    <input name="organization" type="text" value="{{ old('organization', $user->organization) }}" maxlength="180">
+                <label class="form-group">
+                    <span class="form-label">Nama klub / instansi</span>
+                    <input class="input-field @error('organization') is-error @enderror" name="organization" type="text" value="{{ old('organization', $user->organization) }}" maxlength="180">
+                    @error('organization')<small class="helper-text is-error">{{ $message }}</small>@enderror
                 </label>
-                <label>Alamat / domisili
-                    <textarea name="address" rows="3" maxlength="500">{{ old('address', $user->address) }}</textarea>
+                <label class="form-group">
+                    <span class="form-label">Alamat / domisili</span>
+                    <textarea class="textarea-field @error('address') is-error @enderror" name="address" rows="3" maxlength="500">{{ old('address', $user->address) }}</textarea>
+                    @error('address')<small class="helper-text is-error">{{ $message }}</small>@enderror
                 </label>
                 <fieldset class="password-change-fields">
                     <legend>Ubah kata sandi <span class="optional-label">opsional</span></legend>
                     <p>Kosongkan jika tidak ingin mengubah kata sandi. Kata sandi sementara dari Admin sebaiknya segera diganti.</p>
-                    <label>Kata sandi saat ini
-                        <input name="current_password" type="password" autocomplete="current-password">
+                    <label class="form-group">
+                        <span class="form-label">Kata sandi saat ini</span>
+                        <input class="input-field @error('current_password') is-error @enderror" name="current_password" type="password" autocomplete="current-password">
+                        @error('current_password')<small class="helper-text is-error">{{ $message }}</small>@enderror
                     </label>
-                    <label>Kata sandi baru
-                        <input name="password" type="password" autocomplete="new-password">
+                    <label class="form-group">
+                        <span class="form-label">Kata sandi baru</span>
+                        <input class="input-field @error('password') is-error @enderror" name="password" type="password" autocomplete="new-password">
+                        @error('password')<small class="helper-text is-error">{{ $message }}</small>@enderror
                     </label>
-                    <label>Ulangi kata sandi baru
-                        <input name="password_confirmation" type="password" autocomplete="new-password">
+                    <label class="form-group">
+                        <span class="form-label">Ulangi kata sandi baru</span>
+                        <input class="input-field" name="password_confirmation" type="password" autocomplete="new-password">
                     </label>
                 </fieldset>
                 <button class="account-submit" type="submit">Simpan perubahan <span aria-hidden="true">→</span></button>

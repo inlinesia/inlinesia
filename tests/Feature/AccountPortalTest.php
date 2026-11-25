@@ -98,6 +98,31 @@ class AccountPortalTest extends TestCase
         $this->assertDatabaseCount('users', 0);
     }
 
+    public function test_profile_form_uses_control_two_inputs_and_validation_states(): void
+    {
+        $user = User::factory()->create(['role' => 'individual']);
+
+        $this->actingAs($user)
+            ->get(route('profile.show'))
+            ->assertOk()
+            ->assertSee('class="account-form form-grid"', false)
+            ->assertSee('form-label', false)
+            ->assertSee('input-field', false)
+            ->assertSee('textarea-field', false)
+            ->assertSee('helper-text', false);
+
+        $this->from(route('profile.show'))
+            ->put(route('profile.update'), ['name' => ''])
+            ->assertRedirect(route('profile.show'))
+            ->assertSessionHasErrors('name');
+
+        $this->followingRedirects()
+            ->put(route('profile.update'), ['name' => ''])
+            ->assertOk()
+            ->assertSee('is-error', false)
+            ->assertSee('helper-text is-error', false);
+    }
+
     public function test_users_can_login_update_their_profile_and_logout(): void
     {
         $user = User::factory()->create([
