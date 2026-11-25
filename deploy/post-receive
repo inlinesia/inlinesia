@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Dijalankan server setiap kali `git push` masuk ke repo bare deploy.
+# GitHub adalah origin aplikasi; hook ini menarik commit terbaru ke working tree,
+# menyegarkan cache, lalu menyamakan folder build di docroot.
+set -uo pipefail
+
+APP=/home/kilatsch/inlinesia-app
+DOCROOT=/home/kilatsch/inlinesia.kilatschool.my.id
+
+deployed=0
+for attempt in 1 2 3 4 5; do
+    if git -C "$APP" pull --ff-only origin master; then
+        deployed=1
+        break
+    fi
+    echo "Tarik commit belum tersedia (percobaan $attempt), ulang..."
+    sleep 2
+done
+
+if [ "$deployed" -ne 1 ]; then
+    echo "GAGAL: server tidak bisa menarik commit terbaru dari origin." >&2
+    exit 1
+fi
+
+cd "$APP"
+php artisan view:clear
+php artisan view:cache
+php artisan config:clear
+php artisan config:cache
+
+if [ -d "$APP/public/build" ]; then
+    rm -rf "$DOCROOT/build"
+    cp -a "$APP/public/build" "$DOCROOT/build"
+fi
+
+echo "Deploy otomatis selesai: $(git -C "$APP" rev-parse --short HEAD)"

@@ -84,7 +84,6 @@ return [
             'Freestyle Slide',
             'Skate Cross',
             'Relay',
-            ''
         ],
     ],
 
