@@ -193,7 +193,7 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 /* Editor mode tabel untuk aturan KU. */
 .category-table-editor { margin-bottom: 14px; }
 .category-table-wrap { overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
-.category-editor-table { width: 100%; min-width: 1480px; border-collapse: collapse; text-align: left; }
+.category-editor-table { width: 100%; min-width: 2100px; border-collapse: collapse; text-align: left; }
 .category-editor-table th,
 .category-editor-table td { padding: 7px 10px; border-bottom: 1px solid #f0f1f4; font-size: 10px; line-height: 1.2; white-space: nowrap; text-align: left; }
 .category-editor-table th { color: #8b8e9d; font-weight: 700; letter-spacing: .45px; text-transform: uppercase; }
