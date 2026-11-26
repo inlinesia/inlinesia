@@ -225,29 +225,11 @@
                                         <button class="account-edit-link btn-primary btn-icon event-registration-modal-trigger" type="button" data-registration-modal-open="ubah-peserta-{{ $registration->id }}" aria-controls="ubah-peserta-{{ $registration->id }}" title="Edit data" aria-label="Edit data">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                                         </button>
-                                        @php
-                                            $cancelLabel = $registration->payment_status === 'paid' || $registration->amountPaid() > 0
-                                                ? 'Ajukan pembatalan'
-                                                : 'Batalkan pendaftaran';
-                                            $cancelConfirm = $registration->payment_status === 'paid' || $registration->amountPaid() > 0
-                                                ? 'Ajukan pembatalan pendaftaran ini? Pengelola akan menentukan persetujuan dan nominal refund.'
-                                                : 'Batalkan pendaftaran atlet ini? Data dan bukti pembayaran akan dihapus.';
-                                        @endphp
-                                        <form method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}" data-confirm="{{ $cancelConfirm }}" class="guest-registration-cancel-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <label class="guest-registration-cancel-reason">Alasan pembatalan
-                                                <textarea name="reason" rows="2" maxlength="1000" required placeholder="Tuliskan alasan pembatalan"></textarea>
-                                            </label>
-                                            <button class="account-edit-link btn-berry guest-registration-cancel-button" type="submit" title="{{ $cancelLabel }}">
-                                                {{ $cancelLabel }}
+                                        @if ($registration->event->isCancellationOpen())
+                                            <button class="account-edit-link btn-berry btn-icon" type="button" data-registration-modal-open="pembatalan-{{ $registration->id }}" aria-controls="pembatalan-{{ $registration->id }}" title="Ajukan pembatalan" aria-label="Ajukan pembatalan">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>
                                             </button>
-                                            @if ($registration->event->organizer_whatsapp)
-                                                <button class="account-edit-link btn-grape" type="submit" formaction="{{ route('events.registration.cancellation.whatsapp', [$registration->event, $registration]) }}" formmethod="POST" title="Ajukan pembatalan via WhatsApp">
-                                                    Ajukan via WhatsApp
-                                                </button>
-                                            @endif
-                                        </form>
+                                        @endif
                                     @endif
                                     @if ($registration->payment_status !== 'paid' && ! in_array($registration->cancellation_status, ['pending', 'approved'], true) && $registration->event->organizer_whatsapp)
                                         @php
@@ -313,6 +295,32 @@
             </div>
 
             @foreach ($registrations as $registration)
+                @if ($registration->event->isCancellationOpen()
+                    && $registration->cancellation_status !== 'pending'
+                    && $registration->cancellation_status !== 'approved'
+                    && $registration->participant_change_status !== 'pending')
+                    <dialog id="pembatalan-{{ $registration->id }}" class="event-registration-modal" aria-labelledby="pembatalan-title-{{ $registration->id }}">
+                        <section class="account-edit-card event-registration-edit-card">
+                            <header class="event-registration-modal-heading">
+                                <div>
+                                    <span class="account-eyebrow">{{ $registration->event->name }}</span>
+                                    <h2 id="pembatalan-title-{{ $registration->id }}">Ajukan pembatalan</h2>
+                                    <p>{{ $registration->participant_name }}</p>
+                                </div>
+                                <button class="event-registration-modal-close" type="button" data-registration-modal-close aria-label="Tutup">×</button>
+                            </header>
+                            <form class="account-form event-registration-edit-form" method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}">
+                                @csrf
+                                @method('DELETE')
+                                <label>Alasan pembatalan
+                                    <textarea name="reason" rows="4" maxlength="1000" required placeholder="Tuliskan alasan pembatalan"></textarea>
+                                    <small class="field-hint">Setelah dikirim, Anda diarahkan ke WhatsApp pengelola untuk konfirmasi. Pengelola akan menyetujui atau menolak pengajuan ini.</small>
+                                </label>
+                                <button class="account-submit" type="submit">Kirim pengajuan pembatalan <span aria-hidden="true">→</span></button>
+                            </form>
+                        </section>
+                    </dialog>
+                @endif
                 @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved' && $registration->participant_change_status !== 'pending')
                     @include('verified.events.participants.ubah', [
                         'event' => $registration->event,

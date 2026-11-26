@@ -138,6 +138,17 @@ class AdminEventFormTest extends TestCase
             ->assertDontSee('Hapus event');
     }
 
+    public function test_event_form_exposes_cancellation_policy_fields(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'admin']))
+            ->get(route('event-applications.create'))
+            ->assertOk()
+            ->assertSee('Persyaratan pembatalan')
+            ->assertSee('name="cancellation_allowed"', false)
+            ->assertSee('name="cancellation_min_days"', false)
+            ->assertSee('name="cancellation_deadline"', false);
+    }
+
     public function test_event_end_date_cannot_precede_its_start_date(): void
     {
         $payload = $this->validApplication();

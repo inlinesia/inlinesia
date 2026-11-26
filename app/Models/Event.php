@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class Event extends Model
@@ -17,6 +18,9 @@ class Event extends Model
         'venue',
         'venue_address',
         'organizer_whatsapp',
+        'cancellation_allowed',
+        'cancellation_min_days',
+        'cancellation_deadline',
         'scale',
         'regulations',
         'officials',
@@ -49,6 +53,8 @@ class Event extends Model
             'start_date' => 'date',
             'end_date' => 'date',
             'registration_deadline' => 'date',
+            'cancellation_deadline' => 'date',
+            'cancellation_allowed' => 'boolean',
             'categories' => 'array',
             'category_rules' => 'array',
             'races' => 'array',
@@ -210,6 +216,34 @@ class Event extends Model
     public function hasPaymentAccount(): bool
     {
         return filled($this->payment_account_number);
+    }
+
+    /**
+     * Apakah peserta boleh mengajukan pembatalan pada tanggal tertentu.
+     *
+     * Syarat yang bisa dicek sistem: minimal N hari sebelum event dan/atau
+     * batas tanggal pengajuan. Keduanya kosong berarti tidak ada batas.
+     */
+    public function isCancellationOpen(?Carbon $on = null): bool
+    {
+        if (! $this->cancellation_allowed) {
+            return false;
+        }
+
+        $on ??= now();
+
+        if ($this->cancellation_deadline !== null && $on->toDateString() > $this->cancellation_deadline->toDateString()) {
+            return false;
+        }
+
+        if ($this->cancellation_min_days !== null) {
+            $daysBefore = (int) $on->startOfDay()->diffInDays($this->start_date->startOfDay(), false);
+            if ($daysBefore < $this->cancellation_min_days) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

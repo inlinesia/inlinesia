@@ -1170,9 +1170,10 @@ class EventRegistrationManagementTest extends TestCase
         $registration->update(['status' => 'approved']);
         $this->markPaid($registration, 150000, ['Classic Slalom']);
 
-        $this->actingAs($participant)
+        $response = $this->actingAs($participant)
             ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Tidak dapat mengikuti lomba'])
-            ->assertRedirect(route('guest.dashboard'));
+            ->assertRedirect();
+        $this->assertStringStartsWith('https://wa.me/', $response->headers->get('Location') ?? '');
 
         $registration->refresh();
         $this->assertModelExists($registration);
@@ -1211,9 +1212,10 @@ class EventRegistrationManagementTest extends TestCase
         $event = $this->createEvent($owner);
         $registration = $this->createRegistration($event, $participant);
         $this->markPaid($registration, 50000, ['Classic Slalom']);
-        $this->actingAs($participant)
+        $response = $this->actingAs($participant)
             ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Tidak dapat hadir'])
-            ->assertRedirect(route('guest.dashboard'));
+            ->assertRedirect();
+        $this->assertStringStartsWith('https://wa.me/', $response->headers->get('Location') ?? '');
 
         $this->actingAs($owner)
             ->from(route('events.registrations.index', $event))
@@ -1260,9 +1262,10 @@ class EventRegistrationManagementTest extends TestCase
         $registration = $this->createRegistration($event, $participant);
         $this->markPaid($registration, 150000, ['Classic Slalom']);
 
-        $this->actingAs($participant)
+        $response = $this->actingAs($participant)
             ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Sakit'])
-            ->assertRedirect(route('guest.dashboard'));
+            ->assertRedirect();
+        $this->assertStringStartsWith('https://wa.me/', $response->headers->get('Location') ?? '');
 
         $registration->refresh();
         $this->assertSame('pending', $registration->cancellation_status);
@@ -1286,6 +1289,39 @@ class EventRegistrationManagementTest extends TestCase
         $this->assertStringStartsWith('https://wa.me/', $response->headers->get('Location'));
         $this->assertSame('pending', $registration->fresh()->cancellation_status);
         Notification::assertSentTo($owner, CancellationRequestedNotification::class);
+    }
+
+    public function test_cancellation_button_is_hidden_when_event_policy_closes_it(): void
+    {
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $participant = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($owner);
+        $event->update(['cancellation_allowed' => false]);
+        $registration = $this->createRegistration($event, $participant);
+
+        $this->actingAs($participant)
+            ->get(route('guest.dashboard'))
+            ->assertOk()
+            ->assertDontSee('data-registration-modal-open="pembatalan-'.$registration->id.'"', false);
+
+        $this->actingAs($participant)
+            ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Sakit'])
+            ->assertStatus(409);
+    }
+
+    public function test_cancellation_policy_respects_minimum_days_and_deadline(): void
+    {
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $event = $this->createEvent($owner);
+
+        $event->update(['cancellation_min_days' => 60]);
+        $this->assertFalse($event->fresh()->isCancellationOpen());
+
+        $event->update(['cancellation_min_days' => null, 'cancellation_deadline' => now()->subDay()->toDateString()]);
+        $this->assertFalse($event->fresh()->isCancellationOpen());
+
+        $event->update(['cancellation_deadline' => now()->addDay()->toDateString()]);
+        $this->assertTrue($event->fresh()->isCancellationOpen());
     }
 
     public function test_dasbor_menampilkan_tombol_rilis_hanya_kepada_pemilik_event(): void

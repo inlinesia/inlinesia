@@ -248,6 +248,8 @@ class EventRegistrationController extends Controller
     public function destroyOwn(Request $request, Event $event, EventRegistration $registration): RedirectResponse
     {
         abort_unless($registration->user_id === $request->user()->id, 403);
+        abort_unless($event->status === 'approved', 404);
+        abort_if(! $event->isCancellationOpen(), 409, 'Event ini tidak membuka pengajuan pembatalan pada saat ini.');
         abort_if($registration->cancellation_status === 'pending', 409, 'Permintaan pembatalan sedang menunggu keputusan pengelola.');
         abort_if($registration->cancellation_status === 'approved', 409, 'Pendaftaran ini sudah dibatalkan.');
         abort_if($registration->participant_change_status === 'pending', 409, 'Permintaan perubahan masih menunggu keputusan pengelola.');
@@ -265,8 +267,11 @@ class EventRegistrationController extends Controller
 
         $this->notifyOwner($event, $registration);
 
-        return redirect()->route('guest.dashboard')
-            ->with('status', 'Permintaan pembatalan dikirim. Pengelola akan memutuskan persetujuan dan nominal pengembalian dana.');
+        // Form sudah tersimpan di server; peserta kini diarahkan ke WhatsApp
+        // pengelola untuk konfirmasi. Kegagalan nomor tidak membatalkan status.
+        $message = "Saya ingin mengajukan pembatalan untuk atlet dengan data {$registration->participant_name} ({$registration->category}) pada event {$event->name}, dengan alasan {$validated['reason']}. Mohon untuk dipertimbangkan. Terimakasih.";
+
+        return $this->whatsappRedirect($event, $message);
     }
 
     public function uploadProof(Request $request, Event $event, EventRegistration $registration): RedirectResponse
@@ -346,29 +351,13 @@ class EventRegistrationController extends Controller
     {
         abort_unless($registration->user_id === $request->user()->id, 403);
         abort_unless($event->status === 'approved', 404);
+        abort_if(! $event->isCancellationOpen(), 409, 'Event ini tidak membuka pengajuan pembatalan pada saat ini.');
         abort_if($registration->cancellation_status === 'pending', 409, 'Permintaan pembatalan sedang menunggu keputusan pengelola.');
         abort_if($registration->cancellation_status === 'approved', 409, 'Pendaftaran ini sudah dibatalkan.');
 
         $validated = $request->validate([
             'reason' => ['required', 'string', 'max:1000'],
         ]);
-
-        $phone = preg_replace('/\D+/', '', (string) $event->organizer_whatsapp);
-        if (! $phone) {
-            throw ValidationException::withMessages([
-                'reason' => 'Nomor WhatsApp pengelola kejuaraan belum tersedia. Hubungi Admin.',
-            ]);
-        }
-        if (str_starts_with($phone, '0')) {
-            $phone = '62'.substr($phone, 1);
-        } elseif (str_starts_with($phone, '8')) {
-            $phone = '62'.$phone;
-        }
-        if (strlen($phone) < 8 || strlen($phone) > 15) {
-            throw ValidationException::withMessages([
-                'reason' => 'Nomor WhatsApp pengelola kejuaraan belum valid. Hubungi Admin.',
-            ]);
-        }
 
         $registration->update([
             'cancellation_status' => 'pending',
@@ -381,6 +370,27 @@ class EventRegistrationController extends Controller
         $kategori = $registration->category ?: 'kategori belum ditetapkan';
         $alasan = $validated['reason'];
         $message = "Saya ingin mengajukan pembatalan untuk atlet dengan data {$registration->participant_name} ({$kategori}) pada event {$event->name}, dengan alasan {$alasan}. Mohon untuk dipertimbangkan. Terimakasih.";
+
+        return $this->whatsappRedirect($event, $message);
+    }
+
+    /**
+     * Arahkan peserta ke WhatsApp pengelola dengan pesan yang sudah disiapkan.
+     * Nomor tidak valid tidak boleh membatalkan permintaan yang sudah tersimpan.
+     */
+    private function whatsappRedirect(Event $event, string $message): RedirectResponse
+    {
+        $phone = preg_replace('/\D+/', '', (string) $event->organizer_whatsapp) ?? '';
+
+        if (str_starts_with($phone, '0')) {
+            $phone = '62'.substr($phone, 1);
+        } elseif (str_starts_with($phone, '8')) {
+            $phone = '62'.$phone;
+        }
+
+        if ($phone === '' || strlen($phone) < 8 || strlen($phone) > 15) {
+            return redirect()->route('guest.dashboard')->with('status', 'Pengajuan pembatalan tersimpan. Nomor WhatsApp pengelola belum tersedia; silakan hubungi Admin.');
+        }
 
         return redirect()->away('https://wa.me/'.$phone.'?text='.rawurlencode($message));
     }

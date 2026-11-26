@@ -87,6 +87,34 @@
         </section>
 
         <section class="form-section">
+            <div class="form-section-heading"><span class="form-step">01b</span><div><h2>Persyaratan pembatalan</h2><p>Atur apakah peserta boleh mengajukan pembatalan dan syarat yang harus dipenuhi.</p></div></div>
+            <div class="form-fields">
+                <div class="form-field form-field-full">
+                    <label for="cancellation_allowed">Pengajuan pembatalan peserta</label>
+                    @php($selectedCancellation = old('cancellation_allowed', $isEditing && ! $event->cancellation_allowed ? '0' : '1'))
+                    <select id="cancellation_allowed" name="cancellation_allowed" required>
+                        <option value="1" @selected($selectedCancellation === '1')>Diperbolehkan dengan persyaratan</option>
+                        <option value="0" @selected($selectedCancellation === '0')>Tidak diperolehkan</option>
+                    </select>
+                    <small class="field-hint">Bila tidak diperolehkan, tombol pembatalan tidak ditampilkan ke peserta.</small>
+                    @error('cancellation_allowed')<small class="field-error">{{ $message }}</small>@enderror
+                </div>
+                <div class="form-field">
+                    <label for="cancellation_min_days">Minimal hari sebelum event <span class="optional-label">opsional</span></label>
+                    <input id="cancellation_min_days" name="cancellation_min_days" type="number" min="0" max="365" value="{{ old('cancellation_min_days', $stored('cancellation_min_days')) }}" placeholder="Contoh: 3">
+                    <small class="field-hint">Kosongkan bila tidak ada batas minimal hari.</small>
+                    @error('cancellation_min_days')<small class="field-error">{{ $message }}</small>@enderror
+                </div>
+                <div class="form-field">
+                    <label for="cancellation_deadline">Batas tanggal pengajuan <span class="optional-label">opsional</span></label>
+                    <input id="cancellation_deadline" name="cancellation_deadline" type="date" value="{{ old('cancellation_deadline', $stored('cancellation_deadline')?->format('Y-m-d')) }}">
+                    <small class="field-hint">Setelah tanggal ini tombol pembatalan disembunyikan.</small>
+                    @error('cancellation_deadline')<small class="field-error">{{ $message }}</small>@enderror
+                </div>
+            </div>
+        </section>
+
+        <section class="form-section">
             <div class="form-section-heading"><span class="form-step">02</span><div><h2>Teknis pertandingan</h2><p>Peraturan, official, dan kondisi lokasi.</p></div></div>
             <div class="form-fields">
                 <div class="form-field">
