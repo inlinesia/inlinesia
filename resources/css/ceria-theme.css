@@ -1019,6 +1019,29 @@ html[data-theme='ceria'] {
     box-shadow: var(--shadow-sticker-sm);
 }
 
+/* Teks hero harus terbaca di gradien lemon→coral: pakai tinta gelap,
+   bukan warna ungu pucat dari dashboard.css. */
+[data-theme='ceria'] .app-shell .hero-kicker,
+[data-theme='ceria'] .app-shell .hero-copy p,
+[data-theme='ceria'] .app-shell .hero-link {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .app-shell .hero-kicker span {
+    background: var(--color-grape);
+    box-shadow: 0 0 0 4px rgba(131, 56, 236, 0.18);
+}
+
+[data-theme='ceria'] .app-shell .hero-copy h2 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme='ceria'] .app-shell .hero-link {
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
 [data-theme='ceria'] .app-shell .module-status {
     color: #166534;
 }
