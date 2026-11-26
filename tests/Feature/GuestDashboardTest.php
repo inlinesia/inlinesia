@@ -42,7 +42,7 @@ class GuestDashboardTest extends TestCase
             ->assertSee('Gender')
             ->assertSee('Tanggal lahir')
             ->assertSee('KU', false)
-            ->assertSee('KU (Kelompok Usia)')
+            ->assertSee('Mata Lomba')
             ->assertSee('Status bayar')
             ->assertSee('Tambah peserta')
             ->assertSee('Belum bayar')
@@ -71,6 +71,41 @@ class GuestDashboardTest extends TestCase
             ->assertSee('DASBOR AKUN TERVERIFIKASI')
             ->assertSee('Atlet Milik Orang Lain')
             ->assertDontSee('Atlet Milik Saya');
+    }
+
+    public function test_participant_can_update_races_directly_from_dashboard_table(): void
+    {
+        $user = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($user, 'approved');
+        $registration = $this->createRegistration($event, $user, 'Atlet Saya');
+
+        $this->actingAs($user)
+            ->patchJson(route('events.registration.races.update', [$event, $registration]), [
+                'races' => ['Classic Slalom', 'Speed Slalom'],
+            ])
+            ->assertOk()
+            ->assertJsonPath('races', ['Classic Slalom', 'Speed Slalom']);
+
+        $this->assertSame(
+            ['Classic Slalom', 'Speed Slalom'],
+            $registration->fresh()->races,
+        );
+    }
+
+    public function test_paid_participant_cannot_update_races_from_table(): void
+    {
+        $user = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($user, 'approved');
+        $registration = $this->createRegistration($event, $user, 'Atlet Saya');
+        $registration->update(['payment_status' => 'paid', 'fee_total' => 100000]);
+
+        $this->actingAs($user)
+            ->patchJson(route('events.registration.races.update', [$event, $registration]), [
+                'races' => ['Speed Slalom'],
+            ])
+            ->assertStatus(409);
+
+        $this->assertSame(['Classic Slalom'], $registration->fresh()->races);
     }
 
     public function test_registration_form_does_not_show_already_registered_athletes(): void

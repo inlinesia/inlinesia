@@ -3,7 +3,7 @@
 @section('title', $isAdmin ? 'Kelola Event — Inlinesia' : 'Dasbor Peserta — Inlinesia')
 @section('section', 'Kelola event')
 @section('description', 'Kelola event dan pendaftaran peserta di Inlinesia.')
-@section('body-class', 'auth-page')
+@section('body-class', 'auth-page guest-dashboard-page')
 
 @section('content')
 <main class="profile-page guest-dashboard">
@@ -188,6 +188,7 @@
                 $raceColumns = $registrations->first()->event->races ?? [];
                 $raceColumnCount = max(1, count($raceColumns));
             @endphp
+            <input type="hidden" data-race-csrf value="{{ csrf_token() }}">
             <div class="account-table-wrap guest-registration-table-wrap">
                 <table class="account-table guest-registration-table">
                     <thead>
@@ -200,7 +201,7 @@
                             <th scope="col" rowspan="2">Gender</th>
                             <th scope="col" rowspan="2">Tanggal lahir</th>
                             <th scope="col" rowspan="2" title="KU (Kelompok Usia)">KU</th>
-                            <th scope="colgroup" colspan="{{ $raceColumnCount }}">KU (Kelompok Usia)</th>
+                            <th scope="colgroup" colspan="{{ $raceColumnCount }}">Mata Lomba</th>
                             <th scope="col" rowspan="2">Harga</th>
                             <th scope="col" rowspan="2">Status bayar</th>
                         </tr>
@@ -217,7 +218,7 @@
                             @php
                                 $wave = $runningWaves[$registration->id] ?? null;
                             @endphp
-                            <tr>
+                            <tr data-race-registration data-update-url="{{ route('events.registration.races.update', [$registration->event, $registration]) }}">
                                 <td class="guest-registration-number">{{ $loop->iteration }}</td>
                                 <td class="guest-registration-actions">
                                     @if ($registration->cancellation_status !== 'pending' && $registration->cancellation_status !== 'approved' && $registration->participant_change_status !== 'pending')
@@ -264,7 +265,20 @@
                                 <td>{{ $registration->category ?: 'Belum ditetapkan' }}</td>
                                 @foreach ($raceColumns as $race)
                                     <td class="guest-registration-race-cell">
-                                        <input type="checkbox" disabled @checked(in_array($race, $registration->races ?? [], true)) aria-label="{{ $race }}">
+                                        @php
+                                            $bolehUbahLomba = $registration->payment_status !== 'paid'
+                                                && $registration->amountPaid() <= 0
+                                                && ! in_array($registration->cancellation_status, ['pending', 'approved'], true)
+                                                && $registration->participant_change_status !== 'pending';
+                                        @endphp
+                                        <input type="checkbox"
+                                            @if ($bolehUbahLomba) data-race-toggle @endif
+                                            data-race="{{ $race }}"
+                                            value="{{ $race }}"
+                                            @checked(in_array($race, $registration->races ?? [], true))
+                                            @disabled(! $bolehUbahLomba)
+                                            aria-label="{{ $race }}"
+                                            title="{{ $bolehUbahLomba ? 'Klik untuk mengubah mata lomba' : 'Pendaftaran lunas/menunggu persetujuan — ubah lewat pengelola' }}">
                                     </td>
                                 @endforeach
                                 @if ($raceColumns === [])

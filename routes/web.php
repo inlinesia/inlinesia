@@ -157,6 +157,9 @@ Route::middleware(['auth', 'event-access'])->group(function () {
     Route::put('/lomba/{event}/atlet/{registration}', [EventRegistrationController::class, 'updateOwn'])
         ->scopeBindings()
         ->name('events.registration.update-own');
+    Route::patch('/lomba/{event}/atlet/{registration}/mata-lomba', [EventRegistrationController::class, 'updateRaces'])
+        ->scopeBindings()
+        ->name('events.registration.races.update');
     Route::delete('/lomba/{event}/atlet/{registration}', [EventRegistrationController::class, 'destroyOwn'])
         ->scopeBindings()
         ->name('events.registration.destroy-own');

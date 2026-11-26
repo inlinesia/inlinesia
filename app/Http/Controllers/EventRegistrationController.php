@@ -191,6 +191,57 @@ class EventRegistrationController extends Controller
             ->with('status', 'Data pendaftaran berhasil diperbarui. Konfirmasi pembayaran perlu dikirim kembali.');
     }
 
+    /**
+     * Ubah mata lomba langsung dari tabel dasbor peserta.
+     *
+     * Hanya pendaftaran belum bayar yang bisa diubah langsung. Peserta lunas
+     * tetap memakai alur permintaan perubahan yang disetujui pengelola.
+     */
+    public function updateRaces(
+        Request $request,
+        Event $event,
+        EventRegistration $registration,
+        ResolveEventRegistrationCategory $categoryResolver,
+    ): JsonResponse {
+        abort_unless($registration->user_id === $request->user()->id, 403);
+        abort_unless($event->status === 'approved', 404);
+        abort_if($registration->cancellation_status === 'pending' || $registration->cancellation_status === 'approved', 409, 'Pendaftaran yang sedang atau sudah dibatalkan tidak dapat diubah.');
+        abort_if($registration->participant_change_status === 'pending', 409, 'Permintaan perubahan sebelumnya masih menunggu keputusan pengelola.');
+        abort_if($registration->payment_status === 'paid' || $registration->amountPaid() > 0, 409, 'Pendaftaran lunas hanya dapat diubah lewat persetujuan pengelola.');
+
+        $validated = $request->validate([
+            'races' => ['required', 'array', 'min:1', 'distinct'],
+            'races.*' => ['required', 'string', Rule::in($event->races)],
+        ]);
+
+        if ($registration->date_of_birth !== null && $registration->gender !== null) {
+            $match = $categoryResolver->bestMatch(
+                $event,
+                $registration->date_of_birth->format('Y-m-d'),
+                $registration->gender,
+                $validated['races'],
+            );
+
+            if (! $match || count($match['in_category_races']) < max(1, (int) ($match['rule']['required_races'] ?? 1))) {
+                throw ValidationException::withMessages([
+                    'races' => 'Mata lomba yang dipilih tidak memenuhi aturan kategori event.',
+                ]);
+            }
+        }
+
+        $registration->update([
+            'races' => array_values($validated['races']),
+            'category' => null,
+            'fee_total' => null,
+            'fee_breakdown' => null,
+        ]);
+
+        return response()->json([
+            'message' => 'Mata lomba berhasil diperbarui. Konfirmasi pembayaran perlu dikirim kembali.',
+            'races' => array_values($validated['races']),
+        ]);
+    }
+
     public function destroyOwn(Request $request, Event $event, EventRegistration $registration): RedirectResponse
     {
         abort_unless($registration->user_id === $request->user()->id, 403);

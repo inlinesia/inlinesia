@@ -908,6 +908,52 @@ document.querySelectorAll('[data-category-rules-form]').forEach((form) => {
     }
 });
 
+document.querySelectorAll('[data-race-registration]').forEach((row) => {
+    if (!(row instanceof HTMLTableRowElement)) return;
+    const form = row.closest('form, .guest-registration-table');
+    const token = document.querySelector('[data-race-csrf]')?.value ?? '';
+    const url = row.dataset.updateUrl ?? '';
+    if (!url) return;
+
+    row.querySelectorAll('[data-race-toggle]').forEach((checkbox) => {
+        if (!(checkbox instanceof HTMLInputElement)) return;
+        checkbox.addEventListener('change', async () => {
+            const races = Array.from(row.querySelectorAll('[data-race-toggle]:checked'))
+                .map((input) => input.value);
+            checkbox.disabled = true;
+            try {
+                const response = await fetch(url, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token,
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({ races }),
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    const message = data.message
+                        || (data.errors ? Object.values(data.errors)[0]?.[0] : null)
+                        || 'Gagal menyimpan mata lomba.';
+                    checkbox.checked = !checkbox.checked;
+                    window.alert(message);
+                    return;
+                }
+                row.querySelectorAll('[data-race-toggle]').forEach((input) => {
+                    input.checked = races.includes(input.value);
+                });
+            } catch {
+                checkbox.checked = !checkbox.checked;
+                window.alert('Gagal menyimpan mata lomba. Periksa koneksi Anda.');
+            } finally {
+                checkbox.disabled = false;
+            }
+        });
+    });
+});
+
 document.querySelectorAll('[data-athlete-registration]').forEach((form) => {
     if (!(form instanceof HTMLFormElement)) return;
     const dateInput = form.elements.namedItem('date_of_birth');

@@ -127,7 +127,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 
 <!-- AUTO:START -->
 
-### Rute (82)
+### Rute (83)
 
 | Method | URI | Nama | Aksi | Middleware |
 |---|---|---|---|---|
@@ -205,6 +205,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 | DELETE | `lomba/{event}/atlet/{registration}` | `events.registration.destroy-own` | `App\Http\Controllers\EventRegistrationController@destroyOwn` | web, auth, event-access |
 | POST | `lomba/{event}/atlet/{registration}/bukti` | `events.registration.proof.store` | `App\Http\Controllers\EventRegistrationController@uploadProof` | web, auth, event-access, throttle:8,1 |
 | POST | `lomba/{event}/atlet/{registration}/konfirmasi-whatsapp` | `events.registration.whatsapp` | `App\Http\Controllers\EventRegistrationController@confirmViaWhatsapp` | web, auth, event-access, throttle:8,1 |
+| PATCH | `lomba/{event}/atlet/{registration}/mata-lomba` | `events.registration.races.update` | `App\Http\Controllers\EventRegistrationController@updateRaces` | web, auth, event-access |
 | GET\|HEAD | `lomba/{event}/daftar` | `events.registration.create` | `App\Http\Controllers\EventRegistrationController@create` | web, auth, event-access |
 | POST | `lomba/{event}/daftar` | `events.registration.store` | `App\Http\Controllers\EventRegistrationController@store` | web, auth, event-access, throttle:8,1 |
 | POST | `lomba/{event}/resolve-category` | `events.registration.resolve-category` | `App\Http\Controllers\EventRegistrationController@resolveCategory` | web, auth, event-access |
@@ -221,7 +222,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Console/Commands/ReleaseClosedParticipantLists.php` — 48 baris — `ReleaseClosedParticipantLists` — method: `handle`
 - `app/Http/Controllers/Admin/DataManagementController.php` — 138 baris — `DataManagementController` — method: `backup`, `createBackup`, `restore`, `destroyBackup`, `delete`, `reviewDeletion`, `destroySelected`
 - `app/Http/Controllers/Admin/EventOwnershipController.php` — 46 baris — `EventOwnershipController` — method: `update`
-- `app/Http/Controllers/Admin/EventSubmissionController.php` — 84 baris — `EventSubmissionController` — method: `index`, `approve`, `reject`
+- `app/Http/Controllers/Admin/EventSubmissionController.php` — 107 baris — `EventSubmissionController` — method: `index`, `approve`, `reject`
 - `app/Http/Controllers/Admin/ThemeSettingController.php` — 35 baris — `ThemeSettingController` — method: `edit`, `update`
 - `app/Http/Controllers/Admin/UserController.php` — 181 baris — `UserController` — method: `index`, `form`, `store`, `update`, `resendVerification`, `verifyEmail`
 - `app/Http/Controllers/Auth/AuthenticatedSessionController.php` — 47 baris — `AuthenticatedSessionController` — method: `create`, `store`, `destroy`
@@ -229,13 +230,13 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Http/Controllers/Auth/RegisteredUserController.php` — 47 baris — `RegisteredUserController` — method: `create`, `store`
 - `app/Http/Controllers/Controller.php` — 8 baris — `Controller`
 - `app/Http/Controllers/DirectoryController.php` — 245 baris — `DirectoryController` — method: `index`, `createClub`, `storeClub`, `editClub`, `updateClub`, `createAthlete`, `storeAthlete`
-- `app/Http/Controllers/EventCategoryController.php` — 662 baris — `EventCategoryController` — method: `edit`, `update`
+- `app/Http/Controllers/EventCategoryController.php` — 689 baris — `EventCategoryController` — method: `edit`, `update`
 - `app/Http/Controllers/EventFinanceController.php` — 262 baris — `EventFinanceController` — method: `index`, `store`, `update`, `destroy`
 - `app/Http/Controllers/EventListingController.php` — 23 baris — `EventListingController` — method: `__invoke`
 - `app/Http/Controllers/EventRaceDayController.php` — 377 baris — `EventRaceDayController` — method: `show`, `buildHeats`, `resetHeats`, `prepareGroup`, `postpone`, `updateHeat`, `advance`
 - `app/Http/Controllers/EventRaceFormatController.php` — 310 baris — `EventRaceFormatController` — method: `index`, `update`, `release`, `unrelease`
 - `app/Http/Controllers/EventRaceOrderController.php` — 80 baris — `EventRaceOrderController` — method: `show`
-- `app/Http/Controllers/EventRegistrationController.php` — 379 baris — `EventRegistrationController` — method: `create`, `store`, `updateOwn`, `destroyOwn`, `uploadProof`, `confirmViaWhatsapp`, `resolveCategory`
+- `app/Http/Controllers/EventRegistrationController.php` — 425 baris — `EventRegistrationController` — method: `create`, `store`, `updateOwn`, `updateRaces`, `destroyOwn`, `uploadProof`, `confirmViaWhatsapp`, `resolveCategory`
 - `app/Http/Controllers/EventRegistrationManagementController.php` — 764 baris — `EventRegistrationManagementController` — method: `index`, `export`, `assignCategories`, `publish`, `update`, `confirmPayment`, `reviewParticipantChange`, `reviewCancellation`, …
 - `app/Http/Controllers/GuestDashboardController.php` — 119 baris — `GuestDashboardController` — method: `__invoke`
 - `app/Http/Controllers/NikLookupController.php` — 44 baris — `NikLookupController` — method: `__invoke`
@@ -247,7 +248,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Http/Requests/UpdateEventRegistrationRequest.php` — 62 baris — `UpdateEventRegistrationRequest` — method: `authorize`, `rules`, `withValidator`, `attributes`
 - `app/Models/Athlete.php` — 97 baris — `Athlete` — method: `club`, `owner`, `canViewNik`, `maskedNik`, `scopeSearch`
 - `app/Models/Club.php` — 52 baris — `Club` — method: `owner`, `athletes`, `isManagedBy`
-- `app/Models/Event.php` — 377 baris — `Event` — method: `submitter`, `reviewer`, `registrations`, `registrationFinancialEntries`, `financeTransactions`, `raceSettings`, `raceHeats`, `raceEntries`, …
+- `app/Models/Event.php` — 409 baris — `Event` — method: `submitter`, `reviewer`, `registrations`, `registrationFinancialEntries`, `financeTransactions`, `raceSettings`, `raceHeats`, `raceEntries`, …
 - `app/Models/EventCategoryRaceSetting.php` — 265 baris — `EventCategoryRaceSetting` — method: `event`, `usesPoints`, `stageLadder`, `stageBefore`, `stageAfter`, `hasQualificationRound`, `hasSemiFinal`, `hasFinal`, …
 - `app/Models/EventFinanceTransaction.php` — 83 baris — `EventFinanceTransaction` — method: `event`, `author`, `isIncome`, `categoryLabel`, `categoriesFor`
 - `app/Models/EventRaceEntry.php` — 128 baris — `EventRaceEntry` — method: `heat`, `registration`, `statusLabel`, `isAwaitingRace`, `parseTime`, `formatTime`
@@ -283,70 +284,72 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/admin/event-submissions/index.blade.php` — 48 baris
 - `resources/views/admin/settings/theme.blade.php` — 144 baris
 - `resources/views/auth/login.blade.php` — 42 baris
-- `resources/views/auth/profile.blade.php` — 110 baris
+- `resources/views/auth/profile.blade.php` — 124 baris
 - `resources/views/auth/register.blade.php` — 73 baris
 - `resources/views/auth/verify-email.blade.php` — 21 baris
 - `resources/views/components/blade-location.blade.php` — 10 baris
 - `resources/views/components/contact-card.blade.php` — 98 baris
 - `resources/views/components/footer.blade.php` — 7 baris
 - `resources/views/components/logo.blade.php` — 13 baris
-- `resources/views/components/navbar.blade.php` — 32 baris
+- `resources/views/components/navbar.blade.php` — 31 baris
 - `resources/views/components/page-context.blade.php` — 28 baris
 - `resources/views/components/preset-picker.blade.php` — 62 baris
 - `resources/views/components/sidebar.blade.php` — 59 baris
 - `resources/views/components/topbar.blade.php` — 9 baris
 - `resources/views/components/user-badge.blade.php` — 18 baris
-- `resources/views/layouts/admin.blade.php` — 41 baris
-- `resources/views/layouts/public.blade.php` — 57 baris
+- `resources/views/layouts/admin.blade.php` — 50 baris
+- `resources/views/layouts/public.blade.php` — 66 baris
 - `resources/views/publik/beranda.blade.php` — 276 baris
 - `resources/views/publik/direktori/atlet.blade.php` — 90 baris
 - `resources/views/publik/direktori/index.blade.php` — 155 baris
 - `resources/views/publik/direktori/klub-edit.blade.php` — 53 baris
 - `resources/views/publik/direktori/klub.blade.php` — 52 baris
 - `resources/views/publik/lomba/index.blade.php` — 107 baris
-- `resources/views/verified/dashboard.blade.php` — 360 baris
-- `resources/views/verified/events/categories.blade.php` — 541 baris
+- `resources/views/verified/dashboard.blade.php` — 368 baris
+- `resources/views/verified/events/categories.blade.php` — 585 baris
 - `resources/views/verified/events/finance/index.blade.php` — 301 baris
 - `resources/views/verified/events/participants/export.blade.php` — 173 baris
 - `resources/views/verified/events/participants/index.blade.php` — 609 baris
 - `resources/views/verified/events/participants/ubah.blade.php` — 137 baris
-- `resources/views/verified/events/pendaftaran/daftar.blade.php` — 102 baris
+- `resources/views/verified/events/pendaftaran/daftar.blade.php` — 99 baris
 - `resources/views/verified/events/pengajuan/form.blade.php` — 188 baris
 - `resources/views/verified/events/race/day.blade.php` — 252 baris
 - `resources/views/verified/events/race/format.blade.php` — 370 baris
 - `resources/views/verified/events/race/order.blade.php` — 93 baris
 - `resources/views/verified/events/race/partials/heat.blade.php` — 174 baris
 
-### Pengujian (tests/) (26 file)
+### Pengujian (tests/) (28 file)
 
-- `tests/Feature/AccountPortalTest.php` — 473 baris — `AccountPortalTest` — method: `test_guests_can_open_registration_and_login_pages`, `test_public_registration_creates_and_signs_in_a_non_admin_account`, `test_registration_sends_a_verification_email_and_the_signed_link_verifies_the_account`, `test_public_registration_cannot_select_admin_role`, `test_users_can_login_update_their_profile_and_logout`, `test_primary_admin_email_is_fixed_in_profiles_and_when_saving_the_account`, `test_admin_can_edit_an_account_and_email_changes_require_reverification`, `test_admin_can_search_filter_and_sort_the_account_list`, …
+- `tests/Feature/AccountPortalTest.php` — 498 baris — `AccountPortalTest` — method: `test_guests_can_open_registration_and_login_pages`, `test_public_registration_creates_and_signs_in_a_non_admin_account`, `test_registration_sends_a_verification_email_and_the_signed_link_verifies_the_account`, `test_public_registration_cannot_select_admin_role`, `test_profile_form_uses_control_two_inputs_and_validation_states`, `test_users_can_login_update_their_profile_and_logout`, `test_primary_admin_email_is_fixed_in_profiles_and_when_saving_the_account`, `test_admin_can_edit_an_account_and_email_changes_require_reverification`, …
+- `tests/Feature/AdminDashboardThemeTest.php` — 23 baris — `AdminDashboardThemeTest` — method: `test_admin_dashboard_hero_text_is_readable_in_ceria_theme`
 - `tests/Feature/AdminDataManagementTest.php` — 286 baris — `AdminDataManagementTest` — method: `test_guest_is_redirected_from_data_management_pages`, `test_non_admin_cannot_access_data_management_pages`, `test_admin_can_review_and_delete_a_selected_catalog`, `test_deletion_requires_a_fresh_review_when_catalog_contents_change`, `test_user_catalog_deletion_preserves_admin_accounts`, `test_selected_catalog_is_not_deleted_without_confirmation`, `test_admin_can_create_list_and_restore_a_server_backup`, `test_restore_rejects_a_tampered_server_backup_without_changing_data`, …
 - `tests/Feature/AdminEventFormTest.php` — 203 baris — `AdminEventFormTest` — method: `test_admin_submits_event_from_the_shared_dashboard_flow`, `test_admin_can_mark_an_event_as_free`, `test_admin_configures_categories_from_the_shared_dashboard`, `test_event_forms_ask_only_for_categories_and_races`, `test_age_groups_can_no_longer_be_submitted_from_the_event_form`, `test_legacy_admin_create_mode_does_not_open_an_admin_event_form`, `test_event_end_date_cannot_precede_its_start_date`
-- `tests/Feature/AdminEventManagementTest.php` — 103 baris — `AdminEventManagementTest` — method: `test_admin_reviews_submissions_in_notifications_and_manages_events_in_the_shared_dashboard`, `test_public_listing_hides_pending_events_and_management_actions_for_every_role`, `test_the_legacy_admin_event_management_endpoint_is_removed`
+- `tests/Feature/AdminEventManagementTest.php` — 135 baris — `AdminEventManagementTest` — method: `test_admin_reviews_submissions_in_notifications_and_manages_events_in_the_shared_dashboard`, `test_admin_can_approve_event_submission_without_500`, `test_admin_can_reject_event_submission`, `test_public_listing_hides_pending_events_and_management_actions_for_every_role`, `test_the_legacy_admin_event_management_endpoint_is_removed`
 - `tests/Feature/AdminSidebarTest.php` — 53 baris — `AdminSidebarTest` — method: `test_admin_sidebar_has_a_toggle_and_no_help_card`, `test_admin_sidebar_only_links_to_modules_that_exist`, `test_placeholder_admin_module_pages_have_been_removed`
-- `tests/Feature/CategoryPricingTest.php` — 1041 baris — `CategoryPricingTest` — method: `test_fee_calculator_applies_package_extra_races_outside_races_and_discount`, `test_fee_calculator_never_returns_a_negative_total`, `test_outside_obligation_category_charges_the_outside_fee_for_each_selected_race`, `test_organizer_can_store_required_races_and_pricing_per_category`, `test_organizer_can_save_separate_outside_obligation_category_and_fee`, `test_overlapping_categories_report_the_shared_birth_gender_and_race_details`, `test_category_form_builds_the_final_name_from_category_and_gender_dropdowns`, `test_category_form_rejects_a_category_name_not_registered_for_the_event`, …
-- `tests/Feature/CategoryQuotaTest.php` — 384 baris — `CategoryQuotaTest` — method: `test_a_category_without_a_quota_is_never_full`, `test_only_paid_and_accepted_athletes_consume_a_quota_slot`, `test_a_full_category_closes_itself_once_the_quota_is_reached`, `test_an_approved_cancellation_frees_the_slot_again`, `test_the_organizer_can_force_a_category_closed_without_setting_a_quota`, `test_the_organizer_can_reopen_a_full_category`, `test_the_organizer_can_store_the_quota_and_the_override_from_the_category_form`, `test_an_empty_quota_is_stored_as_no_limit`, …
+- `tests/Feature/CategoryPricingTest.php` — 1105 baris — `CategoryPricingTest` — method: `test_fee_calculator_applies_package_extra_races_outside_races_and_discount`, `test_wave_tariffs_charge_package_once_and_extras_per_race`, `test_fee_calculator_never_returns_a_negative_total`, `test_outside_obligation_category_charges_the_outside_fee_for_each_selected_race`, `test_organizer_can_store_required_races_and_pricing_per_category`, `test_organizer_can_save_separate_outside_obligation_category_and_fee`, `test_overlapping_categories_report_the_shared_birth_gender_and_race_details`, `test_category_form_builds_the_final_name_from_category_and_gender_dropdowns`, …
+- `tests/Feature/CategoryQuotaTest.php` — 416 baris — `CategoryQuotaTest` — method: `test_a_category_without_a_quota_is_never_full`, `test_only_paid_and_accepted_athletes_consume_a_quota_slot`, `test_quota_scope_can_count_only_female_only_male_or_both`, `test_single_gender_category_defaults_to_its_own_quota_scope`, `test_a_full_category_closes_itself_once_the_quota_is_reached`, `test_an_approved_cancellation_frees_the_slot_again`, `test_the_organizer_can_force_a_category_closed_without_setting_a_quota`, `test_the_organizer_can_reopen_a_full_category`, …
 - `tests/Feature/DirectoryTest.php` — 557 baris — `DirectoryTest` — method: `test_the_public_dashboard_links_to_the_directory`, `test_a_guest_can_browse_the_club_list_and_search_by_club_name`, `test_the_participant_list_is_limited_to_the_club_owner_the_account_owner_and_admin`, `test_the_nik_is_hidden_from_everyone_except_the_owner_and_the_club_owner`, `test_an_event_registration_is_mirrored_into_the_directory`, `test_a_foreign_national_registration_is_mirrored_with_its_passport`, `test_a_club_can_be_registered_without_any_event_and_shows_its_contact`, `test_the_same_club_cannot_be_registered_twice`, …
 - `tests/Feature/EventApplicationTest.php` — 848 baris — `EventApplicationTest` — method: `test_event_applications_require_an_account_and_verified_email`, `test_complete_event_application_is_saved_as_pending_and_not_public`, `test_event_application_requires_a_valid_organizer_whatsapp_number`, `test_admin_approval_notifies_submitter_and_publishes_event`, `test_each_event_submission_is_shown_in_its_own_compact_card`, `test_admin_rejection_keeps_event_private_and_sends_feedback_to_applicant`, `test_participant_registration_requires_account_verification_and_saves_selected_races`, `test_event_manager_can_update_age_gender_and_race_rules_and_only_owner_can_change_them`, …
 - `tests/Feature/EventFinanceTest.php` — 388 baris — `EventFinanceTest` — method: `test_owner_of_an_approved_event_can_open_the_finance_page`, `test_admin_can_open_the_finance_page_for_any_event`, `test_user_without_the_event_is_forbidden`, `test_owner_cannot_finance_an_event_that_is_not_approved_yet`, `test_guest_is_redirected_to_login`, `test_registration_income_counts_only_confirmed_payments`, `test_registration_income_ignores_manual_notes`, `test_owner_can_store_an_expense`, …
 - `tests/Feature/EventListingTest.php` — 292 baris — `EventListingTest` — method: `test_public_listing_contains_only_approved_events_and_no_management_controls`, `test_verified_owner_manages_events_from_the_shared_dashboard_not_the_public_listing`, `test_unverified_user_is_prompted_to_verify_before_registering_or_applying`, `test_admin_uses_shared_dashboard_for_management_and_notifications_for_review_only`, `test_admin_can_transfer_an_admin_owned_event_to_a_verified_account`, `test_admin_can_assign_an_unowned_legacy_event_to_a_verified_account`, `test_admin_cannot_transfer_an_event_owned_by_a_non_admin_account`, `test_only_admin_can_transfer_event_ownership`, …
 - `tests/Feature/EventPaymentAccountTest.php` — 258 baris — `EventPaymentAccountTest` — method: `test_organizer_can_submit_an_event_with_a_payment_account`, `test_payment_account_is_optional`, `test_account_number_without_a_bank_name_is_rejected`, `test_account_number_with_letters_is_rejected`, `test_owner_can_change_the_payment_account_from_the_edit_form`, `test_clearing_the_payment_account_removes_it`, `test_registration_page_shows_the_payment_account_to_the_athlete`, `test_registration_page_hides_the_payment_account_for_free_events`, …
 - `tests/Feature/EventRaceFormatTest.php` — 1853 baris — `EventRaceFormatTest` — method: `test_owner_of_an_approved_event_can_open_the_format_page`, `test_admin_can_open_the_format_page_for_any_event`, `test_user_without_the_event_is_forbidden`, `test_owner_cannot_configure_an_event_that_is_not_approved_yet`, `test_guest_is_redirected_to_login`, `test_format_page_shows_usable_defaults_before_anything_is_saved`, `test_format_is_saved_per_category_and_race`, `test_saving_saves_every_category_in_one_submit`, …
-- `tests/Feature/EventRegistrationManagementTest.php` — 1430 baris — `EventRegistrationManagementTest` — method: `test_event_owner_can_update_athlete_data_and_confirm_payment_from_the_roster`, `test_admin_can_edit_a_released_roster_but_not_publish_it`, `test_the_managed_roster_shows_full_biodata_and_a_whatsapp_link`, `test_the_public_roster_stays_free_of_biodata_and_contact_details`, `test_the_public_roster_can_be_searched_by_name_or_club`, `test_the_released_roster_can_be_filtered_by_category_race_and_gender`, `test_the_fee_is_shown_only_to_the_event_manager`, `test_only_a_manager_gets_the_printable_category_toggles`, …
+- `tests/Feature/EventRegistrationManagementTest.php` — 1431 baris — `EventRegistrationManagementTest` — method: `test_event_owner_can_update_athlete_data_and_confirm_payment_from_the_roster`, `test_admin_can_edit_a_released_roster_but_not_publish_it`, `test_the_managed_roster_shows_full_biodata_and_a_whatsapp_link`, `test_the_public_roster_stays_free_of_biodata_and_contact_details`, `test_the_public_roster_can_be_searched_by_name_or_club`, `test_the_released_roster_can_be_filtered_by_category_race_and_gender`, `test_the_fee_is_shown_only_to_the_event_manager`, `test_only_a_manager_gets_the_printable_category_toggles`, …
+- `tests/Feature/EventSimulationSeederTest.php` — 79 baris — `EventSimulationSeederTest` — method: `test_seeder_creates_pending_event_with_login_ready_accounts`, `test_seeder_can_be_run_again_without_duplicating_data`, `test_purge_removes_simulation_but_keeps_real_accounts`
 - `tests/Feature/ExampleTest.php` — 101 baris — `ExampleTest` — method: `test_the_public_homepage_highlights_available_event_platform_features`, `test_the_public_homepage_shows_the_event_empty_state_when_no_events_are_upcoming`, `test_the_public_event_listing_only_displays_approved_events`, `test_the_panitia_dashboard_remains_available_separately`
-- `tests/Feature/GuestDashboardTest.php` — 139 baris — `GuestDashboardTest` — method: `test_verified_user_can_open_their_dashboard_and_see_only_their_registrations`, `test_unverified_user_is_prompted_to_verify_and_does_not_see_dashboard_button`, `test_individual_and_club_accounts_can_register_when_registration_is_open`, `test_dashboard_hides_registration_link_until_manager_opens_registration`
+- `tests/Feature/GuestDashboardTest.php` — 212 baris — `GuestDashboardTest` — method: `test_verified_user_can_open_their_dashboard_and_see_only_their_registrations`, `test_participant_can_update_races_directly_from_dashboard_table`, `test_paid_participant_cannot_update_races_from_table`, `test_registration_form_does_not_show_already_registered_athletes`, `test_unverified_user_is_prompted_to_verify_and_does_not_see_dashboard_button`, `test_individual_and_club_accounts_can_register_when_registration_is_open`, `test_dashboard_hides_registration_link_until_manager_opens_registration`
 - `tests/Feature/HomeAuthFormTest.php` — 54 baris — `HomeAuthFormTest` — method: `test_guest_sees_login_and_registration_forms_on_homepage`, `test_authenticated_user_does_not_see_homepage_auth_forms`, `test_failed_login_shows_the_error_in_the_homepage_form`
 - `tests/Feature/MergedFormPagesTest.php` — 158 baris — `MergedFormPagesTest` — method: `test_event_create_and_edit_render_the_same_view`, `test_admin_sees_the_same_shell_for_event_create_and_edit`, `test_event_edit_uses_the_unified_url_without_an_edit_suffix`, `test_account_create_and_edit_render_the_same_view`, `test_account_form_switches_only_by_mode`, `test_new_event_still_requires_a_future_start_date_and_deadline`
 - `tests/Feature/NikAutofillTest.php` — 191 baris — `NikAutofillTest` — method: `test_authenticated_user_can_read_a_nik_into_region_gender_and_birth_date`, `test_nik_lookup_reads_female_nik_from_a_day_above_forty`, `test_nik_lookup_rejects_unknown_region_code`, `test_nik_lookup_requires_sixteen_digits`, `test_nik_lookup_requires_an_account`, `test_registration_page_exposes_the_nik_feedback_container_for_the_region_notice`, `test_registration_rejects_nik_that_does_not_match_the_given_gender`, `test_registration_rejects_nik_that_does_not_match_the_given_birth_date`, …
 - `tests/Feature/PageContextWidgetTest.php` — 119 baris — `PageContextWidgetTest` — method: `test_user_badge_menampilkan_nama_dan_role_pada_setiap_halaman`, `test_lokasi_blade_hanya_muncul_untuk_admin`, `test_halaman_pendaftaran_menampilkan_navbar_di_atas_dan_konten_di_dalam_layout`
 - `tests/Feature/ProjectMapTest.php` — 36 baris — `ProjectMapTest` — method: `test_project_map_contains_every_named_route`, `test_project_map_keeps_the_auto_generated_markers`
-- `tests/Feature/ThemeSettingTest.php` — 59 baris — `ThemeSettingTest` — method: `test_theme_settings_page_offers_the_ceria_theme`, `test_admin_can_save_the_ceria_theme`, `test_theme_settings_rejects_an_unknown_theme`, `test_ceria_stickers_are_marked_only_on_public_pages`
+- `tests/Feature/ThemeSettingTest.php` — 74 baris — `ThemeSettingTest` — method: `test_theme_settings_page_offers_the_ceria_theme`, `test_admin_can_save_the_ceria_theme`, `test_saved_theme_is_written_before_client_scripts_run`, `test_theme_settings_rejects_an_unknown_theme`, `test_ceria_stickers_are_marked_only_on_public_pages`
 - `tests/TestCase.php` — 46 baris — `TestCase`
 - `tests/Unit/ExampleTest.php` — 16 baris — `ExampleTest` — method: `test_that_true_is_true`
 - `tests/Unit/NikParserTest.php` — 90 baris — `NikParserTest` — method: `it_parses_male_nik_with_region_gender_and_birth_date`, `it_detects_female_nik_from_day_above_forty`, `it_reads_two_digit_year_as_1900s_for_values_above_forty_nine`, `it_rejects_nik_that_is_not_sixteen_digits`, `it_rejects_nik_with_unknown_region_code`, `it_rejects_nik_with_invalid_birth_month`, `it_builds_suggested_address_from_region_names`
 - `tests/Unit/PricingWaveTest.php` — 139 baris — `PricingWaveTest` — method: `it_selects_the_wave_matching_the_given_date`, `it_treats_wave_boundaries_as_inclusive`, `active_wave_overrides_only_the_fields_it_fills`, `pricing_falls_back_to_base_fee_outside_any_wave`, `breakdown_uses_the_wave_active_on_the_registration_date`, `a_rule_with_no_base_fee_but_a_wave_still_counts_as_priced`, `wave_summaries_flag_the_wave_active_on_the_given_date`
 
-### Database: migrasi, seeder, factory (32 file)
+### Database: migrasi, seeder, factory (33 file)
 
 - `database/factories/UserFactory.php` — 45 baris — `UserFactory` — method: `definition`, `unverified`
 - `database/migrations/0001_01_01_000000_create_users_table.php` — 49 baris — method: `up`, `down`
@@ -379,6 +382,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `database/seeders/DatabaseSeeder.php` — 25 baris — `DatabaseSeeder` — method: `run`
 - `database/seeders/DemoEventRegistrationSeeder.php` — 540 baris — `DemoEventRegistrationSeeder` — method: `run`
 - `database/seeders/EventFinanceSeeder.php` — 68 baris — `EventFinanceSeeder` — method: `run`
+- `database/seeders/EventSimulationSeeder.php` — 457 baris — `EventSimulationSeeder` — method: `run`, `purge`
 - `database/seeders/TulungagungEventRegistrationSeeder.php` — 144 baris — `TulungagungEventRegistrationSeeder` — method: `run`
 
 ### Konfigurasi, rute, dan skrip (23 file)
@@ -400,7 +404,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `config/session.php` — 233 baris
 - `config/user-roles.php` — 8 baris
 - `routes/console.php` — 8 baris
-- `routes/web.php` — 220 baris
+- `routes/web.php` — 223 baris
 - `scripts/fetch-wilayah-data.php` — 99 baris
 - `scripts/generate-peta-proyek.php` — 220 baris
 - `scripts/inspect-dev-data.php` — 30 baris
