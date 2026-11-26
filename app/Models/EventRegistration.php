@@ -41,6 +41,7 @@ class EventRegistration extends Model
         'participant_change_status',
         'participant_change_requested_at',
         'cancellation_status',
+        'cancellation_reason',
         'cancellation_requested_at',
         'cancellation_decided_at',
         'refund_amount',

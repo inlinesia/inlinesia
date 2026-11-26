@@ -127,7 +127,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 
 <!-- AUTO:START -->
 
-### Rute (83)
+### Rute (84)
 
 | Method | URI | Nama | Aksi | Middleware |
 |---|---|---|---|---|
@@ -206,6 +206,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 | POST | `lomba/{event}/atlet/{registration}/bukti` | `events.registration.proof.store` | `App\Http\Controllers\EventRegistrationController@uploadProof` | web, auth, event-access, throttle:8,1 |
 | POST | `lomba/{event}/atlet/{registration}/konfirmasi-whatsapp` | `events.registration.whatsapp` | `App\Http\Controllers\EventRegistrationController@confirmViaWhatsapp` | web, auth, event-access, throttle:8,1 |
 | PATCH | `lomba/{event}/atlet/{registration}/mata-lomba` | `events.registration.races.update` | `App\Http\Controllers\EventRegistrationController@updateRaces` | web, auth, event-access |
+| POST | `lomba/{event}/atlet/{registration}/pembatalan-whatsapp` | `events.registration.cancellation.whatsapp` | `App\Http\Controllers\EventRegistrationController@cancelViaWhatsapp` | web, auth, event-access, throttle:8,1 |
 | GET\|HEAD | `lomba/{event}/daftar` | `events.registration.create` | `App\Http\Controllers\EventRegistrationController@create` | web, auth, event-access |
 | POST | `lomba/{event}/daftar` | `events.registration.store` | `App\Http\Controllers\EventRegistrationController@store` | web, auth, event-access, throttle:8,1 |
 | POST | `lomba/{event}/resolve-category` | `events.registration.resolve-category` | `App\Http\Controllers\EventRegistrationController@resolveCategory` | web, auth, event-access |
@@ -215,7 +216,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 | GET\|HEAD | `profil` | `profile.show` | `App\Http\Controllers\ProfileController@show` | web, auth |
 | PUT | `profil` | `profile.update` | `App\Http\Controllers\ProfileController@update` | web, auth |
 
-### Lapisan aplikasi (app/) (55 file)
+### Lapisan aplikasi (app/) (56 file)
 
 - `app/Console/Commands/BackfillDirectory.php` — 50 baris — `BackfillDirectory` — method: `handle`
 - `app/Console/Commands/BootstrapPrimaryAdmin.php` — 73 baris — `BootstrapPrimaryAdmin` — method: `handle`
@@ -236,7 +237,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Http/Controllers/EventRaceDayController.php` — 377 baris — `EventRaceDayController` — method: `show`, `buildHeats`, `resetHeats`, `prepareGroup`, `postpone`, `updateHeat`, `advance`
 - `app/Http/Controllers/EventRaceFormatController.php` — 310 baris — `EventRaceFormatController` — method: `index`, `update`, `release`, `unrelease`
 - `app/Http/Controllers/EventRaceOrderController.php` — 80 baris — `EventRaceOrderController` — method: `show`
-- `app/Http/Controllers/EventRegistrationController.php` — 425 baris — `EventRegistrationController` — method: `create`, `store`, `updateOwn`, `updateRaces`, `destroyOwn`, `uploadProof`, `confirmViaWhatsapp`, `resolveCategory`
+- `app/Http/Controllers/EventRegistrationController.php` — 491 baris — `EventRegistrationController` — method: `create`, `store`, `updateOwn`, `updateRaces`, `destroyOwn`, `uploadProof`, `confirmViaWhatsapp`, `cancelViaWhatsapp`, …
 - `app/Http/Controllers/EventRegistrationManagementController.php` — 764 baris — `EventRegistrationManagementController` — method: `index`, `export`, `assignCategories`, `publish`, `update`, `confirmPayment`, `reviewParticipantChange`, `reviewCancellation`, …
 - `app/Http/Controllers/GuestDashboardController.php` — 119 baris — `GuestDashboardController` — method: `__invoke`
 - `app/Http/Controllers/NikLookupController.php` — 44 baris — `NikLookupController` — method: `__invoke`
@@ -254,9 +255,10 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Models/EventRaceEntry.php` — 128 baris — `EventRaceEntry` — method: `heat`, `registration`, `statusLabel`, `isAwaitingRace`, `parseTime`, `formatTime`
 - `app/Models/EventRaceGroup.php` — 102 baris — `EventRaceGroup` — method: `event`, `heats`, `isPrepared`, `status`, `statusLabel`, `label`, `stageLabel`
 - `app/Models/EventRaceHeat.php` — 85 baris — `EventRaceHeat` — method: `event`, `entries`, `group`, `stageLabel`, `statusLabel`, `hasResults`
-- `app/Models/EventRegistration.php` — 159 baris — `EventRegistration` — method: `event`, `user`, `financialEntries`, `isForeignNational`, `maskedIdentity`, `identityHash`, `amountPaid`, `amountDue`
+- `app/Models/EventRegistration.php` — 160 baris — `EventRegistration` — method: `event`, `user`, `financialEntries`, `isForeignNational`, `maskedIdentity`, `identityHash`, `amountPaid`, `amountDue`
 - `app/Models/EventRegistrationFinancialEntry.php` — 42 baris — `EventRegistrationFinancialEntry` — method: `event`, `registration`, `recorder`
 - `app/Models/User.php` — 59 baris — `User` — method: `roleLabel`, `isAdmin`
+- `app/Notifications/CancellationRequestedNotification.php` — 50 baris — `CancellationRequestedNotification` — method: `via`, `toMail`, `toArray`
 - `app/Notifications/EventDecisionNotification.php` — 59 baris — `EventDecisionNotification` — method: `via`, `toMail`, `toArray`
 - `app/Notifications/EventSubmittedNotification.php` — 43 baris — `EventSubmittedNotification` — method: `via`, `toMail`, `toArray`
 - `app/Providers/AppServiceProvider.php` — 45 baris — `AppServiceProvider` — method: `register`, `boot`
@@ -305,7 +307,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/publik/direktori/klub-edit.blade.php` — 53 baris
 - `resources/views/publik/direktori/klub.blade.php` — 52 baris
 - `resources/views/publik/lomba/index.blade.php` — 107 baris
-- `resources/views/verified/dashboard.blade.php` — 368 baris
+- `resources/views/verified/dashboard.blade.php` — 376 baris
 - `resources/views/verified/events/categories.blade.php` — 585 baris
 - `resources/views/verified/events/finance/index.blade.php` — 301 baris
 - `resources/views/verified/events/participants/export.blade.php` — 173 baris
@@ -334,7 +336,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `tests/Feature/EventListingTest.php` — 292 baris — `EventListingTest` — method: `test_public_listing_contains_only_approved_events_and_no_management_controls`, `test_verified_owner_manages_events_from_the_shared_dashboard_not_the_public_listing`, `test_unverified_user_is_prompted_to_verify_before_registering_or_applying`, `test_admin_uses_shared_dashboard_for_management_and_notifications_for_review_only`, `test_admin_can_transfer_an_admin_owned_event_to_a_verified_account`, `test_admin_can_assign_an_unowned_legacy_event_to_a_verified_account`, `test_admin_cannot_transfer_an_event_owned_by_a_non_admin_account`, `test_only_admin_can_transfer_event_ownership`, …
 - `tests/Feature/EventPaymentAccountTest.php` — 258 baris — `EventPaymentAccountTest` — method: `test_organizer_can_submit_an_event_with_a_payment_account`, `test_payment_account_is_optional`, `test_account_number_without_a_bank_name_is_rejected`, `test_account_number_with_letters_is_rejected`, `test_owner_can_change_the_payment_account_from_the_edit_form`, `test_clearing_the_payment_account_removes_it`, `test_registration_page_shows_the_payment_account_to_the_athlete`, `test_registration_page_hides_the_payment_account_for_free_events`, …
 - `tests/Feature/EventRaceFormatTest.php` — 1853 baris — `EventRaceFormatTest` — method: `test_owner_of_an_approved_event_can_open_the_format_page`, `test_admin_can_open_the_format_page_for_any_event`, `test_user_without_the_event_is_forbidden`, `test_owner_cannot_configure_an_event_that_is_not_approved_yet`, `test_guest_is_redirected_to_login`, `test_format_page_shows_usable_defaults_before_anything_is_saved`, `test_format_is_saved_per_category_and_race`, `test_saving_saves_every_category_in_one_submit`, …
-- `tests/Feature/EventRegistrationManagementTest.php` — 1431 baris — `EventRegistrationManagementTest` — method: `test_event_owner_can_update_athlete_data_and_confirm_payment_from_the_roster`, `test_admin_can_edit_a_released_roster_but_not_publish_it`, `test_the_managed_roster_shows_full_biodata_and_a_whatsapp_link`, `test_the_public_roster_stays_free_of_biodata_and_contact_details`, `test_the_public_roster_can_be_searched_by_name_or_club`, `test_the_released_roster_can_be_filtered_by_category_race_and_gender`, `test_the_fee_is_shown_only_to_the_event_manager`, `test_only_a_manager_gets_the_printable_category_toggles`, …
+- `tests/Feature/EventRegistrationManagementTest.php` — 1470 baris — `EventRegistrationManagementTest` — method: `test_event_owner_can_update_athlete_data_and_confirm_payment_from_the_roster`, `test_admin_can_edit_a_released_roster_but_not_publish_it`, `test_the_managed_roster_shows_full_biodata_and_a_whatsapp_link`, `test_the_public_roster_stays_free_of_biodata_and_contact_details`, `test_the_public_roster_can_be_searched_by_name_or_club`, `test_the_released_roster_can_be_filtered_by_category_race_and_gender`, `test_the_fee_is_shown_only_to_the_event_manager`, `test_only_a_manager_gets_the_printable_category_toggles`, …
 - `tests/Feature/EventSimulationSeederTest.php` — 79 baris — `EventSimulationSeederTest` — method: `test_seeder_creates_pending_event_with_login_ready_accounts`, `test_seeder_can_be_run_again_without_duplicating_data`, `test_purge_removes_simulation_but_keeps_real_accounts`
 - `tests/Feature/ExampleTest.php` — 101 baris — `ExampleTest` — method: `test_the_public_homepage_highlights_available_event_platform_features`, `test_the_public_homepage_shows_the_event_empty_state_when_no_events_are_upcoming`, `test_the_public_event_listing_only_displays_approved_events`, `test_the_panitia_dashboard_remains_available_separately`
 - `tests/Feature/GuestDashboardTest.php` — 212 baris — `GuestDashboardTest` — method: `test_verified_user_can_open_their_dashboard_and_see_only_their_registrations`, `test_participant_can_update_races_directly_from_dashboard_table`, `test_paid_participant_cannot_update_races_from_table`, `test_registration_form_does_not_show_already_registered_athletes`, `test_unverified_user_is_prompted_to_verify_and_does_not_see_dashboard_button`, `test_individual_and_club_accounts_can_register_when_registration_is_open`, `test_dashboard_hides_registration_link_until_manager_opens_registration`
@@ -349,7 +351,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `tests/Unit/NikParserTest.php` — 90 baris — `NikParserTest` — method: `it_parses_male_nik_with_region_gender_and_birth_date`, `it_detects_female_nik_from_day_above_forty`, `it_reads_two_digit_year_as_1900s_for_values_above_forty_nine`, `it_rejects_nik_that_is_not_sixteen_digits`, `it_rejects_nik_with_unknown_region_code`, `it_rejects_nik_with_invalid_birth_month`, `it_builds_suggested_address_from_region_names`
 - `tests/Unit/PricingWaveTest.php` — 139 baris — `PricingWaveTest` — method: `it_selects_the_wave_matching_the_given_date`, `it_treats_wave_boundaries_as_inclusive`, `active_wave_overrides_only_the_fields_it_fills`, `pricing_falls_back_to_base_fee_outside_any_wave`, `breakdown_uses_the_wave_active_on_the_registration_date`, `a_rule_with_no_base_fee_but_a_wave_still_counts_as_priced`, `wave_summaries_flag_the_wave_active_on_the_given_date`
 
-### Database: migrasi, seeder, factory (33 file)
+### Database: migrasi, seeder, factory (34 file)
 
 - `database/factories/UserFactory.php` — 45 baris — `UserFactory` — method: `definition`, `unverified`
 - `database/migrations/0001_01_01_000000_create_users_table.php` — 49 baris — method: `up`, `down`
@@ -379,6 +381,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `database/migrations/2026_10_11_051047_create_clubs_and_athletes_tables.php` — 66 baris — method: `up`, `down`
 - `database/migrations/2026_10_11_130609_add_race_scope_to_race_tables.php` — 122 baris — method: `up`, `down`
 - `database/migrations/2026_10_11_160000_create_event_race_groups_table.php` — 108 baris — method: `up`, `down`
+- `database/migrations/2026_11_26_075706_add_cancellation_reason_to_event_registrations_table.php` — 22 baris — method: `up`, `down`
 - `database/seeders/DatabaseSeeder.php` — 25 baris — `DatabaseSeeder` — method: `run`
 - `database/seeders/DemoEventRegistrationSeeder.php` — 540 baris — `DemoEventRegistrationSeeder` — method: `run`
 - `database/seeders/EventFinanceSeeder.php` — 68 baris — `EventFinanceSeeder` — method: `run`
@@ -404,7 +407,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `config/session.php` — 233 baris
 - `config/user-roles.php` — 8 baris
 - `routes/console.php` — 8 baris
-- `routes/web.php` — 223 baris
+- `routes/web.php` — 227 baris
 - `scripts/fetch-wilayah-data.php` — 99 baris
 - `scripts/generate-peta-proyek.php` — 220 baris
 - `scripts/inspect-dev-data.php` — 30 baris

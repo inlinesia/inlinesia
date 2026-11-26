@@ -171,6 +171,10 @@ Route::middleware(['auth', 'event-access'])->group(function () {
         ->scopeBindings()
         ->middleware('throttle:8,1')
         ->name('events.registration.whatsapp');
+    Route::post('/lomba/{event}/atlet/{registration}/pembatalan-whatsapp', [EventRegistrationController::class, 'cancelViaWhatsapp'])
+        ->scopeBindings()
+        ->middleware('throttle:8,1')
+        ->name('events.registration.cancellation.whatsapp');
 
     // API endpoint untuk resolusi kategori otomatis
     Route::post('/lomba/{event}/resolve-category', [EventRegistrationController::class, 'resolveCategory'])

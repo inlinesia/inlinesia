@@ -5,10 +5,12 @@ namespace Tests\Feature;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Models\User;
+use App\Notifications\CancellationRequestedNotification;
 use App\Services\RaceHeatBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -1169,7 +1171,7 @@ class EventRegistrationManagementTest extends TestCase
         $this->markPaid($registration, 150000, ['Classic Slalom']);
 
         $this->actingAs($participant)
-            ->delete(route('events.registration.destroy-own', [$event, $registration]))
+            ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Tidak dapat mengikuti lomba'])
             ->assertRedirect(route('guest.dashboard'));
 
         $registration->refresh();
@@ -1210,7 +1212,7 @@ class EventRegistrationManagementTest extends TestCase
         $registration = $this->createRegistration($event, $participant);
         $this->markPaid($registration, 50000, ['Classic Slalom']);
         $this->actingAs($participant)
-            ->delete(route('events.registration.destroy-own', [$event, $registration]))
+            ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Tidak dapat hadir'])
             ->assertRedirect(route('guest.dashboard'));
 
         $this->actingAs($owner)
@@ -1243,10 +1245,47 @@ class EventRegistrationManagementTest extends TestCase
             ->put(route('events.registration.update-own', [$event, $registration]), $this->validUpdate())
             ->assertForbidden();
 
-        $this->delete(route('events.registration.destroy-own', [$event, $registration]))
+        $this->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Tidak dapat mengikuti lomba'])
             ->assertForbidden();
 
         $this->assertModelExists($registration);
+    }
+
+    public function test_cancellation_request_notifies_owner_and_stores_reason(): void
+    {
+        Notification::fake();
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $participant = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($owner);
+        $registration = $this->createRegistration($event, $participant);
+        $this->markPaid($registration, 150000, ['Classic Slalom']);
+
+        $this->actingAs($participant)
+            ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Sakit'])
+            ->assertRedirect(route('guest.dashboard'));
+
+        $registration->refresh();
+        $this->assertSame('pending', $registration->cancellation_status);
+        $this->assertSame('Sakit', $registration->cancellation_reason);
+        Notification::assertSentTo($owner, CancellationRequestedNotification::class);
+    }
+
+    public function test_cancellation_via_whatsapp_opens_owner_chat_with_prefilled_message(): void
+    {
+        Notification::fake();
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $participant = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($owner);
+        $registration = $this->createRegistration($event, $participant);
+        $this->markPaid($registration, 150000, ['Classic Slalom']);
+
+        $response = $this->actingAs($participant)
+            ->post(route('events.registration.cancellation.whatsapp', [$event, $registration]), ['reason' => 'Sakit']);
+
+        $response->assertRedirect();
+        $this->assertStringStartsWith('https://wa.me/', $response->headers->get('Location'));
+        $this->assertSame('pending', $registration->fresh()->cancellation_status);
+        Notification::assertSentTo($owner, CancellationRequestedNotification::class);
     }
 
     public function test_dasbor_menampilkan_tombol_rilis_hanya_kepada_pemilik_event(): void

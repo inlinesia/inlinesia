@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\User;
+use App\Notifications\CancellationRequestedNotification;
 use App\Services\CategoryFeeCalculator;
 use App\Services\RegistrationIdentity;
 use App\Services\ResolveEventRegistrationCategory;
@@ -15,6 +17,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use RuntimeException;
+use Throwable;
 
 class EventRegistrationController extends Controller
 {
@@ -249,26 +252,21 @@ class EventRegistrationController extends Controller
         abort_if($registration->cancellation_status === 'approved', 409, 'Pendaftaran ini sudah dibatalkan.');
         abort_if($registration->participant_change_status === 'pending', 409, 'Permintaan perubahan masih menunggu keputusan pengelola.');
 
-        if ($registration->payment_status === 'paid' || $registration->amountPaid() > 0) {
-            $registration->update([
-                'cancellation_status' => 'pending',
-                'cancellation_requested_at' => now(),
-                'cancellation_decided_at' => null,
-            ]);
+        $validated = $request->validate([
+            'reason' => ['required', 'string', 'max:1000'],
+        ]);
 
-            return redirect()->route('guest.dashboard')
-                ->with('status', 'Permintaan pembatalan dikirim. Pengelola akan memutuskan persetujuan dan nominal pengembalian dana.');
-        }
+        $registration->update([
+            'cancellation_status' => 'pending',
+            'cancellation_reason' => $validated['reason'],
+            'cancellation_requested_at' => now(),
+            'cancellation_decided_at' => null,
+        ]);
 
-        $proofPath = $registration->payment_proof_path;
-        $registration->delete();
-
-        if ($proofPath) {
-            Storage::disk('local')->delete($proofPath);
-        }
+        $this->notifyOwner($event, $registration);
 
         return redirect()->route('guest.dashboard')
-            ->with('status', 'Pendaftaran berhasil dibatalkan.');
+            ->with('status', 'Permintaan pembatalan dikirim. Pengelola akan memutuskan persetujuan dan nominal pengembalian dana.');
     }
 
     public function uploadProof(Request $request, Event $event, EventRegistration $registration): RedirectResponse
@@ -338,6 +336,74 @@ class EventRegistrationController extends Controller
             : "Halo, saya mengonfirmasi pembayaran atlet {$registration->participant_name} pada event {$event->name}. Saya akan mengirimkan bukti transfer melalui percakapan ini.";
 
         return redirect()->away('https://wa.me/'.$phone.'?text='.rawurlencode($message));
+    }
+
+    /**
+     * Ajukan pembatalan sekaligus membuka WhatsApp pemilik event dengan pesan
+     * yang sudah terisi data atlet dan alasan dari pengaju.
+     */
+    public function cancelViaWhatsapp(Request $request, Event $event, EventRegistration $registration): RedirectResponse
+    {
+        abort_unless($registration->user_id === $request->user()->id, 403);
+        abort_unless($event->status === 'approved', 404);
+        abort_if($registration->cancellation_status === 'pending', 409, 'Permintaan pembatalan sedang menunggu keputusan pengelola.');
+        abort_if($registration->cancellation_status === 'approved', 409, 'Pendaftaran ini sudah dibatalkan.');
+
+        $validated = $request->validate([
+            'reason' => ['required', 'string', 'max:1000'],
+        ]);
+
+        $phone = preg_replace('/\D+/', '', (string) $event->organizer_whatsapp);
+        if (! $phone) {
+            throw ValidationException::withMessages([
+                'reason' => 'Nomor WhatsApp pengelola kejuaraan belum tersedia. Hubungi Admin.',
+            ]);
+        }
+        if (str_starts_with($phone, '0')) {
+            $phone = '62'.substr($phone, 1);
+        } elseif (str_starts_with($phone, '8')) {
+            $phone = '62'.$phone;
+        }
+        if (strlen($phone) < 8 || strlen($phone) > 15) {
+            throw ValidationException::withMessages([
+                'reason' => 'Nomor WhatsApp pengelola kejuaraan belum valid. Hubungi Admin.',
+            ]);
+        }
+
+        $registration->update([
+            'cancellation_status' => 'pending',
+            'cancellation_reason' => $validated['reason'],
+            'cancellation_requested_at' => now(),
+            'cancellation_decided_at' => null,
+        ]);
+        $this->notifyOwner($event, $registration);
+
+        $kategori = $registration->category ?: 'kategori belum ditetapkan';
+        $alasan = $validated['reason'];
+        $message = "Saya ingin mengajukan pembatalan untuk atlet dengan data {$registration->participant_name} ({$kategori}) pada event {$event->name}, dengan alasan {$alasan}. Mohon untuk dipertimbangkan. Terimakasih.";
+
+        return redirect()->away('https://wa.me/'.$phone.'?text='.rawurlencode($message));
+    }
+
+    /**
+     * Beri tahu pemilik event dan admin bahwa ada pembatalan menunggu keputusan.
+     * Mail gagal tidak boleh menggagalkan permintaan pembatalan.
+     */
+    private function notifyOwner(Event $event, EventRegistration $registration): void
+    {
+        $recipients = User::query()
+            ->where('id', $event->submitted_by)
+            ->orWhere('role', 'admin')
+            ->get()
+            ->unique('id');
+
+        foreach ($recipients as $recipient) {
+            try {
+                $recipient->notify(new CancellationRequestedNotification($event, $registration));
+            } catch (Throwable $exception) {
+                report($exception);
+            }
+        }
     }
 
     /**

@@ -233,12 +233,20 @@
                                                 ? 'Ajukan pembatalan pendaftaran ini? Pengelola akan menentukan persetujuan dan nominal refund.'
                                                 : 'Batalkan pendaftaran atlet ini? Data dan bukti pembayaran akan dihapus.';
                                         @endphp
-                                        <form method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}" data-confirm="{{ $cancelConfirm }}">
+                                        <form method="POST" action="{{ route('events.registration.destroy-own', [$registration->event, $registration]) }}" data-confirm="{{ $cancelConfirm }}" class="guest-registration-cancel-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="account-edit-link btn-berry btn-icon guest-registration-cancel-button" type="submit" title="{{ $cancelLabel }}" aria-label="{{ $cancelLabel }}">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>
+                                            <label class="guest-registration-cancel-reason">Alasan pembatalan
+                                                <textarea name="reason" rows="2" maxlength="1000" required placeholder="Tuliskan alasan pembatalan"></textarea>
+                                            </label>
+                                            <button class="account-edit-link btn-berry guest-registration-cancel-button" type="submit" title="{{ $cancelLabel }}">
+                                                {{ $cancelLabel }}
                                             </button>
+                                            @if ($registration->event->organizer_whatsapp)
+                                                <button class="account-edit-link btn-grape" type="submit" formaction="{{ route('events.registration.cancellation.whatsapp', [$registration->event, $registration]) }}" formmethod="POST" title="Ajukan pembatalan via WhatsApp">
+                                                    Ajukan via WhatsApp
+                                                </button>
+                                            @endif
                                         </form>
                                     @endif
                                     @if ($registration->payment_status !== 'paid' && ! in_array($registration->cancellation_status, ['pending', 'approved'], true) && $registration->event->organizer_whatsapp)
