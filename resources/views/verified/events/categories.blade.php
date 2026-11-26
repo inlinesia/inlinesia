@@ -50,10 +50,7 @@
                                 <th scope="col" rowspan="2">Mata lomba di luar kewajiban</th>
                                 <th scope="col" rowspan="2">Batas peserta</th>
                                 <th scope="col" rowspan="2">Cakupan kuota</th>
-                                <th scope="col" rowspan="2">Tarif paket</th>
-                                <th scope="col" rowspan="2">Tarif tambahan</th>
-                                <th scope="col" rowspan="2">Tarif mata lomba di luar kewajiban</th>
-                                <th scope="col" rowspan="2">Masa berlaku gelombang</th>
+                                <th scope="col" rowspan="2">Gelombang</th>
                             </tr>
                         </thead>
                         <tbody data-category-table-body></tbody>

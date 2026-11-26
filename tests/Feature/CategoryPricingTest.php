@@ -971,9 +971,7 @@ class CategoryPricingTest extends TestCase
             ->assertSee('Minimal mata lomba')
             ->assertSee('Mata lomba di luar kewajiban')
             ->assertSee('Batas peserta')
-            ->assertSee('Tarif paket')
-            ->assertSee('Tarif tambahan')
-            ->assertSee('Tarif mata lomba di luar kewajiban')
+            ->assertSee('Gelombang')
             ->assertSee('data-remove-category', false)
             ->assertSee('data-category-rules-form', false);
     }

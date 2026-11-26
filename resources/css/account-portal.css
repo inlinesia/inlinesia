@@ -198,7 +198,7 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .event-category-page .form-section { min-width: 0; width: 100%; }
 .category-table-toolbar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
 .category-table-wrap { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
-.category-editor-table { width: 100%; min-width: 2100px; border-collapse: collapse; text-align: left; }
+.category-editor-table { width: 100%; min-width: 1720px; border-collapse: collapse; text-align: left; }
 .category-editor-table th,
 .category-editor-table td { padding: 7px 10px; border-bottom: 1px solid #f0f1f4; font-size: 10px; line-height: 1.2; white-space: nowrap; text-align: left; }
 .category-editor-table th { color: #8b8e9d; font-weight: 700; letter-spacing: .45px; text-transform: uppercase; }
@@ -209,6 +209,11 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .category-editor-actions button { min-height: 24px; padding: 0 8px; border: 1px solid #e2e5eb; border-radius: 999px; background: #fff; color: #42485a; font: inherit; font-size: 9px; font-weight: 700; cursor: pointer; }
 .category-editor-actions .category-row-remove { border-color: #efd3d0; color: #a94b42; }
 .category-table-hint { margin: 6px 0 0; color: #777c81; font-size: 9px; }
+.category-wave-block { display: grid; gap: 4px; min-width: 190px; padding: 6px 8px; border: 1px solid #e9e7e1; border-radius: 6px; margin-bottom: 6px; }
+.category-wave-block strong { font-size: 9px; color: #4b5359; }
+.category-wave-block label { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 9px; color: #777c81; }
+.category-wave-block input { width: 105px; min-height: 22px; padding: 2px 5px; border: 1px solid #e3e3df; border-radius: 4px; font: inherit; font-size: 9px; }
+.category-wave-add-table { min-height: 24px; padding: 0 8px; border: 1px solid #cfe3d3; border-radius: 999px; color: #3c8058; background: #f0f8f1; font: inherit; font-size: 9px; font-weight: 700; cursor: pointer; }
 
 .category-rule-list { display: grid; gap: 12px; }
 .category-rule-card { position: relative; min-width: 0; padding: 16px; border: 1px solid #e4e5eb; border-radius: 6px; }

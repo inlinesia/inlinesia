@@ -987,6 +987,15 @@ html[data-theme='ceria'] {
 [data-theme='ceria'] .category-editor-actions .category-row-remove { color: #fff; background: var(--color-berry); }
 [data-theme='ceria'] .category-editor-actions .category-row-pair { color: var(--text-primary); background: var(--color-sky); }
 
+[data-theme='ceria'] .category-wave-block {
+    border: 1.5px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    background: var(--bg-canvas);
+}
+[data-theme='ceria'] .category-wave-block strong { color: var(--text-primary); font-family: var(--font-display); }
+[data-theme='ceria'] .category-wave-block input { border: 1.5px solid var(--border-soft); border-radius: var(--radius-sm); color: var(--text-primary); }
+[data-theme='ceria'] .category-wave-add-table { color: #fff; background: var(--color-sky); border: 2px solid var(--border-ink); border-radius: var(--radius-pill); font-family: var(--font-display); }
+
 [data-theme='ceria'] .category-table-toolbar .category-rule-add {
     color: #fff;
     background: var(--color-coral);
