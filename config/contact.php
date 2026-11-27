@@ -13,7 +13,7 @@ return [
 
     'email' => env('CONTACT_EMAIL', 'inlinesia@gmail.com'),
 
-    'whatsapp' => env('CONTACT_WHATSAPP', ''),
+    'whatsapp' => env('CONTACT_WHATSAPP', '085800006248'),
 
     'phone' => env('CONTACT_PHONE', ''),
 
