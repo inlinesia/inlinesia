@@ -10,7 +10,7 @@
         <div>
             <span class="account-eyebrow">INFORMASI LISENSI</span>
             <h1>Lisensi &amp; Harga</h1>
-            <p>Desain dan aplikasi Inlinesia adalah karya © 2026 Damai digital creative. Halaman ini berisi aturan pakai dan pilihan harga untuk pembeli yang ingin memakai sistem ini untuk kejuaraan sepatu roda mereka.</p>
+            <p>Desain dan aplikasi Inlinesia adalah karya © 2026 Damai digital creative. Halaman ini berisi aturan pakai, pilihan paket event, dan ruang kerja sama sponsor. Nominal harga akan diumumkan ketika sudah ditetapkan.</p>
         </div>
         <a class="account-edit-link" href="{{ route('home') }}">← Kembali ke beranda</a>
     </header>
@@ -42,7 +42,7 @@
             <article class="license-price-card license-tier-card">
                 <span class="license-price-tag">BERBAYAR</span>
                 <h3>Kelola penuh — Berbayar</h3>
-                <p class="license-price">Harganya mengikuti pilihan di bawah</p>
+                <p class="license-price">Harga akan diumumkan</p>
                 <p>Untuk organizer yang menjalankan kejuaraan lengkap dengan sistem Inlinesia.</p>
                 <p class="license-tier-label">Yang bisa dilakukan</p>
                 <ul class="license-tier-list license-tier-list--yes">
@@ -54,58 +54,34 @@
                     <li>Mengelola keuangan dan pembayaran.</li>
                     <li>Aktif setelah event disetujui admin.</li>
                 </ul>
-                <p class="license-tier-note">Pilih harga sekali beli (Starter–Semua Lisensi) atau langganan (Basic–Organisasi/Cabang) pada bagian di bawah.</p>
+                <p class="license-tier-note">Nominal dan skema pembayaran paket kelola penuh akan diumumkan pada halaman ini.</p>
             </article>
         </div>
     </section>
 
     <section class="account-table-card license-section" aria-labelledby="license-price-heading">
-        <h2 id="license-price-heading">Pilih cara pakai &amp; harga</h2>
+        <h2 id="license-price-heading">Harga &amp; kerja sama</h2>
         <div class="license-price-grid">
             <article class="license-price-card">
-                <span class="license-price-tag">1X BELI</span>
-                <h3>Starter</h3>
-                <p class="license-price">Rp 3.500.000–7.500.000</p>
-                <p>Untuk satu event atau klub kecil yang baru mulai.</p>
+                <span class="license-price-tag">BERBAYAR</span>
+                <h3>Kelola penuh</h3>
+                <p class="license-price">Harga akan diumumkan</p>
+                <p>Nominal paket pengelolaan event masih disiapkan. Hubungi kami untuk penawaran dan ketersediaan.</p>
             </article>
             <article class="license-price-card">
-                <span class="license-price-tag">1X BELI</span>
-                <h3>Standard</h3>
-                <p class="license-price">Rp 7.500.000–15.000.000</p>
-                <p>Untuk organizer dengan beberapa kejuaraan dalam satu tahun.</p>
-            </article>
-            <article class="license-price-card">
-                <span class="license-price-tag">1X BELI</span>
-                <h3>Plus</h3>
-                <p class="license-price">Rp 15.000.000–30.000.000+</p>
-                <p>Untuk kebutuhan yang lebih luas dengan dukungan lanjutan.</p>
-            </article>
-            <article class="license-price-card">
-                <span class="license-price-tag">1X BELI</span>
-                <h3>Semua Lisensi (Full)</h3>
-                <p class="license-price">Rp 49.000.000</p>
-                <p>Sekali bayar untuk seluruh paket lisensi.</p>
-            </article>
-            <article class="license-price-card">
-                <span class="license-price-tag">LANGGANAN</span>
-                <h3>Basic</h3>
-                <p class="license-price">Rp 149.000–299.000/bln</p>
-                <p>atau Rp 1.490.000–2.990.000/thn.</p>
-            </article>
-            <article class="license-price-card">
-                <span class="license-price-tag">LANGGANAN</span>
-                <h3>Pro</h3>
-                <p class="license-price">Rp 299.000–599.000/bln</p>
-                <p>atau Rp 2.990.000–5.990.000/thn.</p>
-            </article>
-            <article class="license-price-card">
-                <span class="license-price-tag">LANGGANAN</span>
-                <h3>Organisasi/Cabang</h3>
-                <p class="license-price">Rp 599.000–1.500.000+/bln</p>
-                <p>atau Rp 5.990.000–15.000.000+/thn.</p>
+                <span class="license-price-tag">SPONSOR</span>
+                <h3>Sponsor website &amp; event</h3>
+                <p class="license-price">Konsep — harga belum ditetapkan</p>
+                <p>Ruang sponsor bagi brand yang ingin mendukung platform Inlinesia dan/atau kejuaraan tertentu.</p>
+                <ul class="license-tier-list license-tier-list--yes">
+                    <li>Logo pada halaman beranda dan Jelajahi kejuaraan.</li>
+                    <li>Penempatan pada kartu event yang disponsori.</li>
+                    <li>Pencantuman nama sponsor pada materi dan daftar peserta event.</li>
+                    <li>Kerja sama dapat berlaku per event atau per periode tertentu.</li>
+                </ul>
             </article>
         </div>
-        <p class="license-note">Langganan tahunan hemat sekitar 15–20%. Support dan update tahunan Rp 1.500.000–5.000.000. Tersedia add-on onboarding, migrasi data, dan kustomisasi sesuai kebutuhan.</p>
+        <p class="license-note">Harga akhir paket kelola penuh maupun sponsor akan diumumkan melalui halaman ini. Untuk sementara, gunakan kontak di bawah untuk mendiskusikan kerja sama.</p>
     </section>
 
     <section class="account-table-card license-section" aria-labelledby="license-terms-heading">

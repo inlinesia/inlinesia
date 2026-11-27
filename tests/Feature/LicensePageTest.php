@@ -26,7 +26,9 @@ class LicensePageTest extends TestCase
             ->assertSeeText('Damai digital creative')
             ->assertSeeText('Lisensi 1x Beli (Source Code):')
             ->assertSeeText('Undang-Undang Hak Cipta No. 28 Tahun 2014')
-            ->assertSeeText('Rp 49.000.000')
+            ->assertSeeText('Harga akan diumumkan')
+            ->assertDontSeeText('Rp 49.000.000')
+            ->assertDontSeeText('Rp 3.500.000')
             ->assertSee('https://wa.me/6285800006248', false);
     }
 
@@ -37,6 +39,8 @@ class LicensePageTest extends TestCase
             ->assertSeeText('Perbandingan paket event')
             ->assertSeeText('Iklan event')
             ->assertSeeText('Kelola penuh')
-            ->assertSeeText('Rp 0');
+            ->assertSeeText('Rp 0')
+            ->assertSeeText('Sponsor website & event')
+            ->assertSeeText('Konsep — harga belum ditetapkan');
     }
 }
