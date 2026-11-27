@@ -175,6 +175,9 @@
                     @else
                         <span class="guest-event-closed">{{ empty($event->category_rules) ? 'KU disiapkan pengelola' : ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast() ? 'Pendaftaran ditutup' : 'Pendaftaran segera dibuka') }}</span>
                     @endif
+                    @if ($event->whatsapp_group_link)
+                        <a class="listing-group-link" href="{{ $event->whatsapp_group_link }}" target="_blank" rel="noopener noreferrer">Gabung grup WA <span aria-hidden="true">↗</span></a>
+                    @endif
                 </article>
             @empty
                 <div class="listing-empty-state">

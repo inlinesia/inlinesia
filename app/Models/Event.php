@@ -18,6 +18,7 @@ class Event extends Model
         'venue',
         'venue_address',
         'organizer_whatsapp',
+        'whatsapp_group_link',
         'cancellation_allowed',
         'cancellation_min_days',
         'cancellation_deadline',

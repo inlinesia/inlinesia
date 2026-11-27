@@ -44,6 +44,7 @@ class EventDetailsRequest extends FormRequest
             'venue' => ['required', 'string', 'max:180'],
             'venue_address' => ['required', 'string', 'max:1000'],
             'organizer_whatsapp' => ['required', 'string', 'max:40', 'regex:/^(?=(?:\D*\d){8,15}\D*$)\+?[0-9\s().-]{8,40}$/'],
+            'whatsapp_group_link' => ['nullable', 'url', 'max:500', 'regex:/^https:\/\/(chat\.whatsapp\.com|wa\.me)\//i'],
             'cancellation_allowed' => ['boolean'],
             'cancellation_min_days' => ['nullable', 'integer', 'min:0', 'max:365'],
             'cancellation_deadline' => ['nullable', 'date'],
@@ -84,6 +85,8 @@ class EventDetailsRequest extends FormRequest
         $validated['name'] = trim($validated['name']);
         $validated['venue'] = trim($validated['venue']);
         $validated['organizer_whatsapp'] = trim($validated['organizer_whatsapp']);
+        $groupLink = trim((string) ($validated['whatsapp_group_link'] ?? ''));
+        $validated['whatsapp_group_link'] = $groupLink === '' ? null : $groupLink;
         $validated = $this->normalizePaymentAccount($validated);
 
         foreach (self::LINE_FIELDS as $field) {

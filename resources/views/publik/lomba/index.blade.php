@@ -77,6 +77,9 @@
                     @if (($isVerified || $isAdmin) && $event->isParticipantListReleased())
                         <a class="listing-roster-link" href="{{ route('events.registrations.index', $event) }}">Lihat peserta <span aria-hidden="true">→</span></a>
                     @endif
+                    @if ($event->whatsapp_group_link)
+                        <a class="listing-group-link" href="{{ $event->whatsapp_group_link }}" target="_blank" rel="noopener noreferrer">Gabung grup WA <span aria-hidden="true">↗</span></a>
+                    @endif
                 </div>
                 <span class="listing-card-number" aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
             </article>

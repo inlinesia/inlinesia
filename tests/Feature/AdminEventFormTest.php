@@ -164,6 +164,44 @@ class AdminEventFormTest extends TestCase
         $this->assertDatabaseCount('events', 0);
     }
 
+    public function test_owner_can_save_whatsapp_group_link_from_event_form(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $application = $this->validApplication();
+        $application['whatsapp_group_link'] = 'https://chat.whatsapp.com/ABC123';
+
+        $this->actingAs($admin)
+            ->get(route('event-applications.create'))
+            ->assertOk()
+            ->assertSee('name="whatsapp_group_link"', false);
+
+        $this->post(route('event-applications.store'), $application)
+            ->assertRedirect(route('guest.dashboard'));
+
+        $this->assertDatabaseHas('events', [
+            'name' => $application['name'],
+            'whatsapp_group_link' => 'https://chat.whatsapp.com/ABC123',
+        ]);
+
+        $event = Event::query()->firstOrFail();
+        $this->get(route('event-applications.edit', $event))
+            ->assertOk()
+            ->assertSee('value="https://chat.whatsapp.com/ABC123"', false);
+    }
+
+    public function test_event_form_rejects_a_non_whatsapp_group_link(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $application = $this->validApplication();
+        $application['whatsapp_group_link'] = 'https://example.com/group';
+
+        $this->actingAs($admin)
+            ->post(route('event-applications.store'), $application)
+            ->assertSessionHasErrors('whatsapp_group_link');
+
+        $this->assertDatabaseCount('events', 0);
+    }
+
     private function validApplication(): array
     {
         $startDate = today()->addMonth();

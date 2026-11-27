@@ -269,6 +269,30 @@ class EventListingTest extends TestCase
         $this->assertSame('Junior', $event->fresh()->category_rules[0]['name']);
     }
 
+    public function test_group_join_button_appears_only_for_events_with_a_group_link(): void
+    {
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $event = $this->createEvent($owner, 'approved', 'Event Dengan Grup WA');
+        $event->update(['whatsapp_group_link' => 'https://chat.whatsapp.com/ABC123']);
+
+        $this->get(route('events.index'))
+            ->assertOk()
+            ->assertSee('Gabung grup WA')
+            ->assertSee('href="https://chat.whatsapp.com/ABC123"', false)
+            ->assertSee('target="_blank"', false)
+            ->assertSee('rel="noopener noreferrer"', false);
+
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('Gabung grup WA');
+
+        $event->update(['whatsapp_group_link' => null]);
+
+        $this->get(route('events.index'))
+            ->assertOk()
+            ->assertDontSee('Gabung grup WA');
+    }
+
     private function createEvent(User $owner, string $status, string $name, int $daysFromToday = 30): Event
     {
         $startDate = today()->addDays($daysFromToday);

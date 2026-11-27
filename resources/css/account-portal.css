@@ -512,10 +512,14 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .event-public-privacy-note { margin: 10px 20px 15px; color: #858680; font-size: 9px; line-height: 1.6; }
 .listing-roster-link { flex-shrink: 0; color: #a75c43; font-size: 9px; font-weight: 700; }
 .listing-roster-link:hover { color: #d66f4f; }
+.listing-group-link { display: inline-flex; flex: none; align-items: center; justify-content: center; gap: 7px; padding: 10px 12px; color: #fff; background: #25a85c; font-size: 9px; font-weight: 650; white-space: nowrap; }
+.listing-group-link:hover { background: #1d8c4b; }
 .listing-event-actions { display: grid; flex: none; justify-items: stretch; gap: 7px; }
 .listing-event-actions .listing-register-link { justify-content: center; margin-left: 0; }
 .listing-event-actions .guest-event-closed { padding: 5px 0; text-align: center; white-space: nowrap; }
 .listing-event-actions .listing-roster-link { padding: 5px 8px; border: 1px solid #e7d8ca; text-align: center; white-space: nowrap; }
+.listing-event-actions .listing-group-link { justify-content: center; margin-left: 0; }
+.guest-event-actions .listing-group-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 30px; padding: 0 12px; border-radius: 5px; }
 .event-payment-status { display: inline-flex; width: fit-content; padding: 4px 8px; border: 1px solid #e6d5bd; border-radius: 12px; color: #80673e; background: #fbf3e5; font-size: 8px; font-weight: 700; }
 .event-payment-status.payment-pending { border-color: #d9c69e; color: #80673e; background: #fbf3dc;     .event-public-category { padding-right: 14px; padding-left: 14px; }
     .event-public-privacy-note { margin-right: 14px; margin-left: 14px; }

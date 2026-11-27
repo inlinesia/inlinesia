@@ -23,6 +23,7 @@ if [ "$deployed" -ne 1 ]; then
 fi
 
 cd "$APP"
+php artisan migrate --force --no-interaction
 php artisan view:clear
 php artisan view:cache
 php artisan config:clear

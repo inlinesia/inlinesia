@@ -410,6 +410,9 @@
                     @else
                         <span class="guest-event-closed">Pendaftaran segera dibuka</span>
                     @endif
+                    @if ($event->whatsapp_group_link)
+                        <a class="listing-group-link" href="{{ $event->whatsapp_group_link }}" target="_blank" rel="noopener noreferrer">Gabung grup WA <span aria-hidden="true">↗</span></a>
+                    @endif
                 </div>
             </article>
         @empty
