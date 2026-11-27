@@ -932,6 +932,10 @@ html[data-theme='ceria'] {
     padding: 12px 0;
     border-top: 2px dashed var(--border-soft);
 }
+[data-theme='ceria'] .cancellation-request-item p {
+    padding: 4px 0;
+    border-top: 0;
+}
 [data-theme='ceria'] .cancellation-request-item p strong {
     font-family: var(--font-display);
 }
