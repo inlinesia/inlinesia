@@ -61,8 +61,36 @@ class GuestDashboardController extends Controller
                 ->latest()
                 ->limit(10)
                 ->get(),
+            'cancellationRequests' => $this->pendingCancellations($request),
             'runningWaves' => $this->runningWaveInfo($registrations),
         ]);
+    }
+
+    /**
+     * Permintaan pembatalan yang masih menunggu keputusan pemilik event.
+     * Admin melihat semuanya; pengelola hanya event miliknya.
+     *
+     * @return Collection<int, array{registration: EventRegistration, event: Event, reason: string}>
+     */
+    private function pendingCancellations(Request $request): Collection
+    {
+        $user = $request->user();
+
+        return EventRegistration::query()
+            ->with(['event', 'user'])
+            ->where('cancellation_status', 'pending')
+            ->whereHas('event', fn ($query) => $query->when(
+                $user->role !== 'admin',
+                fn ($eventQuery) => $eventQuery->where('submitted_by', $user->id),
+            ))
+            ->latest('cancellation_requested_at')
+            ->limit(20)
+            ->get()
+            ->map(fn (EventRegistration $registration): array => [
+                'registration' => $registration,
+                'event' => $registration->event,
+                'reason' => (string) $registration->cancellation_reason,
+            ]);
     }
 
     /**

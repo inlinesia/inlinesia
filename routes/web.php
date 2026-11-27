@@ -83,6 +83,9 @@ Route::middleware(['auth', 'event-access'])->group(function () {
     Route::post('/kejuaraan/{event}/atlet/{registration}/pembatalan/keputusan', [EventRegistrationManagementController::class, 'reviewCancellation'])
         ->scopeBindings()
         ->name('events.registrations.cancellations.review');
+    Route::get('/kejuaraan/{event}/atlet/{registration}/pembatalan/hubungi', [EventRegistrationManagementController::class, 'contactCancellationRequester'])
+        ->scopeBindings()
+        ->name('events.registrations.cancellations.contact');
     Route::get('/dasbor-peserta/kejuaraan/{event}/kategori', [EventCategoryController::class, 'edit'])->name('owner.events.categories.edit');
     Route::put('/dasbor-peserta/kejuaraan/{event}/kategori', [EventCategoryController::class, 'update'])->name('owner.events.categories.update');
     Route::get('/dasbor-peserta/kejuaraan/{event}/keuangan', [EventFinanceController::class, 'index'])->name('owner.events.finance.index');

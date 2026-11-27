@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateEventRegistrationRequest;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Models\EventRegistrationFinancialEntry;
+use App\Notifications\CancellationRequestedNotification;
 use App\Services\AssignRegistrationCategories;
 use App\Services\CategoryFeeCalculator;
 use App\Services\ReconcileRegistrationFee;
@@ -693,6 +694,13 @@ class EventRegistrationManagementController extends Controller
                 'refunded_at' => $refundAmount > 0 ? now() : $registration->refunded_at,
             ]);
 
+            // Tandai notifikasi pembatalan yang terkait sudah dibaca oleh
+            // pemilik/admin setelah keputusan diambil.
+            $request->user()->notifications()
+                ->where('type', CancellationRequestedNotification::class)
+                ->where('data->registration_id', $registration->id)
+                ->update(['read_at' => now()]);
+
             if ($refundAmount > 0) {
                 EventRegistrationFinancialEntry::create([
                     'event_id' => $event->id,
@@ -711,6 +719,33 @@ class EventRegistrationManagementController extends Controller
             : 'Permintaan pembatalan ditolak.';
 
         return redirect()->route('events.registrations.index', $event)->with('status', $message);
+    }
+
+    /**
+     * Buka WhatsApp pengaju pembatalan (peserta/official) dari panel notifikasi
+     * pemilik event, dengan pesan yang sudah menyebut atlet dan event.
+     */
+    public function contactCancellationRequester(Request $request, Event $event, EventRegistration $registration): RedirectResponse
+    {
+        abort_unless($this->canManage($request, $event), 403);
+        abort_unless($registration->event_id === $event->id, 404);
+        abort_unless($registration->cancellation_status === 'pending', 409, 'Tidak ada permintaan pembatalan yang menunggu keputusan.');
+
+        $phone = preg_replace('/\D+/', '', (string) ($registration->user?->phone ?: $registration->whatsapp)) ?? '';
+        if (str_starts_with($phone, '0')) {
+            $phone = '62'.substr($phone, 1);
+        } elseif (str_starts_with($phone, '8')) {
+            $phone = '62'.$phone;
+        }
+
+        if ($phone === '' || strlen($phone) < 8 || strlen($phone) > 15) {
+            return redirect()->route('guest.dashboard')
+                ->with('warning', 'Nomor WhatsApp pengaju pembatalan belum tersedia.');
+        }
+
+        $message = "Halo, kami menerima pengajuan pembatalan untuk atlet {$registration->participant_name} pada event {$event->name}. Mohon diskusi lebih lanjut untuk konfirmasi.";
+
+        return redirect()->away('https://wa.me/'.$phone.'?text='.rawurlencode($message));
     }
 
     public function proof(Request $request, Event $event, EventRegistration $registration): StreamedResponse

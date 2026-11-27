@@ -1324,6 +1324,71 @@ class EventRegistrationManagementTest extends TestCase
         $this->assertTrue($event->fresh()->isCancellationOpen());
     }
 
+    public function test_owner_sees_cancellation_request_with_decision_and_contact_actions(): void
+    {
+        Notification::fake();
+        $owner = User::factory()->create(['role' => 'club_manager', 'phone' => '081234567890']);
+        $participant = User::factory()->create(['role' => 'individual', 'phone' => '081111111111']);
+        $event = $this->createEvent($owner);
+        $registration = $this->createRegistration($event, $participant, 'Atlet Pengaju');
+        $this->markPaid($registration, 150000, ['Classic Slalom']);
+
+        $this->actingAs($participant)
+            ->delete(route('events.registration.destroy-own', [$event, $registration]), ['reason' => 'Sakit']);
+
+        $this->actingAs($owner)
+            ->get(route('guest.dashboard'))
+            ->assertOk()
+            ->assertSee('Permintaan pembatalan peserta')
+            ->assertSee('Atlet Pengaju')
+            ->assertSee('Sakit')
+            ->assertSee(route('events.registrations.cancellations.contact', [$event, $registration]), false)
+            ->assertSee('Hubungi official')
+            ->assertSee('Setujui')
+            ->assertSee('Tolak');
+    }
+
+    public function test_contact_official_opens_whatsapp_of_cancellation_requester(): void
+    {
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $participant = User::factory()->create(['role' => 'individual', 'phone' => '081111111111']);
+        $event = $this->createEvent($owner);
+        $registration = $this->createRegistration($event, $participant);
+        $registration->update(['cancellation_status' => 'pending', 'cancellation_reason' => 'Sakit']);
+
+        $response = $this->actingAs($owner)
+            ->get(route('events.registrations.cancellations.contact', [$event, $registration]));
+
+        $response->assertRedirect();
+        $this->assertStringStartsWith('https://wa.me/6281111111111?', $response->headers->get('Location') ?? '');
+    }
+
+    public function test_approving_cancellation_keeps_registration_but_removes_it_from_event_participation(): void
+    {
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $participant = User::factory()->create(['role' => 'individual']);
+        $event = $this->createEvent($owner);
+        $registration = $this->createRegistration($event, $participant, 'Atlet Dibatalkan');
+        $registration->update(['status' => 'approved', 'payment_status' => 'paid', 'fee_total' => 100000, 'category' => 'Junior Putra', 'cancellation_status' => 'pending']);
+
+        $this->actingAs($owner)
+            ->post(route('events.registrations.cancellations.review', [$event, $registration]), [
+                'decision' => 'approve',
+                'refund_amount' => 0,
+            ])
+            ->assertRedirect(route('events.registrations.index', $event));
+
+        $this->assertDatabaseHas('event_registrations', [
+            'id' => $registration->id,
+            'participant_name' => 'Atlet Dibatalkan',
+            'cancellation_status' => 'approved',
+        ]);
+        $this->assertSame(0, $event->registrations()
+            ->whereNull('cancellation_status')
+            ->orWhere('cancellation_status', '!=', 'approved')
+            ->count());
+    }
+
     public function test_dasbor_menampilkan_tombol_rilis_hanya_kepada_pemilik_event(): void
     {
         $owner = User::factory()->create(['role' => 'club_manager']);

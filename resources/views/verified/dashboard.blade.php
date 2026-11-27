@@ -35,6 +35,39 @@
         </section>
     @endif
 
+    @if ($cancellationRequests->isNotEmpty())
+        <section class="profile-notifications cancellation-requests" aria-label="Notifikasi permintaan pembatalan">
+            <h2>Permintaan pembatalan peserta</h2>
+            @foreach ($cancellationRequests as $request)
+                @php
+                    $registration = $request['registration'];
+                @endphp
+                <article class="cancellation-request-item">
+                    <p>
+                        <strong>{{ $registration->participant_name }}</strong> ·
+                        {{ $request['event']->name }}
+                        <small>{{ $registration->cancellation_requested_at?->format('d/m/Y H:i') }}</small>
+                    </p>
+                    <p>Alasan: {{ $request['reason'] !== '' ? $request['reason'] : 'Tidak diisi.' }}</p>
+                    <div class="cancellation-request-actions">
+                        <form method="POST" action="{{ route('events.registrations.cancellations.review', [$request['event'], $registration]) }}">
+                            @csrf
+                            <input type="hidden" name="decision" value="approve">
+                            <input type="hidden" name="refund_amount" value="0">
+                            <button class="account-edit-link btn-primary" type="submit">Setujui</button>
+                        </form>
+                        <form method="POST" action="{{ route('events.registrations.cancellations.review', [$request['event'], $registration]) }}">
+                            @csrf
+                            <input type="hidden" name="decision" value="reject">
+                            <button class="account-edit-link btn-berry" type="submit">Tolak</button>
+                        </form>
+                        <a class="account-edit-link btn-grape" href="{{ route('events.registrations.cancellations.contact', [$request['event'], $registration]) }}">Hubungi official</a>
+                    </div>
+                </article>
+            @endforeach
+        </section>
+    @endif
+
     @if ($submissions->isNotEmpty())
         <section class="profile-submissions" aria-label="Status pengajuan event">
             <h2>Status pengajuan event Anda</h2>
