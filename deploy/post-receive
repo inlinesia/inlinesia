@@ -4,6 +4,10 @@
 # menyegarkan cache, lalu menyamakan folder build di docroot.
 set -uo pipefail
 
+# Hook berjalan di repo bare dengan GIT_DIR=. — hapus agar `git -C` memakai
+# direktori kerja aplikasi, bukan direktori hook.
+unset GIT_DIR GIT_WORK_TREE
+
 APP=/home/kilatsch/inlinesia-app
 DOCROOT=/home/kilatsch/inlinesia.kilatschool.my.id
 
