@@ -875,9 +875,9 @@ html[data-theme='ceria'] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    min-height: 34px;
-    padding: 0 12px;
+    gap: 0.4em;
+    min-height: 0;
+    padding: 0.4em 0.9em;
     border: 2.5px solid var(--border-ink);
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-sticker-sm);
@@ -885,8 +885,11 @@ html[data-theme='ceria'] {
     background: var(--grad-sunny);
     font-family: var(--font-display);
     font-size: var(--text-xs);
+    line-height: 1.25;
     font-weight: 700;
     white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 100%;
     text-align: center;
     transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s var(--ease-bounce), filter 0.16s ease;
 }
