@@ -113,6 +113,20 @@ class AdminEventManagementTest extends TestCase
             ->assertNotFound();
     }
 
+    public function test_admin_melihat_semua_atlet_pada_event_milik_pengelola_lain(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $event = $this->createEvent($owner, 'approved', 'Event Atlet Banyak');
+
+        $this->actingAs($admin)
+            ->get(route('guest.dashboard'))
+            ->assertOk()
+            ->assertSee('Lihat semua atlet')
+            ->assertSee('Kelola peserta & pembayaran')
+            ->assertSee(route('events.registrations.index', $event), false);
+    }
+
     private function createEvent(User $owner, string $status, string $name): Event
     {
         $startDate = today()->addMonth();

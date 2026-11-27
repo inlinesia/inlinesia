@@ -100,7 +100,8 @@ class EventListingTest extends TestCase
         $approvedEvent->update(['participants_published' => true]);
         $this->get(route('guest.dashboard'))
             ->assertSee(route('events.registrations.index', $approvedEvent), false)
-            ->assertSee('Lihat peserta · read-only');
+            ->assertSee('Lihat semua atlet')
+            ->assertDontSee('Lihat peserta · read-only');
 
         $this->get(route('admin.event-submissions.index'))
             ->assertOk()
