@@ -121,6 +121,9 @@
                             <span>{{ $ownedEvent->registrations_count }} atlet terdaftar</span>
                         @endif
                         <h3>{{ $ownedEvent->name }}</h3>
+                        @if ($eventSponsors->get($ownedEvent->id))
+                            <span class="sponsor-event-badge">Didukung oleh {{ $eventSponsors->get($ownedEvent->id)->brand_name }}</span>
+                        @endif
                         @if ($ownedEvent->short_description)
                             <p class="listing-event-summary">{{ $ownedEvent->short_description }}</p>
                         @endif
@@ -171,6 +174,9 @@
                             <a class="account-edit-link btn-primary" href="{{ route('event-applications.edit', $ownedEvent) }}">Upgrade ke berbayar <span aria-hidden="true">→</span></a>
                         @endif
                         <a class="account-edit-link" href="{{ route('event-applications.edit', $ownedEvent) }}">Ubah event <span aria-hidden="true">→</span></a>
+                        @unless ($ownedEvent->isAdvertisementOnly())
+                            <a class="account-edit-link" href="{{ route('sponsor.event.form', ['event' => $ownedEvent->id]) }}">Tambah sponsor <span aria-hidden="true">↗</span></a>
+                        @endunless
                         <form method="POST" action="{{ route('event-applications.destroy', $ownedEvent) }}"
                             data-confirm="Hapus event “{{ $ownedEvent->name }}” beserta seluruh pendaftaran, hasil lomba, dan data keuangannya? Tindakan ini tidak dapat dibatalkan.">
                             @csrf
@@ -412,6 +418,9 @@
                 <div class="guest-event-info">
                     <span>{{ $event->isAdvertisementOnly() ? 'Iklan event (Gratis)' : $event->scale.' · '.count($event->races).' mata lomba' }}</span>
                     <h3>{{ $event->name }}</h3>
+                    @if ($eventSponsors->get($event->id))
+                        <span class="sponsor-event-badge">Didukung oleh {{ $eventSponsors->get($event->id)->brand_name }}</span>
+                    @endif
                     @if ($event->short_description)
                         <p class="listing-event-summary">{{ $event->short_description }}</p>
                     @endif

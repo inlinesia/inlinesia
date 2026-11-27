@@ -27,6 +27,12 @@
             @php($pendingEventCount = \App\Models\Event::query()->where('status', 'pending')->count())
             @if ($pendingEventCount > 0)<span class="nav-count">{{ $pendingEventCount > 99 ? '99+' : $pendingEventCount }}</span>@endif
         </a>
+        <a class="nav-link {{ request()->routeIs('admin.sponsors.*') ? 'is-active' : '' }}" href="{{ route('admin.sponsors.index') }}" aria-label="Sponsor">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v12H4zM8 7V4h8v3m-8 6h8"/></svg>
+            <span>Sponsor</span>
+            @php($pendingSponsorCount = \App\Models\Sponsor::query()->where('status', 'pending')->count())
+            @if ($pendingSponsorCount > 0)<span class="nav-count">{{ $pendingSponsorCount > 99 ? '99+' : $pendingSponsorCount }}</span>@endif
+        </a>
         <a class="nav-link {{ request()->routeIs('admin.accounts.*') ? 'is-active' : '' }}" href="{{ route('admin.accounts.index') }}" aria-label="Kelola akun">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-1.5a5.5 5.5 0 0 1 11 0V19zm13-10h5m-2.5-2.5v5"/></svg>
             <span>Kelola akun</span>

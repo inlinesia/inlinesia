@@ -126,6 +126,17 @@
         <div class="hero-bottom-note"><span>01 /</span> JELAJAHI · DAFTAR · KELOLA</div>
     </section>
 
+    @if ($webSponsors->isNotEmpty())
+        <div class="sponsor-web-strip" aria-label="Sponsor website">
+            @foreach ($webSponsors as $sponsor)
+                <a href="{{ $sponsor->website_url }}" target="_blank" rel="noopener noreferrer" title="{{ $sponsor->brand_name }}">
+                    <img src="{{ \Illuminate\Support\Facades\Storage::url($sponsor->logo_path) }}" alt="{{ $sponsor->brand_name }}">
+                    <span>{{ $sponsor->message ?: $sponsor->brand_name }}</span>
+                </a>
+            @endforeach
+        </div>
+    @endif
+
     <section class="public-championships" id="kejuaraan">
         <div class="public-section-heading">
             <div><span class="public-section-label">AGENDA KOMPETISI</span><h2>Kejuaraan yang akan datang.</h2></div>
@@ -157,6 +168,9 @@
                             @endif
                         </div>
                         <h3>{{ $event->name }}</h3>
+                        @if ($eventSponsors->get($event->id))
+                            <span class="sponsor-event-badge">Didukung oleh {{ $eventSponsors->get($event->id)->brand_name }}</span>
+                        @endif
                         @if ($event->short_description)
                             <p class="listing-event-summary">{{ $event->short_description }}</p>
                         @endif

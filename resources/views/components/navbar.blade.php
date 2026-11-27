@@ -14,6 +14,16 @@
         @endif
     </nav>
 
+    @if ($mainWebSponsors->isNotEmpty())
+        <div class="public-header-sponsors" aria-label="Sponsor utama">
+            @foreach ($mainWebSponsors as $sponsor)
+                <a class="sponsor-web-main-logo" href="{{ $sponsor->website_url }}" target="_blank" rel="noopener noreferrer" title="{{ $sponsor->brand_name }}">
+                    <img src="{{ \Illuminate\Support\Facades\Storage::url($sponsor->logo_path) }}" alt="{{ $sponsor->brand_name }}">
+                </a>
+            @endforeach
+        </div>
+    @endif
+
     <div class="public-header-actions">
         @auth
             <a class="public-login" href="{{ route('profile.show') }}">Profil</a>

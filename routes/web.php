@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DataManagementController;
 use App\Http\Controllers\Admin\EventOwnershipController;
 use App\Http\Controllers\Admin\EventSubmissionController;
+use App\Http\Controllers\Admin\SponsorController as AdminSponsorController;
 use App\Http\Controllers\Admin\ThemeSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -21,8 +22,10 @@ use App\Http\Controllers\GuestDashboardController;
 use App\Http\Controllers\NikLookupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicEventApplicationController;
+use App\Http\Controllers\SponsorController;
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\Sponsor;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,10 +35,21 @@ Route::get('/', function () {
             ->whereDate('end_date', '>=', today())
             ->orderBy('start_date')
             ->get(),
+        'webSponsors' => Sponsor::query()
+            ->web()->approved()->active()
+            ->where('package', Sponsor::PACKAGE_WEB_BANNER)
+            ->get(),
+        'eventSponsors' => Sponsor::query()
+            ->forEvent()->approved()->active()->get()->keyBy('event_id'),
     ]);
 })->name('home');
 
 Route::view('/lisensi', 'publik.lisensi')->name('license');
+
+Route::get('/sponsor/web', [SponsorController::class, 'webForm'])->name('sponsor.web.form');
+Route::post('/sponsor/web', [SponsorController::class, 'webStore'])->name('sponsor.web.store');
+Route::get('/sponsor/event', [SponsorController::class, 'eventForm'])->name('sponsor.event.form');
+Route::post('/sponsor/event', [SponsorController::class, 'eventStore'])->name('sponsor.event.store');
 
 Route::get('/lomba', EventListingController::class)->name('events.index');
 
@@ -210,6 +224,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/pengajuan-event', [EventSubmissionController::class, 'index'])->name('event-submissions.index');
     Route::patch('/pengajuan-event/{event}/setujui', [EventSubmissionController::class, 'approve'])->name('event-submissions.approve');
     Route::patch('/pengajuan-event/{event}/tolak', [EventSubmissionController::class, 'reject'])->name('event-submissions.reject');
+    Route::get('/sponsor', [AdminSponsorController::class, 'index'])->name('sponsors.index');
+    Route::post('/sponsor/{sponsor}/setujui', [AdminSponsorController::class, 'approve'])->name('sponsors.approve');
+    Route::post('/sponsor/{sponsor}/tolak', [AdminSponsorController::class, 'reject'])->name('sponsors.reject');
     Route::get('/akun', [UserController::class, 'index'])->name('accounts.index');
     Route::get('/akun/buat', [UserController::class, 'form'])->name('accounts.create');
     Route::post('/akun', [UserController::class, 'store'])->name('accounts.store');

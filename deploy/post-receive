@@ -28,6 +28,8 @@ fi
 
 cd "$APP"
 php artisan migrate --force --no-interaction
+php artisan storage:link --force --no-interaction
+php artisan route:clear
 php artisan view:clear
 php artisan view:cache
 php artisan config:clear

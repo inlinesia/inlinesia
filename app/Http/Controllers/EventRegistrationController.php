@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\Sponsor;
 use App\Models\User;
 use App\Notifications\CancellationRequestedNotification;
 use App\Services\CategoryFeeCalculator;
@@ -31,6 +32,11 @@ class EventRegistrationController extends Controller
 
         return view('verified.events.pendaftaran.daftar', [
             'event' => $event,
+            'eventSponsor' => Sponsor::query()
+                ->forEvent()->approved()->active()
+                ->where('event_id', $event->id)
+                ->latest()
+                ->first(),
         ]);
     }
 

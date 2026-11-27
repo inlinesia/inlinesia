@@ -96,6 +96,26 @@
         </ol>
     </section>
 
+    <section class="account-table-card license-section" aria-labelledby="license-ad-heading">
+        <h2 id="license-ad-heading">Iklan &amp; sponsor</h2>
+        <div class="license-price-grid">
+            <article class="license-price-card">
+                <span class="license-price-tag">WEBSITE</span>
+                <h3>Sponsor website</h3>
+                <p class="license-price">Mulai Rp 250.000</p>
+                <p>Pasang banner atau logo brand Anda di beranda dan halaman Jelajahi kejuaraan.</p>
+                <a class="account-edit-link" href="{{ route('sponsor.web.form') }}">Ajukan sponsor website <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="license-price-card">
+                <span class="license-price-tag">EVENT</span>
+                <h3>Sponsor event</h3>
+                <p class="license-price">Mulai Rp 150.000/event</p>
+                <p>Tampil pada kartu event dan halaman pendaftaran atlet untuk kejuaraan tertentu.</p>
+                <a class="account-edit-link" href="{{ route('sponsor.event.form') }}">Ajukan sponsor event <span aria-hidden="true">↗</span></a>
+            </article>
+        </div>
+    </section>
+
     <section class="account-table-card license-section" aria-labelledby="license-contact-heading">
         <h2 id="license-contact-heading">Kontak lisensi</h2>
         <p>Untuk pertanyaan lisensi, harga, atau kerja sama pengelolaan event, hubungi <a class="license-contact-link" href="https://wa.me/6285800006248?text={{ rawurlencode('Halo Damai digital creative, saya ingin bertanya tentang lisensi Inlinesia.') }}">Damai digital creative</a> di 085800006248.</p>

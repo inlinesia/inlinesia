@@ -13,6 +13,12 @@
         @if (session('status'))<div class="public-flash" role="status">{{ session('status') }}</div>@endif
         <a class="account-back-link" href="{{ route('events.index') }}">← Kembali ke daftar lomba</a>
     </section>
+    @if ($eventSponsor)
+        <a class="sponsor-event-banner" href="{{ $eventSponsor->website_url }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ \Illuminate\Support\Facades\Storage::url($eventSponsor->logo_path) }}" alt="{{ $eventSponsor->brand_name }}">
+            <span>Didukung oleh <strong>{{ $eventSponsor->brand_name }}</strong> · {{ $eventSponsor->message ?: 'Lihat penawaran sponsor' }}</span>
+        </a>
+    @endif
     <section class="account-card">
         <div class="account-card-heading"><span class="account-eyebrow">AKUN {{ auth()->user()->email }}</span><h2>Biodata atlet</h2><p>KU (Kelompok Usia) baru ditetapkan setelah {{ $event->is_free ? 'pendaftaran dikonfirmasi' : 'pembayaran dikonfirmasi' }} oleh pemilik kejuaraan, berdasarkan tanggal lahir, gender, mata lomba, dan aturan KU. Setelah dikirim, data hanya dapat diubah pemilik kejuaraan.</p></div>
         @if ($errors->any())<div class="account-errors" role="alert"><strong>Periksa kembali data pendaftaran.</strong><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif

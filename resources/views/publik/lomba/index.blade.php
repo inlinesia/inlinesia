@@ -16,6 +16,17 @@
         @endif
     </section>
 
+    @if ($webSponsors->isNotEmpty())
+        <div class="sponsor-web-strip" aria-label="Sponsor website">
+            @foreach ($webSponsors as $sponsor)
+                <a href="{{ $sponsor->website_url }}" target="_blank" rel="noopener noreferrer" title="{{ $sponsor->brand_name }}">
+                    <img src="{{ \Illuminate\Support\Facades\Storage::url($sponsor->logo_path) }}" alt="{{ $sponsor->brand_name }}">
+                    <span>{{ $sponsor->message ?: $sponsor->brand_name }}</span>
+                </a>
+            @endforeach
+        </div>
+    @endif
+
     <section class="listing-results" aria-labelledby="listing-heading">
         <div class="listing-toolbar">
             <div><span class="public-section-label">KALENDER SEPATU RODA</span><h2 id="listing-heading">Daftar kejuaraan <span>{{ $events->total() }}</span></h2></div>
@@ -54,6 +65,9 @@
                         @endif
                     </div>
                     <h3>{{ $event->name }}</h3>
+                    @if ($eventSponsors->get($event->id))
+                        <span class="sponsor-event-badge">Didukung oleh {{ $eventSponsors->get($event->id)->brand_name }}</span>
+                    @endif
                     @if ($event->short_description)
                         <p class="listing-event-summary">{{ $event->short_description }}</p>
                     @endif
@@ -89,6 +103,7 @@
                     @if ($event->whatsapp_group_link)
                         <a class="listing-group-link" href="{{ $event->whatsapp_group_link }}" target="_blank" rel="noopener noreferrer">Gabung grup WA <span aria-hidden="true">↗</span></a>
                     @endif
+                    <a class="listing-roster-link" href="{{ route('sponsor.event.form', ['event' => $event->id]) }}">Sponsori event ini <span aria-hidden="true">↗</span></a>
                 </div>
                 <span class="listing-card-number" aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
             </article>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\Sponsor;
 use App\Models\User;
 use App\Notifications\EventDecisionNotification;
 use App\Services\CategoryFeeCalculator;
@@ -63,6 +64,8 @@ class GuestDashboardController extends Controller
                 ->limit(10)
                 ->get(),
             'cancellationRequests' => $this->pendingCancellations($request),
+            'eventSponsors' => Sponsor::query()
+                ->forEvent()->approved()->active()->get()->keyBy('event_id'),
             'runningWaves' => $this->runningWaveInfo($registrations),
         ]);
     }

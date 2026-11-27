@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Sponsor;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View as ViewContract;
@@ -22,6 +23,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->shareCurrentBladeWithEveryView();
+        $this->shareActiveMainSponsors();
+    }
+
+    /**
+     * Logo sponsor utama tampil di navbar dan footer publik selama masih
+     * berada dalam periode aktif dan sudah disetujui admin.
+     */
+    private function shareActiveMainSponsors(): void
+    {
+        View::composer(['components.navbar', 'components.footer'], function (ViewContract $view): void {
+            $view->with(
+                'mainWebSponsors',
+                Sponsor::query()
+                    ->web()
+                    ->approved()
+                    ->active()
+                    ->where('package', Sponsor::PACKAGE_WEB_MAIN)
+                    ->get(),
+            );
+        });
     }
 
     /**
