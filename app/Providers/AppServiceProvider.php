@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->shareCurrentBladeWithEveryView();
         $this->shareActiveMainSponsors();
+        $this->shareInlinesiaWhatsappLink();
     }
 
     /**
@@ -42,6 +43,28 @@ class AppServiceProvider extends ServiceProvider
                     ->where('package', Sponsor::PACKAGE_WEB_MAIN)
                     ->get(),
             );
+        });
+    }
+
+    /**
+     * Tautan WhatsApp Inlinesia untuk kartu kemitraan di beranda. Jika nomor
+     * belum diisi, tombol kembali ke email sampai CONTACT_WHATSAPP tersedia.
+     */
+    private function shareInlinesiaWhatsappLink(): void
+    {
+        View::composer('publik.beranda', function (ViewContract $view): void {
+            $digits = preg_replace('/\D+/', '', (string) config('contact.whatsapp', '')) ?? '';
+            if (str_starts_with($digits, '0')) {
+                $digits = '62'.substr($digits, 1);
+            } elseif (str_starts_with($digits, '8')) {
+                $digits = '62'.$digits;
+            }
+
+            $url = strlen($digits) >= 8 && strlen($digits) <= 15
+                ? 'https://wa.me/'.$digits.'?text='.rawurlencode('Halo Inlinesia, saya ingin bertanya tentang sponsorship dan iklan.')
+                : 'mailto:'.config('contact.email').'?subject='.urlencode('Sponsor dan Iklan Inlinesia');
+
+            $view->with('inlinesiaWhatsappUrl', $url);
         });
     }
 

@@ -91,8 +91,4 @@
         @endif
     </div>
 
-    <div class="contact-foot">
-        <p>Untuk sponsorship dan iklan, sebutkan jenis paket Anda agar kami bisa kirim pricelist.</p>
-        <a class="public-button public-button-orange" href="mailto:{{ $contactEmail }}?subject={{ urlencode('Sponsor dan Iklan Inlinesia') }}">Tanya sponsorship <span aria-hidden="true">→</span></a>
-    </div>
 </section>

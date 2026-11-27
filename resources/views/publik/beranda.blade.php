@@ -245,7 +245,11 @@
                 <span class="public-section-label">KEMITRAAN &amp; IKLAN</span>
                 <h2 id="sponsor-heading">Jangkau komunitas sepatu roda.</h2>
                 <p>Promosikan brand Anda melalui website Inlinesia atau dukung kejuaraan sebagai sponsor event.</p>
-                <a class="public-button public-button-orange" href="mailto:inlinesia@gmail.com?subject=Informasi%20Sponsor%20Inlinesia">Hubungi Inlinesia <span aria-hidden="true">↗</span></a>
+                <div class="sponsor-card-actions">
+                    <a class="public-button public-button-orange" href="{{ $inlinesiaWhatsappUrl }}" @if (str_starts_with($inlinesiaWhatsappUrl, 'https://wa.me/')) target="_blank" rel="noopener noreferrer" @endif>Hubungi Inlinesia <span aria-hidden="true">↗</span></a>
+                    <a class="public-button public-button-dark" href="{{ route('sponsor.web.form') }}">Form iklan website <span aria-hidden="true">↗</span></a>
+                    <a class="public-button public-button-dark" href="{{ route('sponsor.event.form') }}">Form sponsor event <span aria-hidden="true">↗</span></a>
+                </div>
             </div>
             <div class="sponsor-card-options">
                 <article>

@@ -364,3 +364,7 @@
     color: var(--text-primary);
     font-family: var(--font-display);
 }
+
+.sponsor-card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 4px; }
+.sponsor-card-actions .public-button { white-space: nowrap; }
+

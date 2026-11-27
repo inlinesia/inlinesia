@@ -30,6 +30,8 @@ class ExampleTest extends TestCase
             'registration_open' => true,
         ]);
 
+        config(['contact.whatsapp' => '081234567890']);
+
         $this->get('/')
             ->assertOk()
             ->assertViewIs('publik.beranda')
@@ -51,7 +53,10 @@ class ExampleTest extends TestCase
             ->assertSee('KEMITRAAN & IKLAN')
             ->assertSee('Iklan di website')
             ->assertSee('Sponsor event')
-            ->assertSee('mailto:inlinesia@gmail.com?subject=Informasi%20Sponsor%20Inlinesia', false)
+            ->assertSee('https://wa.me/6281234567890', false)
+            ->assertSee(route('sponsor.web.form'), false)
+            ->assertSee(route('sponsor.event.form'), false)
+            ->assertDontSee('pricelist')
             ->assertSee(route('events.index'), false);
 
         $this->actingAs($owner)
