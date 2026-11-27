@@ -139,7 +139,8 @@ class EventApplicationTest extends TestCase
             ->get(route('guest.dashboard'))
             ->assertOk()
             ->assertSee('Pengajuan event “Kediri Roller Cup” disetujui dan telah tampil di daftar lomba.')
-            ->assertSee('Disetujui · tampil di daftar lomba')
+            ->assertDontSee('Status pengajuan event Anda')
+            ->assertDontSee('Disetujui · tampil di daftar lomba')
             ->assertSee('Atur KU');
 
         $this->actingAs($admin)

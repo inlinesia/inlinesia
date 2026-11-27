@@ -54,6 +54,7 @@ class GuestDashboardController extends Controller
                 : collect(),
             'submissions' => Event::query()
                 ->when(! $isAdmin, fn ($query) => $query->where('submitted_by', $user->id))
+                ->where('status', '!=', 'approved')
                 ->latest()
                 ->get(),
             'decisionNotifications' => $request->user()->notifications()
