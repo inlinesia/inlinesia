@@ -88,13 +88,6 @@
                 <a class="public-button public-button-orange" href="{{ route('events.index') }}">Jelajahi kejuaraan <span aria-hidden="true">→</span></a>
                 <a class="public-text-link" href="#layanan">Lihat fitur platform <span aria-hidden="true">↘</span></a>
             </div>
-            <div class="public-hero-directory">
-                {{-- Tiga jalur berbeda: melihat direktori, mendaftarkan klub,
-                     dan mendaftarkan atlet lewat formulir direktori. --}}
-                <a class="public-directory-label" href="{{ route('directory.index') }}">LIHAT DIREKTORI</a>
-                <a class="public-directory-link" href="{{ route('directory.clubs.create') }}">Daftarkan club <span aria-hidden="true">→</span></a>
-                <a class="public-directory-link" href="{{ route('directory.athletes.create') }}">Daftarkan peserta <span aria-hidden="true">→</span></a>
-            </div>
             <div class="public-community-note">
                 <div class="organizer-mark" aria-hidden="true">I</div>
                 <p><strong>Untuk atlet dan penyelenggara.</strong><br>Agenda · pendaftaran · pengelolaan event</p>
@@ -122,6 +115,11 @@
             @endif
                 <span class="platform-preview-number">03</span>
                 <span><small>UNTUK PENGELOLA</small><strong>Dasbor event</strong><em>Event, KU, peserta</em></span>
+                <span class="platform-preview-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="platform-preview-link" href="{{ route('directory.index') }}">
+                <span class="platform-preview-number">04</span>
+                <span><small>DIREKTORI</small><strong>Daftar club &amp; peserta</strong><em>Daftar klub dan atlet ke server</em></span>
                 <span class="platform-preview-arrow" aria-hidden="true">↗</span>
             </a>
         </aside>

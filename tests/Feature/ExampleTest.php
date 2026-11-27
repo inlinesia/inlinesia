@@ -41,6 +41,7 @@ class ExampleTest extends TestCase
             ->assertSee('Agenda kejuaraan')
             ->assertSee('Pendaftaran lomba')
             ->assertSee('Kelola event')
+            ->assertSee('Daftar club &amp; peserta', false)
             ->assertSee('Kejuaraan Inlinesia')
             ->assertSee('Masuk untuk mendaftar')
             ->assertSee('Daftar kejuaraan')

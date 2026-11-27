@@ -551,6 +551,35 @@ html[data-theme='ceria'] {
     box-shadow: var(--shadow-sticker-sm);
 }
 
+/* Kartu fitur di hero: gaya Kids Skate, latar titik-titik pada
+   .public-hero-art::before sengaja dipertahankan. */
+[data-theme='ceria'] .public-home .platform-preview-label {
+    color: var(--color-grape);
+    font-family: var(--font-display);
+}
+[data-theme='ceria'] .public-home .platform-preview-link {
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sticker-sm);
+    background: rgba(255, 255, 255, 0.94);
+    transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s var(--ease-bounce);
+}
+[data-theme='ceria'] .public-home .platform-preview-link:nth-of-type(1) { background: #fff8dc; }
+[data-theme='ceria'] .public-home .platform-preview-link:nth-of-type(2) { background: #e6fcf5; }
+[data-theme='ceria'] .public-home .platform-preview-link:nth-of-type(3) { background: #fff0e5; }
+[data-theme='ceria'] .public-home .platform-preview-link:nth-of-type(4) { background: #f3e8ff; }
+[data-theme='ceria'] .public-home .platform-preview-link:hover {
+    transform: translateX(3px);
+    box-shadow: var(--shadow-sticker);
+}
+[data-theme='ceria'] .public-home .platform-preview-number {
+    color: var(--color-grape);
+    font-family: var(--font-display);
+}
+[data-theme='ceria'] .public-home .platform-preview-link strong { font-family: var(--font-display); }
+[data-theme='ceria'] .public-home .platform-preview-link em { color: var(--text-secondary); }
+[data-theme='ceria'] .public-home .platform-preview-arrow { color: var(--color-coral); }
+
 [data-theme='ceria'] .public-site .public-hero h1 {
     color: var(--text-primary);
     font-family: var(--font-display);

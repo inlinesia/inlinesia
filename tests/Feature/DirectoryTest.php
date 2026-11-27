@@ -18,10 +18,14 @@ class DirectoryTest extends TestCase
     {
         $this->get(route('home'))
             ->assertOk()
+            ->assertSee('Daftar club &amp; peserta', false)
+            ->assertSee(route('directory.index'), false);
+
+        $this->get(route('directory.index'))
+            ->assertOk()
             ->assertSee('Daftarkan club')
-            ->assertSee('Daftarkan peserta')
-            ->assertSee(route('directory.clubs.create'))
-            ->assertSee(route('directory.index'));
+            ->assertSee('Masuk untuk daftar peserta')
+            ->assertSee(route('directory.clubs.create'), false);
     }
 
     public function test_a_guest_can_browse_the_club_list_and_search_by_club_name(): void
