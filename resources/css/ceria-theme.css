@@ -330,7 +330,9 @@ html[data-theme='ceria'] {
 }
 
 [data-theme='ceria'] .public-header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 40;
     padding: 0.7rem 1.25rem;
     background: var(--bg-surface);
     border: 2.5px solid var(--border-ink);

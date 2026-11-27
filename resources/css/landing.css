@@ -1,7 +1,7 @@
 body.public-home { min-width: 360px; color: #242a34; background: #e9e4da; font-family: 'Instrument Sans', 'Segoe UI', sans-serif; }
 .public-site { --ink: #242a34; --muted: #777c81; --orange: #e67855; --paper: #f1ece2; --line: #ded6c8; max-width: 1600px; margin: 0 auto; padding: 0 7.1%; background: #f1ece2; }
 .public-site a:focus-visible { outline-color: #e67855; border-radius: 3px; }
-.public-header { display: flex; min-height: 88px; align-items: center; justify-content: space-between; gap: 22px; border-bottom: 1px solid var(--line); }
+.public-header { position: sticky; top: 0; z-index: 40; display: flex; min-height: 88px; align-items: center; justify-content: space-between; gap: 22px; border-bottom: 1px solid var(--line); }
 .public-brand { display: inline-flex; flex: none; align-items: center; }
 .inlinesia-logo { display: inline-flex; flex: none; align-items: center; gap: 10px; }
 .inlinesia-logo-image { display: block; width: 62px; height: 62px; flex: none; overflow: hidden; padding: 6px; border-radius: 10px; background: #29394a; object-fit: contain; }
@@ -19,12 +19,13 @@ body.public-home { min-width: 360px; color: #242a34; background: #e9e4da; font-f
 .inlinesia-logo-copy strong { color: var(--flag-white); font-size: 17px; font-weight: 800; letter-spacing: -.65px; line-height: 1; }
 .inlinesia-logo-copy .logo-accent { color: var(--flag-red); }
 .inlinesia-logo-copy small { color: #858681; font-size: 6px; font-weight: 750; letter-spacing: .65px; white-space: nowrap; }
-.public-nav { display: flex; align-items: center; gap: clamp(18px, 3.2vw, 48px); margin-left: auto; }
+.public-nav { display: flex; align-items: center; gap: clamp(18px, 3.2vw, 48px); margin-left: 0; }
 .public-nav { flex-wrap: wrap; }
+.public-nav.is-minimal { gap: 0; }
 .public-nav a, .public-login { color: #54585b; font-size: 11px; font-weight: 550; transition: color .18s; }
 .public-nav a:hover, .public-login:hover, .footer-admin-link:hover { color: var(--orange); }
 .public-nav a.is-current { color: #d66f4f; font-weight: 700; }
-.public-header-actions { display: flex; align-items: center; gap: 19px; margin-left: 10px; }
+.public-header-actions { display: flex; align-items: center; gap: 19px; margin-left: auto; }
 .public-login { white-space: nowrap; }
 .public-button { position: relative; z-index: 1; display: inline-flex; min-height: 43px; align-items: center; justify-content: center; gap: 18px; padding: 0 16px; border-radius: 4px; font-size: 10px; font-weight: 650; transition: transform .18s, background .18s, box-shadow .18s; }
 .public-button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px #26313d1a; }
