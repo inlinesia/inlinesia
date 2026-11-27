@@ -71,13 +71,14 @@
             <article class="license-price-card">
                 <span class="license-price-tag">SPONSOR</span>
                 <h3>Sponsor website &amp; event</h3>
-                <p class="license-price">Konsep — harga belum ditetapkan</p>
+                <p class="license-price">Website Rp 250.000–1.000.000/bulan · Event Rp 150.000–300.000/event</p>
                 <p>Ruang sponsor bagi brand yang ingin mendukung platform Inlinesia dan/atau kejuaraan tertentu.</p>
                 <ul class="license-tier-list license-tier-list--yes">
+                    <li>Banner website Rp 250.000/bulan · Sponsor utama website Rp 1.000.000/bulan.</li>
+                    <li>Logo event Rp 150.000/event · Sponsor utama event Rp 300.000/event.</li>
                     <li>Logo pada halaman beranda dan Jelajahi kejuaraan.</li>
                     <li>Penempatan pada kartu event yang disponsori.</li>
                     <li>Pencantuman nama sponsor pada materi dan daftar peserta event.</li>
-                    <li>Kerja sama dapat berlaku per event atau per periode tertentu.</li>
                 </ul>
             </article>
         </div>
@@ -102,14 +103,14 @@
             <article class="license-price-card">
                 <span class="license-price-tag">WEBSITE</span>
                 <h3>Sponsor website</h3>
-                <p class="license-price">Mulai Rp 250.000</p>
+                <p class="license-price">Rp 250.000–1.000.000/bulan</p>
                 <p>Pasang banner atau logo brand Anda di beranda dan halaman Jelajahi kejuaraan.</p>
                 <a class="account-edit-link" href="{{ route('sponsor.web.form') }}">Ajukan sponsor website <span aria-hidden="true">↗</span></a>
             </article>
             <article class="license-price-card">
                 <span class="license-price-tag">EVENT</span>
                 <h3>Sponsor event</h3>
-                <p class="license-price">Mulai Rp 150.000/event</p>
+                <p class="license-price">Rp 150.000–300.000/event</p>
                 <p>Tampil pada kartu event dan halaman pendaftaran atlet untuk kejuaraan tertentu.</p>
                 <a class="account-edit-link" href="{{ route('sponsor.event.form') }}">Ajukan sponsor event <span aria-hidden="true">↗</span></a>
             </article>

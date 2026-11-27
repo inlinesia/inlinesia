@@ -43,6 +43,8 @@ class LicensePageTest extends TestCase
             ->assertSeeText('Kelola penuh')
             ->assertSeeText('Rp 0')
             ->assertSeeText('Sponsor website & event')
-            ->assertSeeText('Konsep — harga belum ditetapkan');
+            ->assertSeeText('Rp 250.000–1.000.000/bulan')
+            ->assertSeeText('Rp 150.000–300.000/event')
+            ->assertDontSeeText('harga belum ditetapkan');
     }
 }
