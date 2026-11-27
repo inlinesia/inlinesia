@@ -127,7 +127,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 
 <!-- AUTO:START -->
 
-### Rute (85)
+### Rute (86)
 
 | Method | URI | Nama | Aksi | Middleware |
 |---|---|---|---|---|
@@ -201,6 +201,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 | POST | `kejuaraan/{event}/atlet/{registration}/perubahan/keputusan` | `events.registrations.changes.review` | `App\Http\Controllers\EventRegistrationManagementController@reviewParticipantChange` | web, auth, event-access |
 | GET\|HEAD | `kejuaraan/{event}/urutan-lomba` | `events.race.order` | `App\Http\Controllers\EventRaceOrderController@show` | web, auth, event-access |
 | POST | `keluar` | `logout` | `App\Http\Controllers\Auth\AuthenticatedSessionController@destroy` | web, auth |
+| GET\|HEAD | `lisensi` | `license` | `Illuminate\Routing\ViewController` | web |
 | GET\|HEAD | `lomba` | `events.index` | `App\Http\Controllers\EventListingController` | web |
 | PUT | `lomba/{event}/atlet/{registration}` | `events.registration.update-own` | `App\Http\Controllers\EventRegistrationController@updateOwn` | web, auth, event-access |
 | DELETE | `lomba/{event}/atlet/{registration}` | `events.registration.destroy-own` | `App\Http\Controllers\EventRegistrationController@destroyOwn` | web, auth, event-access |
@@ -276,7 +277,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `app/Services/ResolveEventRegistrationCategory.php` — 78 baris — `ResolveEventRegistrationCategory` — method: `eligibleCategories`, `matchingCategory`, `bestMatch`
 - `app/Services/SyncRegistrationToDirectory.php` — 166 baris — `SyncRegistrationToDirectory` — method: `registrationChanged`, `syncRegistration`, `resolveClub`
 
-### View Blade (resources/views/) (42 file)
+### View Blade (resources/views/) (43 file)
 
 - `resources/views/admin/accounts/form.blade.php` — 86 baris
 - `resources/views/admin/accounts/index.blade.php` — 267 baris
@@ -292,7 +293,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/auth/verify-email.blade.php` — 21 baris
 - `resources/views/components/blade-location.blade.php` — 10 baris
 - `resources/views/components/contact-card.blade.php` — 98 baris
-- `resources/views/components/footer.blade.php` — 7 baris
+- `resources/views/components/footer.blade.php` — 10 baris
 - `resources/views/components/logo.blade.php` — 13 baris
 - `resources/views/components/navbar.blade.php` — 31 baris
 - `resources/views/components/page-context.blade.php` — 28 baris
@@ -307,8 +308,9 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/publik/direktori/index.blade.php` — 155 baris
 - `resources/views/publik/direktori/klub-edit.blade.php` — 53 baris
 - `resources/views/publik/direktori/klub.blade.php` — 52 baris
+- `resources/views/publik/lisensi.blade.php` — 84 baris
 - `resources/views/publik/lomba/index.blade.php` — 107 baris
-- `resources/views/verified/dashboard.blade.php` — 417 baris
+- `resources/views/verified/dashboard.blade.php` — 423 baris
 - `resources/views/verified/events/categories.blade.php` — 585 baris
 - `resources/views/verified/events/finance/index.blade.php` — 301 baris
 - `resources/views/verified/events/participants/export.blade.php` — 173 baris
@@ -321,7 +323,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `resources/views/verified/events/race/order.blade.php` — 93 baris
 - `resources/views/verified/events/race/partials/heat.blade.php` — 174 baris
 
-### Pengujian (tests/) (28 file)
+### Pengujian (tests/) (29 file)
 
 - `tests/Feature/AccountPortalTest.php` — 498 baris — `AccountPortalTest` — method: `test_guests_can_open_registration_and_login_pages`, `test_public_registration_creates_and_signs_in_a_non_admin_account`, `test_registration_sends_a_verification_email_and_the_signed_link_verifies_the_account`, `test_public_registration_cannot_select_admin_role`, `test_profile_form_uses_control_two_inputs_and_validation_states`, `test_users_can_login_update_their_profile_and_logout`, `test_primary_admin_email_is_fixed_in_profiles_and_when_saving_the_account`, `test_admin_can_edit_an_account_and_email_changes_require_reverification`, …
 - `tests/Feature/AdminDashboardThemeTest.php` — 23 baris — `AdminDashboardThemeTest` — method: `test_admin_dashboard_hero_text_is_readable_in_ceria_theme`
@@ -342,6 +344,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `tests/Feature/ExampleTest.php` — 101 baris — `ExampleTest` — method: `test_the_public_homepage_highlights_available_event_platform_features`, `test_the_public_homepage_shows_the_event_empty_state_when_no_events_are_upcoming`, `test_the_public_event_listing_only_displays_approved_events`, `test_the_panitia_dashboard_remains_available_separately`
 - `tests/Feature/GuestDashboardTest.php` — 212 baris — `GuestDashboardTest` — method: `test_verified_user_can_open_their_dashboard_and_see_only_their_registrations`, `test_participant_can_update_races_directly_from_dashboard_table`, `test_paid_participant_cannot_update_races_from_table`, `test_registration_form_does_not_show_already_registered_athletes`, `test_unverified_user_is_prompted_to_verify_and_does_not_see_dashboard_button`, `test_individual_and_club_accounts_can_register_when_registration_is_open`, `test_dashboard_hides_registration_link_until_manager_opens_registration`
 - `tests/Feature/HomeAuthFormTest.php` — 54 baris — `HomeAuthFormTest` — method: `test_guest_sees_login_and_registration_forms_on_homepage`, `test_authenticated_user_does_not_see_homepage_auth_forms`, `test_failed_login_shows_the_error_in_the_homepage_form`
+- `tests/Feature/LicensePageTest.php` — 32 baris — `LicensePageTest` — method: `test_public_footer_menampilkan_copyright_damai_dan_tautan_lisensi`, `test_halaman_lisensi_dapat_dibuka_tanpa_login`
 - `tests/Feature/MergedFormPagesTest.php` — 158 baris — `MergedFormPagesTest` — method: `test_event_create_and_edit_render_the_same_view`, `test_admin_sees_the_same_shell_for_event_create_and_edit`, `test_event_edit_uses_the_unified_url_without_an_edit_suffix`, `test_account_create_and_edit_render_the_same_view`, `test_account_form_switches_only_by_mode`, `test_new_event_still_requires_a_future_start_date_and_deadline`
 - `tests/Feature/NikAutofillTest.php` — 191 baris — `NikAutofillTest` — method: `test_authenticated_user_can_read_a_nik_into_region_gender_and_birth_date`, `test_nik_lookup_reads_female_nik_from_a_day_above_forty`, `test_nik_lookup_rejects_unknown_region_code`, `test_nik_lookup_requires_sixteen_digits`, `test_nik_lookup_requires_an_account`, `test_registration_page_exposes_the_nik_feedback_container_for_the_region_notice`, `test_registration_rejects_nik_that_does_not_match_the_given_gender`, `test_registration_rejects_nik_that_does_not_match_the_given_birth_date`, …
 - `tests/Feature/PageContextWidgetTest.php` — 119 baris — `PageContextWidgetTest` — method: `test_user_badge_menampilkan_nama_dan_role_pada_setiap_halaman`, `test_lokasi_blade_hanya_muncul_untuk_admin`, `test_halaman_pendaftaran_menampilkan_navbar_di_atas_dan_konten_di_dalam_layout`
@@ -409,7 +412,7 @@ Seeder: `DatabaseSeeder` hanya membuat 1 user; `DemoEventRegistrationSeeder` ber
 - `config/session.php` — 233 baris
 - `config/user-roles.php` — 8 baris
 - `routes/console.php` — 8 baris
-- `routes/web.php` — 230 baris
+- `routes/web.php` — 232 baris
 - `scripts/fetch-wilayah-data.php` — 99 baris
 - `scripts/generate-peta-proyek.php` — 220 baris
 - `scripts/inspect-dev-data.php` — 30 baris

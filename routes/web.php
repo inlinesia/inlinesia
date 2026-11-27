@@ -35,6 +35,8 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::view('/lisensi', 'publik.lisensi')->name('license');
+
 Route::get('/lomba', EventListingController::class)->name('events.index');
 
 // Direktori klub dan atlet terbuka untuk umum, karena justru dipakai orang

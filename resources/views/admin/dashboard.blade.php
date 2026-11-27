@@ -127,6 +127,6 @@
                     </div>
                 </section>
 
-                <footer class="page-footer"><span>© {{ now()->year }} Inlinesia</span><span>Operasional event sepatu roda <span class="footer-heart">♥</span></span></footer>
+                <footer class="page-footer"><span>© 2026 - Damai digital creative · <a href="{{ route('license') }}">Lisensi</a></span><span>Operasional event sepatu roda <span class="footer-heart">♥</span></span></footer>
 </div>
 @endsection

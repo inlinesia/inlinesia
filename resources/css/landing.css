@@ -235,6 +235,25 @@ a.contact-value:hover { color: var(--orange); }
 .footer-brand .inlinesia-logo-copy small { font-size: 5px; letter-spacing: .45px; }
 .footer-tagline, .footer-copyright, .footer-admin-link { color: #878982; font-size: 9px; }
 .footer-admin-link { font-weight: 600; white-space: nowrap; }.footer-admin-link span { margin-left: 4px; }
+.footer-copyright { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; text-align: right; }
+.footer-license-link { color: inherit; font-weight: 700; text-decoration: underline; }
+.footer-license-link:hover { color: var(--color-grape); }
+
+/* Halaman lisensi Inlinesia: kartu harga dan ketentuan memakai gaya kartu
+   publik yang sudah ada, dengan tambahan grid harga yang rapat. */
+.public-license-page { display: grid; gap: 18px; }
+.license-section h2 { margin: 0 0 12px; color: #293747; font-size: 15px; font-weight: 650; }
+.license-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.license-price-card { display: grid; align-content: start; gap: 4px; padding: 13px; border: 1px solid #eae7df; border-radius: 12px; background: #fffdf7; }
+.license-price-card h3 { margin: 0; color: #293747; font-size: 12px; font-weight: 650; }
+.license-price-card p { margin: 0; color: #777c81; font-size: 10px; line-height: 1.5; }
+.license-price-tag { width: fit-content; padding: 2px 7px; border-radius: 10px; color: #a75c43; background: #fbede5; font-size: 8px; font-weight: 700; letter-spacing: .3px; }
+.license-price-card .license-price { color: #293747; font-size: 11px; font-weight: 700; }
+.license-note { margin: 12px 0 0; color: #777c81; font-size: 10px; line-height: 1.6; }
+.license-terms { display: grid; gap: 8px; margin: 0; padding-left: 18px; }
+.license-terms li { color: #3d4750; font-size: 10px; line-height: 1.7; }
+.license-terms strong { color: #293747; font-weight: 700; }
+.license-contact-link { color: var(--color-grape, #8338ec); font-weight: 700; text-decoration: underline; }
 
 @media (min-width: 1400px) {
     .public-site { padding-right: 9%; padding-left: 9%; }
