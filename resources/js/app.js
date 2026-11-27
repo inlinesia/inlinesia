@@ -1733,3 +1733,18 @@ function enablePasswordToggles(root) {
 }
 
 enablePasswordToggles(document);
+
+// Paket event: tampilkan hanya field yang relevan dengan pilihan gratis/berbayar.
+const eventTierInputs = document.querySelectorAll('input[name="event_tier"]');
+if (eventTierInputs.length > 0) {
+    const tierForm = eventTierInputs[0].closest('form');
+    const applyEventTier = () => {
+        const isAdvertisement = tierForm.querySelector('input[name="event_tier"]:checked')?.value === 'advertisement';
+        tierForm.querySelectorAll('[data-tier-full-only]').forEach((element) => { element.hidden = isAdvertisement; });
+        tierForm.querySelectorAll('[data-tier-ad-only]').forEach((element) => { element.hidden = !isAdvertisement; });
+        tierForm.querySelectorAll('[data-tier-ad-only] input, [data-tier-ad-only] textarea, [data-tier-ad-only] select').forEach((input) => { input.required = isAdvertisement; });
+    };
+    eventTierInputs.forEach((input) => input.addEventListener('change', applyEventTier));
+    applyEventTier();
+}
+

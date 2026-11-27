@@ -72,6 +72,26 @@
         @csrf
         @if ($isEditing) @method('PUT') @endif
 
+        <section class="form-section event-tier-section">
+            <div class="form-section-heading"><span class="form-step">00</span><div><h2>Paket event</h2><p>Pilih cara event ini ditampilkan dan dikelola di Inlinesia.</p></div></div>
+            <div class="form-fields">
+                @php($selectedTier = old('event_tier', $stored('event_tier') ?? \App\Models\Event::TIER_FULL))
+                <div class="form-field form-field-full">
+                    <div class="tier-options">
+                        <label class="tier-option">
+                            <input type="radio" name="event_tier" value="{{ \App\Models\Event::TIER_ADVERTISEMENT }}" @checked($selectedTier === \App\Models\Event::TIER_ADVERTISEMENT)>
+                            <span><strong>Gratis — Iklan event</strong><small>Event hanya tampil di halaman Jelajahi kejuaraan sebagai informasi. Tidak bisa membuka pendaftaran atlet, mengatur KU, perlombaan, peserta, atau keuangan.</small></span>
+                        </label>
+                        <label class="tier-option">
+                            <input type="radio" name="event_tier" value="{{ \App\Models\Event::TIER_FULL }}" @checked($selectedTier === \App\Models\Event::TIER_FULL)>
+                            <span><strong>Berbayar — Kelola penuh</strong><small>Semua fitur pengelolaan aktif setelah event disetujui Admin. Rincian harga tersedia di <a href="{{ route('license') }}" target="_blank" rel="noopener noreferrer">halaman lisensi</a>.</small></span>
+                        </label>
+                    </div>
+                    @error('event_tier')<small class="field-error">{{ $message }}</small>@enderror
+                </div>
+            </div>
+        </section>
+
         <section class="form-section">
             <div class="form-section-heading"><span class="form-step">01</span><div><h2>Identitas event</h2><p>Nama, tanggal, lokasi, serta jenis penyelenggaraan.</p></div></div>
             <div class="form-fields">
@@ -79,15 +99,16 @@
                 <div class="form-field"><label for="start_date">Tanggal mulai <span>*</span></label><input id="start_date" name="start_date" type="date" value="{{ old('start_date', $stored('start_date')?->format('Y-m-d')) }}" min="{{ today()->format('Y-m-d') }}" required>@error('start_date')<small class="field-error">{{ $message }}</small>@enderror</div>
                 <div class="form-field"><label for="end_date">Tanggal selesai <span>*</span></label><input id="end_date" name="end_date" type="date" value="{{ old('end_date', $stored('end_date')?->format('Y-m-d')) }}" min="{{ today()->format('Y-m-d') }}" required>@error('end_date')<small class="field-error">{{ $message }}</small>@enderror</div>
                 <div class="form-field"><label for="scale">Skala event <span>*</span></label><input id="scale" name="scale" value="{{ $value('scale') }}" placeholder="Kota, provinsi, nasional" maxlength="120" required>@error('scale')<small class="field-error">{{ $message }}</small>@enderror</div>
-                <div class="form-field"><label for="registration_deadline">Batas pendaftaran @if (! $isEditing)<span>*</span>@endif</label><input id="registration_deadline" name="registration_deadline" type="date" value="{{ old('registration_deadline', $stored('registration_deadline')?->format('Y-m-d')) }}" min="{{ today()->format('Y-m-d') }}" @required(! $isEditing)>@error('registration_deadline')<small class="field-error">{{ $message }}</small>@enderror</div>
+                <div class="form-field" data-tier-full-only><label for="registration_deadline">Batas pendaftaran @if (! $isEditing)<span>*</span>@endif</label><input id="registration_deadline" name="registration_deadline" type="date" value="{{ old('registration_deadline', $stored('registration_deadline')?->format('Y-m-d')) }}" min="{{ today()->format('Y-m-d') }}" @required(! $isEditing)>@error('registration_deadline')<small class="field-error">{{ $message }}</small>@enderror</div>
                 <div class="form-field"><label for="venue">Nama venue <span>*</span></label><input id="venue" name="venue" value="{{ $value('venue') }}" maxlength="180" required>@error('venue')<small class="field-error">{{ $message }}</small>@enderror</div>
                 <div class="form-field"><label for="venue_address">Alamat lengkap venue <span>*</span></label><input id="venue_address" name="venue_address" value="{{ $value('venue_address') }}" maxlength="1000" required>@error('venue_address')<small class="field-error">{{ $message }}</small>@enderror</div>
+                <div class="form-field form-field-full" data-tier-ad-only><label for="short_description">Deskripsi singkat event <span>*</span></label><textarea id="short_description" name="short_description" rows="3" maxlength="500" placeholder="Ringkasan singkat kejuaraan untuk tampil di halaman Jelajahi kejuaraan.">{{ $value('short_description') }}</textarea><small class="field-hint">Hanya dipakai paket Gratis — Iklan event. Maksimal 500 karakter.</small>@error('short_description')<small class="field-error">{{ $message }}</small>@enderror</div>
                 <div class="form-field"><label for="organizer_whatsapp">WhatsApp pengelola kejuaraan <span>*</span></label><input id="organizer_whatsapp" name="organizer_whatsapp" type="tel" value="{{ $value('organizer_whatsapp') }}" autocomplete="tel" maxlength="40" placeholder="08xx atau +62xx" pattern="\+?[0-9\s().-]{8,40}" required><small class="field-hint">Nomor ini ditampilkan pada informasi kejuaraan dan menjadi tujuan konfirmasi melalui WhatsApp.</small>@error('organizer_whatsapp')<small class="field-error">{{ $message }}</small>@enderror</div>
                 <div class="form-field"><label for="whatsapp_group_link">Tautan grup WhatsApp tanya jawab <span class="optional-label">opsional</span></label><input id="whatsapp_group_link" name="whatsapp_group_link" type="url" value="{{ $value('whatsapp_group_link') }}" maxlength="500" placeholder="https://chat.whatsapp.com/..." autocomplete="off"><small class="field-hint">Isi undangan grup WA panitia. Tautan akan muncul sebagai tombol “Gabung grup WA” pada kartu event. Kosongkan bila belum ada grup.</small>@error('whatsapp_group_link')<small class="field-error">{{ $message }}</small>@enderror</div>
             </div>
         </section>
 
-        <section class="form-section">
+        <section class="form-section" data-tier-full-only>
             <div class="form-section-heading"><span class="form-step">01b</span><div><h2>Persyaratan pembatalan</h2><p>Atur apakah peserta boleh mengajukan pembatalan dan syarat yang harus dipenuhi.</p></div></div>
             <div class="form-fields">
                 <div class="form-field form-field-full">
@@ -115,7 +136,7 @@
             </div>
         </section>
 
-        <section class="form-section">
+        <section class="form-section" data-tier-full-only>
             <div class="form-section-heading"><span class="form-step">02</span><div><h2>Teknis pertandingan</h2><p>Peraturan, official, dan kondisi lokasi.</p></div></div>
             <div class="form-fields">
                 <div class="form-field">
@@ -137,7 +158,7 @@
             </div>
         </section>
 
-        <section class="form-section">
+        <section class="form-section" data-tier-full-only>
             <div class="form-section-heading"><span class="form-step">03</span><div><h2>KU (Kelompok Usia) &amp; nomor lomba</h2><p>Tulis satu pilihan per baris. Rentang usia tiap KU diatur di halaman pengaturan KU.</p></div></div>
             <div class="form-fields">
                 <div class="form-field form-field-full">
@@ -155,7 +176,7 @@
             </div>
         </section>
 
-        <section class="form-section">
+        <section class="form-section" data-tier-full-only>
             <div class="form-section-heading"><span class="form-step">04</span><div><h2>Pendaftaran &amp; hadiah</h2><p>Informasi yang akan dibaca calon peserta.</p></div></div>
             <div class="form-fields">
                 <div class="form-field">
@@ -189,7 +210,7 @@
             </div>
         </section>
 
-        <section class="form-section">
+        <section class="form-section" data-tier-full-only>
             <div class="form-section-heading"><span class="form-step">05</span><div><h2>Ketentuan &amp; jadwal</h2><p>Jelaskan keadaan kahar dan susunan kegiatan.</p></div></div>
             <div class="form-fields">
                 <div class="form-field form-field-full">

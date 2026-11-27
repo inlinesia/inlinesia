@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class Event extends Model
 {
+    public const TIER_ADVERTISEMENT = 'advertisement';
+
+    public const TIER_FULL = 'full';
+
     protected $fillable = [
         'submitted_by',
         'name',
@@ -17,6 +21,7 @@ class Event extends Model
         'end_date',
         'venue',
         'venue_address',
+        'short_description',
         'organizer_whatsapp',
         'whatsapp_group_link',
         'cancellation_allowed',
@@ -32,6 +37,7 @@ class Event extends Model
         'races',
         'registration_open',
         'is_free',
+        'event_tier',
         'participants_published',
         'participants_published_at',
         'registration_deadline',
@@ -279,6 +285,36 @@ class Event extends Model
         }
 
         return $this->status === 'approved' && $this->registrationClosed();
+    }
+
+    /**
+     * Event iklan hanya tampil sebagai informasi publik; seluruh fitur kelola
+     * dinonaktifkan sampai pemilik meng-upgrade ke paket berbayar.
+     */
+    public function isAdvertisementOnly(): bool
+    {
+        return $this->event_tier === self::TIER_ADVERTISEMENT;
+    }
+
+    /**
+     * Tautan WhatsApp pengelola untuk kartu event iklan.
+     */
+    public function organizerWhatsappLink(): ?string
+    {
+        $phone = preg_replace('/\D+/', '', (string) $this->organizer_whatsapp) ?? '';
+        if (str_starts_with($phone, '0')) {
+            $phone = '62'.substr($phone, 1);
+        } elseif (str_starts_with($phone, '8')) {
+            $phone = '62'.$phone;
+        }
+
+        if ($phone === '' || strlen($phone) < 8 || strlen($phone) > 15) {
+            return null;
+        }
+
+        $message = rawurlencode("Halo, saya tertarik dengan event {$this->name} di Inlinesia.");
+
+        return 'https://wa.me/'.$phone.'?text='.$message;
     }
 
     /**

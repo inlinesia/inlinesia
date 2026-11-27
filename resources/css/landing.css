@@ -257,6 +257,16 @@ a.contact-value:hover { color: var(--orange); }
 .license-terms strong { color: #293747; font-weight: 700; }
 .license-contact-link { color: var(--color-grape, #8338ec); font-weight: 700; text-decoration: underline; }
 
+/* Perbandingan paket event: dua kartu sejajar di atas daftar harga. */
+.license-comparison-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); align-items: start; }
+.license-tier-card { gap: 6px; }
+.license-price-card .license-tier-label { margin-top: 8px; color: #293747; font-weight: 700; }
+.license-tier-list { display: grid; gap: 4px; margin: 0; padding-left: 16px; }
+.license-tier-list li { color: #3d4750; font-size: 10px; line-height: 1.55; }
+.license-tier-list--yes li::marker { color: #3f8a62; }
+.license-tier-list--no li::marker { color: #c76363; }
+.license-price-card .license-tier-note { margin-top: 8px; font-style: italic; }
+
 @media (min-width: 1400px) {
     .public-site { padding-right: 9%; padding-left: 9%; }
     .public-hero { min-height: 540px; }

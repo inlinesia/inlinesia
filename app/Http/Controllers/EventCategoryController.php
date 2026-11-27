@@ -549,6 +549,8 @@ class EventCategoryController extends Controller
 
     private function authorizeManager(Request $request, Event $event): bool
     {
+        abort_if($event->isAdvertisementOnly(), 403, 'Paket iklan tidak menyediakan pengaturan KU.');
+
         $isAdmin = $request->user()->role === 'admin';
         $canManageAsAdmin = $isAdmin;
         $canManageAsOwner = ! $isAdmin

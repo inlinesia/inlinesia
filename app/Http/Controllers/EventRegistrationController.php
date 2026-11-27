@@ -24,6 +24,7 @@ class EventRegistrationController extends Controller
     public function create(Event $event): View
     {
         abort_unless($event->status === 'approved', 404);
+        abort_if($event->isAdvertisementOnly(), 404, 'Event ini hanya ditampilkan sebagai iklan.');
         abort_unless($event->registration_open, 409, 'Pengelola kejuaraan belum membuka pendaftaran.');
         abort_if($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast(), 410, 'Pendaftaran event ini telah ditutup.');
         abort_if(empty($event->category_rules), 409, 'Pengelola kejuaraan belum mengatur kategori peserta.');
@@ -40,6 +41,7 @@ class EventRegistrationController extends Controller
         CategoryFeeCalculator $feeCalculator,
     ): RedirectResponse {
         abort_unless($event->status === 'approved', 404);
+        abort_if($event->isAdvertisementOnly(), 404, 'Event ini hanya ditampilkan sebagai iklan.');
         abort_unless($event->registration_open, 409, 'Pengelola kejuaraan belum membuka pendaftaran.');
         abort_if($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast(), 410, 'Pendaftaran event ini telah ditutup.');
         abort_if(empty($event->category_rules), 409, 'Pengelola kejuaraan belum mengatur kategori peserta.');

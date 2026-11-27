@@ -15,6 +15,50 @@
         <a class="account-edit-link" href="{{ route('home') }}">← Kembali ke beranda</a>
     </header>
 
+    <section class="account-table-card license-section" aria-labelledby="license-comparison-heading">
+        <h2 id="license-comparison-heading">Perbandingan paket event</h2>
+        <div class="license-price-grid license-comparison-grid">
+            <article class="license-price-card license-tier-card">
+                <span class="license-price-tag">GRATIS</span>
+                <h3>Iklan event — Gratis (Rp 0)</h3>
+                <p class="license-price">Rp 0</p>
+                <p>Untuk pengelola yang hanya ingin memasang iklan dan menyebarkan informasi kejuaraan.</p>
+                <p class="license-tier-label">Yang bisa dilakukan</p>
+                <ul class="license-tier-list license-tier-list--yes">
+                    <li>Tampil di beranda pada Agenda kejuaraan.</li>
+                    <li>Tampil di halaman Jelajahi kejuaraan (/lomba) sebagai informasi event.</li>
+                    <li>Rincian event sederhana: nama, tanggal, venue, alamat, skala, deskripsi singkat, WhatsApp pengelola, dan tautan grup WA.</li>
+                    <li>Event ditampilkan setelah disetujui admin.</li>
+                </ul>
+                <p class="license-tier-label">Pembatasan</p>
+                <ul class="license-tier-list license-tier-list--no">
+                    <li>Tidak dapat membuka pendaftaran atlet.</li>
+                    <li>Tidak dapat mengatur KU (kriteria usia).</li>
+                    <li>Tidak dapat mengatur perlombaan.</li>
+                    <li>Tidak dapat mengelola peserta.</li>
+                    <li>Tidak dapat mengelola keuangan.</li>
+                </ul>
+            </article>
+            <article class="license-price-card license-tier-card">
+                <span class="license-price-tag">BERBAYAR</span>
+                <h3>Kelola penuh — Berbayar</h3>
+                <p class="license-price">Harganya mengikuti pilihan di bawah</p>
+                <p>Untuk organizer yang menjalankan kejuaraan lengkap dengan sistem Inlinesia.</p>
+                <p class="license-tier-label">Yang bisa dilakukan</p>
+                <ul class="license-tier-list license-tier-list--yes">
+                    <li>Semua fitur iklan event pada paket gratis.</li>
+                    <li>Membuka dan mengelola pendaftaran atlet.</li>
+                    <li>Mengatur KU (kriteria usia) dan kategori.</li>
+                    <li>Mengatur perlombaan dan jadwalnya.</li>
+                    <li>Mengelola data peserta.</li>
+                    <li>Mengelola keuangan dan pembayaran.</li>
+                    <li>Aktif setelah event disetujui admin.</li>
+                </ul>
+                <p class="license-tier-note">Pilih harga sekali beli (Starter–Semua Lisensi) atau langganan (Basic–Organisasi/Cabang) pada bagian di bawah.</p>
+            </article>
+        </div>
+    </section>
+
     <section class="account-table-card license-section" aria-labelledby="license-price-heading">
         <h2 id="license-price-heading">Pilih cara pakai &amp; harga</h2>
         <div class="license-price-grid">

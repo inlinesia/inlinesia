@@ -769,6 +769,8 @@ class EventRegistrationManagementController extends Controller
      */
     private function canManage(Request $request, Event $event): bool
     {
+        abort_if($event->isAdvertisementOnly(), 403, 'Paket iklan tidak menyediakan pengelolaan peserta.');
+
         return $event->isManagedBy($request->user());
     }
 

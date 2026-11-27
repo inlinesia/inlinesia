@@ -123,6 +123,7 @@ class PublicEventApplicationController extends Controller
     public function toggleRegistration(Request $request, Event $event): RedirectResponse
     {
         $this->authorizeOwnership($request, $event);
+        abort_if($event->isAdvertisementOnly(), 403, 'Paket iklan tidak menyediakan pendaftaran atlet.');
 
         $open = $request->boolean('registration_open');
         $event->update(['registration_open' => $open]);

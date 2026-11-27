@@ -54,6 +54,9 @@
                         @endif
                     </div>
                     <h3>{{ $event->name }}</h3>
+                    @if ($event->short_description)
+                        <p class="listing-event-summary">{{ $event->short_description }}</p>
+                    @endif
                     <p>{{ $event->venue_address }}</p>
                     <div class="listing-event-facts">
                         <span><span aria-hidden="true">⌖</span>{{ $event->venue }}</span>
@@ -65,7 +68,13 @@
                     </div>
                 </div>
                 <div class="listing-event-actions">
-                    @if (($isVerified || $isAdmin) && $registrationIsOpen)
+                    @if ($event->isAdvertisementOnly())
+                        @if ($event->organizerWhatsappLink())
+                            <a class="listing-register-link" href="{{ $event->organizerWhatsappLink() }}" target="_blank" rel="noopener noreferrer">Hubungi pengelola <span aria-hidden="true">↗</span></a>
+                        @else
+                            <span class="guest-event-closed">Informasi event iklan</span>
+                        @endif
+                    @elseif (($isVerified || $isAdmin) && $registrationIsOpen)
                         <a class="listing-register-link" href="{{ route('events.registration.create', $event) }}">Daftar lomba <span aria-hidden="true">→</span></a>
                     @elseif (auth()->check() && $registrationIsOpen)
                         <a class="listing-register-link" href="{{ route('verification.notice') }}">Verifikasi email untuk mendaftar <span aria-hidden="true">→</span></a>

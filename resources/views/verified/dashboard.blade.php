@@ -115,19 +115,33 @@
                         <small>{{ $ownedEvent->start_date->format('Y') }}</small>
                     </div>
                     <div class="guest-event-info">
-                        <span>{{ $ownedEvent->registrations_count }} atlet terdaftar</span>
+                        @if ($ownedEvent->isAdvertisementOnly())
+                            <span class="event-tier-badge">Iklan (Gratis)</span>
+                        @else
+                            <span>{{ $ownedEvent->registrations_count }} atlet terdaftar</span>
+                        @endif
                         <h3>{{ $ownedEvent->name }}</h3>
+                        @if ($ownedEvent->short_description)
+                            <p class="listing-event-summary">{{ $ownedEvent->short_description }}</p>
+                        @endif
                         <p>{{ $ownedEvent->venue }} · {{ $ownedEvent->venue_address }}</p>
                         <div class="guest-event-meta">
                             <small>WhatsApp pengelola: {{ $ownedEvent->organizer_whatsapp ?: 'Belum diisi' }}</small>
-                            <small>Rekening pembayaran: {{ $ownedEvent->hasPaymentAccount() ? $ownedEvent->payment_account_number.' '.($ownedEvent->payment_bank_name ? '('.$ownedEvent->payment_bank_name.')' : '') : 'Belum diisi' }}</small>
+                            @unless ($ownedEvent->isAdvertisementOnly())
+                                <small>Rekening pembayaran: {{ $ownedEvent->hasPaymentAccount() ? $ownedEvent->payment_account_number.' '.($ownedEvent->payment_bank_name ? '('.$ownedEvent->payment_bank_name.')' : '') : 'Belum diisi' }}</small>
+                            @endunless
                             @if ($isAdmin)
                                 <small>Pemilik: {{ $ownedEvent->submitter?->name ?? 'Admin Inlinesia' }}</small>
                             @endif
-                            <small>{{ ucfirst($ownedEvent->status) }} · {{ count($ownedEvent->category_rules ?? []) }} KU · {{ count($ownedEvent->races) }} mata lomba</small>
+                            @if ($ownedEvent->isAdvertisementOnly())
+                                <small>{{ ucfirst($ownedEvent->status) }} · tayang sebagai iklan</small>
+                            @else
+                                <small>{{ ucfirst($ownedEvent->status) }} · {{ count($ownedEvent->category_rules ?? []) }} KU · {{ count($ownedEvent->races) }} mata lomba</small>
+                            @endif
                         </div>
                     </div>
                     <div class="guest-event-actions">
+                        @unless ($ownedEvent->isAdvertisementOnly())
                         @if ($ownedEvent->status === 'approved' && ($ownedEvent->submitted_by === $user->id || $ownedEvent->isParticipantListReleased()))
                             <a class="account-edit-link" href="{{ route('events.registrations.index', $ownedEvent) }}">{{ $ownedEvent->submitted_by === $user->id ? 'Kelola peserta & pembayaran' : 'Lihat peserta · read-only' }} <span aria-hidden="true">→</span></a>
                         @endif
@@ -152,6 +166,10 @@
                                 <button class="account-edit-link" type="submit">{{ $ownedEvent->registration_open ? 'Tutup pendaftaran event' : 'Buka pendaftaran event' }} <span aria-hidden="true">→</span></button>
                             </form>
                         @endif
+                        @endunless
+                        @if ($ownedEvent->isAdvertisementOnly())
+                            <a class="account-edit-link btn-primary" href="{{ route('event-applications.edit', $ownedEvent) }}">Upgrade ke berbayar <span aria-hidden="true">→</span></a>
+                        @endif
                         <a class="account-edit-link" href="{{ route('event-applications.edit', $ownedEvent) }}">Ubah event <span aria-hidden="true">→</span></a>
                         <form method="POST" action="{{ route('event-applications.destroy', $ownedEvent) }}"
                             data-confirm="Hapus event “{{ $ownedEvent->name }}” beserta seluruh pendaftaran, hasil lomba, dan data keuangannya? Tindakan ini tidak dapat dibatalkan.">
@@ -159,6 +177,7 @@
                             @method('DELETE')
                             <button class="account-edit-link event-delete-button" type="submit">Hapus event</button>
                         </form>
+                        @unless ($ownedEvent->isAdvertisementOnly())
                         @if ($isAdmin || ($ownedEvent->submitted_by === $user->id && $ownedEvent->status === 'approved'))
                             <a class="account-edit-link" href="{{ route('owner.events.categories.edit', $ownedEvent) }}">Atur KU (Kelompok Usia) &amp; batas peserta <span aria-hidden="true">→</span></a>
                         @endif
@@ -174,6 +193,7 @@
                         @if ($isAdmin || ($ownedEvent->submitted_by === $user->id && $ownedEvent->status === 'approved'))
                             <a class="account-edit-link" href="{{ route('owner.events.finance.index', $ownedEvent) }}">Kelola keuangan <span aria-hidden="true">→</span></a>
                         @endif
+                        @endunless
                         @if ($isAdmin && ($ownedEvent->submitted_by === null || $ownedEvent->submitter?->role === 'admin'))
                             <form class="event-ownership-transfer" method="POST" action="{{ route('admin.events.ownership.update', $ownedEvent) }}">
                                 @csrf
@@ -200,6 +220,7 @@
     @php
         $tambahPesertaEvent = $registrations->first()?->event ?? $events->first();
         $bisaTambahPeserta = $tambahPesertaEvent
+            && ! $tambahPesertaEvent->isAdvertisementOnly()
             && $tambahPesertaEvent->status === 'approved'
             && $tambahPesertaEvent->registration_open
             && (! $tambahPesertaEvent->registration_deadline || $tambahPesertaEvent->registration_deadline->endOfDay()->isFuture());
@@ -389,8 +410,11 @@
                     <small>{{ $event->start_date->format('Y') }}</small>
                 </div>
                 <div class="guest-event-info">
-                    <span>{{ $event->scale }} · {{ count($event->races) }} mata lomba</span>
+                    <span>{{ $event->isAdvertisementOnly() ? 'Iklan event (Gratis)' : $event->scale.' · '.count($event->races).' mata lomba' }}</span>
                     <h3>{{ $event->name }}</h3>
+                    @if ($event->short_description)
+                        <p class="listing-event-summary">{{ $event->short_description }}</p>
+                    @endif
                     <p>{{ $event->venue }} · {{ $event->venue_address }}</p>
                     <div class="guest-event-meta">
                         <small>{{ $event->start_date->format('d/m/Y') }}–{{ $event->end_date->format('d/m/Y') }}
@@ -401,7 +425,13 @@
                     </div>
                 </div>
                 <div class="guest-event-actions">
-                    @if (empty($event->category_rules))
+                    @if ($event->isAdvertisementOnly())
+                        @if ($event->organizerWhatsappLink())
+                            <a class="listing-register-link" href="{{ $event->organizerWhatsappLink() }}" target="_blank" rel="noopener noreferrer">Hubungi pengelola <span aria-hidden="true">↗</span></a>
+                        @else
+                            <span class="guest-event-closed">Informasi event iklan</span>
+                        @endif
+                    @elseif (empty($event->category_rules))
                         <span class="guest-event-closed">KU belum disiapkan</span>
                     @elseif ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast())
                         <span class="guest-event-closed">Pendaftaran ditutup</span>

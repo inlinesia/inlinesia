@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Event;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -37,14 +38,46 @@ class EventDetailsRequest extends FormRequest
      */
     public function rules(): array
     {
+        $tierRule = ['sometimes', 'in:'.Event::TIER_ADVERTISEMENT.','.Event::TIER_FULL];
+        $nameRule = ['required', 'string', 'max:180'];
+        $startRule = ['required', 'date'];
+        $endRule = ['required', 'date', 'after_or_equal:start_date'];
+        $venueRule = ['required', 'string', 'max:180'];
+        $addressRule = ['required', 'string', 'max:1000'];
+        $whatsappRule = ['required', 'string', 'max:40', 'regex:/^(?=(?:\D*\d){8,15}\D*$)\+?[0-9\s().-]{8,40}$/'];
+        $groupRule = ['nullable', 'url', 'max:500', 'regex:/^https:\/\/(chat\.whatsapp\.com|wa\.me)\//i'];
+
+        if ($this->input('event_tier') === Event::TIER_ADVERTISEMENT) {
+            $rules = [
+                'event_tier' => $tierRule,
+                'name' => $nameRule,
+                'start_date' => $startRule,
+                'end_date' => $endRule,
+                'venue' => $venueRule,
+                'venue_address' => $addressRule,
+                'scale' => ['required', 'string', 'max:120'],
+                'short_description' => ['required', 'string', 'max:500'],
+                'organizer_whatsapp' => $whatsappRule,
+                'whatsapp_group_link' => $groupRule,
+            ];
+
+            if ($this->isCreating()) {
+                $rules['start_date'][] = 'after_or_equal:today';
+            }
+
+            return $rules;
+        }
+
         $rules = [
-            'name' => ['required', 'string', 'max:180'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-            'venue' => ['required', 'string', 'max:180'],
-            'venue_address' => ['required', 'string', 'max:1000'],
-            'organizer_whatsapp' => ['required', 'string', 'max:40', 'regex:/^(?=(?:\D*\d){8,15}\D*$)\+?[0-9\s().-]{8,40}$/'],
-            'whatsapp_group_link' => ['nullable', 'url', 'max:500', 'regex:/^https:\/\/(chat\.whatsapp\.com|wa\.me)\//i'],
+            'event_tier' => $tierRule,
+            'name' => $nameRule,
+            'start_date' => $startRule,
+            'end_date' => $endRule,
+            'venue' => $venueRule,
+            'venue_address' => $addressRule,
+            'short_description' => ['nullable', 'string', 'max:500'],
+            'organizer_whatsapp' => $whatsappRule,
+            'whatsapp_group_link' => $groupRule,
             'cancellation_allowed' => ['boolean'],
             'cancellation_min_days' => ['nullable', 'integer', 'min:0', 'max:365'],
             'cancellation_deadline' => ['nullable', 'date'],
@@ -82,14 +115,37 @@ class EventDetailsRequest extends FormRequest
     public function eventAttributes(): array
     {
         $validated = $this->validated();
+        // Pengajuan lama/API tanpa field paket tetap dianggap berbayar.
+        $validated['event_tier'] ??= Event::TIER_FULL;
+
+        if ($validated['event_tier'] === Event::TIER_ADVERTISEMENT) {
+            // Kolom daftar ini NOT NULL pada skema events; event iklan tidak
+            // mengisi KU/mata lomba/jadwal, jadi disimpan sebagai array kosong.
+            $validated += [
+                'categories' => [],
+                'races' => [],
+                'schedule' => [],
+            ];
+        }
+
         $validated['name'] = trim($validated['name']);
         $validated['venue'] = trim($validated['venue']);
         $validated['organizer_whatsapp'] = trim($validated['organizer_whatsapp']);
         $groupLink = trim((string) ($validated['whatsapp_group_link'] ?? ''));
         $validated['whatsapp_group_link'] = $groupLink === '' ? null : $groupLink;
+
+        if (array_key_exists('short_description', $validated)) {
+            $shortDescription = trim((string) $validated['short_description']);
+            $validated['short_description'] = $shortDescription === '' ? null : $shortDescription;
+        }
+
         $validated = $this->normalizePaymentAccount($validated);
 
         foreach (self::LINE_FIELDS as $field) {
+            if (! array_key_exists($field, $validated) || ! is_string($validated[$field])) {
+                continue;
+            }
+
             $lines = collect(preg_split('/\R/u', $validated[$field]))
                 ->map(fn (string $line) => trim($line))
                 ->filter()

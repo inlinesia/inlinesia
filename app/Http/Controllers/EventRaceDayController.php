@@ -365,6 +365,8 @@ class EventRaceDayController extends Controller
 
     private function authorizeManager(Request $request, Event $event): bool
     {
+        abort_if($event->isAdvertisementOnly(), 403, 'Paket iklan tidak menyediakan hari lomba.');
+
         $isAdmin = $request->user()->role === 'admin';
         $canManageAsOwner = ! $isAdmin
             && $event->submitted_by === $request->user()->id

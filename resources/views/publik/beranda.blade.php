@@ -159,6 +159,9 @@
                             @endif
                         </div>
                         <h3>{{ $event->name }}</h3>
+                        @if ($event->short_description)
+                            <p class="listing-event-summary">{{ $event->short_description }}</p>
+                        @endif
                         <p>{{ $event->venue_address }}</p>
                         <div class="listing-event-facts">
                             <span><span aria-hidden="true">⌖</span>{{ $event->venue }}</span>
@@ -166,7 +169,13 @@
                             <span><span aria-hidden="true">◷</span>{{ $event->start_date->format('d/m/Y') }}–{{ $event->end_date->format('d/m/Y') }}</span>
                         </div>
                     </div>
-                    @if ($registrationIsOpen && auth()->check() && (auth()->user()->hasVerifiedEmail() || auth()->user()->role === 'admin'))
+                    @if ($event->isAdvertisementOnly())
+                        @if ($event->organizerWhatsappLink())
+                            <a class="listing-register-link" href="{{ $event->organizerWhatsappLink() }}" target="_blank" rel="noopener noreferrer">Hubungi pengelola <span aria-hidden="true">↗</span></a>
+                        @else
+                            <span class="guest-event-closed">Informasi event iklan</span>
+                        @endif
+                    @elseif ($registrationIsOpen && auth()->check() && (auth()->user()->hasVerifiedEmail() || auth()->user()->role === 'admin'))
                         <a class="listing-register-link" href="{{ route('events.registration.create', $event) }}">Daftar lomba <span aria-hidden="true">→</span></a>
                     @elseif ($registrationIsOpen && auth()->check())
                         <a class="listing-register-link" href="{{ route('verification.notice') }}">Verifikasi email untuk mendaftar <span aria-hidden="true">→</span></a>
