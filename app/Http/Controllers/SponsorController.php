@@ -48,7 +48,7 @@ class SponsorController extends Controller
 
     public function eventForm(): View
     {
-        $requestedEventId = (int) request()->query('event', 0);
+        $requestedEventId = request()->has('event') ? (int) request()->query('event') : null;
         $events = Event::query()
             ->where('status', 'approved')
             ->orderBy('start_date')

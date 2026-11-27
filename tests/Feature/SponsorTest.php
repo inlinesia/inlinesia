@@ -35,7 +35,8 @@ class SponsorTest extends TestCase
             ->assertOk()
             ->assertSee('name="event_id"', false)
             ->assertSee('name="website_url"', false)
-            ->assertSee('name="agreement"', false);
+            ->assertSee('name="agreement"', false)
+            ->assertDontSee('Event #0');
     }
 
     public function test_pengajuan_sponsor_website_tersimpan_dan_menghitung_tarif(): void
