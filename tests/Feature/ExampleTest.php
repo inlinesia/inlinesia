@@ -49,6 +49,8 @@ class ExampleTest extends TestCase
             ->assertSee('Daftar kejuaraan')
             ->assertSee('Fitur platform')
             ->assertSee('Alur penggunaan')
+            ->assertDontSee('ALUR PESERTA DAN PENGELOLA')
+            ->assertDontSee('Dari agenda hingga')
             ->assertSee('Tentang kami')
             ->assertSee('KEMITRAAN & IKLAN')
             ->assertSee('Iklan di website')

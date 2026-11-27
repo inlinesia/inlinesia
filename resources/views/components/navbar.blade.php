@@ -8,7 +8,7 @@
         @if (request()->routeIs('home'))
             <a href="{{ route('home') }}#kejuaraan" @if (request()->routeIs('events.index')) class="is-current" aria-current="page" @endif>Daftar kejuaraan</a>
             <a href="{{ route('home') }}#layanan">Fitur platform</a>
-            <a href="{{ route('home') }}#cara-kerja">Alur penggunaan</a>
+            <a href="{{ route('home') }}#layanan">Alur penggunaan</a>
             <a href="{{ route('home') }}#kontak">Kontak</a>
             <a href="{{ route('home') }}#tentang">Tentang kami</a>
         @endif

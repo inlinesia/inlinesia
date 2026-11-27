@@ -264,20 +264,6 @@
         </div>
     </section>
 
-    <section class="public-community" id="cara-kerja">
-        <div class="community-copy">
-            <span class="public-section-label">ALUR PESERTA DAN PENGELOLA</span>
-            <h2>Dari agenda hingga <span>pendaftaran.</span></h2>
-            <p>Informasi kejuaraan tersedia untuk publik. Peserta dapat mendaftar setelah masuk dan memverifikasi akun, sementara pengelola mengatur event melalui dasbor.</p>
-            <a class="public-button public-button-dark" href="{{ route('events.index') }}">Lihat kejuaraan <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="community-values">
-            <article><span class="value-number">01</span><div><h3>Jelajahi agenda</h3><p>Temukan kejuaraan berdasarkan jadwal dan lokasi.</p></div><span class="value-mark">↗</span></article>
-            <article><span class="value-number">02</span><div><h3>Daftarkan atlet</h3><p>Pilih kejuaraan yang membuka pendaftaran dan mata lomba.</p></div><span class="value-mark">↗</span></article>
-            <article><span class="value-number">03</span><div><h3>Kelola kejuaraan</h3><p>Atur KU, pendaftaran, dan data peserta dari dasbor.</p></div><span class="value-mark">↗</span></article>
-        </div>
-    </section>
-
     <section class="club-cta" id="rencana-event">
         <div><span class="public-section-label">PENGELOLA EVENT</span><h2>Siapkan kejuaraan berikutnya.</h2><p>Buat akun untuk mengajukan event dan mengelola KU, pendaftaran, serta data peserta melalui dasbor Inlinesia.</p></div>
         <div class="club-cta-actions">
