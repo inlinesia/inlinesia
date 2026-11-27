@@ -918,6 +918,63 @@ html[data-theme='ceria'] {
     background: var(--grad-sunny);
 }
 
+/* --------------------------------------------------------------------------
+   Panel notifikasi permintaan pembatalan di dasbor pemilik. Kartu memakai
+   gaya Ceria yang sudah ada; isi dan tombolnya mengikuti Kids Skate tokens.
+   -------------------------------------------------------------------------- */
+[data-theme='ceria'] .cancellation-requests h2 {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+}
+[data-theme='ceria'] .cancellation-request-item {
+    padding: 12px 0;
+    border-top: 2px dashed var(--border-soft);
+}
+[data-theme='ceria'] .cancellation-request-item p strong {
+    font-family: var(--font-display);
+}
+[data-theme='ceria'] .cancellation-request-item p small {
+    padding: 2px 7px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    background: var(--bg-soft-sky);
+    font-size: 8px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+[data-theme='ceria'] .cancellation-request-actions :is(.account-edit-link, .event-delete-button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-height: 0;
+    padding: 0.4em 0.9em;
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    color: var(--text-inverse) !important;
+    background: var(--grad-sunny);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    line-height: 1.25;
+    font-weight: 700;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    text-align: center;
+    transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s var(--ease-bounce), filter 0.16s ease;
+}
+[data-theme='ceria'] .cancellation-request-actions .btn-berry { background: var(--grad-berry-pop); }
+[data-theme='ceria'] .cancellation-request-actions .btn-grape { background: var(--grad-sky-roll); }
+[data-theme='ceria'] .cancellation-request-actions :is(.account-edit-link, .event-delete-button):hover,
+[data-theme='ceria'] .cancellation-request-actions :is(.account-edit-link, .event-delete-button):focus-visible {
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sticker);
+}
+
 /* Tombol aksi pada tabel "Pendaftaran saya", mengikuti varian warna
    controls-1.button-A dari Kids Skate Controls & Form Inputs Library. */
 [data-theme='ceria'] .guest-registration-table :is(.btn-primary, .btn-secondary, .btn-accent, .btn-grape, .btn-berry) {
