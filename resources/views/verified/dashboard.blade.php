@@ -382,7 +382,7 @@
         </div>
 
         @forelse ($events as $event)
-            <article class="guest-event-card">
+            <article class="guest-event-card guest-open-event-card">
                 <div class="guest-event-date">
                     <span>{{ strtoupper($event->start_date->translatedFormat('M')) }}</span>
                     <strong>{{ $event->start_date->format('d') }}</strong>
@@ -392,21 +392,25 @@
                     <span>{{ $event->scale }} · {{ count($event->races) }} mata lomba</span>
                     <h3>{{ $event->name }}</h3>
                     <p>{{ $event->venue }} · {{ $event->venue_address }}</p>
-                    <small>{{ $event->start_date->format('d/m/Y') }}–{{ $event->end_date->format('d/m/Y') }}
-                        @if ($event->registration_deadline)
-                            · Batas daftar {{ $event->registration_deadline->format('d/m/Y') }}
-                        @endif
-                    </small>
+                    <div class="guest-event-meta">
+                        <small>{{ $event->start_date->format('d/m/Y') }}–{{ $event->end_date->format('d/m/Y') }}
+                            @if ($event->registration_deadline)
+                                · Batas daftar {{ $event->registration_deadline->format('d/m/Y') }}
+                            @endif
+                        </small>
+                    </div>
                 </div>
-                @if (empty($event->category_rules))
-                    <span class="guest-event-closed">KU belum disiapkan</span>
-                @elseif ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast())
-                    <span class="guest-event-closed">Pendaftaran ditutup</span>
-                @elseif ($event->registration_open)
-                    <a class="listing-register-link" href="{{ route('events.registration.create', $event) }}">Daftar lomba <span aria-hidden="true">→</span></a>
-                @else
-                    <span class="guest-event-closed">Pendaftaran segera dibuka</span>
-                @endif
+                <div class="guest-event-actions">
+                    @if (empty($event->category_rules))
+                        <span class="guest-event-closed">KU belum disiapkan</span>
+                    @elseif ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast())
+                        <span class="guest-event-closed">Pendaftaran ditutup</span>
+                    @elseif ($event->registration_open)
+                        <a class="listing-register-link" href="{{ route('events.registration.create', $event) }}">Daftar lomba <span aria-hidden="true">→</span></a>
+                    @else
+                        <span class="guest-event-closed">Pendaftaran segera dibuka</span>
+                    @endif
+                </div>
             </article>
         @empty
             <div class="guest-dashboard-empty">

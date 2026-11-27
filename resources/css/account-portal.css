@@ -198,10 +198,9 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .guest-event-actions > :is(a, button, form) { min-width: 0; max-width: 100%; }
 .guest-event-actions form { display: inline-flex; max-width: 100%; }
 .guest-event-card .listing-register-link { flex-shrink: 0; }
-/* Kartu event milik pemilik: kolom tanggal penuh tinggi di kiri, deskripsi
-   ringkas di atas deretan tombol aksi. Layout ini tidak dipakai kartu event
-   yang hanya berisi tautan daftar. */
-.guest-owned-event-card {
+/* Kartu event pemilik dan kartu "Event tersedia": kolom tanggal penuh tinggi
+   di kiri, deskripsi ringkas di atas tombol aksi/tautan daftar. */
+:is(.guest-owned-event-card, .guest-open-event-card) {
     --guest-event-divider: #eae7df;
     --guest-event-date-bg: #fbede5;
     --guest-event-date-fg: #b45e42;
@@ -216,7 +215,7 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
     padding: 0;
     overflow: hidden;
 }
-.guest-owned-event-card .guest-event-date {
+:is(.guest-owned-event-card, .guest-open-event-card) .guest-event-date {
     grid-area: date;
     display: grid;
     align-content: center;
@@ -232,17 +231,17 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
     background: var(--guest-event-date-bg);
     text-align: center;
 }
-.guest-owned-event-card .guest-event-info {
+:is(.guest-owned-event-card, .guest-open-event-card) .guest-event-info {
     grid-area: info;
     display: grid;
     gap: 2px;
     padding: 12px 0 0;
     text-align: left;
 }
-.guest-owned-event-card .guest-event-info p { font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
+:is(.guest-owned-event-card, .guest-open-event-card) .guest-event-info p { font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
 .guest-event-meta { display: flex; flex-wrap: wrap; gap: 2px 12px; }
 .guest-event-meta small { color: #777c81; font-size: 9px; line-height: 1.5; }
-.guest-owned-event-card .guest-event-actions {
+:is(.guest-owned-event-card, .guest-open-event-card) .guest-event-actions {
     grid-area: actions;
     display: flex;
     flex-wrap: wrap;
@@ -420,8 +419,10 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
     .guest-registration-card, .guest-event-card { align-items: flex-start; flex-wrap: wrap; }
     .guest-registration-actions { width: 100%; justify-content: flex-start; padding-left: 0; }
     .guest-event-actions { width: 100%; margin-left: 69px; }
-    .guest-owned-event-card .guest-event-actions { width: auto; margin-left: 0; }
+    :is(.guest-owned-event-card, .guest-open-event-card) .guest-event-actions { width: auto; margin-left: 0; }
     .guest-event-card .listing-register-link, .guest-event-closed { margin-left: 69px; }
+    .guest-open-event-card .listing-register-link,
+    .guest-open-event-card .guest-event-closed { margin-left: 0; }
     .event-registration-edit-form { grid-template-columns: minmax(0, 1fr); }
     .event-registration-full-width, .event-registration-races, .event-registration-category-note, .event-registration-edit-form > button { grid-column: auto; }
     .event-registration-row { padding-right: 14px; padding-left: 14px; }

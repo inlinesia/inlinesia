@@ -1179,23 +1179,23 @@ html[data-theme='ceria'] {
     color: var(--text-primary) !important;
 }
 
-/* Kolom tanggal kartu event pemilik memakai gradien Kids Skate dan garis
-   pemisah lurus yang sewarna dengan border kartu. */
-[data-theme='ceria'] .guest-owned-event-card {
+/* Kolom tanggal kartu event pemilik dan kartu "Event tersedia" memakai
+   gradien Kids Skate dan garis pemisah lurus sewarna border kartu. */
+[data-theme='ceria'] :is(.guest-owned-event-card, .guest-open-event-card) {
     --guest-event-divider: var(--border-ink);
     --guest-event-date-bg: var(--grad-sunny);
     --guest-event-date-fg: var(--text-primary);
 }
-[data-theme='ceria'] .guest-owned-event-card .guest-event-date {
+[data-theme='ceria'] :is(.guest-owned-event-card, .guest-open-event-card) .guest-event-date {
     border-right-width: 2.5px;
     font-family: var(--font-display);
 }
-[data-theme='ceria'] .guest-owned-event-card .guest-event-date strong {
+[data-theme='ceria'] :is(.guest-owned-event-card, .guest-open-event-card) .guest-event-date strong {
     font-family: var(--font-display);
     font-size: 1.15rem;
     font-weight: 700;
 }
-[data-theme='ceria'] .guest-owned-event-card .guest-event-meta small {
+[data-theme='ceria'] :is(.guest-owned-event-card, .guest-open-event-card) .guest-event-meta small {
     color: var(--text-secondary) !important;
 }
 
