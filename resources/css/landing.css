@@ -122,7 +122,7 @@ body.public-home { min-width: 360px; color: #242a34; background: #e9e4da; font-f
 .listing-demo-footnote span { width: 5px; height: 5px; border-radius: 50%; background: #d89a70; }
 .listing-empty-state { padding: 40px 15px; border: 1px dashed #d9d4c9; color: #777b78; text-align: center; background: #f7f1e7; }
 .listing-empty-state > span { color: #d18161; font-size: 24px; }
-.public-championships { padding: 38px 0 34px; border-bottom: 1px solid var(--line); }
+.public-championships { padding: 38px 0 34px; border-bottom: 1px solid var(--line); scroll-margin-top: 96px; }
 .public-championship-list { display: grid; gap: 8px; margin-top: 16px; }
 .public-championship-list .listing-event-card { margin: 0; }
 .listing-empty-state h3 { margin: 9px 0 5px; color: #39444b; font-size: 14px; }

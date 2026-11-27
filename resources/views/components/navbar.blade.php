@@ -6,7 +6,7 @@
     <nav class="public-nav{{ auth()->check() && (auth()->user()->role === 'admin' || auth()->user()->hasVerifiedEmail()) ? ' is-account-nav' : '' }}{{ request()->routeIs('home') ? '' : ' is-minimal' }}" aria-label="Navigasi utama">
         <a href="{{ route('home') }}" @if (request()->routeIs('home')) class="is-current" aria-current="page" @endif>Beranda utama</a>
         @if (request()->routeIs('home'))
-            <a href="{{ route('events.index') }}" @if (request()->routeIs('events.index')) class="is-current" aria-current="page" @endif>Daftar kejuaraan</a>
+            <a href="{{ route('home') }}#kejuaraan" @if (request()->routeIs('events.index')) class="is-current" aria-current="page" @endif>Daftar kejuaraan</a>
             <a href="{{ route('home') }}#layanan">Fitur platform</a>
             <a href="{{ route('home') }}#cara-kerja">Alur penggunaan</a>
             <a href="{{ route('home') }}#kontak">Kontak</a>
