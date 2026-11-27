@@ -108,7 +108,7 @@
                 <span class="guest-dashboard-count">{{ $ownedEvents->count() }} event</span>
             </div>
             @foreach ($ownedEvents as $ownedEvent)
-                <article class="guest-event-card">
+                <article class="guest-event-card guest-owned-event-card">
                     <div class="guest-event-date">
                         <span>{{ strtoupper($ownedEvent->start_date->translatedFormat('M')) }}</span>
                         <strong>{{ $ownedEvent->start_date->format('d') }}</strong>
@@ -118,12 +118,14 @@
                         <span>{{ $ownedEvent->registrations_count }} atlet terdaftar</span>
                         <h3>{{ $ownedEvent->name }}</h3>
                         <p>{{ $ownedEvent->venue }} · {{ $ownedEvent->venue_address }}</p>
-                        <small>WhatsApp pengelola: {{ $ownedEvent->organizer_whatsapp ?: 'Belum diisi' }}</small>
-                        <small>Rekening pembayaran: {{ $ownedEvent->hasPaymentAccount() ? $ownedEvent->payment_account_number.' '.($ownedEvent->payment_bank_name ? '('.$ownedEvent->payment_bank_name.')' : '') : 'Belum diisi' }}</small>
-                        @if ($isAdmin)
-                            <small>Pemilik: {{ $ownedEvent->submitter?->name ?? 'Admin Inlinesia' }}</small>
-                        @endif
-                        <small>{{ ucfirst($ownedEvent->status) }} · {{ count($ownedEvent->category_rules ?? []) }} KU · {{ count($ownedEvent->races) }} mata lomba</small>
+                        <div class="guest-event-meta">
+                            <small>WhatsApp pengelola: {{ $ownedEvent->organizer_whatsapp ?: 'Belum diisi' }}</small>
+                            <small>Rekening pembayaran: {{ $ownedEvent->hasPaymentAccount() ? $ownedEvent->payment_account_number.' '.($ownedEvent->payment_bank_name ? '('.$ownedEvent->payment_bank_name.')' : '') : 'Belum diisi' }}</small>
+                            @if ($isAdmin)
+                                <small>Pemilik: {{ $ownedEvent->submitter?->name ?? 'Admin Inlinesia' }}</small>
+                            @endif
+                            <small>{{ ucfirst($ownedEvent->status) }} · {{ count($ownedEvent->category_rules ?? []) }} KU · {{ count($ownedEvent->races) }} mata lomba</small>
+                        </div>
                     </div>
                     <div class="guest-event-actions">
                         @if ($ownedEvent->status === 'approved' && ($ownedEvent->submitted_by === $user->id || $ownedEvent->isParticipantListReleased()))

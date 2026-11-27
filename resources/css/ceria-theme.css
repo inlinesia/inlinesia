@@ -1179,6 +1179,26 @@ html[data-theme='ceria'] {
     color: var(--text-primary) !important;
 }
 
+/* Kolom tanggal kartu event pemilik memakai gradien Kids Skate dan garis
+   pemisah lurus yang sewarna dengan border kartu. */
+[data-theme='ceria'] .guest-owned-event-card {
+    --guest-event-divider: var(--border-ink);
+    --guest-event-date-bg: var(--grad-sunny);
+    --guest-event-date-fg: var(--text-primary);
+}
+[data-theme='ceria'] .guest-owned-event-card .guest-event-date {
+    border-right-width: 2.5px;
+    font-family: var(--font-display);
+}
+[data-theme='ceria'] .guest-owned-event-card .guest-event-date strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+[data-theme='ceria'] .guest-owned-event-card .guest-event-meta small {
+    color: var(--text-secondary) !important;
+}
+
 [data-theme='ceria'] .guest-event-card .listing-register-link,
 [data-theme='ceria'] .guest-registration-card .guest-event-closed {
     color: var(--color-grape) !important;
