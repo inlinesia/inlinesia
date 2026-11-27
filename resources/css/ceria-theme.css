@@ -1073,7 +1073,8 @@ html[data-theme='ceria'] {
 }
 
 /* --------------------------------------------------------------------------
-   Stiker sepatu roda — STATIS, hanya di halaman publik.
+   Stiker dekoratif — STATIS, hanya di halaman publik.
+   Stiker helm dan sepatu roda sengaja tidak dipakai lagi.
    -------------------------------------------------------------------------- */
 [data-theme='ceria'] body.ceria-sticker-page :is(
     .listing-event-card, .service-card, .public-event-card, .listing-empty-state,
@@ -1099,50 +1100,11 @@ html[data-theme='ceria'] {
     filter: drop-shadow(0 3px 0 var(--border-ink)) drop-shadow(0 5px 6px rgba(43, 45, 66, 0.18));
 }
 
-[data-theme='ceria'] body.ceria-sticker-page .public-header::after {
-    content: '🛼';
-    top: 12px;
-    left: 28%;
-    font-size: 1.4rem;
-    transform: rotate(-12deg);
-}
-
-[data-theme='ceria'] body.ceria-sticker-page .public-brand::after {
-    content: '⛑️';
-    top: 2px;
-    right: -26px;
-    font-size: 1.15rem;
-}
-
 [data-theme='ceria'] body.ceria-sticker-page .public-hero-art::before {
     content: '✨';
     left: 12px;
     top: 12px;
     font-size: 1.6rem;
-}
-
-[data-theme='ceria'] body.ceria-sticker-page .public-hero-art::after {
-    content: '🛼';
-    right: 12px;
-    bottom: 12px;
-    font-size: 2rem;
-    transform: rotate(14deg);
-}
-
-[data-theme='ceria'] body.ceria-sticker-page .listing-event-card::after {
-    content: '🛼';
-    top: 10px;
-    right: 12px;
-    font-size: 1.5rem;
-    opacity: 0.9;
-    transform: rotate(-10deg);
-}
-
-[data-theme='ceria'] body.ceria-sticker-page .listing-empty-state::before {
-    content: '🛼';
-    top: 14px;
-    right: 18px;
-    font-size: 2rem;
 }
 
 [data-theme='ceria'] body.ceria-sticker-page .listing-organizer-cta::before {
@@ -1152,13 +1114,6 @@ html[data-theme='ceria'] {
     font-size: 2rem;
 }
 
-[data-theme='ceria'] body.ceria-sticker-page .service-card::after {
-    content: '⛑️';
-    top: 10px;
-    right: 12px;
-    font-size: 1.3rem;
-}
-
 [data-theme='ceria'] body.ceria-sticker-page .public-event-card::after {
     content: '🏅';
     top: 10px;
@@ -1166,35 +1121,11 @@ html[data-theme='ceria'] {
     font-size: 1.3rem;
 }
 
-[data-theme='ceria'] body.ceria-sticker-page :is(.account-card, .account-table-card)::after {
-    content: '🛼';
-    top: 12px;
-    right: 14px;
-    font-size: 1.6rem;
-    transform: rotate(-8deg);
-}
-
 [data-theme='ceria'] body.ceria-sticker-page .account-card::before {
     content: '✨';
     left: 14px;
     top: 12px;
     font-size: 1.2rem;
-}
-
-[data-theme='ceria'] body.ceria-sticker-page .public-footer::before {
-    content: '⛑️';
-    left: 24px;
-    top: 50%;
-    font-size: 1.5rem;
-    transform: translateY(-50%);
-}
-
-[data-theme='ceria'] body.ceria-sticker-page .public-footer::after {
-    content: '🛼';
-    right: 24px;
-    top: 50%;
-    font-size: 1.7rem;
-    transform: translateY(-50%) rotate(10deg);
 }
 
 /* --------------------------------------------------------------------------

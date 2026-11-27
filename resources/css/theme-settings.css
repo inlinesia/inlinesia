@@ -281,14 +281,3 @@
     border-radius: 11px 16px 10px 15px;
 }
 
-/* Stiker kecil pada pratinjau — statis */
-.theme-preview-ceria::after {
-    content: '🛼';
-    position: absolute;
-    right: 12px;
-    bottom: 8px;
-    font-size: 1.5rem;
-    line-height: 1;
-    pointer-events: none;
-    filter: drop-shadow(0 2px 0 #2b2d42);
-}

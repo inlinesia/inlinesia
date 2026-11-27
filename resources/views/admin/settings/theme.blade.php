@@ -126,7 +126,7 @@
                     <span class="theme-option-meta">
                         <span>
                             <strong>Ceria</strong>
-                            <small>Tema ramah anak &amp; tampilan bawaan Inlinesia: sistem desain Kids Roller Skate — lemon, coral, grape, dan stiker sepatu roda. Berlaku di publik dan panel admin.</small>
+                            <small>Tema ramah anak &amp; tampilan bawaan Inlinesia: sistem desain Kids Roller Skate — lemon, coral, dan grape. Berlaku di publik dan panel admin.</small>
                         </span>
                         <span class="theme-option-check" aria-hidden="true">&#10003;</span>
                     </span>
