@@ -33,7 +33,8 @@ class EventRegistrationManagementTest extends TestCase
         $this->actingAs($owner)
             ->get(route('guest.dashboard'))
             ->assertSee(route('events.registrations.index', $event), false)
-            ->assertSee('Kelola peserta & pembayaran');
+            ->assertSee('Kelola peserta & pembayaran')
+            ->assertSee('Lihat semua atlet');
 
         $this->get(route('events.registrations.index', $event))
             ->assertOk()

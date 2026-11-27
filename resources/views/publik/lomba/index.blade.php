@@ -97,8 +97,8 @@
                     @else
                         <span class="guest-event-closed">{{ empty($event->category_rules) ? 'KU disiapkan pengelola' : ($event->registration_deadline && $event->registration_deadline->endOfDay()->isPast() ? 'Pendaftaran ditutup' : 'Pendaftaran segera dibuka') }}</span>
                     @endif
-                    @if (($isVerified || $isAdmin) && $event->isParticipantListReleased())
-                        <a class="listing-roster-link" href="{{ route('events.registrations.index', $event) }}">Lihat peserta <span aria-hidden="true">→</span></a>
+                    @if (($isVerified || $isAdmin) && ($event->isParticipantListReleased() || $isAdmin || $event->isOwnedBy(auth()->user())))
+                        <a class="listing-roster-link" href="{{ route('events.registrations.index', $event) }}">{{ $event->isOwnedBy(auth()->user()) ? 'Lihat semua atlet' : 'Lihat peserta' }} <span aria-hidden="true">→</span></a>
                     @endif
                     @if ($event->whatsapp_group_link)
                         <a class="listing-group-link" href="{{ $event->whatsapp_group_link }}" target="_blank" rel="noopener noreferrer">Gabung grup WA <span aria-hidden="true">↗</span></a>

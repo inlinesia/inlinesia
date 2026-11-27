@@ -293,6 +293,18 @@ class EventListingTest extends TestCase
             ->assertDontSee('Gabung grup WA');
     }
 
+    public function test_pemilik_melihat_tautan_semua_atlet_di_listing_sebelum_rilis(): void
+    {
+        $owner = User::factory()->create(['role' => 'club_manager']);
+        $event = $this->createEvent($owner, 'approved', 'Event Roster Pemilik');
+
+        $this->actingAs($owner)
+            ->get(route('events.index'))
+            ->assertOk()
+            ->assertSee('Lihat semua atlet')
+            ->assertSee(route('events.registrations.index', $event), false);
+    }
+
     private function createEvent(User $owner, string $status, string $name, int $daysFromToday = 30): Event
     {
         $startDate = today()->addDays($daysFromToday);

@@ -147,6 +147,9 @@
                         @unless ($ownedEvent->isAdvertisementOnly())
                         @if ($ownedEvent->status === 'approved' && ($ownedEvent->submitted_by === $user->id || $ownedEvent->isParticipantListReleased()))
                             <a class="account-edit-link" href="{{ route('events.registrations.index', $ownedEvent) }}">{{ $ownedEvent->submitted_by === $user->id ? 'Kelola peserta & pembayaran' : 'Lihat peserta · read-only' }} <span aria-hidden="true">→</span></a>
+                            @if ($ownedEvent->submitted_by === $user->id)
+                                <a class="account-edit-link" href="{{ route('events.registrations.index', $ownedEvent) }}">Lihat semua atlet <span aria-hidden="true">→</span></a>
+                            @endif
                         @endif
                         @if ($ownedEvent->status === 'approved' && $ownedEvent->submitted_by === $user->id && ! $ownedEvent->isParticipantListReleased())
                             <form method="POST" action="{{ route('events.registrations.publish', $ownedEvent) }}"
