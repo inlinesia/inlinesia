@@ -118,7 +118,7 @@
 
     <section class="account-table-card license-section" aria-labelledby="license-contact-heading">
         <h2 id="license-contact-heading">Kontak lisensi</h2>
-        <p>Untuk pertanyaan lisensi, harga, atau kerja sama pengelolaan event, hubungi <a class="license-contact-link" href="https://wa.me/6285800006248?text={{ rawurlencode('Halo Damai digital creative, saya ingin bertanya tentang lisensi Inlinesia.') }}">Damai digital creative</a> di 085800006248.</p>
+        <p>Karya <a class="license-contact-link" href="https://damai.kilatschool.my.id/" target="_blank" rel="noopener noreferrer">Damai digital creative</a> — kunjungi portofolio untuk informasi lisensi, harga, dan kerja sama. Pertanyaan juga bisa dikirim ke WhatsApp 085800006248.</p>
     </section>
 </main>
 @endsection

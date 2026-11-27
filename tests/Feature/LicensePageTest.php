@@ -29,7 +29,8 @@ class LicensePageTest extends TestCase
             ->assertSeeText('Harga akan diumumkan')
             ->assertDontSeeText('Rp 49.000.000')
             ->assertDontSeeText('Rp 3.500.000')
-            ->assertSee('https://wa.me/6285800006248', false);
+            ->assertSee('https://damai.kilatschool.my.id/', false)
+            ->assertSeeText('085800006248');
     }
 
     public function test_halaman_lisensi_menampilkan_perbandingan_paket_event(): void
