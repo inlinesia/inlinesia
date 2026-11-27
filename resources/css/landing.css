@@ -242,6 +242,7 @@ a.contact-value:hover { color: var(--orange); }
 /* Halaman lisensi Inlinesia: kartu harga dan ketentuan memakai gaya kartu
    publik yang sudah ada, dengan tambahan grid harga yang rapat. */
 .public-license-page { display: grid; gap: 18px; }
+.license-section { padding: 18px 20px; }
 .license-section h2 { margin: 0 0 12px; color: #293747; font-size: 15px; font-weight: 650; }
 .license-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
 .license-price-card { display: grid; align-content: start; gap: 4px; padding: 13px; border: 1px solid #eae7df; border-radius: 12px; background: #fffdf7; }
