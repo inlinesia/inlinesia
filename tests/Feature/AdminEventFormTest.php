@@ -144,6 +144,7 @@ class AdminEventFormTest extends TestCase
             ->get(route('event-applications.create'))
             ->assertOk()
             ->assertSee('Persyaratan pembatalan')
+            ->assertSee('Berbayar — Kelola penuh (Rp 149.000/event)')
             ->assertSee('name="cancellation_allowed"', false)
             ->assertSee('name="cancellation_min_days"', false)
             ->assertSee('name="cancellation_deadline"', false);

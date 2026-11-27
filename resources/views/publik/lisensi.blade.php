@@ -10,7 +10,7 @@
         <div>
             <span class="account-eyebrow">INFORMASI LISENSI</span>
             <h1>Lisensi &amp; Harga</h1>
-            <p>Desain dan aplikasi Inlinesia adalah karya © 2026 Damai digital creative. Halaman ini berisi aturan pakai, pilihan paket event, dan ruang kerja sama sponsor. Nominal harga akan diumumkan ketika sudah ditetapkan.</p>
+            <p>Desain dan aplikasi Inlinesia adalah karya © 2026 Damai digital creative. Halaman ini berisi aturan pakai, pilihan paket event, dan ruang kerja sama sponsor. Tarif paket sudah ditetapkan dan pembayarannya dikonfirmasi manual.</p>
         </div>
         <a class="account-edit-link" href="{{ route('home') }}">← Kembali ke beranda</a>
     </header>
@@ -42,7 +42,7 @@
             <article class="license-price-card license-tier-card">
                 <span class="license-price-tag">BERBAYAR</span>
                 <h3>Kelola penuh — Berbayar</h3>
-                <p class="license-price">Harga akan diumumkan</p>
+                <p class="license-price">Rp 149.000/event</p>
                 <p>Untuk organizer yang menjalankan kejuaraan lengkap dengan sistem Inlinesia.</p>
                 <p class="license-tier-label">Yang bisa dilakukan</p>
                 <ul class="license-tier-list license-tier-list--yes">
@@ -54,7 +54,7 @@
                     <li>Mengelola keuangan dan pembayaran.</li>
                     <li>Aktif setelah event disetujui admin.</li>
                 </ul>
-                <p class="license-tier-note">Nominal dan skema pembayaran paket kelola penuh akan diumumkan pada halaman ini.</p>
+                <p class="license-tier-note">Tarif berlaku per event dan dibayar manual setelah disetujui. Upgrade dari paket iklan tidak perlu mengajukan event baru.</p>
             </article>
         </div>
     </section>
@@ -65,8 +65,8 @@
             <article class="license-price-card">
                 <span class="license-price-tag">BERBAYAR</span>
                 <h3>Kelola penuh</h3>
-                <p class="license-price">Harga akan diumumkan</p>
-                <p>Nominal paket pengelolaan event masih disiapkan. Hubungi kami untuk penawaran dan ketersediaan.</p>
+                <p class="license-price">Rp 149.000/event</p>
+                <p>Berjangka untuk satu event. Aktif setelah event disetujui Admin; pembayaran dikonfirmasi manual lewat WhatsApp.</p>
             </article>
             <article class="license-price-card">
                 <span class="license-price-tag">SPONSOR</span>
@@ -81,7 +81,7 @@
                 </ul>
             </article>
         </div>
-        <p class="license-note">Harga akhir paket kelola penuh maupun sponsor akan diumumkan melalui halaman ini. Untuk sementara, gunakan kontak di bawah untuk mendiskusikan kerja sama.</p>
+        <p class="license-note">Tarif paket kelola penuh Rp 149.000/event, sponsor website mulai Rp 250.000/bulan, dan sponsor event mulai Rp 150.000/event. Gunakan kontak di bawah untuk mendiskusikan kerja sama.</p>
     </section>
 
     <section class="account-table-card license-section" aria-labelledby="license-terms-heading">

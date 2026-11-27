@@ -84,7 +84,7 @@
                         </label>
                         <label class="tier-option">
                             <input type="radio" name="event_tier" value="{{ \App\Models\Event::TIER_FULL }}" @checked($selectedTier === \App\Models\Event::TIER_FULL)>
-                            <span><strong>Berbayar — Kelola penuh</strong><small>Semua fitur pengelolaan aktif setelah event disetujui Admin. Rincian harga tersedia di <a href="{{ route('license') }}" target="_blank" rel="noopener noreferrer">halaman lisensi</a>.</small></span>
+                            <span><strong>Berbayar — Kelola penuh (Rp 149.000/event)</strong><small>Semua fitur pengelolaan aktif setelah event disetujui Admin. Rincian tarif dan pembayaran manual ada di <a href="{{ route('license') }}" target="_blank" rel="noopener noreferrer">halaman lisensi</a>.</small></span>
                         </label>
                     </div>
                     @error('event_tier')<small class="field-error">{{ $message }}</small>@enderror
