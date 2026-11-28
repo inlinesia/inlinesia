@@ -232,7 +232,7 @@ html[data-theme='ceria'] {
 
 /* Halaman format perlombaan memakai layout publik (bukan .app-shell), jadi
    aturan kontrol Ceria perlu diulang di sini sesuai token Kids Skate. */
-[data-theme='ceria'] .event-race-page :is(.form-field, .account-form) :is(input, select, textarea) {
+[data-theme='ceria'] .event-race-page form.event-form :is(.form-field, .account-form) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
     min-height: 48px;
     padding: 0.65rem 1rem;
     color: var(--text-primary);
@@ -240,8 +240,12 @@ html[data-theme='ceria'] {
     border: 2.5px solid var(--border-soft);
     border-radius: var(--radius-md);
 }
-[data-theme='ceria'] .event-race-page :is(.form-field, .account-form) :is(input, textarea)::placeholder {
+[data-theme='ceria'] .event-race-page form.event-form :is(input, textarea)::placeholder {
     color: var(--text-secondary);
+}
+[data-theme='ceria'] .event-race-page form.event-form select option {
+    color: var(--text-primary);
+    background: var(--bg-surface);
 }
 [data-theme='ceria'] .event-race-page .race-mode-option {
     display: inline-flex;

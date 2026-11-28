@@ -8,7 +8,7 @@ Halaman `verified/events/race/format.blade.php` untuk akun non-admin memakai `la
 
 ## Keputusan
 - Aturan Ceria untuk halaman ini ditempatkan dengan scope `[data-theme='ceria'] .event-race-page`, bukan `.app-shell`, agar berlaku baik di layout publik maupun admin.
-- Input, select, dan textarea memakai `--bg-canvas`, border `--border-soft`, radius `--radius-md`, dan teks `--text-primary`.
+- Input, select, dan textarea memakai `--bg-canvas`, border `--border-soft`, radius `--radius-md`, dan teks `--text-primary`; opsi select juga terang agar tidak tertimpa gaya gelap tema glass.
 - Opsi gruping babak memakai pill dengan border, latar `--bg-canvas`, dan keadaan terpilih berwarna lemon dengan shadow stiker.
 - Catatan format (` .race-format-note`) memakai latar `--bg-soft-lemon`, border ink, aksen kiri coral, dan teks `--text-primary` agar kontras.
 - Tombol **Terapkan**, **Buka hari lomba**, **Tarik rilis**, **Rilis KU**, **Susun ulang**, **Reset susunan**, **Batal**, dan **Simpan pengaturan** memakai border ink, radius pill, shadow stiker, font display, serta gradien Kids Skate (sunny untuk simpan, sky-roll untuk aksi kelola, surface untuk batal/reset).
