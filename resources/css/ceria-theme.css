@@ -304,6 +304,72 @@ html[data-theme='ceria'] {
     box-shadow: var(--shadow-sticker);
 }
 
+/* Urutan lomba & hari lomba: token Ceria menggantikan warna gelap bawaan
+   event-race.css supaya teks tidak tenggelam di latar kartu. */
+[data-theme='ceria'] .event-race-page {
+    --race-line: var(--border-soft);
+    --race-chip: var(--bg-surface);
+    --race-win: var(--color-sky);
+    --race-warn: var(--color-coral-deep);
+    --race-income: var(--color-sky-deep);
+    --race-expense: var(--color-coral-deep);
+}
+[data-theme='ceria'] .event-race-page :is(.race-format-summary-item, .race-control,
+    .race-warnings, .race-format-note, .race-heat) {
+    border-color: var(--border-soft);
+    background: var(--bg-surface);
+}
+[data-theme='ceria'] .event-race-page .race-lane-number {
+    border: 2px solid var(--border-ink);
+    color: var(--text-primary);
+    background: var(--color-lemon);
+}
+[data-theme='ceria'] .event-race-page .race-category-tab {
+    display: inline-flex;
+    align-items: center;
+    min-height: 0;
+    padding: 0.45rem 0.95rem;
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-decoration: none;
+}
+[data-theme='ceria'] .event-race-page .race-category-tab.is-active {
+    border-color: var(--border-ink);
+    background: var(--grad-sunny);
+    box-shadow: var(--shadow-sticker-sm);
+}
+[data-theme='ceria'] .event-race-page .race-quick {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 0.35rem 0.7rem;
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    cursor: pointer;
+}
+[data-theme='ceria'] .event-race-page .race-quick.is-win { background: var(--color-sky); }
+[data-theme='ceria'] .event-race-page .race-quick.is-no-show { background: var(--color-lemon); }
+[data-theme='ceria'] .event-race-page .race-quick.is-dnf,
+[data-theme='ceria'] .event-race-page .race-quick.is-dsq { color: var(--text-inverse); background: var(--color-berry); }
+[data-theme='ceria'] .event-race-page .race-quick.is-clear { background: var(--bg-soft-sky); }
+[data-theme='ceria'] .event-race-page .race-quick.is-postpone { color: var(--text-inverse); background: var(--color-grape); }
+[data-theme='ceria'] .event-race-page :is(.race-quick, .race-category-tab):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sticker);
+}
+
 [data-theme='ceria'] :is(.form-field, .account-form) :is(input, select, textarea) {
     min-height: 48px;
     padding: 0.65rem 1rem;
@@ -831,8 +897,8 @@ html[data-theme='ceria'] {
     .listing-event-card, .listing-demo-notice, .account-table-card,
     .submission-card, .category-rule-card, .sponsor-card, .public-event-card,
     .service-card, .sponsor-card-options article, .contact-item, .contact-foot,
-    .community-values article
-) :is(h1, h2, h3, h4, p, strong, label, legend, small, span, em, b):not(.skate-word) {
+    .community-values article, .event-race-page
+) :is(h1, h2, h3, h4, p, strong, label, legend, small, span, em, b, td, th):not(.skate-word) {
     color: var(--text-primary) !important;
 }
 
