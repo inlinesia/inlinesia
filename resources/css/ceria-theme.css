@@ -230,6 +230,76 @@ html[data-theme='ceria'] {
     background: var(--color-lemon);
 }
 
+/* Halaman format perlombaan memakai layout publik (bukan .app-shell), jadi
+   aturan kontrol Ceria perlu diulang di sini sesuai token Kids Skate. */
+[data-theme='ceria'] .event-race-page :is(.form-field, .account-form) :is(input, select, textarea) {
+    min-height: 48px;
+    padding: 0.65rem 1rem;
+    color: var(--text-primary);
+    background: var(--bg-canvas);
+    border: 2.5px solid var(--border-soft);
+    border-radius: var(--radius-md);
+}
+[data-theme='ceria'] .event-race-page :is(.form-field, .account-form) :is(input, textarea)::placeholder {
+    color: var(--text-secondary);
+}
+[data-theme='ceria'] .event-race-page .race-mode-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    color: var(--text-primary);
+    background: var(--bg-canvas);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 700;
+}
+[data-theme='ceria'] .event-race-page .race-mode-option:has(input:checked) {
+    border-color: var(--border-ink);
+    background: var(--color-lemon);
+    box-shadow: 0 2px 0 var(--border-ink);
+}
+[data-theme='ceria'] .event-race-page .race-mode-option input {
+    accent-color: var(--color-grape);
+}
+[data-theme='ceria'] .event-race-page .race-format-note {
+    padding: 10px 13px;
+    border: 2px solid var(--border-ink);
+    border-left: 5px solid var(--color-coral);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    background: var(--bg-soft-lemon);
+    font-weight: 600;
+}
+[data-theme='ceria'] .event-race-page .account-edit-link,
+[data-theme='ceria'] .event-race-page .form-cancel-button,
+[data-theme='ceria'] .event-race-page .button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 0.5rem 1rem;
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sticker-sm);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    line-height: 1.25;
+    text-decoration: none;
+    transition: transform 0.16s var(--ease-bounce), box-shadow 0.16s var(--ease-bounce);
+}
+[data-theme='ceria'] .event-race-page .account-edit-link { background: var(--grad-sky-roll); }
+[data-theme='ceria'] .event-race-page .form-cancel-button { background: var(--bg-surface); }
+[data-theme='ceria'] .event-race-page .button-primary { background: var(--grad-sunny); }
+[data-theme='ceria'] .event-race-page :is(.account-edit-link, .form-cancel-button, .button-primary):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sticker);
+}
+
 [data-theme='ceria'] :is(.form-field, .account-form) :is(input, select, textarea) {
     min-height: 48px;
     padding: 0.65rem 1rem;
