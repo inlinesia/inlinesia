@@ -9,6 +9,7 @@ use App\Notifications\CancellationRequestedNotification;
 use App\Services\RaceHeatBuilder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -1481,6 +1482,20 @@ class EventRegistrationManagementTest extends TestCase
             'payment_status' => 'paid',
             'confirmed_paid_at' => now(),
         ]);
+    }
+
+    public function test_roster_menggunakan_compact_pill_pager(): void
+    {
+        $paginator = new LengthAwarePaginator(range(1, 10), 100, 10, 2);
+
+        $html = view('vendor.pagination.ceria-compact', ['paginator' => $paginator])->render();
+
+        $this->assertStringContainsString('class="compact-pager"', $html);
+        $this->assertStringContainsString('← Prev', $html);
+        $this->assertStringContainsString('Page 2 of 10', $html);
+        $this->assertStringContainsString('Next →', $html);
+        $this->assertStringContainsString('rel="prev"', $html);
+        $this->assertStringContainsString('rel="next"', $html);
     }
 
     private function createEvent(User $owner, string $name = 'Kejuaraan Tulungagung'): Event

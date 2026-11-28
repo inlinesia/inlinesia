@@ -502,7 +502,7 @@
             </div>
 
             @if ($registrations->hasPages())
-                <div class="account-pagination">{{ $registrations->links() }}</div>
+                <div class="account-pagination">{{ $registrations->links('vendor.pagination.ceria-compact') }}</div>
             @endif
         </section>
 
@@ -601,7 +601,7 @@
                 </table>
             </div>
             @if ($registrations->hasPages())
-                <div class="account-pagination">{{ $registrations->links() }}</div>
+                <div class="account-pagination">{{ $registrations->links('vendor.pagination.ceria-compact') }}</div>
             @endif
         </section>
     @endif

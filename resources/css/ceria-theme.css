@@ -431,6 +431,55 @@ html[data-theme='ceria'] {
     box-shadow: 0 2px 0 var(--border-ink);
 }
 
+/* Pola navigasi 4B: Compact Pill Pager dari Kids Skate Navigations. */
+[data-theme='ceria'] .account-pagination .compact-pager {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    border: 2.5px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-sticker-sm);
+}
+[data-theme='ceria'] .account-pagination .compact-pager :is(a, span) {
+    display: inline-flex;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+[data-theme='ceria'] .account-pagination .compact-pager .pager-arrow {
+    padding: 6px 14px;
+    border: 2px solid var(--border-ink);
+    border-radius: var(--radius-pill);
+    color: var(--text-primary);
+    background: var(--color-lemon);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-decoration: none;
+}
+[data-theme='ceria'] .account-pagination .compact-pager .pager-arrow:hover {
+    background: var(--color-lemon-deep);
+}
+[data-theme='ceria'] .account-pagination .compact-pager .pager-arrow.is-disabled {
+    opacity: .45;
+    background: var(--bg-soft-sky);
+    pointer-events: none;
+}
+[data-theme='ceria'] .account-pagination .compact-pager .pager-status {
+    padding: 0 6px;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 [data-theme='ceria'] :is(.public-text-link, .account-back-link, .form-back-link,
     .listing-back-link, .account-edit-link) {
     color: var(--color-grape);

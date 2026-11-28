@@ -115,6 +115,10 @@ body.auth-page { min-width: 360px; color: #283544; background: #faf9f6; font-fam
 .account-pagination nav { display: flex; justify-content: space-between; color: #767988; font-size: 10px; }
 .account-pagination nav > div:last-child > span, .account-pagination nav > div:last-child > a { display: inline-flex; gap: 6px; }
 .account-pagination a, .account-pagination span { padding: 5px 8px; }
+.account-pagination .compact-pager { display: inline-flex; align-items: center; gap: 10px; padding: 6px; border: 1px solid #e2e5eb; border-radius: 9999px; background: #fff; }
+.account-pagination .compact-pager .pager-arrow { display: inline-flex; align-items: center; min-width: 0; height: auto; padding: 6px 14px; border-radius: 9999px; color: #293747; background: #fff3d6; font-size: 10px; font-weight: 700; text-decoration: none; }
+.account-pagination .compact-pager .pager-arrow.is-disabled { opacity: .45; background: #eef1f5; pointer-events: none; }
+.account-pagination .compact-pager .pager-status { padding: 0 6px; color: #555b64; font-size: 10px; font-weight: 700; white-space: nowrap; }
 .account-edit-card { max-width: 680px; padding: 24px; }
 .account-edit-card .account-form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .account-edit-card .account-form > label:nth-of-type(5), .account-admin-note, .account-edit-card .account-submit { grid-column: 1 / -1; }
